@@ -1,0 +1,85 @@
+/* Container for the edit account page */
+.Tedit-account-container {
+    padding: 20px;
+    max-width: 500px;
+    margin: 0 auto;
+    margin-top: 30px;
+    margin-bottom: 35px;
+    font-family: 'Arial', sans-serif;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    user-select: none; /* Prevent selection */
+  }
+  
+  /* Heading style */
+  .Tedit-account-container h1 {
+    text-align: center;
+    color: #000;
+    margin-bottom: 20px;
+    font-size: 2rem;
+    text-decoration: none;
+  }
+  
+  /* Form group styling */
+  .Tform-group {
+    margin-bottom: 15px;
+  }
+  
+  .Tform-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .Tform-group input {
+    width: 100%;
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+  
+  .Tform-group input:focus {
+    border-color: #007acc;
+    outline: none;
+  }
+  
+  /* Update button styling */
+  .Tupdate-button {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .Tupdate-button:hover {
+    background-color: #218838;
+  }
+  
+  /* Back button styling */
+  .Tback-button {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    background-color: #f44336;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .Tback-button:hover {
+    background-color: #d32f2f;
+  }
+  
+  .Tback-button:focus {
+    outline: none;
+  }
+  

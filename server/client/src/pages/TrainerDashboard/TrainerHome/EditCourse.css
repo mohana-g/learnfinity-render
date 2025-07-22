@@ -1,0 +1,103 @@
+.edit-course-container {
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  user-select: none; /* Prevent selection */
+}
+
+.edit-course-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #000;
+}
+
+.edit-course-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.edit-form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.edit-form-group label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #000;
+}
+
+.edit-form-group input,
+.edit-form-group select,
+.edit-form-group textarea {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.edit-form-group select {
+  cursor: pointer;
+}
+
+.edit-form-group textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.edit-btn-submit {
+  padding: 10px 15px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #007acc;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.edit-btn-submit:hover {
+  background-color: #005c99;
+}
+
+.edit-success-message {
+  color: green;
+  font-weight: bold;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.edit-error-message {
+  color: red;
+  font-weight: bold;
+  margin-top: 20px;
+  text-align: center;
+}
+
+/* CSS for Go Back Button */
+.edit-btn-back {
+  padding: 10px 20px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  text-align: center;
+  margin-top: 5px;
+  width: 100%;
+}
+
+.edit-btn-back:hover {
+  background-color: #e53935;
+}
+
+.edit-btn-back:focus {
+  outline: none;
+}
+
+.edit-btn-back:active {
+  background-color: #d32f2f;
+}

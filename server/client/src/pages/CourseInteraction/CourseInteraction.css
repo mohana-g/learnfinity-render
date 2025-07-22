@@ -1,0 +1,256 @@
+/* General styling */
+.courseinteraction-page {
+  padding: 2rem;
+  font-family: 'Arial', sans-serif;
+  color: #fff;
+  background-color: #fff;
+}
+
+.courseinteraction-page h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  text-decoration: none;
+  color: #000;
+}
+
+.courseinteraction-page p {
+  font-size: 1.2rem;
+  color: #000;
+}
+
+/* Course details */
+.courseinteraction-details {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.courseinteraction-image {
+  width: 300px;
+  height: auto;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 2px solid #6c63ff;
+}
+
+.courseinteraction-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.courseinteraction-info p {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #000;
+}
+
+.courseinteraction-info strong {
+  color: #000;
+}
+
+/* Course Header 
+.courseinteraction-page h1, p {
+  text-align: left;
+}*/
+
+.courseinteraction-page img {
+  display: block;
+  margin-bottom: 1rem;
+}
+
+/* Chapters */
+.courseinteraction-chapters-title {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #000;
+}
+
+.courseinteraction-chapters {
+  border-top: 2px solid #6c63ff;
+  padding-top: 1rem;
+}
+
+.courseinteraction-chapter {
+  border-bottom: 1px solid #000;
+  padding: 1.5rem 0;
+}
+
+.courseinteraction-chapter h3 {
+  font-size: 1.8rem;
+  color: #000;
+}
+
+/* Lessons */
+.courseinteraction-lessons {
+  list-style: none;
+  padding: 0;
+}
+
+.courseinteraction-lesson {
+  background-color: #2b2b3d;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 0.75rem;
+  border: 1px solid #6c63ff;
+  transition: transform 0.3s ease;
+}
+
+.courseinteraction-lesson:hover {
+  transform: scale(1.01);
+}
+
+.courseinteraction-lesson-title {
+  font-size: 1.2rem;
+  color: #fff;
+  cursor: pointer;
+}
+.courseinteraction-lesson-title {
+  font-size: 1.1rem;
+  color: #fff !important; /* Ensures the text stays white */
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.courseinteraction-lesson-details p {
+  margin: 0.5rem 0;
+  font-size: 1rem;
+  color: #fff;
+}
+
+.courseinteraction-lesson-details strong {
+  color: #fff;
+}
+
+/* Video */
+.courseinteraction-video {
+  margin-top: 1rem;
+  border: 2px solid #6c63ff;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 400px;
+}
+
+/* Loading & Error */
+.courseinteraction-loading,
+.courseinteraction-error {
+  font-size: 1.5rem;
+  text-align: center;
+  color: #6c63ff;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .courseinteraction-details {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .courseinteraction-image {
+    width: 100%;
+    max-width: 300px;
+  }
+}
+/*Quiz Style*/
+.courseinteraction-quiz {
+  margin-top: 20px;
+  padding: 20px;
+  border: 1px solid #333;
+  border-radius: 5px;
+  color: black;
+}
+
+.quiz-question {
+  margin-bottom: 15px;
+}
+
+.quiz-question p {
+  font-weight: bold;
+}
+
+.courseinteraction-quiz button.quiz-submit {
+  background-color: #6c63ff; /* Soft purple */
+  color: #fff; /* White text */
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 0 10px rgba(108, 99, 255, 0.5);
+  outline: none;
+}
+
+.courseinteraction-quiz button.quiz-submit:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(108, 99, 255, 0.8);
+}
+
+.courseinteraction-quiz button.quiz-submit:active {
+  transform: scale(0.98);
+}
+
+.courseinteraction-quiz .quiz-score {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-top: 1rem;
+  padding: 0.5rem;
+  border-radius: 8px;
+  display: inline-block;
+}
+
+.courseinteraction-quiz .quiz-score.pass {
+  color: #155724;
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+}
+
+.courseinteraction-quiz .quiz-score.fail {
+  color: #721c24;
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+}
+
+.courseinteraction-review {
+  margin-top: 20px;
+  color: white;
+}
+
+.courseinteraction-review textarea {
+  width: 99.6%;
+  margin-bottom: 10px;
+}
+
+.courseinteraction-review button {
+  padding: 10px 20px;
+  background-color: #ff4081;
+  border: none;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.courseinteraction-review button:hover {
+  background-color: #ff0055;
+}
+
+.certificate-section {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.download-certificate-button {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.download-certificate-button:hover {
+  background-color: #45a049;
+}

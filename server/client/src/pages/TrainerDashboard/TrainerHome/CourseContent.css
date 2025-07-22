@@ -1,0 +1,154 @@
+/* General Styles */
+.course-content-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 20px;
+  user-select: none; /* Prevent selection */
+}
+
+/* Left Sidebar (Tabs) */
+.left-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.left-sidebar button {
+  padding: 10px;
+  background-color: #f1f1f1;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.left-sidebar button:hover {
+  background-color: #ddd;
+}
+
+.left-sidebar button.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+/* Content Container */
+.content-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* Tab Content */
+.tab-content-container {
+  margin-bottom: 20px;
+}
+
+/* Instructor Tab Content */
+.tab-content.instructor {
+  padding: 16px;
+}
+
+.tab-content.instructor p {
+  text-align: justify;
+}
+
+/* Review Item */
+.review-item {
+  background: #f9f9f9;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  border-left: 4px solid #4CAF50; /* Match active tab color */
+  transition: transform 0.3s ease-in-out;
+}
+
+.review-item:hover {
+  transform: translateX(5px);
+}
+
+/* Review Name */
+.review-name {
+  font-size: 16px;
+  font-weight: bold;
+  color: #4CAF50;
+  margin-bottom: 5px;
+}
+
+/* Review Rating */
+.review-rating {
+  font-size: 14px;
+  color: #ff9800;
+  font-weight: bold;
+}
+
+/* Review Comment */
+.review-comment {
+  font-size: 14px;
+  color: #555;
+  margin-top: 5px;
+  font-style: italic;
+}
+
+
+
+/* Action Buttons Box */
+.course-actions {
+  width: 100%;
+  margin-bottom: 10%;
+}
+
+.course-content-box {
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.course-content-box h3 {
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+
+/* Action Buttons */
+.action-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-start;
+}
+
+.action-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.action-btn.edit {
+  background-color: #ff9800;
+  color: white;
+}
+
+.action-btn.edit:hover {
+  background-color: #e68900;
+}
+
+.action-btn.upload {
+  background-color: #2196f3;
+  color: white;
+}
+
+.action-btn.upload:hover {
+  background-color: #1976d2;
+}
+
+.action-btn.quiz {
+  background-color: #9c27b0;
+  color: white;
+}
+
+.action-btn.quiz:hover {
+  background-color: #7b1fa2;
+}

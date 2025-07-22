@@ -1,0 +1,161 @@
+/* Container styles */
+.learner-profile-container {
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+    margin-bottom: 8%;
+    font-family: Arial, sans-serif;
+    user-select: none; /* Prevent selection */
+  }
+  
+  /* Heading styles */
+  .learner-profile-container h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #000;
+    font-size: 2rem;
+    text-decoration: none;
+  }
+  
+  /* Card styles */
+  .learner-profile-card {
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Profile field styles */
+  .learner-profile-card p {
+    margin: 10px 0;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  
+  .learner-profile-card p strong {
+    font-weight: bold;
+    color: #000;
+  }
+  
+  /* Input field styles */
+  .learner-profile-card input[type="text"],
+  .learner-profile-card input[type="email"],
+  .learner-profile-card input[type="date"] {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    box-sizing: border-box;
+  }
+  
+  /* Button styles */
+  .learner-profile-card button {
+    padding: 10px 20px;
+    margin: 5px;
+    font-size: 14px;
+    color: #fff;
+    background: #007acc;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  .learner-profile-card button:hover {
+    background: #005c99;
+  }
+  
+  /* Cancel button styles */
+  .learner-profile-card button:last-child {
+    background: #f44336;
+  }
+  
+  .learner-profile-card button:last-child:hover {
+    background: #d32f2f;
+  }
+  
+/* Course progress styles */
+.learner-course-progress {
+  margin-top: 50px;
+}
+.course-progress-grid {
+  display: grid;
+  gap: 20px;
+  justify-content: center;
+}
+
+.course-progress-card {
+  width: 300px;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+  padding: 15px;
+  transition: 0.3s ease;
+  position: relative;
+}
+
+.course-progress-card:hover {
+  transform: translateY(-5px);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-header h4 {
+  margin: 0;
+  font-size: 16px;
+  color: #333;
+}
+
+.toggle-details {
+  background: #007bff;
+  border: none;
+  color: #fff;
+  font-size: 12px;
+  padding: 5px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.toggle-details:hover {
+  background-color: #0056b3;
+}
+
+.progress-bar {
+  background-color: #eee;
+  border-radius: 10px;
+  overflow: hidden;
+  height: 8px;
+  margin-top: 10px;
+}
+
+.progress-fill {
+  background: linear-gradient(to right, #007bff, #00c6ff);
+  height: 100%;
+  width: 0;
+  transition: width 0.5s ease;
+}
+
+.progress-percent {
+  font-size: 12px;
+  text-align: right;
+  color: #666;
+  margin-top: 4px;
+}
+
+.card-details {
+  margin-top: 10px;
+  font-size: 13px;
+  color: #444;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scaleY(0.95); }
+  to { opacity: 1; transform: scaleY(1); }
+}

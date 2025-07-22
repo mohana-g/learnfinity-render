@@ -1,0 +1,237 @@
+/* General styles */
+.course-details-page {
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+    font-family: Arial, sans-serif;
+    user-select: none; /* Prevent selection */
+}
+
+/* Course header */
+.course-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+/* Course info card */
+.course-info-card {
+    width: 70%;
+    padding: 20px;
+    margin-right: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.course-info-card h1 {
+    color: #000;
+    text-decoration: none;
+}
+
+.course-title {
+    font-weight: bold;
+    color: #000;
+    font-size: 1.5em;
+}
+
+.ratings {
+    color: #ffcc00;
+    margin-top: 5px;
+}
+
+.course-meta {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 10px;
+}
+
+.course-meta li {
+    margin-bottom: 8px;
+}
+
+/* Course sidebar card */
+.course-sidebar-card {
+    width: 28%;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Sidebar Image */
+.course-image {
+    width: 100%;
+    border-radius: 8px;
+}
+
+/* Features list */
+.course-features {
+    margin-top: 20px;
+}
+
+.course-features ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.course-features li {
+    margin-bottom: 10px;
+}
+
+/* Enroll button */
+.enroll-btn {
+    background-color: #007acc;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    font-size: 1.1em;
+    margin-top: 20px;
+    border-radius: 8px;
+}
+
+.enroll-btn:hover {
+    background-color: #005c99;
+}
+
+/* Tabs Section */
+.tabs-section {
+    width: 70%;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+
+/* Tabs */
+.tab-list {
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.tab {
+    flex: 1;
+    text-align: center;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.tab:hover {
+    background-color: #f0f8ff;
+    transform: translateY(-2px);
+}
+
+.tab.active {
+    background-color: #007acc;
+    color: white;
+    font-weight: bold;
+}
+
+.tab-content {
+    margin-top: 15px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    border: 1px solid #ddd;
+    background-color: #fff;
+}
+
+/* Curriculum Section */
+.curriculum {
+    margin-top: 20px;
+}
+
+.chapter-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.chapter-list > li {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+.chapter-list > li > strong {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 1.2em;
+    color: #333;
+}
+
+.lesson-list {
+    list-style-type: none;
+    padding: 0;
+    margin-left: 20px;
+}
+
+.lesson-list > li {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+}
+
+.lesson-list > li > strong {
+    display: block;
+    font-size: 1em;
+    color: #007acc;
+}
+
+.lesson-list > li > p {
+    margin: 5px 0 0;
+    font-size: 0.9em;
+    color: #666;
+}
+
+
+/* Instructor Section */
+.instructor p {
+    margin-bottom: 10px;
+    font-size: 1em;
+    color: #050505;
+}
+
+/* Reviews Section */
+.review-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.review-list > li {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+.review-list > li > strong {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 1.2em;
+    color: #333;
+}
+
+.review-list > li > p {
+    margin: 5px 0 0;
+    font-size: 1em;
+    color: #666;
+}
+
+.review-list > li > small {
+    display: block;
+    margin-top: 10px;
+    font-size: 0.9em;
+    color: #666;
+}

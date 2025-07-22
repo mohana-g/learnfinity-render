@@ -1,0 +1,78 @@
+/* Container styles */
+.trainer-profile-container {
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+    margin-bottom: 8%;
+    font-family: Arial, sans-serif;
+    user-select: none; /* Prevent selection */
+  }
+  
+  /* Heading styles */
+  .trainer-profile-container h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #000;
+    font-size: 2rem;
+    text-decoration: none;
+  }
+  
+  /* Card styles */
+  .trainer-profile-card {
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 11%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Profile field styles */
+  .trainer-profile-card p {
+    margin: 10px 0;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  
+  .trainer-profile-card p strong {
+    font-weight: bold;
+    color: #000;
+  }
+  
+  /* Input field styles */
+  .trainer-profile-card input[type="text"],
+  .trainer-profile-card input[type="email"],
+  .trainer-profile-card input[type="date"] {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    box-sizing: border-box;
+  }
+  
+  /* Button styles */
+  .trainer-profile-card button {
+    padding: 10px 20px;
+    margin: 5px;
+    font-size: 14px;
+    color: #fff;
+    background: #28a745;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  .trainer-profile-card button:hover {
+    background: #218838;
+  }
+  
+  /* Cancel button styles */
+  .trainer-profile-card button:last-child {
+    background: #f44336;
+  }
+  
+  .trainer-profile-card button:last-child:hover {
+    background: #d32f2f;
+  }
+  
