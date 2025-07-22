@@ -25,7 +25,11 @@ const cors = require("cors");
 require("dotenv").config();
 
 const app = express();
-app.use(cors());
+// app.use(cors());
+app.use(cors({
+  origin: ["https://learnfinity-client.onrender.com"], // ✅ change this to your actual frontend URL
+  credentials: true
+}));
 app.use(bodyParser.json());
 
 // Debug environment variables
