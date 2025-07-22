@@ -84,25 +84,6 @@ app.use(bodyParser.json());
 // Serve static files (for image uploads)
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-//Use the client app
-app.use(express.static(path.join(__dirname,"/client/build")));
-
-//Render client for any path
-app.get('*', (req, res) =>
-  res.sendFile(path.join(__dirname, "/client/build/index.html"))
-);
-
-// MongoDB Connection
-mongoose
-  .connect(process.env.MONGODB_URL)
-  .then(() => console.log("MongoDB connected successfully"))
-  .catch((err) => console.error("MongoDB connection error:", err));
-
-// Base Route
-app.get("/", (req, res) => {
-  res.send("Welcome to the Learnfinity Backend!");
-});
-
 // API Routes
 app.use("/api/admin", adminRoutes); // Admin-related routes
 app.use("/api/auth", authRoutes); // Authentication-related routes
@@ -114,12 +95,29 @@ app.use("/api/lessons", lessonRoutes); // Lesson-related routes
 app.use("/api/quizzes", quizRoutes); // Quiz-related routes
 app.use('/api/course-interaction', courseInteractionRoutes);
 
-
 // ✅ Add this test route to verify the backend
 app.get("/api/test", (req, res) => {
   res.json({ message: "API is working!" });
 });
 
+// MongoDB Connection
+mongoose
+  .connect(process.env.MONGODB_URL)
+  .then(() => console.log("MongoDB connected successfully"))
+  .catch((err) => console.error("MongoDB connection error:", err));
+
+//Use the client app
+app.use(express.static(path.join(__dirname,"/client/build")));
+
+//Render client for any path
+app.get('*', (req, res) =>
+  res.sendFile(path.join(__dirname, "/client/build/index.html"))
+);
+
+// Base Route
+app.get("/", (req, res) => {
+  res.send("Welcome to the Learnfinity Backend!");
+});
 
 // Start the Server
 const PORT = process.env.PORT || 5000;
