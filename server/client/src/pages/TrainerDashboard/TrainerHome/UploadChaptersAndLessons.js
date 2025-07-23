@@ -51,7 +51,7 @@ const handleVideoUpload = (chapterIndex, lessonIndex, file) => {
 
   const handleRemoveChapter = async (courseId, chapterId, setChapters, chapters) => {
   try {
-    await axios.delete(`http://localhost:5000/api/courses/${courseId}/chapters/${chapterId}`);
+    await axios.delete(`https://hilms.onrender.com/api/courses/${courseId}/chapters/${chapterId}`);
     setChapters(chapters.filter((chapter) => chapter._id !== chapterId));
     alert('Chapter removed successfully!');
   } catch (error) {
@@ -62,7 +62,7 @@ const handleVideoUpload = (chapterIndex, lessonIndex, file) => {
 
 const handleRemoveLesson = async (courseId, chapterId, lessonId, setChapters, chapters) => {
   try {
-    await axios.delete(`http://localhost:5000/api/courses/${courseId}/chapters/${chapterId}/lessons/${lessonId}`);
+    await axios.delete(`https://hilms.onrender.com/api/courses/${courseId}/chapters/${chapterId}/lessons/${lessonId}`);
     const updatedChapters = chapters.map((chapter) => {
       if (chapter._id === chapterId) {
         chapter.lessons = chapter.lessons.filter((lesson) => lesson._id !== lessonId);
@@ -105,7 +105,7 @@ const handleRemoveLesson = async (courseId, chapterId, lessonId, setChapters, ch
     });
   
     try {
-      await axios.post("http://localhost:5000/api/courses/upload", formData, {
+      await axios.post("https://hilms.onrender.com/api/courses/upload", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       alert("Chapters and lessons uploaded successfully!");
@@ -124,7 +124,7 @@ const handleRemoveLesson = async (courseId, chapterId, lessonId, setChapters, ch
   useEffect(() => {
     const fetchChapters = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/courses/${courseId}/chapters`);
+        const response = await axios.get(`https://hilms.onrender.com/api/courses/${courseId}/chapters`);
         const formattedChapters = response.data.map((chapter) => ({
           _id: chapter._id,
           chapterName: chapter.name, // Ensure consistency with form fields
@@ -134,7 +134,7 @@ const handleRemoveLesson = async (courseId, chapterId, lessonId, setChapters, ch
             number: lesson.number || "",
             title: lesson.title || "", // Ensure lesson name matches your form
             description: lesson.description || "",
-            videoUrl: lesson.videoUrl ? `http://localhost:5000/${lesson.videoUrl}` : "", // Ensure full URL
+            videoUrl: lesson.videoUrl ? `https://hilms.onrender.com/${lesson.videoUrl}` : "", // Ensure full URL
           })),
         }));
         setChapters(formattedChapters);
