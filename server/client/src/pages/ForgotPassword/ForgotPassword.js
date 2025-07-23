@@ -94,7 +94,7 @@ const ForgotPassword = () => {
     e.preventDefault();
     setLoading(true);
 
-    const resetLink = `http://localhost:3000/reset-password?token=${btoa(email)}`; // Encode email as a simple identifier
+    const resetLink = `https://hilms.onrender.com/microsoft-login/reset-password?token=${btoa(email)}`; // Encode email as a simple identifier
 
 
     const emailParams = {
