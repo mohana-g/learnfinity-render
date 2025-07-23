@@ -10,7 +10,7 @@ const CoursesPage = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/courses"); // API URL
+        const response = await fetch("https://hilms.onrender.com/api/courses"); // API URL
         if (!response.ok) {
           throw new Error("Failed to fetch courses");
         }
