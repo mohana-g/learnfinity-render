@@ -13,7 +13,7 @@ const CoursesPage = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/courses");
+        const response = await fetch("https://hilms.onrender.com/api/courses");
         if (!response.ok) {
           throw new Error("Failed to fetch courses");
         }
@@ -31,7 +31,7 @@ const CoursesPage = () => {
   useEffect(() => {
     const fetchEnrolledCourses = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/learner/enrolled-courses", {
+        const response = await fetch("https://hilms.onrender.com/api/learner/enrolled-courses", {
           method: "GET",
           headers: {
             Authorization: `Bearer ${learnerToken}`, // Pass token for authentication
