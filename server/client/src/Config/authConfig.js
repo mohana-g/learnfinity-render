@@ -4,7 +4,7 @@ export const msalConfig = {
   auth: {
     clientId: "357a04d9-4f27-4699-8cb3-718977898ac7",
     authority: "https://login.microsoftonline.com/009944cd-196f-414f-a62a-d9ec41f72b20",
-    redirectUri: "http://localhost:3000/microsoft-login", // Must match Azure portal setting
+    redirectUri: "https://hilms.onrender.com/microsoft-login", // Must match Azure portal setting
     postLogoutRedirectUri: "/",
     navigateToLoginRequestUrl: false,
   },
