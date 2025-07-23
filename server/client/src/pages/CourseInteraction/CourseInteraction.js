@@ -587,7 +587,7 @@ const CourseInteraction = () => {
                     <p><strong>Description:</strong> {lesson.description || 'No description available.'}</p>
                     {lesson.videoUrl && (() => {
                       const type = getFileType(lesson.videoUrl);
-                      const fullPath = `http://localhost:5000/${lesson.videoUrl.replace(/\\/g, "/")}`;
+                      const fullPath = `https://hilms.onrender.com/${lesson.videoUrl.replace(/\\/g, "/")}`;
 
                       switch (type) {
                         case 'video':
