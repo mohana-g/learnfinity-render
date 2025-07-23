@@ -324,7 +324,7 @@ const AdminDashboard = () => {
           )
                 .map((course) => (
                   <div className="course-card" key={course._id}>
-                  <img src={`http://localhost:5000${course.imageurl}`} alt={course.title} className="course-image" />
+                  <img src={`https://hilms.onrender.com${course.imageurl}`} alt={course.title} className="course-image" />
                   <p className="course-title-label">Title:<span className="course-title">{course.title}</span></p>
                   <p className="course-description-label">Description:<span className="course-description">{course.description}</span></p>
                   <button className="admin-delete-btn" onClick={() => deleteCourse(course._id)}>Delete Course</button>
