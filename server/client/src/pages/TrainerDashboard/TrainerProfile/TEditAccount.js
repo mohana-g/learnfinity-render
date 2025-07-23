@@ -25,7 +25,7 @@ const TEditAccount = () => {
           return;
         }
 
-        const response = await axios.get("http://localhost:5000/api/trainer/profile", {
+        const response = await axios.get("https://hilms.onrender.com/api/trainer/profile", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -61,7 +61,7 @@ const TEditAccount = () => {
       }
 
       await axios.put(
-        "http://localhost:5000/api/trainer/update-password",
+        "https://hilms.onrender.com/api/trainer/update-password",
         {
           currentPassword: formData.currentPassword,
           newPassword: formData.newPassword,
