@@ -20,7 +20,7 @@ const AdminDashboard = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/admin/users');
+      const response = await axios.get('https://hilms.onrender.com/api/admin/users');
       //console.log("Users Fetched:", response.data.users);
       setUsers(response.data.users);  // Use correct state update
     } catch (error) {
@@ -30,7 +30,7 @@ const AdminDashboard = () => {
 
   const fetchTrainers = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/admin/pending-trainers');
+      const response = await axios.get('https://hilms.onrender.com/api/admin/pending-trainers');
       setTrainers(response.data.trainers);
     } catch (error) {
       console.error('Error fetching trainers:', error);
@@ -39,7 +39,7 @@ const AdminDashboard = () => {
 
   const fetchCourses = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/admin/courses');
+      const response = await axios.get('https://hilms.onrender.com/api/admin/courses');
       setCourses(response.data.courses);
     } catch (error) {
       console.error('Error fetching courses:', error);
@@ -57,7 +57,7 @@ const AdminDashboard = () => {
 
   const fetchLearnersProgress = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/admin/learners-progress');
+      const response = await axios.get('https://hilms.onrender.com/api/admin/learners-progress');
       //console.log("Fetched Learner Progress:", response.data);  // Check the structure of the response
       setLearnersProgress(response.data);  // Update state directly with the response data
     } catch (error) {
@@ -67,7 +67,7 @@ const AdminDashboard = () => {
   
   const fetchLeaderboard = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/learner/leaderboard");
+      const response = await axios.get("https://hilms.onrender.com/api/learner/leaderboard");
       setLeaderboard(response.data);
     } catch (err) {
       setLeaderboardError("Failed to fetch leaderboard");
@@ -89,7 +89,7 @@ const AdminDashboard = () => {
   const blockUser = async (userId) => {
     confirmAction("Are you sure you want to block this user?", async () => {
         try {
-            const response = await axios.put(`http://localhost:5000/api/admin/block-user/${userId}`);
+            const response = await axios.put(`https://hilms.onrender.com/api/admin/block-user/${userId}`);
              console.log("Block Response:", response.data);
             alert("User has been blocked!");
             fetchUsers(); // Refresh the user list
@@ -102,7 +102,7 @@ const AdminDashboard = () => {
   const unblockUser = async (userId) => {
       confirmAction("Are you sure you want to unblock this user?", async () => {
           try {
-              const response = await axios.put(`http://localhost:5000/api/admin/unblock-user/${userId}`);
+              const response = await axios.put(`https://hilms.onrender.com/api/admin/unblock-user/${userId}`);
               console.log("Unblock Response:", response.data);
               alert("User has been unblocked!");
               fetchUsers(); // Refresh the user list
@@ -116,7 +116,7 @@ const AdminDashboard = () => {
   const deleteUser = async (userId) => {
       confirmAction("Are you sure you want to delete this user?", async () => {
           try {
-            await axios.delete(`http://localhost:5000/api/admin/delete-user/${userId}`);
+            await axios.delete(`https://hilms.onrender.com/api/admin/delete-user/${userId}`);
             alert("User has been deleted!");
               fetchUsers();
           } catch (error) {
@@ -128,7 +128,7 @@ const AdminDashboard = () => {
   const deleteCourse = async (courseId) => {
     confirmAction('Are you sure you want to delete this course?', async () => {
       try {
-        await axios.delete(`http://localhost:5000/api/admin/delete-course/${courseId}`);
+        await axios.delete(`https://hilms.onrender.com/api/admin/delete-course/${courseId}`);
         fetchCourses();
       } catch (error) {
         console.error('Error deleting course:', error);
@@ -139,7 +139,7 @@ const AdminDashboard = () => {
   const approveTrainer = async (trainerId) => {
     confirmAction('Are you sure you want to approve this trainer?', async () => {
       try {
-        await axios.put(`http://localhost:5000/api/admin/approve-trainer/${trainerId}`);
+        await axios.put(`https://hilms.onrender.com/api/admin/approve-trainer/${trainerId}`);
         fetchTrainers();
       } catch (error) {
         console.error('Error approving trainer:', error);
@@ -150,7 +150,7 @@ const AdminDashboard = () => {
   const declineTrainer = async (trainerId) => {
     confirmAction('Are you sure you want to decline this trainer?', async () => {
       try {
-        await axios.put(`http://localhost:5000/api/admin/decline-trainer/${trainerId}`);
+        await axios.put(`https://hilms.onrender.com/api/admin/decline-trainer/${trainerId}`);
         fetchTrainers();
       } catch (error) {
         console.error('Error declining trainer:', error);
