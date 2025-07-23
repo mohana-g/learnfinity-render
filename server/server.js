@@ -107,11 +107,11 @@ mongoose
   .catch((err) => console.error("MongoDB connection error:", err));
 
 //Use the client app
-app.use(express.static(path.join(__dirname,"/client/build")));
+app.use(express.static(path.join(__dirname,"client/build")));
 
 //Render client for any path
 app.get('*', (req, res) =>
-  res.sendFile(path.join(__dirname, "/client/build/index.html"))
+  res.sendFile(path.join(__dirname, "client/build/index.html"))
 );
 
 // Base Route
