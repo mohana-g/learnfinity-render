@@ -105,7 +105,9 @@
 .toggle-password-icon {
   position: absolute;
   right: 10px;
-  cursor: pointer;
+  top: 50%;
+  transform: translateY(-50%);
   font-size: 18px;
-  color: #000; /* black icon */
+  color: #000;
+  cursor: pointer;
 }
