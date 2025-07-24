@@ -623,15 +623,7 @@ const CourseInteraction = () => {
                             <div style={{ marginTop: '20px' }}>
                               <h4>📄 Document Preview</h4>
                               <>
-                              <iframe
-                                src={`https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(fullPath)}`}
-                                width="100%"
-                                height="500px"
-                                frameBorder="0"
-                                title="Office File Viewer"
-                              />
-
-                                {/* {window.location.hostname === 'localhost' ? (
+                                {window.location.hostname === 'localhost' ? (
                                   <div style={{ color: 'red' }}>
                                     ❗ Cannot preview documents on localhost. <br />
                                     <a href={fullPath} download target="_blank" rel="noopener noreferrer">
@@ -646,7 +638,7 @@ const CourseInteraction = () => {
                                     frameBorder="0"
                                     title="Office File Viewer"
                                   />
-                                )} */}
+                                )}
                                 {!completedLessons.includes(lesson._id) && (
                                   <button
                                     style={{ marginTop: '10px' }}
