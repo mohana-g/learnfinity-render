@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { FiEye, FiEyeOff } from 'react-icons/fi';
 import './SignUp.css';
 
 const SignUp = () => {
@@ -13,9 +12,6 @@ const SignUp = () => {
     address:'',
     confirmPassword: '',
   });
-
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const [errors, setErrors] = useState({});
 
@@ -165,50 +161,29 @@ const SignUp = () => {
           </div>
 
           <div className="input-group">
-          <label htmlFor="password">Password:</label>
-          <div className="password-wrapper">
+            <label htmlFor="password">Password:</label>
             <input
-              type={showPassword ? 'text' : 'password'}
+              type="password"
               id="password"
               name="password"
               value={formData.password}
               onChange={handleChange}
               required
             />
-            <span
-              className="toggle-password-icon"
-              onClick={() => setShowPassword(!showPassword)}
-              role="button"
-              tabIndex={0}
-            >
-              {showPassword ? <FiEyeOff /> : <FiEye />}
-            </span>
           </div>
-        </div>
 
-        <div className="input-group">
-          <label htmlFor="confirmPassword">Confirm Password:</label>
-          <div className="password-wrapper">
+          <div className="input-group">
+            <label htmlFor="confirmPassword">Confirm Password:</label>
             <input
-              type={showConfirmPassword ? 'text' : 'password'}
+              type="password"
               id="confirmPassword"
               name="confirmPassword"
               value={formData.confirmPassword}
               onChange={handleChange}
               required
             />
-            <span
-              className="toggle-password-icon"
-              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-              role="button"
-              tabIndex={0}
-            >
-              {showConfirmPassword ? <FiEyeOff /> : <FiEye />}
-            </span>
+            {errors.password && <span className="error">{errors.password}</span>}
           </div>
-          {errors.password && <span className="error">{errors.password}</span>}
-        </div>
-
 
           <div className="input-group">
             <input type="submit" value="Submit" />
