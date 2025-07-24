@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { FiEye, FiEyeOff } from 'react-icons/fi';
 import './TrainerSignUp.css';
 
 const TrainerSignup = () => {
@@ -11,6 +12,10 @@ const TrainerSignup = () => {
     password: '',
     confirmPassword: ''
   });
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -148,7 +153,7 @@ const TrainerSignup = () => {
             required
           />
 
-          <label htmlFor="institute">Institute:</label>
+          <label htmlFor="institute">Institution:</label>
           <input
             type="text"
             id="institute"
@@ -173,24 +178,46 @@ const TrainerSignup = () => {
           </select>
 
           <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
+          <div className="password-wrapper">
+            <input
+              type={showPassword ? 'text' : 'password'}
+              id="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+            />
+            <span
+              className="toggle-password-icon"
+              onClick={() => setShowPassword((prev) => !prev)}
+              role="button"
+              tabIndex={0}
+            >
+              {showPassword ? <FiEyeOff /> : <FiEye />}
+            </span>
+          </div>
+
 
           <label htmlFor="confirmPassword">Confirm Password:</label>
-          <input
-            type="password"
-            id="confirmPassword"
-            name="confirmPassword"
-            value={formData.confirmPassword}
-            onChange={handleChange}
-            required
-          />
+          <div className="password-wrapper">
+            <input
+              type={showConfirmPassword ? 'text' : 'password'}
+              id="confirmPassword"
+              name="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              required
+            />
+            <span
+              className="toggle-password-icon"
+              onClick={() => setShowConfirmPassword((prev) => !prev)}
+              role="button"
+              tabIndex={0}
+            >
+              {showConfirmPassword ? <FiEyeOff /> : <FiEye />}
+            </span>
+          </div>
+
 
           <button type="submit" className="Trainer-signup-submit-btn" disabled={loading}>
             {loading ? 'Submitting...' : 'Submit'}

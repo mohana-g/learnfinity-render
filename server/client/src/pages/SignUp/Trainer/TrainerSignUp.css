@@ -85,3 +85,23 @@
 .Trainer-signup-form .Trainer-signup-submit-btn:hover {
     background-color: #218838;
 }
+
+.password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-wrapper input {
+  width: 100%;
+  padding-right: 40px;
+  box-sizing: border-box;
+}
+
+.toggle-password-icon {
+  position: absolute;
+  right: 10px;
+  font-size: 18px;
+  color: #000;
+  cursor: pointer;
+}
