@@ -206,7 +206,7 @@ const AdminDashboard = () => {
           <th>Role</th>
           <th>Email</th>
           <th>Phone</th>
-          <th>DOB / Institute</th>
+          <th>DOB / Institution</th>
           <th>Actions</th>
         </tr>
       </thead>

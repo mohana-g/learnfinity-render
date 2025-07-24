@@ -186,8 +186,8 @@ const CourseDetails = () => {
                 <h2>Instructor Information</h2>
                 <p><strong>Full Name: </strong>{course.trainer?.fullName || "N/A"}</p>
                 <p><strong>Email: </strong> {course.trainer?.email || "N/A"}</p>
-                <p><strong>Institute: </strong> {course.trainer?.institute || "N/A"}</p>
-                <p><strong>Phone: </strong> {course.trainer?.phoneNumber || "N/A"}</p>
+                <p><strong>Institution: </strong> {course.trainer?.institute || "N/A"}</p>
+                {/* <p><strong>Phone: </strong> {course.trainer?.phoneNumber || "N/A"}</p> */}
               </div>
             )}
 

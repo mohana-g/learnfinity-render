@@ -76,8 +76,8 @@ function Home() {
       <section className="hero-section">
         <div className="hero-content">
           <h1>Unlock Your Potential</h1>
-          <p>Learn, Grow, and Excel with Our Online Courses</p>
-          <p>Get Educated Online From Your Home. Register now and Enroll in the courses to break records.</p>
+          {/* <p>Learn, Grow, and Excel with Our Online Courses</p>
+          <p>Get Educated Online From Your Home. Register now and Enroll in the courses to break records.</p> */}
           <Link to="/signup" className="btn-primary">Join Now</Link>
         </div>
       </section>

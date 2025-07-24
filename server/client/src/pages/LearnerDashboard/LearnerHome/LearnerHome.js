@@ -110,7 +110,7 @@ function LearnerHome() {
       {/* Hero Section */}
       <section className="learnerHeader">
         <div className="learnerHeaderContent">
-          <h1>learner's Home Page</h1>
+          <h1>Learner's Home Page</h1>
           <h1 className="learnerHeaderHeading">
             Welcome to Learnfinity - Empowering Your Learning Journey
           </h1>
