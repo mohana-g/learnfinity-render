@@ -98,11 +98,13 @@
   position: relative;
   display: flex;
   align-items: center;
+  width: 100%;
+  min-height: 40px; /* Ensures consistent height */
 }
 
 .password-wrapper input {
   width: 100%;
-  padding-right: 40px; /* space for eye icon */
+  padding-right: 40px; /* space for the icon */
   box-sizing: border-box;
 }
 
@@ -111,7 +113,13 @@
   right: 10px;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 10px;
+  width: 24px;         /* Fixed width for icon area */
+  height: 24px;        /* Fixed height for icon area */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;     /* Slightly larger for better click area */
   color: #000;
   cursor: pointer;
+  z-index: 2;
 }
