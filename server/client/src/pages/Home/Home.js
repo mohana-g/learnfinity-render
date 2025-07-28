@@ -81,8 +81,7 @@ function Home() {
           <Link to="/signup" className="btn-primary">Join Now</Link>
         </div>
       </section>
-
- {/* Popular Courses */}
+{/* Popular Courses */}
 <section className="courses-section">
   <h2>Popular Courses</h2>
   {loading ? (
@@ -94,7 +93,7 @@ function Home() {
           <Link
             to={`/course-details/${course._id}`}
             key={course._id}
-            style={{ textDecoration: "none", color: "inherit", width: "300px" }}
+            className="courses-card-link"
           >
             <div className="courses-card">
               <img
@@ -102,13 +101,11 @@ function Home() {
                 alt={course.title}
                 className="courses-image"
               />
-              <h3>{course.title}</h3>
-              <p>
-                <strong>Instructor:</strong> {course.trainer?.fullName}
-              </p>
-              <p>
-                <strong>Enrolled Learners:</strong> {course.learnerCount}
-              </p>
+              <div className="courses-card-content">
+                <h3>{course.title}</h3>
+                <p><strong>Instructor:</strong> {course.trainer?.fullName}</p>
+                <p><strong>Enrolled Learners:</strong> {course.learnerCount}</p>
+              </div>
               <div className="btn-primary">Read More</div>
             </div>
           </Link>
@@ -119,6 +116,7 @@ function Home() {
     </div>
   )}
 </section>
+
 
       
       {/* Teach Section */}

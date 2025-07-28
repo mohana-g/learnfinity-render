@@ -66,23 +66,19 @@ background-color: #0056b3;
 
 
 /* Popular Courses Section */
-.courses-section {
-  padding: 50px 20px;
-  text-align: center;
-}
-
-.courses-section h2 {
-  text-align: center;
-  font-size: 2rem;
-  margin-bottom: 30px;
-  text-decoration: underline;
-}
-
 .courses-container-cards {
   display: flex;
   justify-content: space-around;
   gap: 20px;
   flex-wrap: wrap;
+  align-items: stretch; /* Stretch all cards to equal height */
+}
+
+.courses-card-link {
+  text-decoration: none;
+  color: inherit;
+  width: 300px;
+  display: flex;
 }
 
 .courses-card {
@@ -90,18 +86,17 @@ background-color: #0056b3;
   border: 1px solid #ddd;
   border-radius: 5px;
   padding: 0;
-  width: 300px;
+  width: 100%;
   text-align: center;
   transition: transform 0.3s ease;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  min-height: 460px; /* Ensures consistent height */
+  box-sizing: border-box;
   margin-top: 5px;
-}
-
-.courses-card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
 }
 
 .courses-card img.courses-image {
@@ -110,6 +105,14 @@ background-color: #0056b3;
   object-fit: cover;
   margin-bottom: 10px;
   border-radius: 5px 5px 0 0;
+}
+
+.courses-card-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 10px;
 }
 
 .courses-card h3 {
