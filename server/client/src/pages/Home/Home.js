@@ -82,29 +82,44 @@ function Home() {
         </div>
       </section>
 
-      {/* Popular Courses */}
-      <section className="courses-section">
-        <h2>Popular Courses</h2>
-        {loading ? (
-          <p>Loading courses...</p>
-        ) : (
-          <div className="courses-container-cards">
-            {courses.length > 0 ? (
-              courses.slice(0, 4).map((course) => (
-                <div className="courses-card" key={course._id}>
-                  <img src={course.imageurl} alt={course.title} className="courses-image" />
-                  <h3>{course.title}</h3>
-                  <p><strong>Instructor:</strong> {course.trainer?.fullName}</p>
-                  <p><strong>Enrolled Learners:</strong> {course.learnerCount}</p>
-                  <Link to={`/course-details/${course._id}`} className="btn-primary">Read More</Link>
-                </div>
-              ))
-            ) : (
-              <p>No popular courses available</p>
-            )}
-          </div>
-        )}
-      </section>
+ {/* Popular Courses */}
+<section className="courses-section">
+  <h2>Popular Courses</h2>
+  {loading ? (
+    <p>Loading courses...</p>
+  ) : (
+    <div className="courses-container-cards">
+      {courses.length > 0 ? (
+        courses.slice(0, 4).map((course) => (
+          <Link
+            to={`/course-details/${course._id}`}
+            key={course._id}
+            style={{ textDecoration: "none", color: "inherit", width: "300px" }}
+          >
+            <div className="courses-card">
+              <img
+                src={course.imageurl}
+                alt={course.title}
+                className="courses-image"
+              />
+              <h3>{course.title}</h3>
+              <p>
+                <strong>Instructor:</strong> {course.trainer?.fullName}
+              </p>
+              <p>
+                <strong>Enrolled Learners:</strong> {course.learnerCount}
+              </p>
+              <div className="btn-primary">Read More</div>
+            </div>
+          </Link>
+        ))
+      ) : (
+        <p>No popular courses available</p>
+      )}
+    </div>
+  )}
+</section>
+
       
       {/* Teach Section */}
       <section className="teach-section">
