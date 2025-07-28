@@ -132,7 +132,7 @@ const CourseDetails = () => {
                 <li>🎥 {Array.isArray(course.chapters) ? course.chapters.length : 0} Chapters</li>
                 <li>📖 {course.lessonCount || 0} Lessons</li>
                 <li>📚 {Array.isArray(course.quizzes) ? course.quizzes.length : 0} Quizzes</li>
-                <li>💳 Free Course</li>
+                {/* <li>💳 Free Course</li> */}
                 <li>🏆 Certificate of Completion</li>
               </ul>
             </div>

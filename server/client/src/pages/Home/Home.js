@@ -83,36 +83,43 @@ function Home() {
       </section>
 
       {/* Popular Courses */}
-      <section className="courses-section">
-        <h2>Popular Courses</h2>
-        {loading ? (
-          <p>Loading courses...</p>
-        ) : (
-          <div className="courses-container-cards">
-            {courses.length > 0 ? (
-              courses.slice(0, 4).map((course) => (
-                <div className="courses-card" key={course._id}>
-                  <img src={course.imageurl} alt={course.title} className="courses-image" />
-                  <h3>{course.title}</h3>
-                  <p><strong>Instructor:</strong> {course.trainer?.fullName}</p>
-                  <p><strong>Enrolled Learners:</strong> {course.learnerCount}</p>
-                  <Link to={`/course-details/${course._id}`} className="btn-primary">Read More</Link>
-                </div>
-              ))
-            ) : (
-              <p>No popular courses available</p>
-            )}
-          </div>
-        )}
-      </section>
+<section className="courses-section">
+  <h2>Popular Courses</h2>
+  {loading ? (
+    <p>Loading courses...</p>
+  ) : (
+    <div className="courses-container-cards">
+      {courses.length > 0 ? (
+        courses.slice(0, 4).map((course) => (
+          <Link
+            to={`/course-details/${course._id}`}
+            className="courses-card-link"
+            key={course._id}
+          >
+            <div className="courses-card">
+              <img src={course.imageurl} alt={course.title} className="courses-image" />
+              <h3>{course.title}</h3>
+              <p><strong>Instructor:</strong> {course.trainer?.fullName}</p>
+              <p><strong>Enrolled Learners:</strong> {course.learnerCount}</p>
+              <span className="btn-primary">Read More</span>
+            </div>
+          </Link>
+        ))
+      ) : (
+        <p>No popular courses available</p>
+      )}
+    </div>
+  )}
+</section>
+
       
       {/* Teach Section */}
       <section className="teach-section">
         <div className="teach-content">
           <div className="teach-text">
-            <h2>Teach on Our Platform</h2>
+            <h2>Share your expertise on this platform</h2>
             <p>Share your knowledge and expertise with Learners around the world. Join our community of educators and help learners achieve their goals. Whether you're a seasoned professional or just starting, we welcome passionate individuals like you.</p>
-            <Link to="/trainer-signup" className="btn-secondary">Teach Now</Link>
+            <Link to="/trainer-signup" className="btn-secondary">Become a Trainer</Link>
           </div>
           <div className="teach-image">
             <img src="https://media.istockphoto.com/id/1392125218/photo/happy-teacher-and-schoolboy-giving-each-other-high-five-on-a-class.jpg?s=612x612&w=0&k=20&c=xn3BHSIvAzsLosNAYEn5SdZILHd_smpp3W4DR7fNTdM=" alt="Teaching Platform" />
