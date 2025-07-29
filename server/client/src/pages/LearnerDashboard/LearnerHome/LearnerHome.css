@@ -52,7 +52,7 @@
   }
   
     .learnerHeader .learnerHeaderButton {
-    background-color: #007bff;
+    background-color: #0505fc;
     color: #fff;
     padding: 10px 20px;
     border: none;
@@ -63,7 +63,7 @@
   }
   
     .learnerHeader .learnerHeaderButton:hover {
-    background-color: #0056b3;
+    background-color: #0000cc;
   }
   
   /* Enrolled Courses Section */
@@ -129,7 +129,7 @@
   }
   
   .courses-card .btn-primary {
-    background-color: #007bff;
+    background-color: #0505fc;
     padding: 10px 20px;
     color: white;
     text-decoration: none;
@@ -139,7 +139,7 @@
   }
   
   .courses-card .btn-primary:hover {
-    background-color: #0056b3;
+    background-color: #0000cc;
   }
   
 
