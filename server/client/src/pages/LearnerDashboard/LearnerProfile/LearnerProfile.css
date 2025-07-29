@@ -55,7 +55,7 @@
     margin: 5px;
     font-size: 14px;
     color: #fff;
-    background: #007acc;
+    background: #0505fc;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -63,7 +63,7 @@
   }
   
   .learner-profile-card button:hover {
-    background: #005c99;
+    background: #0000cc;
   }
   
   /* Cancel button styles */

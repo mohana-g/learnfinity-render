@@ -79,7 +79,7 @@
 
 /* Enroll button */
 .enroll-btn {
-    background-color: #007acc;
+    background-color: #0505fc;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -91,7 +91,7 @@
 }
 
 .enroll-btn:hover {
-    background-color: #005c99;
+    background-color: #0000cc;
 }
 
 /* Tabs Section */
@@ -129,7 +129,7 @@
 }
 
 .tab.active {
-    background-color: #007acc;
+    background-color: #0505fc;
     color: white;
     font-weight: bold;
 }
@@ -185,7 +185,7 @@
 .lesson-list > li > strong {
     display: block;
     font-size: 1em;
-    color: #007acc;
+    color: #0505fc;
 }
 
 .lesson-list > li > p {

@@ -43,7 +43,7 @@
 
 .form-group input:focus,
 .form-group textarea:focus {
-  border-color: #007acc;
+  border-color: #0505fc;
   outline: none;
 }
 
@@ -56,7 +56,7 @@ textarea {
   display: block;
   width: 100%;
   padding: 10px;
-  background-color: #007acc;
+  background-color: #0505fc;
   color: white;
   border: none;
   border-radius: 5px;
@@ -66,7 +66,7 @@ textarea {
 }
 
 .send-mail-btn:hover {
-  background-color: #005c99;
+  background-color: #0000cc;
 }
 
 .success-message {

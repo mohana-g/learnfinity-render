@@ -54,7 +54,7 @@
 
 }
 .action-btn {
-  background-color: #007acc;
+  background-color: #0505fc;
   color: white;
   padding: 10px 20px;
   font-size: 1.1em;
@@ -64,7 +64,7 @@
   transition: background-color 0.3s ease;
 }
 .action-btn:hover {
-  background-color: #005c99;
+  background-color: #0000cc;
 }
 
 /* Sections (Manage Users, Manage Courses, Approve Trainers,manage Learners, view leaderboard) */

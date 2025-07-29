@@ -60,7 +60,7 @@
   .signin-btn {
     width: 100%;
     padding: 10px;
-    background-color: #007acc;
+    background-color: #0505fc;
     color: white;
     border: none;
     border-radius: 4px;
@@ -68,7 +68,7 @@
   }
   
   .signin-btn:hover {
-    background-color: #005c99;
+    background-color: #0000cc;
   }
   
   .error-message {
@@ -83,7 +83,7 @@
   }
   
   .additional-links a {
-    color: #007acc;
+    color: #0505fc;
     text-decoration: none;
   }
   
