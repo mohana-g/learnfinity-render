@@ -1,7 +1,7 @@
 /* Home.css */
 
 .home-container {
-  font-family: Arial, sans-serif;
+  font-family: 'Work Sans', sans-serif;
   user-select: none; /* Prevent selection */
 }
 
@@ -51,7 +51,7 @@ margin-bottom: 20px;
 }
 
 .hero-section .btn-primary {
-background-color: #007bff;
+background-color: #0505fc;
 color: #fff;
 padding: 10px 20px;
 border: none;
@@ -61,7 +61,7 @@ font-size: 1rem;
 }
 
 .hero-section .btn-primary:hover {
-background-color: #0056b3;
+background-color: #0000cc;
 }
 
 
@@ -144,7 +144,7 @@ background-color: #0056b3;
 }
 
 .courses-card .btn-primary {
-  background-color: #007bff;
+  background-color: #0505fc;
   padding: 10px 20px;
   color: white;
   text-decoration: none;
@@ -154,7 +154,7 @@ background-color: #0056b3;
 }
 
 .courses-card .btn-primary:hover {
-  background-color: #0056b3;
+  background-color: #0000cc;
 }
 
   /* Teach Section */
@@ -284,7 +284,7 @@ background-color: #0056b3;
     background: transparent;
     border: none;
     font-size: 24px;
-    color: #007acc;
+    color: #0505fc;
     cursor: pointer;
   }
 
@@ -297,7 +297,7 @@ background-color: #0056b3;
   }
 
   .nav-button:hover {
-    color: #005c99;
+    color: #0000cc;
   }
 
 
@@ -368,5 +368,5 @@ background-color: #0056b3;
 }
 
 .social-icon:hover {
-  color: #007bff;
+  color: #0505fc;
 }
