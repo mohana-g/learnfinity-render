@@ -8,7 +8,7 @@
 /* Hero Section */
 .hero-section {
 position: relative;
-background-image: url("https://www.freepik.com/redirect?url=aHR0cHM6Ly9pc3RvY2twaG90by42cTMzLm5ldC9jLzM5NDIyLzkxNzk0OS80MjA1P3NoYXJlZElkPWlkcCZzdWJJZDE9R0ExLjEuMTMwNTMwMzgzNS4xNzQyMjAzMTUzJnN1YklkMj1waG90byZzdWJJZDM9d3d3LmZyZWVwaWsuY29tJnU9aHR0cHMlM0ElMkYlMkZ3d3cuaXN0b2NrcGhvdG8uY29tJTJGcGhvdG8lMkZsbXMtbGVhcm5pbmctbWFuYWdlbWVudC1zeXN0ZW0tZm9yLWxlc3Nvbi1hbmQtb25saW5lLWVkdWNhdGlvbi1jb3Vyc2UtYXBwbGljYXRpb24tZ20xNDUxMzE2MDE2LTQ4ODAyMzYyOA==");
+background-image: url("https://www.vecteezy.com/photo/6844856-learn-and-lead-businessman-presses-hand-on-the-virtual-screen-inscription");
 background-size: cover;
 background-position: center;
 background-repeat: no-repeat;
@@ -156,23 +156,6 @@ background-color: #0000cc;
 .courses-card .btn-primary:hover {
   background-color: #0000cc;
 }
-
-.btn-primary {
-  background-color: #0505fc;
-  color: #fff;
-  padding: 0.6rem 1.2rem;
-  border-radius: 5px;
-  text-align: center;
-  display: inline-block;
-  font-weight: 600;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.btn-primary:hover {
-  background-color: #0000cc;
-  transform: scale(1.05);
-}
-
 
   /* Teach Section */
   .teach-section {
@@ -385,5 +368,5 @@ background-color: #0000cc;
 }
 
 .social-icon:hover {
-  color: #0505fc !important;
+  color: #0505fc;
 }
