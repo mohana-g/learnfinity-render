@@ -44,7 +44,7 @@
 }
 
 .nav-links button {
-  background-color: #007bff;
+  background-color: #0505fc;
   color: #fff;
   padding: 0.4rem 0.8rem;
   border: none;
@@ -55,12 +55,12 @@
 }
 
 .nav-links button:hover {
-  background-color: #007acc;
+  background-color: #0000cc;
   transform: scale(1.05);
 }
 
 .nav-links button:active {
-  background-color: #005c99;
+  background-color: #0505fc;
   transform: scale(0.95);
 }
 
@@ -71,7 +71,7 @@
 }
 
 .nav-links a:hover {
-  color: #007bff;
+  color: #0000cc;
 }
 
 
