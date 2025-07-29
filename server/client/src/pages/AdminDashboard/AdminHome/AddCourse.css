@@ -55,7 +55,7 @@ body {
     padding: 10px 15px;
     font-size: 16px;
     color: #fff;
-    background-color: #007acc;
+    background-color: #0505fc;
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -63,7 +63,7 @@ body {
   }
   
   .a-btn-submit:hover {
-    background-color: #005c99;
+    background-color: #0000cc;
   }
 
   .a-btn-back {
