@@ -67,76 +67,91 @@
 
 /* Teaching Courses Section */
 .trainer-teaching-courses-section {
-    padding: 50px 20px;
-    text-align: center;
-}
-  
-.trainer-teaching-courses-section h2 {
-font-size: 2rem;
-margin-bottom: 30px;
-text-decoration: underline;
-}
-  
-.trainer-courses-container-cards {
-display: flex;
-justify-content: space-around;
-gap: 20px;
-flex-wrap: wrap;
-}
-  
-.trainer-courses-card {
-background: white;
-border: 1px solid #ddd;
-border-radius: 5px;
-padding: 0;
-width: 300px;
-text-align: center;
-transition: transform 0.3s ease;
-box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-display: flex;
-flex-direction: column;
-margin-top: 5px;
-}
-  
-.trainer-courses-card:hover {
-transform: scale(1.05);
-box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1);
-}
-  
-.trainer-courses-image {
-width: 100%;
-height: 200px;
-object-fit: cover;
-margin-bottom: 10px;
-border-radius: 5px 5px 0 0;
-}
-  
-.trainer-courses-card h3 {
-font-size: 1.2em;
-margin: 10px 0;
+  padding: 50px 20px;
+  text-align: center;
 }
 
+.trainer-teaching-courses-section h2 {
+  font-size: 2rem;
+  margin-bottom: 30px;
+  text-decoration: underline;
+}
+
+.trainer-courses-container-cards {
+  display: flex;
+  justify-content: space-around;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+/* Link wrapper */
+.trainer-courses-card-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Card styling */
+.trainer-courses-card {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 0;
+  width: 300px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  margin-top: 5px;
+  cursor: pointer;
+}
+
+.trainer-courses-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Image */
+.trainer-courses-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  margin-bottom: 10px;
+  border-radius: 5px 5px 0 0;
+}
+
+/* Title */
+.trainer-courses-card h3 {
+  font-size: 1.2em;
+  margin: 10px 0;
+}
+
+/* Text */
 .trainer-courses-card p {
-margin-bottom: 0%;
-}  
-  
+  margin-bottom: 0%;
+}
+
+/* Button */
 .trainer-courses-card .btn-primary {
-background-color: #0505fc;
-padding: 10px 20px;
-color: white;
-text-decoration: none;
-border-radius: 5px;
-font-size: 1em;
-margin: 10px auto 20px;
+  background-color: #0505fc;
+  padding: 10px 20px;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 1em;
+  margin: 10px auto 20px;
+  width: fit-content;
 }
-  
+
 .trainer-courses-card .btn-primary:hover {
-background-color: #0000cc;
+  background-color: #0000cc;
 }
+
 .trainer-no-courses-text {
-font-size: 1.5rem;
-font-weight: bold;
-}  
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
   
 /* Testimonials Section */
 .trainer-testimonials-container {

@@ -125,32 +125,44 @@ function TrainerHome() {
       </section>
 
       {/* Trainer Courses Section */}
-      <section className="trainer-teaching-courses-section">
-        <h2>Your Teaching Courses</h2>
-        {loading ? (
-          <p>Loading courses...</p>
-        ) : teachingCourses.length > 0 ? (
-          <div className="trainer-courses-container-cards">
-            {teachingCourses.map((course) => (
-              <div className="trainer-courses-card" key={course._id}>
-                <img
-                  src={course.imageurl || "https://via.placeholder.com/150"}
-                  alt={course.title}
-                  className="trainer-courses-image"
-                />
-                <h3>{course.title}</h3>
-                <p><strong>Instructor:</strong> {course.trainer?.fullName || "Not Available"}</p>
-                <p><strong>Enrolled Learners:</strong> {course.learners?.length || 0}</p>
-                <Link to={`/trainer-dashboard/course-content/${course._id}`} className="btn-primary">
-                  Open Course
-                </Link>
-              </div>
-            ))}
+
+<section className="trainer-teaching-courses-section">
+  <h2>Your Teaching Courses</h2>
+  {loading ? (
+    <p>Loading courses...</p>
+  ) : teachingCourses.length > 0 ? (
+    <div className="trainer-courses-container-cards">
+      {teachingCourses.map((course) => (
+        <Link
+          to={`/trainer-dashboard/course-content/${course._id}`}
+          key={course._id}
+          className="trainer-courses-card-link"
+        >
+          <div className="trainer-courses-card">
+            <img
+              src={course.imageurl || "https://via.placeholder.com/150"}
+              alt={course.title}
+              className="trainer-courses-image"
+            />
+            <h3>{course.title}</h3>
+            <p>
+              <strong>Instructor:</strong>{" "}
+              {course.trainer?.fullName || "Not Available"}
+            </p>
+            <p>
+              <strong>Enrolled Learners:</strong>{" "}
+              {course.learners?.length || 0}
+            </p>
+            <div className="btn-primary">Open Course</div>
           </div>
-        ) : (
-          <p className="trainer-no-courses-text">No assigned courses found.</p>
-        )}
-      </section>
+        </Link>
+      ))}
+    </div>
+  ) : (
+    <p className="trainer-no-courses-text">No assigned courses found.</p>
+  )}
+</section>
+
 
     {/* Leaderboard Section */}
     <section className="leaderboard-section">
