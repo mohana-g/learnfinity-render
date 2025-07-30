@@ -195,6 +195,24 @@ const submitReview = async (req, res) => {
   }
 };
 
+// Fetch testimonials
+const getTestimonials = async (req, res) => {
+  try {
+    const reviews = await Review.find().sort({ createdAt: -1 }).limit(10); // latest 10 reviews
+
+    const formatted = reviews.map((review) => ({
+      name: review.learnerName,
+      quote: review.comment,
+      image: `https://api.dicebear.com/7.x/thumbs/svg?seed=${review.learnerName}`, // Dynamic avatar
+    }));
+
+    res.status(200).json(formatted);
+  } catch (error) {
+    console.error('Error fetching testimonials:', error);
+    res.status(500).json({ message: 'Failed to fetch testimonials' });
+  }
+};
+
 const downloadCertificate = async (req, res) => {
   const { courseId } = req.params;
   const userId = req.user.id; // Assuming you have user authentication
@@ -307,4 +325,4 @@ const downloadCertificate = async (req, res) => {
   }
 };
 
-module.exports = { getEnrolledCourses,markLessonComplete,getQuiz,submitQuizAttempt,submitReview,downloadCertificate };
+module.exports = { getEnrolledCourses,markLessonComplete,getQuiz,submitQuizAttempt,submitReview,downloadCertificate, getTestimonials };
