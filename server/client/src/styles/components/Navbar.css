@@ -86,11 +86,12 @@
     display: none;
     position: absolute;
     top: 100%;
-    left: 0;
-    right: 0;
+    right: 0; /* Align to right */
     background-color: #333;
-    width: 50%;
+    width: 220px; /* Smaller width */
     z-index: 999;
+    border-radius: 4px 0 0 4px;
+    box-shadow: -2px 2px 8px rgba(0, 0, 0, 0.2);
   }
 
   nav.nav-open {
@@ -99,18 +100,29 @@
 
   .nav-links {
     flex-direction: column;
-    align-items: flex-end;
-    gap: 1rem;
+    align-items: flex-end; /* Right align content */
+    gap: 0.8rem;
     padding: 1rem;
   }
 
   .nav-links li {
     width: 100%;
+    text-align: right;
   }
 
   .nav-links a,
   .nav-links button {
-    width: 100%;
-    text-align: left;
+    width: auto;
+    text-align: right;
+    font-size: 0.95rem;
+    padding: 0.3rem 0.6rem;
+  }
+
+  .nav-links button {
+    background-color: blue;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
+    width: auto;
+    display: inline-block;
   }
 }
