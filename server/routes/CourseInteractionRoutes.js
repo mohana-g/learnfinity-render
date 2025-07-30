@@ -20,7 +20,7 @@ router.post('/submit-quiz', authMiddleware, submitQuizAttempt);
 router.post('/submit-review', authMiddleware, submitReview);
 
 //Route to get testimonials
-router.get('/testimonials', authMiddleware ,getTestimonials);
+router.get('/testimonials', getTestimonials);
 
 //Route to download certificate
 router.get('/download-certificate/:courseId', authMiddleware, downloadCertificate);
