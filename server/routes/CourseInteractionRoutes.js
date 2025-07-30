@@ -2,7 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const authMiddleware = require('../middleware/authMiddleware');
-const { getEnrolledCourses, markLessonComplete, getQuiz, submitQuizAttempt, submitReview, downloadCertificate, getTestimonials } = require('../controllers/CourseInteractionController');
+const { getEnrolledCourses, markLessonComplete, getQuiz, submitQuizAttempt, submitReview, downloadCertificate } = require('../controllers/CourseInteractionController');
 
 //get course
 router.get('/:courseId', authMiddleware, getEnrolledCourses);
@@ -18,9 +18,6 @@ router.post('/submit-quiz', authMiddleware, submitQuizAttempt);
 
 //Route to submit a review
 router.post('/submit-review', authMiddleware, submitReview);
-
-//Route to get testimonials
-router.get('/testimonials', getTestimonials);
 
 //Route to download certificate
 router.get('/download-certificate/:courseId', authMiddleware, downloadCertificate);

@@ -1,68 +1,45 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FaInstagram, FaFacebookF, FaTwitter, FaArrowLeft, FaArrowRight } from 'react-icons/fa';
-// import User1 from '../../assets/User1.jpg';
-// import User2 from '../../assets/User2.jpg';
-// import User3 from '../../assets/User3.avif';
-// import User4 from '../../assets/User4.avif';
-// import User5 from '../../assets/User5.avif';
+import User1 from '../../assets/User1.jpg';
+import User2 from '../../assets/User2.jpg';
+import User3 from '../../assets/User3.avif';
+import User4 from '../../assets/User4.avif';
+import User5 from '../../assets/User5.avif';
 import './Home.css';
 
 function Home() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [testimonials, setTestimonials] = useState([]);
-  const [loadingTestimonials, setLoadingTestimonials] = useState(true);
-  
-  const fetchTestimonials = async () => {
-  try {
-    const response = await fetch('https://hilms.onrender.com/api/course-interaction/testimonials');
 
-    if (!response.ok) throw new Error('Failed to fetch testimonials');
-    
-    const data = await response.json();
-    setTestimonials(data);
-  } catch (error) {
-    console.error('Error fetching testimonials:', error);
-  } finally {
-    setLoadingTestimonials(false);
-  }
-};
-
-useEffect(() => {
-  fetchPopularCourses();
-  fetchTestimonials();
-}, []);
-
-
-  // const testimonials = [
-  //   {
-  //     name: 'Preetham',
-  //     quote: "I've learned so much from this platform. The courses are top-notch, and the instructors are experts in their fields.",
-  //     image: User5,
-  //   },
-  //   {
-  //     name: 'Chaitanya',
-  //     quote: 'The interactive lessons and quizzes have made my learning experience enjoyable and effective. I highly recommend it!',
-  //     image: User4,
-  //   },
-  //   {
-  //     name: 'Abhishikth',
-  //     quote: "This e-learning platform has been a game-changer for me. It's convenient, flexible, and has helped me advance in my career.",
-  //     image: User3,
-  //   },
-  //   {
-  //     name: 'Narasimha',
-  //     quote: "I can't believe how much I've grown as a learner. The variety of courses is impressive, and the support is outstanding.",
-  //     image: User1,
-  //   },
-  //   {
-  //     name: 'Manjith',
-  //     quote: "The quality of education here is unmatched. I'm grateful for the opportunity to expand my knowledge and skills.",
-  //     image: User2,
-  //   },
-  // ];
+  const testimonials = [
+    {
+      name: 'Preetham',
+      quote: "I've learned so much from this platform. The courses are top-notch, and the instructors are experts in their fields.",
+      image: User5,
+    },
+    {
+      name: 'Chaitanya',
+      quote: 'The interactive lessons and quizzes have made my learning experience enjoyable and effective. I highly recommend it!',
+      image: User4,
+    },
+    {
+      name: 'Abhishikth',
+      quote: "This e-learning platform has been a game-changer for me. It's convenient, flexible, and has helped me advance in my career.",
+      image: User3,
+    },
+    {
+      name: 'Narasimha',
+      quote: "I can't believe how much I've grown as a learner. The variety of courses is impressive, and the support is outstanding.",
+      image: User1,
+    },
+    {
+      name: 'Manjith',
+      quote: "The quality of education here is unmatched. I'm grateful for the opportunity to expand my knowledge and skills.",
+      image: User2,
+    },
+  ];
 
   const handlePrevClick = () => {
     setCurrentIndex((prevIndex) => (prevIndex === 0 ? testimonials.length - 1 : prevIndex - 1));
@@ -158,35 +135,6 @@ useEffect(() => {
 
       {/* Testimonials Section */}
       <section className="testimonials-container">
-  <h2>Learner Testimonials</h2>
-  {loadingTestimonials ? (
-    <p>Loading testimonials...</p>
-  ) : testimonials.length > 0 ? (
-    <div className="testimonial-slider">
-      <button className="nav-button left" onClick={handlePrevClick}>
-        <FaArrowLeft />
-      </button>
-      <div className="testimonial">
-        <div className="image-container">
-          <img
-            className="testimonial-image"
-            src={testimonials[currentIndex]?.image}
-            alt={testimonials[currentIndex]?.name}
-          />
-        </div>
-        <p className="quote">{testimonials[currentIndex]?.quote}</p>
-        <p className="name">{testimonials[currentIndex]?.name}</p>
-      </div>
-      <button className="nav-button right" onClick={handleNextClick}>
-        <FaArrowRight />
-      </button>
-    </div>
-  ) : (
-    <p>No testimonials found.</p>
-  )}
-</section>
-
-      {/* <section className="testimonials-container">
         <h2>Learner Testimonials</h2>
         <div className="testimonial-slider">
           <button className="nav-button left" onClick={handlePrevClick}>
@@ -203,7 +151,7 @@ useEffect(() => {
             <FaArrowRight />
           </button>
         </div>
-      </section> */}
+      </section>
 
       {/* Expert Instructors Section */}
       <section className="expert-instructors-section">
