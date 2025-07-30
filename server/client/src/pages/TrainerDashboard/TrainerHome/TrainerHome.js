@@ -124,7 +124,7 @@ function TrainerHome() {
         </div>
       </section>
 
-{/* Trainer Courses Section */}
+      {/* Trainer Courses Section */}
 <section className="trainer-teaching-courses-section">
   <h2>Your Teaching Courses</h2>
   {loading ? (
@@ -134,8 +134,8 @@ function TrainerHome() {
       {teachingCourses.map((course) => (
         <Link
           to={`/trainer-dashboard/course-content/${course._id}`}
-          className="courses-card-link"
           key={course._id}
+          className="trainer-courses-card-link"
         >
           <div className="trainer-courses-card">
             <img
