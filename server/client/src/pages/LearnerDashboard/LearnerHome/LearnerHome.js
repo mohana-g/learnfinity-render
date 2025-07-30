@@ -125,7 +125,39 @@ function LearnerHome() {
       </section>
 
       {/* Enrolled Courses Section */}
+
       <section className="enrolled-courses-section">
+  <h2>Your Enrolled Courses</h2>
+  {loading ? (
+    <p>Loading courses...</p>
+  ) : enrolledCourses.length > 0 ? (
+    <div className="courses-container-cards">
+      {enrolledCourses.map((course) => (
+        <Link
+          to={`/course-interaction/${course._id}`}
+          className="courses-card-link"
+          key={course._id}
+        >
+          <div className="courses-card">
+            <img src={course.imageurl} alt={course.title} className="courses-image" />
+            <h3>{course.title}</h3>
+            <p>
+              <strong>Instructor:</strong> {course.trainer.fullName}
+            </p>
+            <p>
+              <strong>Enrolled learners:</strong> {course.learners.length}
+            </p>
+            <div className="btn-primary">Go to Course</div>
+          </div>
+        </Link>
+      ))}
+    </div>
+  ) : (
+    <p className="no-courses-text">You have not enrolled in any courses yet.</p>
+  )}
+</section>
+
+      {/* <section className="enrolled-courses-section">
       <h2>Your Enrolled Courses</h2>
       {loading ? (
         <p>Loading courses...</p>
@@ -151,7 +183,7 @@ function LearnerHome() {
         <p className="no-courses-text">You have not enrolled in any courses yet.</p>
       )}
     </section>
-    
+     */}
       {/* Leaderboard Section */}
       <section className="leaderboard-section">
         <h2>🏆 Learner Leaderboard</h2>
