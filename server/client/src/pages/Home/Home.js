@@ -17,7 +17,14 @@ function Home() {
 
 const fetchTestimonials = async () => {
   try {
-    const response = await fetch('https://hilms.onrender.com/api/course-interaction/testimonials');
+    const token = localStorage.getItem('token'); // Or wherever your token is stored
+
+    const response = await fetch('https://hilms.onrender.com/api/course-interaction/testimonials', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
     if (!response.ok) throw new Error('Failed to fetch testimonials');
     const data = await response.json();
     setTestimonials(data);
