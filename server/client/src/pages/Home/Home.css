@@ -8,7 +8,8 @@
 /* Hero Section */
 .hero-section {
 position: relative;
-background-image: url("https://www.shutterstock.com/image-photo/education-internet-online-digital-technology-260nw-2342293899.jpg");
+/* background-image: url("https://www.shutterstock.com/image-photo/education-internet-online-digital-technology-260nw-2342293899.jpg"); */
+background-image: url(https://www.zealousys.com/wp-content/uploads/2021/06/Customized-Learning-Management-System-LMS-for-Different-Industries.webp);
 background-size: cover;
 background-position: center;
 background-repeat: no-repeat;
