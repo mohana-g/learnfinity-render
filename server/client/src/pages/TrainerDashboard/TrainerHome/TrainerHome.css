@@ -82,6 +82,8 @@
   justify-content: space-around;
   gap: 20px;
   flex-wrap: wrap;
+  align-items: stretch; /* Stretch all cards to equal height */
+
 }
 
 /* Card Styles */
