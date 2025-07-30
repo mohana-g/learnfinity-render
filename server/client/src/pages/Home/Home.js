@@ -14,18 +14,13 @@ function Home() {
   const [loading, setLoading] = useState(true);
   const [testimonials, setTestimonials] = useState([]);
   const [loadingTestimonials, setLoadingTestimonials] = useState(true);
-
-const fetchTestimonials = async () => {
+  
+  const fetchTestimonials = async () => {
   try {
-    const token = localStorage.getItem('token'); // Or wherever your token is stored
-
-    const response = await fetch('https://hilms.onrender.com/api/course-interaction/testimonials', {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await fetch('https://hilms.onrender.com/api/course-interaction/testimonials');
 
     if (!response.ok) throw new Error('Failed to fetch testimonials');
+    
     const data = await response.json();
     setTestimonials(data);
   } catch (error) {
@@ -37,8 +32,9 @@ const fetchTestimonials = async () => {
 
 useEffect(() => {
   fetchPopularCourses();
-  fetchTestimonials(); // 👈 fetch testimonials dynamically
+  fetchTestimonials();
 }, []);
+
 
   // const testimonials = [
   //   {
