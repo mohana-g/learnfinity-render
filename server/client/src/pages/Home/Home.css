@@ -11,7 +11,6 @@ position: relative;
 background-image: url("https://www.shutterstock.com/image-photo/education-internet-online-digital-technology-260nw-2342293899.jpg");
 background-size: cover;
 background-position: top middle; /* Adjusted for better visibility */
-height: 100vh; /* Full viewport height */
 background-repeat: no-repeat;
 padding: 100px 20px;
 color: black;
