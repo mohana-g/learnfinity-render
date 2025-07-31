@@ -84,15 +84,15 @@ const CoursesPage = () => {
         <button onClick={handleSortButtonClick}>Sort</button>
       </div>
 
-      <section className="learner-courses-page-section">
-        <div className="learner-courses-page-container-cards">
+      <section className="courses-page-section">
+        <div className="courses-page-container-cards">
           {courses.length > 0 ? (
             courses.map((course) => (
-              <div className="learner-courses-page-card" key={course._id}>
+              <div className="courses-page-card" key={course._id}>
                 <img
                   src={course.imageurl}
                   alt={course.title}
-                  className="learner-courses-page-image"
+                  className="courses-page-image"
                 />
                 <h3>{course.title}</h3>
                 <p>
