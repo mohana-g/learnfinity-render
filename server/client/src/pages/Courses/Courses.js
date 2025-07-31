@@ -60,26 +60,25 @@ const CoursesPage = () => {
         <div className="courses-page-container-cards">
           {courses.length > 0 ? (
             courses.map((course) => (
-              // 
-              <Link to={`/course-details/${course._id}`} className="courses-page-card-link" key={course._id}>
-  <div className="courses-page-card">
-    <img
-      src={course.imageurl}
-      alt={course.title}
-      className="courses-page-image"
-    />
-    <h3>{course.title}</h3>
-    <p>
-      <strong>Instructor:</strong>{" "}
-      {course.trainer?.fullName || "Unknown"}
-    </p>
-    <p>
-      <strong>Enrolled Learners:</strong>{" "}
-      {course.learners?.length || 0}
-    </p>
-  </div>
-</Link>
-
+              <div className="courses-page-card" key={course._id}>
+                <img
+                  src={course.imageurl}
+                  alt={course.title}
+                  className="courses-page-image"
+                />
+                <h3>{course.title}</h3>
+                <p>
+                  <strong>Instructor:</strong>{" "}
+                  {course.trainer?.fullName || "Unknown"}
+                </p>
+                <p>
+                  <strong>Enrolled Learners:</strong>{" "}
+                  {course.learners?.length || 0}
+                </p>
+                <Link to={`/course-details/${course._id}`} className="btn-primary">
+                  Read More
+                </Link>
+              </div>
             ))
           ) : (
             <p>No courses available</p>
