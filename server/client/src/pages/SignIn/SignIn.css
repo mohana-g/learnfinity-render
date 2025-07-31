@@ -54,12 +54,7 @@
     padding: 10px;
     margin-bottom: 15px;
     border: 1px solid #ddd;
-    background-color: #0505fc;
     border-radius: 4px;
-  }
-
-  .signin-form option {
-    background-color: #0505fc;
   }
   
   .signin-btn {
