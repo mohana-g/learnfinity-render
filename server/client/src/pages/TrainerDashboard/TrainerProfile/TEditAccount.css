@@ -1,4 +1,9 @@
 /* Container for the edit account page */
+
+*{
+    font-family: 'Work Sans', sans-serif;
+}
+
 .Tedit-account-container {
     padding: 20px;
     max-width: 500px;

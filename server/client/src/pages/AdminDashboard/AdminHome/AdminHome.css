@@ -1,3 +1,7 @@
+* {
+    font-family: 'Work Sans', sans-serif;
+}
+
 .admin-dashboard {
   font-family: 'Work Sans', sans-serif;
   user-select: none; /* Prevent selection */
@@ -55,6 +59,7 @@
 }
 .action-btn {
   background-color: #0505fc;
+  font-family: 'Work Sans', sans-serif;
   color: white;
   padding: 10px 20px;
   font-size: 1.1em;
