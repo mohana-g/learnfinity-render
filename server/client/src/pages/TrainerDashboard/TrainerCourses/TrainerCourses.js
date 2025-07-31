@@ -54,7 +54,42 @@ const CoursesPage = () => {
         <button onClick={handleSortButtonClick}>Sort</button>
       </div>
 
-      <section className="courses-page-section">
+      {/* Display courses if available, or show 'No courses available' message */}
+            <section className="courses-page-section">
+            <div className="courses-page-container-cards">
+              {courses.length > 0 ? (
+                courses.map((course) => (
+                  <Link
+                    to={`/course-details/${course._id}`}
+                    key={course._id}
+                    className="trainer-courses-card-link"
+                  >
+                    <div className="courses-page-card">
+                      <img
+                        src={course.imageurl}
+                        alt={course.title}
+                        className="courses-page-image"
+                      />
+                      <h3>{course.title}</h3>
+                      <p>
+                        <strong>Instructor:</strong>{" "}
+                        {course.trainer?.fullName || "Unknown"}
+                      </p>
+                      <p>
+                        <strong>Enrolled Learners:</strong>{" "}
+                        {course.learners?.length || 0}
+                      </p>
+                      <span className="btn-primary">Read More</span>
+                    </div>
+                  </Link>
+                ))
+                ) : (
+                  <p>No courses available</p>
+                )}
+              </div>
+            </section>
+
+      {/* <section className="courses-page-section">
         <div className="courses-page-container-cards">
           {courses.length > 0 ? (
             courses.map((course) => (
@@ -82,7 +117,7 @@ const CoursesPage = () => {
             <p>No courses available</p>
           )}
         </div>
-      </section>
+      </section> */}
     </div>
   );
 };

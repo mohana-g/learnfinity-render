@@ -67,7 +67,7 @@ body {
     outline: none;
   }
   
-  
+  /* Courses Cards Section */
   .courses-page-container-cards {
     display: flex;
     justify-content: space-around;
