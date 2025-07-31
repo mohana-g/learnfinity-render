@@ -84,52 +84,15 @@ const CoursesPage = () => {
         <button onClick={handleSortButtonClick}>Sort</button>
       </div>
 
-      <section className="courses-page-section">
-  <div className="courses-page-container-cards">
-    {courses.length > 0 ? (
-      courses.map((course) => (
-        <Link
-          to={`/course-details/${course._id}`}
-          key={course._id}
-          className="learner-courses-card-link"
-        >
-          <div className="courses-page-card">
-            <img
-              src={course.imageurl}
-              alt={course.title}
-              className="courses-page-image"
-            />
-            <h3>{course.title}</h3>
-            <p>
-              <strong>Instructor:</strong> {course.trainer?.fullName || "Unknown"}
-            </p>
-            <p>
-              <strong>Enrolled Learners:</strong> {course.learners?.length || 0}
-            </p>
-            {enrolledCourses.has(course._id) && (
-              <p className="enrolled-label">✔ Enrolled</p>
-            )}
-            <span className={enrolledCourses.has(course._id) ? "btn-continue" : "btn-read-more"}>
-              {enrolledCourses.has(course._id) ? "Continue Course" : "Read More"}
-            </span>
-          </div>
-        </Link>
-      ))
-    ) : (
-      <p>No courses available</p>
-    )}
-  </div>
-</section>
-{/* 
-      <section className="courses-page-section">
-        <div className="courses-page-container-cards">
+      <section className="learner-courses-page-section">
+        <div className="learner-courses-page-container-cards">
           {courses.length > 0 ? (
             courses.map((course) => (
-              <div className="courses-page-card" key={course._id}>
+              <div className="learner-courses-page-card" key={course._id}>
                 <img
                   src={course.imageurl}
                   alt={course.title}
-                  className="courses-page-image"
+                  className="learner-courses-page-image"
                 />
                 <h3>{course.title}</h3>
                 <p>
@@ -151,7 +114,7 @@ const CoursesPage = () => {
             <p>No courses available</p>
           )}
         </div>
-      </section> */}
+      </section>
     </div>
   );
 };
