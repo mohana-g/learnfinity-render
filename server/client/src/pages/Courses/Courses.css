@@ -73,7 +73,6 @@ body {
     justify-content: space-around;
     gap: 20px;
     flex-wrap: wrap;
-    align-items: stretch;
   }
   
   .courses-page-card {
@@ -85,9 +84,6 @@ body {
     text-align: center;
     transition: transform 0.3s ease;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-    justify-content: space-between;
-    min-height: 350px; /* Ensures consistent height */
-    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     margin-top: 5px;
