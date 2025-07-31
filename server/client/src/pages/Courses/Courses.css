@@ -87,6 +87,7 @@ body {
     display: flex;
     flex-direction: column;
     margin-top: 5px;
+    min-height: 350px;
   }
   
   .courses-page-card:hover {
