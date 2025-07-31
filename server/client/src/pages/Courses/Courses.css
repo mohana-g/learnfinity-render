@@ -40,6 +40,7 @@ body {
   .courses-page-sort-by select {
     padding: 10px 20px;
     background-color: #f9f9f9;
+    font-family: 'Work Sans', sans-serif;
     border: 1px solid #ddd;
     border-radius: 5px;
     font-size: 1rem;
@@ -48,6 +49,7 @@ body {
   
   .courses-page-sort-by button {
     background-color: #0505fc;
+    font-family: 'Work Sans', sans-serif;
     color: white;
     padding: 10px 20px;
     font-size: 1rem;
@@ -85,6 +87,8 @@ body {
     display: flex;
     flex-direction: column;
     margin-top: 5px;
+    cursor: pointer;
+
   }
   
   .courses-page-card:hover {
@@ -130,3 +134,9 @@ body {
     background-color: #0000cc;
   }
   
+  .courses-page-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  width: 100%;
+}
