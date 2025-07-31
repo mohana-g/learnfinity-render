@@ -57,7 +57,7 @@
     border-radius: 4px;
   }
 
-  .signin-form select {
+  .signin-form option {
     color: #0505fc;
   }
   
