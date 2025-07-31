@@ -62,7 +62,7 @@
   font-family: 'Work Sans', sans-serif;
   color: white;
   padding: 10px 20px;
-  font-size: 0.9em;
+  font-size: 1.1em;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -334,6 +334,7 @@ h2 {
 
 .admin-learner-card p {
   margin: 6px 0;
+  font-size: 15px;
 }
 
 .toggle-details-button {
