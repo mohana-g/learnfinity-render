@@ -63,7 +63,9 @@
 
 .trainer-header-button:hover {
     background-color: #0000cc;
-}/* Teaching Courses Section */
+}
+
+/* Teaching Courses Section */
 .trainer-teaching-courses-section {
   padding: 50px 20px;
   text-align: center;

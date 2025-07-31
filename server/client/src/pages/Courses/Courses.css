@@ -73,6 +73,15 @@ body {
     justify-content: space-around;
     gap: 20px;
     flex-wrap: wrap;
+    align-items: stretch; /* Ensures equal height */
+
+  }
+
+  .general-courses-card-link {
+  text-decoration: none;
+  color: inherit;
+  width: 300px;
+  display: flex;
   }
   
   .courses-page-card {
@@ -80,28 +89,32 @@ body {
     border: 1px solid #ddd;
     border-radius: 5px;
     padding: 0;
-    width: 300px;
+    width: 100%;
     text-align: center;
     transition: transform 0.3s ease;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+    min-height: 350px;
+    box-sizing: border-box;
     margin-top: 5px;
+    cursor: pointer;
   }
-  
+    
   .courses-page-card:hover {
     transform: scale(1.05);
     box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1);
   }
   
-  .courses-page-card img.courses-page-image {
+  .courses-page-image {
     width: 100%;
     height: 200px;
     object-fit: cover;
     margin-bottom: 10px;
     border-radius: 5px 5px 0 0;
   }
-  
+
   .courses-page-card h3 {
     font-size: 1.2em;
     margin: 10px 0;
