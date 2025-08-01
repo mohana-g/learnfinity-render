@@ -13,7 +13,7 @@ const CoursesPage = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await fetch("https://hilms.onrender.com/api/courses");
+        const response = await fetch("http://localhost:5000/api/courses");
         if (!response.ok) {
           throw new Error("Failed to fetch courses");
         }
@@ -31,7 +31,7 @@ const CoursesPage = () => {
   useEffect(() => {
     const fetchEnrolledCourses = async () => {
       try {
-        const response = await fetch("https://hilms.onrender.com/api/learner/enrolled-courses", {
+        const response = await fetch("http://localhost:5000/api/learner/enrolled-courses", {
           method: "GET",
           headers: {
             Authorization: `Bearer ${learnerToken}`, // Pass token for authentication
@@ -84,15 +84,15 @@ const CoursesPage = () => {
         <button onClick={handleSortButtonClick}>Sort</button>
       </div>
 
-      <section className="lcourses-page-section">
-        <div className="lcourses-page-container-cards">
+      <section className="courses-page-section">
+        <div className="courses-page-container-cards">
           {courses.length > 0 ? (
             courses.map((course) => (
-              <div className="lcourses-page-card" key={course._id}>
+              <div className="courses-page-card" key={course._id}>
                 <img
                   src={course.imageurl}
                   alt={course.title}
-                  className="lcourses-page-image"
+                  className="courses-page-image"
                 />
                 <h3>{course.title}</h3>
                 <p>
