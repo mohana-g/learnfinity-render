@@ -64,12 +64,8 @@ body {
     .courses-page-sort-by button:focus {
       outline: none;
     }
-    
-    .learner-courses-section {
-  padding: 50px 20px;
-  text-align: center;
-}
 
+/* Learner Courses Section */
 .learner-courses-container-cards {
   display: flex;
   justify-content: space-around;
@@ -125,7 +121,7 @@ body {
   color: #333;
 }
 
-.learner-btn-read-more {
+.learner-courses-card .learner-btn-read-more {
   background-color: #0505fc;
   padding: 10px 20px;
   color: white;
@@ -136,11 +132,11 @@ body {
   display: inline-block;
 }
 
-.learner-btn-read-more:hover {
+.learner-courses-card .learner-btn-read-more:hover {
   background-color: #0000cc;
 }
 
-.learner-btn-continue {
+.learner-courses-card .learner-btn-continue {
   background-color: #0dbc21;
   padding: 10px 20px;
   color: white;
@@ -151,12 +147,6 @@ body {
   display: inline-block;
 }
 
-.learner-btn-continue:hover {
+.learner-courses-card .learner-btn-continue:hover {
   background-color: #0a7b16;
-}
-
-.learner-enrolled-label {
-  color: #0dbc21;
-  font-weight: bold;
-  margin-bottom: 10px;
 }
