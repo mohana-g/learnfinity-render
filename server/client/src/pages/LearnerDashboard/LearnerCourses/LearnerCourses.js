@@ -101,12 +101,12 @@ const CoursesPage = () => {
                 <p>
                   <strong>Enrolled Learners:</strong> {course.learners?.length || 0}
                 </p>
-                {enrolledCourses.has(course._id) && <p className="lenrolled-label">✔ Enrolled</p>}
+                {enrolledCourses.has(course._id) && <p className="enrolled-label">✔ Enrolled</p>}
                 <Link
                   to={`/course-details/${course._id}`}
-                  className={enrolledCourses.has(course._id) ? "lbtn-continue" : "lbtn-read-more"}
+                  className={enrolledCourses.has(course._id) ? "btn-continue" : "btn-read-more"}
                 >
-                  {enrolledCourses.has(course._id) ? "lContinue Course" : "lRead More"}
+                  {enrolledCourses.has(course._id) ? "Continue Course" : "Read More"}
                 </Link>
               </div>
             ))

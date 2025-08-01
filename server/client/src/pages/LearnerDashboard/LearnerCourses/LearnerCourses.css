@@ -10,12 +10,12 @@ body {
     margin-top: 20px;
   }
   
-  .courses-page-section {
+  .lcourses-page-section {
       padding: 50px 20px;
       text-align: center;
     }
     
-    .courses-page-section h2 {
+    .lcourses-page-section h2 {
       text-align: center;
       font-size: 2rem;
       margin-bottom: 30px;
