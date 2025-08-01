@@ -82,21 +82,20 @@ const CoursesPage = () => {
           <option value="title-desc">Title: Z to A</option>
         </select>
         <button onClick={handleSortButtonClick}>Sort</button>
-      </div>
-<section className="courses-page-section">
-  <div className="courses-page-container-cards">
+      </div><section className="learner-courses-section">
+  <div className="learner-courses-container-cards">
     {courses.length > 0 ? (
       courses.map((course) => (
         <Link
           to={`/course-details/${course._id}`}
           key={course._id}
-          className="general-courses-card-link"
+          className="learner-courses-card-link"
         >
-          <div className="courses-page-card">
+          <div className="learner-courses-card">
             <img
               src={course.imageurl}
               alt={course.title}
-              className="courses-page-image"
+              className="learner-courses-image"
             />
             <h3>{course.title}</h3>
             <p>
@@ -106,9 +105,9 @@ const CoursesPage = () => {
               <strong>Enrolled Learners:</strong> {course.learners?.length || 0}
             </p>
             {enrolledCourses?.has(course._id) && (
-              <p className="enrolled-label">✔ Enrolled</p>
+              <p className="learner-enrolled-label">✔ Enrolled</p>
             )}
-            <span className={enrolledCourses?.has(course._id) ? "btn-continue" : "btn-read-more"}>
+            <span className={enrolledCourses?.has(course._id) ? "learner-btn-continue" : "learner-btn-read-more"}>
               {enrolledCourses?.has(course._id) ? "Continue Course" : "Read More"}
             </span>
           </div>
