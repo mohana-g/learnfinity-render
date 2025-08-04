@@ -8,6 +8,19 @@ import User4 from '../../assets/User4.avif';
 import User5 from '../../assets/User5.avif';
 import './Home.css';
 
+// Add this above your Home component
+const HomeCourseSkeleton = () => (
+  <div className="courses-card skeleton-card">
+    <div className="skeleton-image"></div>
+    <div className="courses-card-content">
+      <div className="skeleton-text short"></div>
+      <div className="skeleton-text long"></div>
+      <div className="skeleton-text long"></div>
+    </div>
+    <div className="skeleton-btn"></div>
+  </div>
+);
+
 function Home() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [courses, setCourses] = useState([]);
@@ -85,36 +98,40 @@ function Home() {
 <section className="courses-section">
   <h2>Popular Courses</h2>
   {loading ? (
-    <p>Loading courses...</p>
-  ) : (
-    <div className="courses-container-cards">
-      {courses.length > 0 ? (
-        courses.slice(0, 4).map((course) => (
-          <Link
-            to={`/course-details/${course._id}`}
-            key={course._id}
-            className="courses-card-link"
-          >
-            <div className="courses-card">
-              <img
-                src={course.imageurl}
-                alt={course.title}
-                className="courses-image"
-              />
-              <div className="courses-card-content">
-                <h3>{course.title}</h3>
-                <p><strong>Instructor:</strong> {course.trainer?.fullName}</p>
-                <p><strong>Enrolled Learners:</strong> {course.learnerCount}</p>
-              </div>
-              <div className="btn-primary">Read More</div>
+  <div className="courses-container-cards">
+    {Array.from({ length: 4 }).map((_, i) => (
+      <HomeCourseSkeleton key={i} />
+    ))}
+  </div>
+) : (
+  <div className="courses-container-cards">
+    {courses.length > 0 ? (
+      courses.slice(0, 4).map((course) => (
+        <Link
+          to={`/course-details/${course._id}`}
+          key={course._id}
+          className="courses-card-link"
+        >
+          <div className="courses-card">
+            <img
+              src={course.imageurl}
+              alt={course.title}
+              className="courses-image"
+            />
+            <div className="courses-card-content">
+              <h3>{course.title}</h3>
+              <p><strong>Instructor:</strong> {course.trainer?.fullName}</p>
+              <p><strong>Enrolled Learners:</strong> {course.learnerCount}</p>
             </div>
-          </Link>
-        ))
-      ) : (
-        <p>No popular courses available</p>
-      )}
-    </div>
-  )}
+            <div className="btn-primary">Read More</div>
+          </div>
+        </Link>
+      ))
+    ) : (
+      <p>No popular courses available</p>
+    )}
+  </div>
+)}
 </section>
 
 
