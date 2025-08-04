@@ -94,7 +94,6 @@
 // };
 
 // export default CoursesPage;
-
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./Courses.css";
@@ -153,6 +152,11 @@ const CoursesPage = () => {
     setCourses(sortedCourses);
   };
 
+  // Use the number of skeletons based on expected data length or fallback to 4
+  const skeletonCount = loading
+    ? (courses && courses.length > 0 ? courses.length : 4)
+    : 0;
+
   return (
     <div className="courses-page">
       <h2>Courses Page</h2>
@@ -172,7 +176,9 @@ const CoursesPage = () => {
       <section className="courses-page-section">
         <div className="courses-page-container-cards">
           {loading ? (
-            [...Array(4)].map((_, i) => <CourseCardSkeleton key={i} />)
+            Array.from({ length: skeletonCount }).map((_, i) => (
+              <CourseCardSkeleton key={i} />
+            ))
           ) : courses.length > 0 ? (
             courses.map((course) => (
               <Link
@@ -209,4 +215,3 @@ const CoursesPage = () => {
 };
 
 export default CoursesPage;
-
