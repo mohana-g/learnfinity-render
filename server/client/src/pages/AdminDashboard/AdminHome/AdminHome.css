@@ -657,7 +657,7 @@ h2 {
   background: #f0f0f0;
   border-radius: 8px;
   padding: 16px;
-  width: 320px;
+  width: 280px;
   min-height: 140px;
   display: flex;
   flex-direction: column;
@@ -690,4 +690,43 @@ h2 {
   background: #ccc;
   border-radius: 5px;
   margin: 8px 0;
+}
+
+/* Leaderboard Skeleton Styles */
+.leaderboard-skeleton {
+  margin: 20px 0;
+}
+.leaderboard-skeleton .leaderboard-top3,
+.leaderboard-skeleton .leaderboard-grid {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.leaderboard-skeleton-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #e0e0e0;
+  margin: 0 auto 10px auto;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+.leaderboard-skeleton-name {
+  width: 80px;
+  height: 16px;
+  background: #ccc;
+  border-radius: 4px;
+  margin: 0 auto 8px auto;
+}
+.leaderboard-skeleton-marks {
+  width: 60px;
+  height: 14px;
+  background: #ddd;
+  border-radius: 4px;
+  margin: 0 auto 8px auto;
+}
+@keyframes pulse {
+  0% { background-color: #f0f0f0; }
+  50% { background-color: #e0e0e0; }
+  100% { background-color: #f0f0f0; }
 }

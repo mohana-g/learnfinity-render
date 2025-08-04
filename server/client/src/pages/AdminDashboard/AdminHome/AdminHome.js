@@ -49,6 +49,30 @@ const LearnerProgressSkeleton = () => (
   </div>
 );
 
+const LeaderboardSkeleton = () => (
+  <div className="leaderboard-skeleton">
+    <div className="leaderboard-top3">
+      {Array.from({ length: 3 }).map((_, i) => (
+        <div className="leaderboard-item top-scorer" key={i}>
+          <div className="skeleton-avatar leaderboard-skeleton-avatar"></div>
+          <div className="skeleton-text leaderboard-skeleton-name"></div>
+          <div className="skeleton-text leaderboard-skeleton-marks"></div>
+        </div>
+      ))}
+    </div>
+    <div className="leaderboard-grid">
+      {Array.from({ length: 5 }).map((_, i) => (
+        <div className="leaderboard-grid-item" key={i}>
+          <div className="skeleton-avatar leaderboard-skeleton-avatar"></div>
+          <div className="skeleton-text leaderboard-skeleton-name"></div>
+          <div className="skeleton-text leaderboard-skeleton-marks"></div>
+        </div>
+      ))}
+    </div>
+  </div>
+);
+
+
 const AdminDashboard = () => {
   const [activeSection, setActiveSection] = useState('manage-users');
   const [users, setUsers] = useState([]);
@@ -67,6 +91,7 @@ const AdminDashboard = () => {
   const [coursesLoading, setCoursesLoading] = useState(true);
   const [trainersLoading, setTrainersLoading] = useState(true);
   const [learnersLoading, setLearnersLoading] = useState(true);
+  const [leaderboardLoading, setLeaderboardLoading] = useState(true);
 
   const fetchUsers = async () => {
     setUsersLoading(true);
@@ -126,14 +151,17 @@ const AdminDashboard = () => {
   };
 
   const fetchLeaderboard = async () => {
+    setLeaderboardLoading(true);
     try {
       const response = await axios.get("https://hilms.onrender.com/api/learner/leaderboard");
       setLeaderboard(response.data);
     } catch (err) {
       setLeaderboardError("Failed to fetch leaderboard");
+    } finally {
+      setLeaderboardLoading(false);
     }
   };
-  
+
   
 
   const handleSectionChange = (section) => setActiveSection(section);
@@ -490,17 +518,20 @@ const AdminDashboard = () => {
     )}
 
     {/* Leaderboard Section */}
-    {activeSection === 'leaderboard' && (
-      <section className="admin-leaderboard-section">
-        <h2>🏆 Learner Leaderboard</h2>
-        {leaderboardError && <p className="error-message">{leaderboardError}</p>}
-        {leaderboard.length === 0 && <p>No leaderboard data available</p>}
-        {leaderboard.length > 0 && (
-          <p className="leaderboard-note">
-            Top 3 Learners are highlighted with badges!
-          </p>
-        )}
-
+{/* Leaderboard Section */}
+{activeSection === 'leaderboard' && (
+  <section className="admin-leaderboard-section">
+    <h2>🏆 Learner Leaderboard</h2>
+    {leaderboardError && <p className="error-message">{leaderboardError}</p>}
+    {leaderboardLoading ? (
+      <LeaderboardSkeleton />
+    ) : leaderboard.length === 0 ? (
+      <p>No leaderboard data available</p>
+    ) : (
+      <>
+        <p className="leaderboard-note">
+          Top 3 Learners are highlighted with badges!
+        </p>
         <div className="leaderboard-top3">
           {leaderboard.slice(0, 3).map((learner, index) => (
             <div
@@ -526,8 +557,6 @@ const AdminDashboard = () => {
             </div>
           ))}
         </div>
-
-
         <div className="leaderboard-grid">
           {leaderboard.slice(3).map((learner, index) => (
             <div
@@ -551,7 +580,7 @@ const AdminDashboard = () => {
             </div>
           ))}
         </div>
-      </section>
+      </>
     )}
     {selectedLearner && (
       <div className="learner-popup-overlay" onClick={() => setSelectedLearner(null)}>
@@ -569,9 +598,11 @@ const AdminDashboard = () => {
           <p><strong>Enrolled Courses:</strong> {selectedLearner.enrolledCourses?.length || 0}</p>
           <p><strong>Date of Joined:</strong> {new Date(selectedLearner.DateofJoined).toLocaleDateString()}</p>
           <button className="leaderboard-close-btn" onClick={() => setSelectedLearner(null)}>Close</button>
-          </div>
+        </div>
       </div>
     )}
+  </section>
+)}
 
 
       </div>
