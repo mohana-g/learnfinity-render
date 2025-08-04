@@ -295,6 +295,7 @@ body {
   min-width: 300px;
   max-width: 300px;
   min-height: 350px;
+  text-align: center;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -312,7 +313,6 @@ body {
 .skeleton-text {
   height: 15px;
   background: #ccc;
-  text-align: center;
   margin: 10px 0;
   border-radius: 4px;
 }
