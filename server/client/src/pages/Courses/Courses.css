@@ -258,17 +258,23 @@ body {
 .courses-page-card h3 {
   font-size: 1.2em;
   margin: 10px 0;
+  justify-content: center; /* Center vertically */
+  align-items: center;  
 }
 
 .courses-page-card p {
   margin: 5px 0;
   color: #555;
   margin-bottom: 10px;
+  justify-content: center; /* Center vertically */
+  align-items: center;  
 }
 
 .courses-page-card p strong {
   font-weight: bold;
   color: #333;
+  justify-content: center; /* Center vertically */
+  align-items: center;  
 }
 
 .courses-page-card .btn-primary {
