@@ -541,3 +541,28 @@ h2 {
   from { transform: scale(0.8); opacity: 0; }
   to { transform: scale(1); opacity: 1; }
 }
+
+/* Skeleton Loader Styles */
+.admin-table-skeleton {
+  margin: 20px 0;
+}
+.skeleton-header, .skeleton-row {
+  display: flex;
+}
+.skeleton-cell {
+  height: 24px;
+  flex: 1;
+  background: #e0e0e0;
+  margin: 4px;
+  border-radius: 4px;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+.skeleton-header-cell {
+  height: 28px;
+  background: #c0c0c0;
+}
+@keyframes pulse {
+  0% { background-color: #f0f0f0; }
+  50% { background-color: #e0e0e0; }
+  100% { background-color: #f0f0f0; }
+}

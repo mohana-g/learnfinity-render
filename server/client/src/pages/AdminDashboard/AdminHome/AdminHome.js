@@ -3,6 +3,24 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './AdminHome.css';
 
+
+const TableSkeleton = ({ rows = 5, cols = 8 }) => (
+  <div className="admin-table-skeleton">
+    <div className="skeleton-header">
+      {Array.from({ length: cols }).map((_, i) => (
+        <div className="skeleton-cell skeleton-header-cell" key={i}></div>
+      ))}
+    </div>
+    {Array.from({ length: rows }).map((_, r) => (
+      <div className="skeleton-row" key={r}>
+        {Array.from({ length: cols }).map((_, c) => (
+          <div className="skeleton-cell" key={c}></div>
+        ))}
+      </div>
+    ))}
+  </div>
+);
+
 const AdminDashboard = () => {
   const [activeSection, setActiveSection] = useState('manage-users');
   const [users, setUsers] = useState([]);
@@ -17,16 +35,20 @@ const AdminDashboard = () => {
   const [leaderboard, setLeaderboard] = useState([]);
   const [leaderboardError, setLeaderboardError] = useState(null);
   const [selectedLearner, setSelectedLearner] = useState(null);
+  const [usersLoading, setUsersLoading] = useState(true);
+
 
   const fetchUsers = async () => {
-    try {
-      const response = await axios.get('https://hilms.onrender.com/api/admin/users');
-      //console.log("Users Fetched:", response.data.users);
-      setUsers(response.data.users);  // Use correct state update
-    } catch (error) {
-      console.error('Error fetching users:', error);
-    }
-  };
+  setUsersLoading(true);
+  try {
+    const response = await axios.get('https://hilms.onrender.com/api/admin/users');
+    setUsers(response.data.users);
+  } catch (error) {
+    console.error('Error fetching users:', error);
+  } finally {
+    setUsersLoading(false);
+  }
+};
 
   const fetchTrainers = async () => {
     try {
@@ -192,8 +214,10 @@ const AdminDashboard = () => {
               />
             </div>
 
-           <div className="user-table-container">
-  {users.length === 0 ? (
+<div className="user-table-container">
+  {usersLoading ? (
+    <TableSkeleton rows={5} cols={8} />
+  ) : users.length === 0 ? (
     <p>No users found.</p>
   ) : (
     <table className="user-table">
