@@ -30,6 +30,16 @@ const CourseCardSkeleton = () => (
   </div>
 );
 
+const TrainerCardSkeleton = () => (
+  <div className="trainer-skeleton-card">
+    <div className="trainer-skeleton-avatar"></div>
+    <div className="trainer-skeleton-text short"></div>
+    <div className="trainer-skeleton-text long"></div>
+    <div className="trainer-skeleton-btn"></div>
+    <div className="trainer-skeleton-btn"></div>
+  </div>
+);
+
 const AdminDashboard = () => {
   const [activeSection, setActiveSection] = useState('manage-users');
   const [users, setUsers] = useState([]);
@@ -46,6 +56,7 @@ const AdminDashboard = () => {
   const [selectedLearner, setSelectedLearner] = useState(null);
   const [usersLoading, setUsersLoading] = useState(true);
   const [coursesLoading, setCoursesLoading] = useState(true);
+  const [trainersLoading, setTrainersLoading] = useState(true);
 
 
   const fetchUsers = async () => {
@@ -61,11 +72,14 @@ const AdminDashboard = () => {
   };
 
   const fetchTrainers = async () => {
+    setTrainersLoading(true);
     try {
       const response = await axios.get('https://hilms.onrender.com/api/admin/pending-trainers');
       setTrainers(response.data.trainers);
     } catch (error) {
       console.error('Error fetching trainers:', error);
+    } finally {
+      setTrainersLoading(false);
     }
   };
 
@@ -376,13 +390,15 @@ const AdminDashboard = () => {
 
         {/* Approve Trainers Section */}
         {activeSection === 'approve-trainers' && (
-          <div className="approve-trainers">
-            <h2>Approve Trainers</h2>
-            {trainers.length === 0 ? (
-            <p>No pending trainers for approval.</p>
-          ) : (
-            <div className="trainer-cards">
-              {trainers.map((trainer) => (
+        <div className="approve-trainers">
+          <h2>Approve Trainers</h2>
+          <div className="trainer-cards">
+            {trainersLoading ? (
+              Array.from({ length: 3 }).map((_, i) => <TrainerCardSkeleton key={i} />)
+            ) : trainers.length === 0 ? (
+              <p>No pending trainers for approval.</p>
+            ) : (
+              trainers.map((trainer) => (
                 <div className="trainer-card" key={trainer._id}>
                   <img 
                     src={trainer.profileImage || "https://static.vecteezy.com/system/resources/thumbnails/009/734/564/small/default-avatar-profile-icon-of-social-media-user-vector.jpg"} 
@@ -392,15 +408,14 @@ const AdminDashboard = () => {
                   <p><strong>{trainer.fullName}</strong></p>
                   <p>Email: {trainer.email}</p>
                   <p>Phone: {trainer.phoneNumber || "N/A"}</p>
-
                   <button className="approve-btn" onClick={() => approveTrainer(trainer._id)}>Approve</button>
                   <button className="decline-btn" onClick={() => declineTrainer(trainer._id)}>Decline</button>
                 </div>
-              ))}
-            </div>
-          )}
+              ))
+            )}
           </div>
-        )}
+        </div>
+      )}
 
       {/* Learners Progress Section */}
       {activeSection === 'manage-learners' && (

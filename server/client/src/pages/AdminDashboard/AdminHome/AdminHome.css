@@ -567,6 +567,7 @@ h2 {
   100% { background-color: #f0f0f0; }
 }
 
+/* Skeleton Card Styles */
 .skeleton-card {
   background: #f0f0f0;
   border-radius: 8px;
@@ -608,4 +609,44 @@ h2 {
   background: #ccc;
   border-radius: 5px;
   margin: 0 auto 20px;
+}
+
+/* Trainer Skeleton Card Styles */
+.trainer-skeleton-card {
+  background: #f0f0f0;
+  border-radius: 8px;
+  padding: 16px;
+  width: 300px;
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: pulse 1.5s infinite ease-in-out;
+  margin: 15px;
+}
+.trainer-skeleton-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #d0d0d0;
+  margin-bottom: 12px;
+}
+.trainer-skeleton-text {
+  height: 15px;
+  background: #ccc;
+  border-radius: 4px;
+  margin: 8px 0;
+}
+.trainer-skeleton-text.short {
+  width: 40%;
+}
+.trainer-skeleton-text.long {
+  width: 80%;
+}
+.trainer-skeleton-btn {
+  width: 60%;
+  height: 32px;
+  background: #ccc;
+  border-radius: 5px;
+  margin: 8px 0;
 }
