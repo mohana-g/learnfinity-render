@@ -550,7 +550,7 @@ h2 {
   display: flex;
 }
 .skeleton-cell {
-  height: 24px;
+  height: 44px;
   flex: 1;
   background: #e0e0e0;
   margin: 4px;
@@ -558,11 +558,54 @@ h2 {
   animation: pulse 1.5s infinite ease-in-out;
 }
 .skeleton-header-cell {
-  height: 28px;
+  height: 48px;
   background: #c0c0c0;
 }
 @keyframes pulse {
   0% { background-color: #f0f0f0; }
   50% { background-color: #e0e0e0; }
   100% { background-color: #f0f0f0; }
+}
+
+.skeleton-card {
+  background: #f0f0f0;
+  border-radius: 8px;
+  padding: 10px;
+  width: 300px;
+  min-width: 300px;
+  max-width: 300px;
+  min-height: 350px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  animation: pulse 1.5s infinite ease-in-out;
+  box-sizing: border-box;
+  margin: 15px;
+}
+.skeleton-image {
+  height: 200px;
+  background: #ddd;
+  border-radius: 5px 5px 0 0;
+  margin-bottom: 10px;
+}
+.skeleton-text {
+  height: 15px;
+  background: #ccc;
+  margin: 10px 0;
+  border-radius: 4px;
+}
+.skeleton-text.short {
+  width: 50%;
+  margin: 0 auto 10px auto;
+}
+.skeleton-text.long {
+  width: 80%;
+  margin: 0 auto 10px auto;
+}
+.skeleton-btn {
+  width: 60%;
+  height: 35px;
+  background: #ccc;
+  border-radius: 5px;
+  margin: 0 auto 20px;
 }

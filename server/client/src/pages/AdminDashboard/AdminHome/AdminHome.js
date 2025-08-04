@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './AdminHome.css';
 
-
+// Skeleton components for loading states
 const TableSkeleton = ({ rows = 5, cols = 8 }) => (
   <div className="admin-table-skeleton">
     <div className="skeleton-header">
@@ -18,6 +18,15 @@ const TableSkeleton = ({ rows = 5, cols = 8 }) => (
         ))}
       </div>
     ))}
+  </div>
+);
+
+const CourseCardSkeleton = () => (
+  <div className="course-card skeleton-card">
+    <div className="skeleton-image"></div>
+    <div className="skeleton-text short"></div>
+    <div className="skeleton-text long"></div>
+    <div className="skeleton-btn"></div>
   </div>
 );
 
@@ -36,19 +45,20 @@ const AdminDashboard = () => {
   const [leaderboardError, setLeaderboardError] = useState(null);
   const [selectedLearner, setSelectedLearner] = useState(null);
   const [usersLoading, setUsersLoading] = useState(true);
+  const [coursesLoading, setCoursesLoading] = useState(true);
 
 
   const fetchUsers = async () => {
-  setUsersLoading(true);
-  try {
-    const response = await axios.get('https://hilms.onrender.com/api/admin/users');
-    setUsers(response.data.users);
-  } catch (error) {
-    console.error('Error fetching users:', error);
-  } finally {
-    setUsersLoading(false);
-  }
-};
+    setUsersLoading(true);
+    try {
+      const response = await axios.get('https://hilms.onrender.com/api/admin/users');
+      setUsers(response.data.users);
+    } catch (error) {
+      console.error('Error fetching users:', error);
+    } finally {
+      setUsersLoading(false);
+    }
+  };
 
   const fetchTrainers = async () => {
     try {
@@ -60,11 +70,14 @@ const AdminDashboard = () => {
   };
 
   const fetchCourses = async () => {
+    setCoursesLoading(true);
     try {
       const response = await axios.get('https://hilms.onrender.com/api/admin/courses');
       setCourses(response.data.courses);
     } catch (error) {
       console.error('Error fetching courses:', error);
+    } finally {
+      setCoursesLoading(false);
     }
   };
 
@@ -214,12 +227,12 @@ const AdminDashboard = () => {
               />
             </div>
 
-<div className="user-table-container">
-  {usersLoading ? (
-    <TableSkeleton rows={5} cols={8} />
-  ) : users.length === 0 ? (
-    <p>No users found.</p>
-  ) : (
+    <div className="user-table-container">
+      {usersLoading ? (
+        <TableSkeleton rows={10} cols={8} />
+      ) : users.length === 0 ? (
+        <p>No users found.</p>
+      ) : (
     <table className="user-table">
       <thead>
         <tr>
@@ -337,10 +350,12 @@ const AdminDashboard = () => {
     </div>
 
             <button className="add-course-btn" onClick={navigateToAddCourse}>Add Course</button>
-            <div className="course-cards">
-              {courses.length === 0 ? (
-                <p>No courses found.</p>
-              ) : (
+           <div className="course-cards">
+            {coursesLoading ? (
+              Array.from({ length: 4 }).map((_, i) => <CourseCardSkeleton key={i} />)
+            ) : courses.length === 0 ? (
+              <p>No courses found.</p>
+            ) : (
                 courses
                 .filter((course) =>
             course.title.toLowerCase().includes(searchCourseQuery.toLowerCase()) ||
