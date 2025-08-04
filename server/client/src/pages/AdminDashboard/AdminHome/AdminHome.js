@@ -40,6 +40,15 @@ const TrainerCardSkeleton = () => (
   </div>
 );
 
+const LearnerProgressSkeleton = () => (
+  <div className="admin-learner-card learner-skeleton-card">
+    <div className="learner-skeleton-avatar"></div>
+    <div className="learner-skeleton-text short"></div>
+    <div className="learner-skeleton-text long"></div>
+    <div className="learner-skeleton-btn"></div>
+  </div>
+);
+
 const AdminDashboard = () => {
   const [activeSection, setActiveSection] = useState('manage-users');
   const [users, setUsers] = useState([]);
@@ -57,7 +66,7 @@ const AdminDashboard = () => {
   const [usersLoading, setUsersLoading] = useState(true);
   const [coursesLoading, setCoursesLoading] = useState(true);
   const [trainersLoading, setTrainersLoading] = useState(true);
-
+  const [learnersLoading, setLearnersLoading] = useState(true);
 
   const fetchUsers = async () => {
     setUsersLoading(true);
@@ -105,15 +114,17 @@ const AdminDashboard = () => {
   
 
   const fetchLearnersProgress = async () => {
+    setLearnersLoading(true);
     try {
       const response = await axios.get('https://hilms.onrender.com/api/admin/learners-progress');
-      //console.log("Fetched Learner Progress:", response.data);  // Check the structure of the response
-      setLearnersProgress(response.data);  // Update state directly with the response data
+      setLearnersProgress(response.data);
     } catch (error) {
       console.error('Error fetching Learner progress:', error);
+    } finally {
+      setLearnersLoading(false);
     }
   };
-  
+
   const fetchLeaderboard = async () => {
     try {
       const response = await axios.get("https://hilms.onrender.com/api/learner/leaderboard");
@@ -394,7 +405,7 @@ const AdminDashboard = () => {
           <h2>Approve Trainers</h2>
           <div className="trainer-cards">
             {trainersLoading ? (
-              Array.from({ length: 3 }).map((_, i) => <TrainerCardSkeleton key={i} />)
+              Array.from({ length: 4 }).map((_, i) => <TrainerCardSkeleton key={i} />)
             ) : trainers.length === 0 ? (
               <p>No pending trainers for approval.</p>
             ) : (
@@ -422,8 +433,14 @@ const AdminDashboard = () => {
       <div className="manage-learners learner-progress-section">
         <h2>Learners Progress</h2>
 
-        {learnersProgress.length === 0 ? (
-          <p>No Learner data found.</p>
+         {learnersLoading ? (
+            <div className="admin-learner-cards">
+              {Array.from({ length: 4 }).map((_, i) => (
+                <LearnerProgressSkeleton key={i} />
+              ))}
+            </div>
+          ) : learnersProgress.length === 0 ? (
+            <p>No Learner data found.</p>
         ) : (
           <div className="admin-learner-cards">
             {learnersProgress.map((learner) => (

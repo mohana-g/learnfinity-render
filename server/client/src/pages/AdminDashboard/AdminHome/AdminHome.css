@@ -14,7 +14,8 @@
   background-repeat: no-repeat;
   background-position: center;
   height: 290px;
-  background-image: url('https://www.shutterstock.com/image-photo/admin-login-sign-made-wood-260nw-1890258622.jpg');
+  background-image: url('https://www.shutterstock.com/image-photo/woman-technology-digital-interface-word-600nw-2479652707.jpg');
+  /* background-image: url('https://www.shutterstock.com/image-photo/admin-login-sign-made-wood-260nw-1890258622.jpg'); */
   color: white;
   display: flex;
   flex-direction: column;
@@ -646,6 +647,46 @@ h2 {
 .trainer-skeleton-btn {
   width: 60%;
   height: 32px;
+  background: #ccc;
+  border-radius: 5px;
+  margin: 8px 0;
+}
+
+/* Learner Skeleton Card Styles */
+.learner-skeleton-card {
+  background: #f0f0f0;
+  border-radius: 8px;
+  padding: 16px;
+  width: 320px;
+  min-height: 140px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  animation: pulse 1.5s infinite ease-in-out;
+  margin: 15px;
+}
+.learner-skeleton-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #d0d0d0;
+  margin-bottom: 12px;
+}
+.learner-skeleton-text {
+  height: 15px;
+  background: #ccc;
+  border-radius: 4px;
+  margin: 8px 0;
+}
+.learner-skeleton-text.short {
+  width: 40%;
+}
+.learner-skeleton-text.long {
+  width: 80%;
+}
+.learner-skeleton-btn {
+  width: 60%;
+  height: 28px;
   background: #ccc;
   border-radius: 5px;
   margin: 8px 0;
