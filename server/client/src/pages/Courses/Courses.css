@@ -146,8 +146,7 @@ body {
     background-color: #0000cc;
   }
    */
-
-   /* General Reset */
+/* General Reset */
 body {
   user-select: none;
 }
@@ -206,16 +205,19 @@ body {
 
 .courses-page-container-cards {
   display: flex;
-  justify-content: space-around;
+  justify-content: center; /* Center cards horizontally */
   gap: 20px;
   flex-wrap: wrap;
   align-items: stretch;
 }
 
+/* Make sure the link is the card's fixed width */
 .general-courses-card-link {
   text-decoration: none;
   color: inherit;
   width: 300px;
+  min-width: 300px;
+  max-width: 300px;
   display: flex;
 }
 
@@ -226,6 +228,8 @@ body {
   border-radius: 5px;
   padding: 0;
   width: 100%;
+  min-width: 300px;
+  max-width: 300px;
   text-align: center;
   transition: transform 0.3s ease;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
@@ -235,6 +239,7 @@ body {
   min-height: 350px;
   margin-top: 5px;
   cursor: pointer;
+  box-sizing: border-box;
 }
 
 .courses-page-card:hover {
@@ -274,6 +279,7 @@ body {
   border-radius: 5px;
   font-size: 1em;
   margin: 10px auto 20px;
+  display: inline-block;
 }
 
 .courses-page-card .btn-primary:hover {
@@ -286,11 +292,14 @@ body {
   border-radius: 5px;
   padding: 10px;
   width: 300px;
+  min-width: 300px;
+  max-width: 300px;
   min-height: 350px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   animation: pulse 1.5s infinite ease-in-out;
+  box-sizing: border-box;
 }
 
 .skeleton-image {
