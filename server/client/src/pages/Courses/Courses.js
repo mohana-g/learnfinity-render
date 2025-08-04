@@ -154,7 +154,7 @@ const CoursesPage = () => {
 
   // Use the number of skeletons based on expected data length or fallback to 4
   const skeletonCount = loading
-    ? (courses && courses.length > 0 ? courses.length : 4)
+    ? (courses && courses.length > 0 ? courses.length : 6)
     : 0;
 
   return (
