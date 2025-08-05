@@ -19,7 +19,7 @@ const LearnerProfileSkeleton = () => (
     <div className="learner-course-progress">
       <div className="skeleton skeleton-section-title" />
       <div className="course-progress-grid">
-        {Array.from({ length: 2 }).map((_, i) => (
+        {Array.from({ length: 3 }).map((_, i) => (
           <div className="course-progress-card" key={i}>
             <div className="skeleton skeleton-course-title" />
             <div className="skeleton skeleton-progress-bar" />

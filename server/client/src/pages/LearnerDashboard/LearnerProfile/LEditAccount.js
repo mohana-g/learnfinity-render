@@ -3,6 +3,31 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./LEditAccount.css";
 
+
+// Skeleton loader component
+const LEditAccountSkeleton = () => (
+  <div className="edit-account-container">
+    <div className="skeleton skeleton-title" />
+    <form className="edit-account-form">
+      <div className="form-group">
+        <div className="skeleton skeleton-field" />
+      </div>
+      <div className="form-group">
+        <div className="skeleton skeleton-field" />
+      </div>
+      <div className="form-group">
+        <div className="skeleton skeleton-field" />
+      </div>
+      <div className="form-group">
+        <div className="skeleton skeleton-field" />
+      </div>
+      <div className="skeleton skeleton-btn" />
+    </form>
+    <div className="skeleton skeleton-btn" />
+  </div>
+);
+
+
 const LEditAccount = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -80,7 +105,12 @@ const LEditAccount = () => {
     navigate("/learner-dashboard/profile");
   };
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return (
+    <div className="edit-account-loading-center">
+      <LEditAccountSkeleton />
+    </div>
+  );
+  // if (loading) return <p>Loading...</p>;
   if (error) return <p className="error-message">{error}</p>;
 
   return (

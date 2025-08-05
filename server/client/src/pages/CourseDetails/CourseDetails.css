@@ -240,7 +240,6 @@
 .skeleton {
   background: linear-gradient(90deg, #ececec 25%, #f5f5f5 50%, #ececec 75%);
   background-size: 200% 100%;
-  justify-content: center;
   animation: skeleton-loading 1.2s infinite linear;
   border-radius: 6px;
 }
@@ -248,6 +247,10 @@
 @keyframes skeleton-loading {
   0% { background-position: 200% 0; }
   100% { background-position: -200% 0; }
+}
+
+.course-details-page {
+    justify-content: center;
 }
 
 .skeleton-title {
