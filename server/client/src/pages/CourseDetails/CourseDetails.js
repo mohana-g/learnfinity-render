@@ -3,6 +3,45 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./CourseDetails.css";
 
+const CourseDetailsSkeleton = () => (
+  <div className="course-details-page">
+    <div className="course-header">
+      <div className="course-info-card">
+        <div className="skeleton skeleton-title" />
+        <div className="skeleton skeleton-rating" />
+        <ul className="course-meta">
+          <li className="skeleton skeleton-meta" />
+          <li className="skeleton skeleton-meta" />
+          <li className="skeleton skeleton-meta" />
+          <li className="skeleton skeleton-meta" />
+        </ul>
+      </div>
+      <div className="course-sidebar-card">
+        <div className="skeleton skeleton-image" />
+        <div className="skeleton skeleton-feature" />
+        <div className="skeleton skeleton-feature" />
+        <div className="skeleton skeleton-feature" />
+        <div className="skeleton skeleton-feature" />
+        <div className="skeleton skeleton-btn" />
+      </div>
+    </div>
+    <div className="course-content">
+      <div className="tab-list">
+        <div className="skeleton skeleton-tab" />
+        <div className="skeleton skeleton-tab" />
+        <div className="skeleton skeleton-tab" />
+      </div>
+      <div className="tab-content">
+        <div className="skeleton skeleton-section-title" />
+        <div className="skeleton skeleton-block" />
+        <div className="skeleton skeleton-block" />
+        <div className="skeleton skeleton-block" />
+      </div>
+    </div>
+  </div>
+);
+
+
 const CourseDetails = () => {
   const { courseId } = useParams();
   const navigate = useNavigate();
@@ -10,7 +49,7 @@ const CourseDetails = () => {
   const [course, setCourse] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  
   // const isAuthenticated = localStorage.getItem("isAuthenticated");
   const token = localStorage.getItem("token");
   const isAuthenticated = Boolean(token); // true if token exists
@@ -104,7 +143,8 @@ const CourseDetails = () => {
     setActiveTab(tab);
   };
 
-  if (loading) return <div className="loading">Loading...</div>;
+  if (loading) return <CourseDetailsSkeleton />;
+  // if (loading) return <div className="loading">Loading...</div>;
   if (error) return <div className="error">{error}</div>;
 
   return (
