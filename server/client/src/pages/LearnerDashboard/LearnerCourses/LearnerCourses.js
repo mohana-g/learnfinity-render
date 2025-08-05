@@ -129,9 +129,9 @@ import { Link } from "react-router-dom";
 import "./LearnerCourses.css";
 
 // Skeleton loader for course cards
-const LearnerCoursesSkeleton = () => (
+const LearnerCoursesSkeleton = ({ count = 6 }) => (
   <div className="learner-courses-container-cards">
-    {Array.from({ length: 4 }).map((_, i) => (
+    {Array.from({ length: count }).map((_, i) => (
       <div className="learner-courses-card-link" key={i}>
         <div className="learner-courses-card">
           <div className="skeleton skeleton-course-img" />
@@ -213,46 +213,47 @@ const CoursesPage = () => {
         </select>
         <button onClick={handleSortButtonClick}>Sort</button>
       </div>
-      <section className="learner-courses-section">
-        {loading ? (
-          <LearnerCoursesSkeleton />
+
+   <section className="learner-courses-section">
+    {loading ? (
+      <LearnerCoursesSkeleton count={courses.length > 0 ? courses.length : 6} />
+    ) : (
+      <div className="learner-courses-container-cards">
+        {courses.length > 0 ? (
+          courses.map((course) => (
+            <Link
+              to={`/course-details/${course._id}`}
+              key={course._id}
+              className="learner-courses-card-link"
+            >
+              <div className="learner-courses-card">
+                <img
+                  src={course.imageurl}
+                  alt={course.title}
+                  className="learner-courses-image"
+                />
+                <h3>{course.title}</h3>
+                <p>
+                  <strong>Instructor:</strong> {course.trainer?.fullName || "Unknown"}
+                </p>
+                <p>
+                  <strong>Enrolled Learners:</strong> {course.learners?.length || 0}
+                </p>
+                {enrolledCourses?.has(course._id) && (
+                  <p className="learner-enrolled-label">✔ Enrolled</p>
+                )}
+                <span className={enrolledCourses?.has(course._id) ? "learner-btn-continue" : "learner-btn-read-more"}>
+                  {enrolledCourses?.has(course._id) ? "Continue Course" : "Read More"}
+                </span>
+              </div>
+            </Link>
+          ))
         ) : (
-          <div className="learner-courses-container-cards">
-            {courses.length > 0 ? (
-              courses.map((course) => (
-                <Link
-                  to={`/course-details/${course._id}`}
-                  key={course._id}
-                  className="learner-courses-card-link"
-                >
-                  <div className="learner-courses-card">
-                    <img
-                      src={course.imageurl}
-                      alt={course.title}
-                      className="learner-courses-image"
-                    />
-                    <h3>{course.title}</h3>
-                    <p>
-                      <strong>Instructor:</strong> {course.trainer?.fullName || "Unknown"}
-                    </p>
-                    <p>
-                      <strong>Enrolled Learners:</strong> {course.learners?.length || 0}
-                    </p>
-                    {enrolledCourses?.has(course._id) && (
-                      <p className="learner-enrolled-label">✔ Enrolled</p>
-                    )}
-                    <span className={enrolledCourses?.has(course._id) ? "learner-btn-continue" : "learner-btn-read-more"}>
-                      {enrolledCourses?.has(course._id) ? "Continue Course" : "Read More"}
-                    </span>
-                  </div>
-                </Link>
-              ))
-            ) : (
-              <p>No courses available</p>
-            )}
-          </div>
+          <p>No courses available</p>
         )}
-      </section>
+      </div>
+    )}
+  </section>
     </div>
   );
 };
