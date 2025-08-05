@@ -106,10 +106,9 @@ const LEditAccount = () => {
   };
 
   if (loading) return (
-    <div className="edit-account-loading-center">
       <LEditAccountSkeleton />
-    </div>
   );
+  
   // if (loading) return <p>Loading...</p>;
   if (error) return <p className="error-message">{error}</p>;
 
