@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./CourseDetails.css";
 
+//skeleton code
 const CourseDetailsSkeleton = () => (
   <div className="course-details-page">
     <div className="course-header">

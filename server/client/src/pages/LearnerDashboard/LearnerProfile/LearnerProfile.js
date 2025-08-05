@@ -3,6 +3,35 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./LearnerProfile.css"; 
 
+// Skeleton component for loading state
+const LearnerProfileSkeleton = () => (
+  <div className="learner-profile-container">
+    <div className="learner-profile-card">
+      <div className="skeleton skeleton-title" />
+      <div className="skeleton skeleton-field" />
+      <div className="skeleton skeleton-field" />
+      <div className="skeleton skeleton-field" />
+      <div className="skeleton skeleton-field" />
+      <div className="skeleton skeleton-field" />
+      <div className="skeleton skeleton-btn" />
+      <div className="skeleton skeleton-btn" />
+    </div>
+    <div className="learner-course-progress">
+      <div className="skeleton skeleton-section-title" />
+      <div className="course-progress-grid">
+        {Array.from({ length: 2 }).map((_, i) => (
+          <div className="course-progress-card" key={i}>
+            <div className="skeleton skeleton-course-title" />
+            <div className="skeleton skeleton-progress-bar" />
+            <div className="skeleton skeleton-percent" />
+            <div className="skeleton skeleton-details" />
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+);
+
 const LearnerProfile = () => {
   const [profile, setProfile] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
@@ -109,7 +138,8 @@ const LearnerProfile = () => {
     navigate("/learner-dashboard/profile/editaccount");
   };
 
-  if (loading) return <p>Loading profile...</p>;
+  if (loading) return <LearnerProfileSkeleton />;
+  // if (loading) return <p>Loading profile...</p>;
   if (error) return <p className="error-message">{error}</p>;
 
   return (
