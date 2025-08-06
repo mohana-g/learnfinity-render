@@ -366,15 +366,16 @@ const CourseInteractionSkeleton = () => {
       <div className="skeleton skeleton-video" />
       {/* Course Description */}
       <div className="skeleton skeleton-description" />
-      
+      {/* Instructor and Enrolled Learners */}
+      <div className="skeleton skeleton-line short" />
+      <div className="skeleton skeleton-line short" />
 
       {/* Accordion Section (chapters and lessons) */}
       <div className="skeleton-accordion">
-        <div className="skeleton-chapter-title"></div>
         {[...Array(3)].map((_, index) => (
           <div className="skeleton-chapter" key={index}>
             <div className="skeleton skeleton-line short" />
-            {[...Array(1)].map((_, i) => (
+            {[...Array(2)].map((_, i) => (
               <div className="skeleton skeleton-line" key={i} />
             ))}
           </div>
