@@ -272,181 +272,59 @@
   }
 }
 
-/* Container */
+/* Layout styles */
 .skeleton-course-interaction {
   padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 40px; /* Vertical spacing between major sections */
 }
 
-/* Fix section-level margin-bottom */
-.skeleton-chapter,
-.skeleton-quiz,
-.skeleton-review,
-.skeleton-certificate {
-  margin-bottom: 0;
-}
-
-/* General elements */
 .skeleton-title {
   width: 60%;
   height: 32px;
   margin-bottom: 20px;
 }
 
+
 .skeleton-video {
-  width: 100%;
-  max-width: 800px;
+  width: 600px;
   height: 300px;
   margin-bottom: 30px;
 }
 
-.skeleton-description,
-.skeleton-instructor,
-.skeleton-learners,
-.skeleton-chapters-title {
-  height: 20px;
-  width: 50%;
-  margin-bottom: 16px;
-}
-
-/* Chapters & lessons */
-
-
-.skeleton-chapter-title {
-  height: 24px;
-  width: 40%;
-  margin-bottom: 16px;
-}
-
-.skeleton-lessons {
-  list-style: none;
-  padding-left: 0;
-}
-
-.skeleton-lesson {
-  margin-bottom: 20px;
-}
-
-.skeleton-lesson-title {
-  height: 18px;
-  width: 50%;
+.skeleton-description {
+  width: 70%;
+  height: 16px;
   margin-bottom: 10px;
 }
 
-.skeleton-lesson-details {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.skeleton-lesson-description {
-  height: 14px;
-  width: 70%;
-}
-
-.skeleton-lesson-video {
-  height: 180px;
-  width: 100%;
-  max-width: 600px;
-}
-
-/* Quiz section */
-
-.skeleton-quiz-title {
-  height: 26px;
+.skeleton-instructor {
   width: 50%;
-  margin-bottom: 20px;
-}
-
-.skeleton-quiz-form {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-
-.skeleton-quiz-question {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.skeleton-question-text {
-  height: 18px;
-  width: 60%;
-}
-
-.skeleton-options {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.skeleton-option {
   height: 16px;
+  margin-bottom: 10px;
+}
+
+.skeleton-learners {
   width: 40%;
-}
-
-.skeleton-quiz-submit {
-  height: 40px;
-  width: 200px;
-  margin-top: 20px;
-}
-
-/* Review section */
-
-.skeleton-review-title {
-  height: 26px;
-  width: 50%;
+  height: 16px;
   margin-bottom: 20px;
 }
 
-.skeleton-review-form {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+.skeleton-accordion {
+  margin-bottom: 20px;
 }
 
-.skeleton-review-name {
-  height: 20px;
-  width: 50%;
-}
-
-.skeleton-review-rating {
-  height: 20px;
-  width: 30%;
-}
-
-.skeleton-review-comment {
-  height: 60px;
-  width: 100%;
-  max-width: 600px;
-}
-
-.skeleton-review-submit {
-  height: 40px;
-  width: 180px;
-}
-
-/* Certificate section */
-
-
-.skeleton-certificate-title {
-  height: 26px;
-  width: 50%;
+.skeleton-chapter {
   margin-bottom: 16px;
 }
 
-.skeleton-certificate-description {
-  height: 18px;
-  width: 70%;
-  margin-bottom: 20px;
+.skeleton-line {
+  height: 25px;
+  width: 90%;
+  margin: 8px 0;
 }
 
-.skeleton-certificate-button {
-  height: 40px;
-  width: 200px;
+.skeleton-line.short {
+  width: 40%;
+  height: 16px;
 }
 
 /* .skeleton-buttons {

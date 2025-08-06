@@ -370,60 +370,9 @@ const CourseInteractionSkeleton = () => {
       <div className="skeleton skeleton-instructor" />
       {/* Enrolled Learners Count */}
       <div className="skeleton skeleton-learners" />
-      {/* Chapters Section Title */}
-      <div className="skeleton skeleton-chapters-title" />
-      {/* Chapters and Lessons Skeleton */}
-      <div className="skeleton skeleton-chapter">
-        <div className="skeleton skeleton-chapter-title" />
-        <ul className="skeleton skeleton-lessons">
-          {[...Array(3)].map((_, index) => (
-            <li className="skeleton skeleton-lesson" key={index}>
-              <div className="skeleton skeleton-lesson-title" />
-              <div className="skeleton skeleton-lesson-details">
-                <div className="skeleton skeleton-lesson-description" />
-                <div className="skeleton skeleton-lesson-video" />
-              </div>
-            </li>
-          ))}
-        </ul>
-      </div>
-      {/* Quiz Section */}
-      <div className="skeleton skeleton-quiz">
-        <div className="skeleton skeleton-quiz-title" />
-        <form className="skeleton skeleton-quiz-form">
-          {[...Array(3)].map((_, index) => (
-            <div className="skeleton skeleton-quiz-question" key={index}>
-              <div className="skeleton skeleton-question-text" />
-              <div className="skeleton skeleton-options">
-                {[...Array(4)].map((_, i) => (
-                  <div className="skeleton skeleton-option" key={i} />
-                ))}
-              </div>
-            </div>
-          ))}
-          <div className="skeleton skeleton-quiz-submit" />
-        </form>
-      </div>
-      {/* Review Section */}
-      <div className="skeleton skeleton-review">
-        <div className="skeleton skeleton-review-title" />
-        <form className="skeleton skeleton-review-form">
-          <div className="skeleton skeleton-review-name" />
-          <div className="skeleton skeleton-review-rating" />
-          <div className="skeleton skeleton-review-comment" />
-          <div className="skeleton skeleton-review-submit" />
-        </form>
-      </div>
-      {/* Certificate Section */}
-      <div className="skeleton skeleton-certificate">
-        <div className="skeleton skeleton-certificate-title" />
-        <div className="skeleton skeleton-certificate-description" />
-        <div className="skeleton skeleton-certificate-button" />
-      </div>
-
 
       {/* Accordion Section (chapters and lessons) */}
-      {/* <div className="skeleton-accordion">
+      <div className="skeleton-accordion">
         {[...Array(3)].map((_, index) => (
           <div className="skeleton-chapter" key={index}>
             <div className="skeleton skeleton-line short" />
@@ -432,7 +381,7 @@ const CourseInteractionSkeleton = () => {
             ))}
           </div>
         ))}
-      </div> */}
+      </div>
 
       {/* Buttons: Quiz and Certificate */}
       {/* <div className="skeleton-buttons">
