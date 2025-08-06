@@ -368,7 +368,7 @@ const CourseInteractionSkeleton = () => {
       {/* Accordion Section (chapters and lessons) */}
       <div className="skeleton-accordion">
         {[...Array(3)].map((_, index) => (
-          <div className="skeleton skeleton-chapter" key={index}>
+          <div className="skeleton-chapter" key={index}>
             <div className="skeleton skeleton-line short" />
             {[...Array(2)].map((_, i) => (
               <div className="skeleton skeleton-line" key={i} />
@@ -385,6 +385,9 @@ const CourseInteractionSkeleton = () => {
     </div>
   );
 };
+
+const { data: course, isLoading } = useGetCourseDetailsQuery(courseId);
+
 
 const getFileType = (filePath) => {
   if (!filePath) return null;
@@ -411,6 +414,7 @@ const CourseInteraction = () => {
   const [comment, setComment] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [certificateEligible, setCertificateEligible] = useState(false);
+  
 
   const toggleLesson = (index) => {
     setOpenLessonIndex(openLessonIndex === index ? null : index);
@@ -591,7 +595,9 @@ const CourseInteraction = () => {
   
   if (error) return <p className="courseinteraction-error">{error}</p>;
   // if (!course) return <p className="courseinteraction-loading">Loading...</p>;
-  if (!course) return <CourseInteractionSkeleton />;
+
+  if (isLoading || !course) return <CourseInteractionSkeleton />;
+
 
   return (
     <div className="courseinteraction-page">
