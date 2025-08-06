@@ -592,9 +592,7 @@ const CourseInteraction = () => {
   
   if (error) return <p className="courseinteraction-error">{error}</p>;
   // if (!course) return <p className="courseinteraction-loading">Loading...</p>;
-
-  if (isLoading || !course) return <CourseInteractionSkeleton />;
-
+  if (!course) return <CourseInteractionSkeleton />;
 
   return (
     <div className="courseinteraction-page">
