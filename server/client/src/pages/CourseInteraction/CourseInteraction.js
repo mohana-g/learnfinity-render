@@ -371,9 +371,11 @@ const CourseInteractionSkeleton = () => {
       {/* Enrolled Learners Count */}
       <div className="skeleton skeleton-learners" />
 
+      <div className="skeleton skeleton-chapters-title" />
+
       {/* Accordion Section (chapters and lessons) */}
       <div className="skeleton-accordion">
-        {[...Array(3)].map((_, index) => (
+        {[...Array(2)].map((_, index) => (
           <div className="skeleton-chapter" key={index}>
             <div className="skeleton skeleton-line short" />
             {[...Array(2)].map((_, i) => (
@@ -382,12 +384,6 @@ const CourseInteractionSkeleton = () => {
           </div>
         ))}
       </div>
-
-      {/* Buttons: Quiz and Certificate */}
-      {/* <div className="skeleton-buttons">
-        <div className="skeleton skeleton-button" />
-        <div className="skeleton skeleton-button" />
-      </div> */}
     </div>
   );
 };

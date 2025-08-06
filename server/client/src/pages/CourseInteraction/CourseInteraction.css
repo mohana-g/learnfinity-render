@@ -305,7 +305,14 @@
 .skeleton-learners {
   width: 40%;
   height: 16px;
+  margin-bottom: 30px;
+}
+
+.skeleton-chapters-title {
+  width: 50%;
+  height: 24px;
   margin-bottom: 20px;
+  justify-content: center;
 }
 
 .skeleton-accordion {
@@ -317,22 +324,12 @@
 }
 
 .skeleton-line {
-  height: 25px;
+  height: 35px;
   width: 90%;
   margin: 8px 0;
 }
 
 .skeleton-line.short {
   width: 40%;
-  height: 16px;
+  height: 20px;
 }
-
-/* .skeleton-buttons {
-  display: flex;
-  gap: 16px;
-}
-
-.skeleton-button {
-  width: 150px;
-  height: 40px;
-} */
