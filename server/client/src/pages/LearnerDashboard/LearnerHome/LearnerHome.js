@@ -15,6 +15,23 @@ import User3 from '../../../assets/User3.avif';
 import User4 from '../../../assets/User4.avif';
 import User5 from '../../../assets/User5.avif';
 
+// Skeleton loader for enrolled courses
+const LearnerEnrolledCoursesSkeleton = ({ count = 3 }) => (
+  <div className="courses-container-cards">
+    {Array.from({ length: count }).map((_, i) => (
+      <div className="courses-card-link" key={i}>
+        <div className="courses-card">
+          <div className="skeleton skeleton-course-img" />
+          <div className="skeleton skeleton-course-title" />
+          <div className="skeleton skeleton-course-meta" />
+          <div className="skeleton skeleton-course-meta" />
+          <div className="skeleton skeleton-course-btn" />
+        </div>
+      </div>
+    ))}
+  </div>
+);
+
 function LearnerHome() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [enrolledCourses, setEnrolledCourses] = useState([]);
@@ -129,7 +146,7 @@ function LearnerHome() {
       <section className="enrolled-courses-section">
   <h2>Your Enrolled Courses</h2>
   {loading ? (
-    <p>Loading courses...</p>
+    <LearnerEnrolledCoursesSkeleton count={4} />
   ) : enrolledCourses.length > 0 ? (
     <div className="courses-container-cards">
       {enrolledCourses.map((course) => (
