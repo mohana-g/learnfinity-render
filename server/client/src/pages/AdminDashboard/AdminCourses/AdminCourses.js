@@ -131,15 +131,18 @@ import { Link } from "react-router-dom";
 import "./AdminCourses.css";
 
 // Skeleton loader for course cards
-const CourseCardSkeleton = () => (
-  <div className="courses-page-card skeleton-card">
-    <div className="skeleton-image"></div>
-    <div className="skeleton-text short"></div>
-    <div className="skeleton-text long"></div>
-    <div className="skeleton-text long"></div>
-    <div className="skeleton-btn"></div>
-  </div>
-);
+const CourseCardSkeleton = () => {
+  return (
+    <div className="courses-page-card">
+      <div className="skeleton skeleton-course-img"></div>
+      <div className="skeleton skeleton-course-title"></div>
+      <div className="skeleton skeleton-course-meta"></div>
+      <div className="skeleton skeleton-course-meta"></div>
+      <div className="skeleton skeleton-course-btn"></div>
+    </div>
+  );
+};
+
 
 const CoursesPage = () => {
   const [courses, setCourses] = useState([]);
