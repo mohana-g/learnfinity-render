@@ -11,13 +11,13 @@ import './Home.css';
 // Add this above your Home component
 const HomeCourseSkeleton = () => (
   <div className="courses-card skeleton-card">
-    <div className="skeleton-image"></div>
+    <div className="skeleton skeleton-course-img"></div>
     <div className="courses-card-content">
-      <div className="skeleton-text short"></div>
-      <div className="skeleton-text long"></div>
-      <div className="skeleton-text long"></div>
+      <div className="skeleton skeleton-course-title"></div>
+      <div className="skeleton skeleton-course-meta"></div>
+      <div className="skeleton skeleton-course-meta"></div>
     </div>
-    <div className="skeleton-btn"></div>
+    <div className="skeleton skeleton-course-btn"></div>
   </div>
 );
 
@@ -94,46 +94,45 @@ function Home() {
           <Link to="/signup" className="btn-primary">Join Now</Link>
         </div>
       </section>
-{/* Popular Courses */}
-<section className="courses-section">
-  <h2>Popular Courses</h2>
-  {loading ? (
-  <div className="courses-container-cards">
-    {Array.from({ length: 4 }).map((_, i) => (
-      <HomeCourseSkeleton key={i} />
-    ))}
-  </div>
-) : (
-  <div className="courses-container-cards">
-    {courses.length > 0 ? (
-      courses.slice(0, 4).map((course) => (
-        <Link
-          to={`/course-details/${course._id}`}
-          key={course._id}
-          className="courses-card-link"
-        >
-          <div className="courses-card">
-            <img
-              src={course.imageurl}
-              alt={course.title}
-              className="courses-image"
-            />
-            <div className="courses-card-content">
-              <h3>{course.title}</h3>
-              <p><strong>Instructor:</strong> {course.trainer?.fullName}</p>
-              <p><strong>Enrolled Learners:</strong> {course.learnerCount}</p>
-            </div>
-            <div className="btn-primary">Read More</div>
+      {/* Popular Courses */}
+      <section className="courses-section">
+        <h2>Popular Courses</h2>
+        {loading ? (
+          <div className="courses-container-cards">
+            {Array.from({ length: 4 }).map((_, i) => (
+              <HomeCourseSkeleton key={i} />
+            ))}
           </div>
-        </Link>
-      ))
-    ) : (
-      <p>No popular courses available</p>
-    )}
-  </div>
-)}
-</section>
-
+        ) : (
+          <div className="courses-container-cards">
+            {courses.length > 0 ? (
+              courses.slice(0, 4).map((course) => (
+                <Link
+                  to={`/course-details/${course._id}`}
+                  key={course._id}
+                  className="courses-card-link"
+                >
+                  <div className="courses-card">
+                    <img
+                      src={course.imageurl}
+                      alt={course.title}
+                      className="courses-image"
+                    />
+                    <div className="courses-card-content">
+                      <h3>{course.title}</h3>
+                      <p><strong>Instructor:</strong> {course.trainer?.fullName}</p>
+                      <p><strong>Enrolled Learners:</strong> {course.learnerCount}</p>
+                    </div>
+                    <div className="btn-primary">Read More</div>
+                  </div>
+                </Link>
+              ))
+            ) : (
+              <p>No popular courses available</p>
+            )}
+          </div>
+        )}
+      </section>
 
       
       {/* Teach Section */}

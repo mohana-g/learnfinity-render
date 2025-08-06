@@ -286,9 +286,29 @@ body {
   background-color: #0000cc;
 }
 
-/* Skeleton Loader Styles */
+/* Shimmer Effect */
+@keyframes skeleton-loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Base Skeleton Class */
+.skeleton-card .skeleton-image,
+.skeleton-card .skeleton-text,
+.skeleton-card .skeleton-btn {
+  background: linear-gradient(90deg, #ececec 25%, #f5f5f5 50%, #ececec 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.2s infinite linear;
+  border-radius: 6px;
+}
+
+/* Specific Elements */
 .skeleton-card {
-  background: #f0f0f0;
+  background: #fff;
   border-radius: 5px;
   padding: 10px;
   width: 300px;
@@ -298,23 +318,18 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  animation: pulse 1.5s infinite ease-in-out;
   box-sizing: border-box;
 }
 
 .skeleton-image {
   height: 200px;
-  background: #ddd;
-  border-radius: 5px 5px 0 0;
   margin-bottom: 10px;
-  justify-content: center;
+  border-radius: 5px 5px 0 0;
 }
 
 .skeleton-text {
   height: 15px;
-  background: #ccc;
   margin: 10px 0;
-  border-radius: 4px;
 }
 
 .skeleton-text.short {
@@ -328,20 +343,6 @@ body {
 .skeleton-btn {
   width: 60%;
   height: 35px;
-  background: #ccc;
-  border-radius: 5px;
   margin: 0 auto 20px;
-}
-
-/* Skeleton Animation */
-@keyframes pulse {
-  0% {
-    background-color: #f0f0f0;
-  }
-  50% {
-    background-color: #e0e0e0;
-  }
-  100% {
-    background-color: #f0f0f0;
-  }
+  border-radius: 5px;
 }
