@@ -275,6 +275,17 @@
 /* Container */
 .skeleton-course-interaction {
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px; /* Vertical spacing between major sections */
+}
+
+/* Fix section-level margin-bottom */
+.skeleton-chapter,
+.skeleton-quiz,
+.skeleton-review,
+.skeleton-certificate {
+  margin-bottom: 0;
 }
 
 /* General elements */
@@ -301,9 +312,7 @@
 }
 
 /* Chapters & lessons */
-.skeleton-chapter {
-  margin-bottom: 30px;
-}
+
 
 .skeleton-chapter-title {
   height: 24px;
@@ -344,9 +353,6 @@
 }
 
 /* Quiz section */
-.skeleton-quiz {
-  margin-bottom: 40px;
-}
 
 .skeleton-quiz-title {
   height: 26px;
@@ -389,9 +395,6 @@
 }
 
 /* Review section */
-.skeleton-review {
-  margin-bottom: 40px;
-}
 
 .skeleton-review-title {
   height: 26px;
@@ -427,9 +430,7 @@
 }
 
 /* Certificate section */
-.skeleton-certificate {
-  margin-bottom: 40px;
-}
+
 
 .skeleton-certificate-title {
   height: 26px;
