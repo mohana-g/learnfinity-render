@@ -537,40 +537,65 @@ h2 {
   transform: translateY(-2px);
 }
 
-/* Animation Keyframes */
+
+/* === Universal Shimmer Skeleton Style === */
+.skeleton-card .skeleton-image,
+.skeleton-card .skeleton-text,
+.skeleton-card .skeleton-btn,
+.trainer-skeleton-card .trainer-skeleton-avatar,
+.trainer-skeleton-card .trainer-skeleton-text,
+.trainer-skeleton-card .trainer-skeleton-btn,
+.learner-skeleton-card .learner-skeleton-avatar,
+.learner-skeleton-card .learner-skeleton-text,
+.learner-skeleton-card .learner-skeleton-btn,
+.leaderboard-skeleton-avatar,
+.leaderboard-skeleton-name,
+.leaderboard-skeleton-marks,
+.skeleton-cell,
+.skeleton-header-cell {
+  background: linear-gradient(90deg, #ececec 25%, #f5f5f5 50%, #ececec 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.2s infinite linear;
+  border-radius: 6px;
+}
+
+/* Shimmer Animation Keyframe */
+@keyframes skeleton-loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* === Keep original layout and sizing styles === */
+
+/* Animation Keyframes (fade only) */
 @keyframes fadeIn {
   from { transform: scale(0.8); opacity: 0; }
   to { transform: scale(1); opacity: 1; }
 }
 
-/* Skeleton Loader Styles */
 .admin-table-skeleton {
   margin: 20px 0;
 }
-.skeleton-header, .skeleton-row {
+.skeleton-header,
+.skeleton-row {
   display: flex;
 }
 .skeleton-cell {
   height: 44px;
   flex: 1;
-  background: #e0e0e0;
   margin: 4px;
-  border-radius: 4px;
-  animation: pulse 1.5s infinite ease-in-out;
 }
 .skeleton-header-cell {
   height: 48px;
-  background: #c0c0c0;
-}
-@keyframes pulse {
-  0% { background-color: #f0f0f0; }
-  50% { background-color: #e0e0e0; }
-  100% { background-color: #f0f0f0; }
 }
 
 /* Skeleton Card Styles */
 .skeleton-card {
-  background: #f0f0f0;
+  background: #fff;
   border-radius: 8px;
   padding: 10px;
   width: 300px;
@@ -580,21 +605,17 @@ h2 {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  animation: pulse 1.5s infinite ease-in-out;
   box-sizing: border-box;
   margin: 15px;
 }
 .skeleton-image {
   height: 200px;
-  background: #ddd;
   border-radius: 5px 5px 0 0;
   margin-bottom: 10px;
 }
 .skeleton-text {
   height: 15px;
-  background: #ccc;
   margin: 10px 0;
-  border-radius: 4px;
 }
 .skeleton-text.short {
   width: 50%;
@@ -607,14 +628,13 @@ h2 {
 .skeleton-btn {
   width: 60%;
   height: 35px;
-  background: #ccc;
-  border-radius: 5px;
   margin: 0 auto 20px;
+  border-radius: 5px;
 }
 
 /* Trainer Skeleton Card Styles */
 .trainer-skeleton-card {
-  background: #f0f0f0;
+  background: #fff;
   border-radius: 8px;
   padding: 16px;
   width: 300px;
@@ -622,19 +642,16 @@ h2 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  animation: pulse 1.5s infinite ease-in-out;
   margin: 15px;
 }
 .trainer-skeleton-avatar {
   width: 56px;
   height: 56px;
   border-radius: 50%;
-  background: #d0d0d0;
   margin-bottom: 12px;
 }
 .trainer-skeleton-text {
   height: 15px;
-  background: #ccc;
   border-radius: 4px;
   margin: 8px 0;
 }
@@ -647,14 +664,13 @@ h2 {
 .trainer-skeleton-btn {
   width: 60%;
   height: 32px;
-  background: #ccc;
-  border-radius: 5px;
   margin: 8px 0;
+  border-radius: 5px;
 }
 
 /* Learner Skeleton Card Styles */
 .learner-skeleton-card {
-  background: #f0f0f0;
+  background: #fff;
   border-radius: 8px;
   padding: 16px;
   width: 280px;
@@ -662,19 +678,16 @@ h2 {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  animation: pulse 1.5s infinite ease-in-out;
   margin: 15px;
 }
 .learner-skeleton-avatar {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: #d0d0d0;
   margin-bottom: 12px;
 }
 .learner-skeleton-text {
   height: 15px;
-  background: #ccc;
   border-radius: 4px;
   margin: 8px 0;
 }
@@ -687,9 +700,8 @@ h2 {
 .learner-skeleton-btn {
   width: 60%;
   height: 28px;
-  background: #ccc;
-  border-radius: 5px;
   margin: 8px 0;
+  border-radius: 5px;
 }
 
 /* Leaderboard Skeleton Styles */
@@ -707,26 +719,17 @@ h2 {
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background: #e0e0e0;
   margin: 0 auto 10px auto;
-  animation: pulse 1.5s infinite ease-in-out;
 }
 .leaderboard-skeleton-name {
   width: 80px;
   height: 16px;
-  background: #ccc;
   border-radius: 4px;
   margin: 0 auto 8px auto;
 }
 .leaderboard-skeleton-marks {
   width: 60px;
   height: 14px;
-  background: #ddd;
   border-radius: 4px;
   margin: 0 auto 8px auto;
-}
-@keyframes pulse {
-  0% { background-color: #f0f0f0; }
-  50% { background-color: #e0e0e0; }
-  100% { background-color: #f0f0f0; }
 }
