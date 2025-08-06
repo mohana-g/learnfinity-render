@@ -355,6 +355,37 @@ import axios from 'axios';
 import PdfViewer from '../../components/pdfViewer/pdfViewer';
 import './CourseInteraction.css';
 
+// Skeleton loader for course interaction
+const CourseInteractionSkeleton = () => {
+  return (
+    <div className="skeleton-course-interaction">
+      {/* Course Title */}
+      <div className="skeleton skeleton-title" />
+
+      {/* Video Player Placeholder */}
+      <div className="skeleton skeleton-video" />
+
+      {/* Accordion Section (chapters and lessons) */}
+      <div className="skeleton-accordion">
+        {[...Array(3)].map((_, index) => (
+          <div className="skeleton skeleton-chapter" key={index}>
+            <div className="skeleton skeleton-line short" />
+            {[...Array(2)].map((_, i) => (
+              <div className="skeleton skeleton-line" key={i} />
+            ))}
+          </div>
+        ))}
+      </div>
+
+      {/* Buttons: Quiz and Certificate */}
+      <div className="skeleton-buttons">
+        <div className="skeleton skeleton-button" />
+        <div className="skeleton skeleton-button" />
+      </div>
+    </div>
+  );
+};
+
 const getFileType = (filePath) => {
   if (!filePath) return null;
   const ext = filePath.split('.').pop().toLowerCase();
@@ -557,9 +588,10 @@ const CourseInteraction = () => {
       alert('Failed to download certificate. Please try again.');
     }
   };
-
+  
   if (error) return <p className="courseinteraction-error">{error}</p>;
-  if (!course) return <p className="courseinteraction-loading">Loading...</p>;
+  // if (!course) return <p className="courseinteraction-loading">Loading...</p>;
+  if (!course) return <CourseInteractionSkeleton />;
 
   return (
     <div className="courseinteraction-page">

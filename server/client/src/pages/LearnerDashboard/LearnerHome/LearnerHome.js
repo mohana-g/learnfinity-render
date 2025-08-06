@@ -233,7 +233,7 @@ function LearnerHome() {
         {leaderboardError && <p className="error-message">{leaderboardError}</p>}
         {/* {leaderboard.length === 0 && <p>No leaderboard data available</p>} */}
         {loading ? (
-          <LeaderboardSkeleton count={6} />
+          <LeaderboardSkeleton count={9} />
         ) : leaderboard.length === 0 ? (
           <p>No leaderboard data available</p>
         ) : (
