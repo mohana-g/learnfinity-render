@@ -311,8 +311,7 @@
 .skeleton-chapters-title {
   width: 50%;
   height: 24px;
-  margin-bottom: 20px;
-  justify-content: center;
+  margin: 0 auto 20px auto; /* top 0, horizontal auto, bottom 20px */
 }
 
 .skeleton-accordion {
