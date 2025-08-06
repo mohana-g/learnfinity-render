@@ -364,13 +364,17 @@ const CourseInteractionSkeleton = () => {
 
       {/* Video Player Placeholder */}
       <div className="skeleton skeleton-video" />
+      {/* Course Description */}
+      <div className="skeleton skeleton-description" />
+      
 
       {/* Accordion Section (chapters and lessons) */}
       <div className="skeleton-accordion">
+        <div className="skeleton-chapter-title"></div>
         {[...Array(3)].map((_, index) => (
           <div className="skeleton-chapter" key={index}>
             <div className="skeleton skeleton-line short" />
-            {[...Array(2)].map((_, i) => (
+            {[...Array(1)].map((_, i) => (
               <div className="skeleton skeleton-line" key={i} />
             ))}
           </div>
@@ -378,10 +382,10 @@ const CourseInteractionSkeleton = () => {
       </div>
 
       {/* Buttons: Quiz and Certificate */}
-      <div className="skeleton-buttons">
+      {/* <div className="skeleton-buttons">
         <div className="skeleton skeleton-button" />
         <div className="skeleton skeleton-button" />
-      </div>
+      </div> */}
     </div>
   );
 };
