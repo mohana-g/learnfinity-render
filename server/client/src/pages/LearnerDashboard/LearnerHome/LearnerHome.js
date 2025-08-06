@@ -32,6 +32,32 @@ const LearnerEnrolledCoursesSkeleton = ({ count = 3 }) => (
   </div>
 );
 
+const LeaderboardSkeleton = ({ count = 6 }) => {
+  return (
+    <div className="leaderboard-skeleton-wrapper">
+      <div className="leaderboard-top3">
+        {[...Array(3)].map((_, index) => (
+          <div className="leaderboard-item top-scorer" key={index}>
+            <div className="skeleton skeleton-avatar-circle" />
+            <div className="skeleton skeleton-line-short" />
+            <div className="skeleton skeleton-line-thin" />
+          </div>
+        ))}
+      </div>
+
+      <div className="leaderboard-grid">
+        {[...Array(count - 3)].map((_, index) => (
+          <div className="leaderboard-grid-item" key={index}>
+            <div className="skeleton skeleton-avatar-square" />
+            <div className="skeleton skeleton-line-short" />
+            <div className="skeleton skeleton-line-thin" />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
 function LearnerHome() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [enrolledCourses, setEnrolledCourses] = useState([]);
@@ -205,12 +231,25 @@ function LearnerHome() {
       <section className="leaderboard-section">
         <h2>🏆 Learner Leaderboard</h2>
         {leaderboardError && <p className="error-message">{leaderboardError}</p>}
-        {leaderboard.length === 0 && <p>No leaderboard data available</p>}
-        {leaderboard.length > 0 && (
+        {/* {leaderboard.length === 0 && <p>No leaderboard data available</p>} */}
+        {loading ? (
+          <LeaderboardSkeleton count={6} />
+        ) : leaderboard.length === 0 ? (
+          <p>No leaderboard data available</p>
+        ) : (
+          <>
+            <p className="leaderboard-note">
+              Top 3 learners are highlighted with badges!
+            </p>
+            {/* ...rest of your leaderboard rendering code... */}
+          </>
+        )}
+
+        {/* {leaderboard.length > 0 && (
           <p className="leaderboard-note">
             Top 3 learners are highlighted with badges!
           </p>
-        )}
+        )} */}
 
         <div className="leaderboard-top3">
           {leaderboard.slice(0, 3).map((learner, index) => (
