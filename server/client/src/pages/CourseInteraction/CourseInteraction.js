@@ -386,9 +386,6 @@ const CourseInteractionSkeleton = () => {
   );
 };
 
-const { data: course, isLoading } = useGetCourseDetailsQuery(courseId);
-
-
 const getFileType = (filePath) => {
   if (!filePath) return null;
   const ext = filePath.split('.').pop().toLowerCase();
