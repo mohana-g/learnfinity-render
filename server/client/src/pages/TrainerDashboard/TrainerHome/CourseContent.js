@@ -3,6 +3,42 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./CourseContent.css";
 
+const CourseContentSkeleton = () => {
+  return (
+    <div className="course-content-container">
+      <div className="left-sidebar">
+        <div className="skeleton skeleton-btn-tab" />
+        <div className="skeleton skeleton-btn-tab" />
+        <div className="skeleton skeleton-btn-tab" />
+      </div>
+
+      <div className="content-container">
+        <div className="tab-content-container">
+          <div className="skeleton skeleton-title-large" />
+          <div className="skeleton skeleton-paragraph" />
+          <div className="skeleton skeleton-paragraph" />
+
+          <div className="course-stats">
+            <div className="skeleton skeleton-small-box" />
+            <div className="skeleton skeleton-small-box" />
+          </div>
+        </div>
+
+        <div className="course-actions">
+          <div className="course-content-box">
+            <div className="skeleton skeleton-title-medium" />
+            <div className="action-buttons">
+              <div className="skeleton skeleton-action-btn" />
+              <div className="skeleton skeleton-action-btn" />
+              <div className="skeleton skeleton-action-btn" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 function CourseContent() {
   const { courseId } = useParams();
   const navigate = useNavigate();
@@ -37,52 +73,9 @@ function CourseContent() {
   // if (loading) {
   //   return <p>Loading course details...</p>;
   // }
-if (loading) {
-  return (
-    <div className="course-content-container">
-      {/* Left Sidebar Skeleton */}
-      <div className="left-sidebar">
-        <div className="skeleton skeleton-course-meta-card" />
-        <div className="skeleton skeleton-course-meta-card" />
-        <div className="skeleton skeleton-course-meta-card" />
-      </div>
-
-      {/* Center Content Skeleton */}
-      <div className="content-container">
-        <div className="tab-content-container">
-          <div className="tab-content">
-            {/* Course Title Skeleton */}
-            <div className="skeleton skeleton-course-title-card" />
-
-            {/* Three vertically stacked skeleton cards */}
-            <div className="skeleton-card">
-              <div className="skeleton skeleton-course-info" />
-            </div>
-            <div className="skeleton-card">
-              <div className="skeleton skeleton-course-info" />
-            </div>
-            <div className="skeleton-card">
-              <div className="skeleton skeleton-course-info" />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Right Action Buttons Skeleton */}
-      <div className="course-actions">
-        <div className="skeleton-card">
-          <div className="skeleton skeleton-action-heading" />
-          <div className="action-buttons">
-            <div className="skeleton skeleton-course-btn" />
-            <div className="skeleton skeleton-course-btn" />
-            <div className="skeleton skeleton-course-btn" />
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+  if (loading) {
+  return <CourseContentSkeleton />;
 }
-
 
   // ✅ Show error message if course is not found
   if (!course) {

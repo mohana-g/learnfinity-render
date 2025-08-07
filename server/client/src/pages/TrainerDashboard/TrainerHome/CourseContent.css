@@ -152,110 +152,58 @@
 .action-btn.quiz:hover {
   background-color: #7b1fa2;
 }
-.course-content-container {
-  display: flex;
-  padding: 20px;
-  gap: 20px;
-}
-.course-content-container {
-  display: flex;
-  gap: 20px;
-  padding: 20px;
-}
 
-/* Left Sidebar Skeleton Cards */
-.left-sidebar {
-  width: 220px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.skeleton-course-meta-card {
-  height: 120px;
-  border-radius: 10px;
-  background: linear-gradient(90deg, #e0e0e0 25%, #f5f5f5 50%, #e0e0e0 75%);
+/* Skeleton animation base */
+.skeleton {
+  background: linear-gradient(90deg, #ececec 25%, #f5f5f5 50%, #ececec 75%);
   background-size: 200% 100%;
-  animation: skeleton-loading 1.2s infinite;
-}
-
-/* Center Content Skeleton */
-.content-container {
-  flex: 1;
-}
-
-.tab-content-container {
-  width: 100%;
-}
-
-.tab-content {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-/* Course Title Skeleton Card */
-.skeleton-course-title-card {
-  height: 50px;
-  border-radius: 10px;
-  background: linear-gradient(90deg, #e0e0e0 25%, #f5f5f5 50%, #e0e0e0 75%);
-  background-size: 200% 100%;
-  animation: skeleton-loading 1.2s infinite;
-}
-
-/* Skeleton Cards for description, reviews, enrollments */
-.skeleton-card {
-  width: 100%;
-  height: 80px;
-  border-radius: 10px;
-  background-color: #fff;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  padding: 16px;
-  display: flex;
-  align-items: center;
-}
-
-.skeleton-course-info {
-  width: 100%;
-  height: 20px;
+  animation: skeleton-loading 1.2s infinite linear;
   border-radius: 6px;
-  background: linear-gradient(90deg, #e0e0e0 25%, #f5f5f5 50%, #e0e0e0 75%);
-  background-size: 200% 100%;
-  animation: skeleton-loading 1.2s infinite;
 }
 
-/* Right Action Skeleton */
-.course-actions {
-  width: 220px;
-}
-
-.skeleton-action-heading {
-  width: 60%;
-  height: 20px;
-  border-radius: 6px;
-  background: linear-gradient(90deg, #e0e0e0 25%, #f5f5f5 50%, #e0e0e0 75%);
-  background-size: 200% 100%;
-  animation: skeleton-loading 1.2s infinite;
-  margin-bottom: 20px;
-}
-
-.action-buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.skeleton-course-btn {
-  width: 100%;
-  height: 40px;
-  border-radius: 8px;
-  background: linear-gradient(90deg, #e0e0e0 25%, #f5f5f5 50%, #e0e0e0 75%);
-  background-size: 200% 100%;
-  animation: skeleton-loading 1.2s infinite;
-}
-
-/* Animation */
 @keyframes skeleton-loading {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Skeleton layout specific to CourseContent */
+.skeleton-title-large {
+  width: 70%;
+  height: 28px;
+  margin-bottom: 16px;
+}
+
+.skeleton-title-medium {
+  width: 50%;
+  height: 24px;
+  margin-bottom: 14px;
+}
+
+.skeleton-paragraph {
+  width: 90%;
+  height: 16px;
+  margin-bottom: 12px;
+}
+
+.skeleton-small-box {
+  width: 40%;
+  height: 20px;
+  margin: 10px 0;
+}
+
+.skeleton-btn-tab {
+  width: 80%;
+  height: 36px;
+  margin: 12px auto;
+}
+
+.skeleton-action-btn {
+  width: 100px;
+  height: 36px;
+  margin-right: 12px;
+  display: inline-block;
 }
