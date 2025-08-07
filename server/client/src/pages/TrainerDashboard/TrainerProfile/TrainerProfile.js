@@ -3,6 +3,21 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./TrainerProfile.css";
 
+// Skeleton Loader Component
+const TrainerProfileSkeleton = () => (
+  <div className="trainer-profile-container">
+    <div className="trainer-profile-card">
+      <div className="skeleton skeleton-title" />
+      <div className="skeleton skeleton-field" />
+      <div className="skeleton skeleton-field" />
+      <div className="skeleton skeleton-field" />
+      <div className="skeleton skeleton-field" />
+      <div className="skeleton skeleton-btn" />
+      <div className="skeleton skeleton-btn" />
+    </div>
+  </div>
+);
+
 const TrainerProfile = () => {
   const [profile, setProfile] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
@@ -76,7 +91,9 @@ const TrainerProfile = () => {
     navigate("/trainer-dashboard/profile/editaccount");
   };
 
-  if (loading) return <p>Loading profile...</p>;
+  // if (loading) return <p>Loading profile...</p>;
+  if (loading) return <TrainerProfileSkeleton />;
+
   if (error) return <p className="error-message">{error}</p>;
 
   return (

@@ -3,6 +3,29 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios'; // Add axios for API calls
 import './TEditAccount.css';
 
+// Skeleton loader for Trainer Edit Account
+const TEditAccountSkeleton = () => (
+  <div className="Tedit-account-container">
+    <div className="skeleton skeleton-title" />
+    <form className="Tedit-account-form">
+      <div className="Tform-group">
+        <div className="skeleton skeleton-field" />
+      </div>
+      <div className="Tform-group">
+        <div className="skeleton skeleton-field" />
+      </div>
+      <div className="Tform-group">
+        <div className="skeleton skeleton-field" />
+      </div>
+      <div className="Tform-group">
+        <div className="skeleton skeleton-field" />
+      </div>
+      <div className="skeleton skeleton-btn" />
+    </form>
+    <div className="skeleton skeleton-btn" />
+  </div>
+);
+
 const TEditAccount = () => {
   const navigate = useNavigate(); // Hook to navigate programmatically
   const [formData, setFormData] = useState({
@@ -85,7 +108,9 @@ const TEditAccount = () => {
     navigate("/trainer-dashboard/profile"); // Navigate back to Trainer Profile without any updates
   };
 
-  if (loading) return <p>Loading...</p>;
+  // if (loading) return <p>Loading...</p>;
+  if (loading) return <TEditAccountSkeleton />;
+
   if (error) return <p className="error-message">{error}</p>;
 
   return (

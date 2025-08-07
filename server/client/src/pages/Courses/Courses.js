@@ -154,7 +154,7 @@ const CoursesPage = () => {
     setCourses(sortedCourses);
   };
 
-  // Use the number of skeletons based on expected data length or fallback to 4
+  // Use the number of skeletons based on expected data length or fallback to 6
   const skeletonCount = loading
     ? (courses && courses.length > 0 ? courses.length : 6)
     : 0;
