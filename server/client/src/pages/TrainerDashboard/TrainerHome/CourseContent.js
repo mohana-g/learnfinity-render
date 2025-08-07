@@ -14,6 +14,7 @@ const CourseContentSkeleton = () => {
 
       <div className="content-container">
         <div className="tab-content-container">
+          <div className="course-content-box">
           <div className="skeleton skeleton-title-large" />
           <div className="skeleton skeleton-paragraph" />
           <div className="skeleton skeleton-paragraph" />
@@ -23,6 +24,7 @@ const CourseContentSkeleton = () => {
             <div className="skeleton skeleton-small-box" />
           </div>
         </div>
+      </div>
 
         <div className="course-actions">
           <div className="course-content-box">
