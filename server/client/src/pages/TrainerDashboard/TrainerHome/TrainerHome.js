@@ -15,50 +15,50 @@ import User3 from "../../../assets/User3.avif";
 import User4 from "../../../assets/User4.avif";
 import User5 from "../../../assets/User5.avif";
 
-const TrainerHomeSkeleton = () => {
-  return (
-    <div className="trainer-container">
-      {/* Courses Skeleton */}
-      <section className="trainer-teaching-courses-section">
-        <div className="skeleton-section-heading" />
-        <div className="trainer-courses-container-cards">
-          {[...Array(3)].map((_, i) => (
-            <div className="trainer-courses-card" key={i}>
-              <div className="skeleton skeleton-course-img" />
-              <div className="skeleton skeleton-course-title" />
-              <div className="skeleton skeleton-course-meta" />
-              <div className="skeleton skeleton-course-meta" />
-              <div className="skeleton skeleton-course-btn" />
-            </div>
-          ))}
-        </div>
-      </section>
 
-      {/* Leaderboard Skeleton */}
-      <section className="leaderboard-section">
-        <div className="skeleton-section-heading" />
-        <div className="leaderboard-top3">
-          {[...Array(3)].map((_, index) => (
-            <div className="leaderboard-item top-scorer" key={index}>
-              <div className="skeleton skeleton-avatar-circle" />
-              <div className="skeleton skeleton-line-short" />
-              <div className="skeleton skeleton-line-thin" />
-            </div>
-          ))}
+// Skeleton loader for enrolled courses
+const TrainerEnrolledCoursesSkeleton = ({ count = 3 }) => (
+  <div className="courses-container-cards">
+    {Array.from({ length: count }).map((_, i) => (
+      <div className="courses-card-link" key={i}>
+        <div className="courses-card">
+          <div className="skeleton skeleton-course-img" />
+          <div className="skeleton skeleton-course-title" />
+          <div className="skeleton skeleton-course-meta" />
+          <div className="skeleton skeleton-course-meta" />
+          <div className="skeleton skeleton-course-btn" />
         </div>
-        <div className="leaderboard-grid">
-          {[...Array(3)].map((_, index) => (
-            <div className="leaderboard-grid-item" key={index}>
-              <div className="skeleton skeleton-avatar-square" />
-              <div className="skeleton skeleton-line-short" />
-              <div className="skeleton skeleton-line-thin" />
-            </div>
-          ))}
-        </div>
-      </section>
+      </div>
+    ))}
+  </div>
+);
+
+const LeaderboardSkeleton = ({ count = 6 }) => {
+  return (
+    <div className="leaderboard-skeleton-wrapper">
+      <div className="leaderboard-top3">
+        {[...Array(3)].map((_, index) => (
+          <div className="leaderboard-item top-scorer" key={index}>
+            <div className="skeleton skeleton-avatar-circle" />
+            <div className="skeleton skeleton-line-short" />
+            <div className="skeleton skeleton-line-thin" />
+          </div>
+        ))}
+      </div>
+
+      <div className="leaderboard-grid">
+        {[...Array(count - 3)].map((_, index) => (
+          <div className="leaderboard-grid-item" key={index}>
+            <div className="skeleton skeleton-avatar-square" />
+            <div className="skeleton skeleton-line-short" />
+            <div className="skeleton skeleton-line-thin" />
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
+
 
 function TrainerHome() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -169,130 +169,11 @@ function TrainerHome() {
         </div>
       </section>
 
-{/* Loading State new code for skeleton*/}
-      {loading ? (
-        <TrainerHomeSkeleton />
-      ) : (
-        <>
-          {/* Trainer Courses Section */}
-          <section className="trainer-teaching-courses-section">
-            <h2>Your Teaching Courses</h2>
-            {teachingCourses.length > 0 ? (
-              <div className="trainer-courses-container-cards">
-                {teachingCourses.map((course) => (
-                  <Link
-                    to={`/trainer-dashboard/course-content/${course._id}`}
-                    key={course._id}
-                    className="trainer-courses-card-link"
-                  >
-                    <div className="trainer-courses-card">
-                      <img
-                        src={course.imageurl || "https://via.placeholder.com/150"}
-                        alt={course.title}
-                        className="trainer-courses-image"
-                      />
-                      <h3>{course.title}</h3>
-                      <p><strong>Instructor:</strong> {course.trainer?.fullName || "Not Available"}</p>
-                      <p><strong>Enrolled Learners:</strong> {course.learners?.length || 0}</p>
-                      <div className="btn-primary">Open Course</div>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            ) : (
-              <p className="trainer-no-courses-text">No assigned courses found.</p>
-            )}
-          </section>
-
-          {/* Leaderboard Section */}
-          <section className="leaderboard-section">
-            <h2>🏆 Learner Leaderboard</h2>
-            {leaderboardError && <p className="error-message">{leaderboardError}</p>}
-            {leaderboard.length === 0 && <p>No leaderboard data available</p>}
-            {leaderboard.length > 0 && (
-              <p className="leaderboard-note">
-                Top 3 Learners are highlighted with badges!
-              </p>
-            )}
-
-            <div className="leaderboard-top3">
-              {leaderboard.slice(0, 3).map((Learner, index) => (
-                <div
-                  className="leaderboard-item top-scorer"
-                  key={index}
-                  onClick={() => setSelectedLearner(Learner)}
-                >
-                  <div className="leaderboard-rank">{getBadge(index) || `${index + 1}`}</div>
-                  <div className="leaderboard-profile">
-                    <img
-                      src={`https://api.dicebear.com/8.x/initials/svg?seed=${Learner.name}`}
-                      alt={Learner.name}
-                      className="profile-avatar"
-                    />
-                    <div className="leaderboard-details">
-                      <h3>{Learner.name}</h3>
-                      <p>{Learner.totalMarks} Marks</p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div className="leaderboard-grid">
-              {leaderboard.slice(3).map((Learner, index) => (
-                <div
-                  className="leaderboard-grid-item"
-                  key={index + 3}
-                  onClick={() => setSelectedLearner(Learner)}
-                >
-                  <div className="grid-rank">{index + 4}</div>
-                  <div className="grid-profile">
-                    <img
-                      src={`https://api.dicebear.com/8.x/initials/svg?seed=${Learner.name}`}
-                      alt={Learner.name}
-                      className="profile-avatar"
-                    />
-                    <div>
-                      <h4>{Learner.name}</h4>
-                      <p>{Learner.totalMarks} Marks</p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          {/* Learner Details Popup */}
-          {selectedLearner && (
-            <div className="Learner-popup-overlay" onClick={() => setSelectedLearner(null)}>
-              <div className="Learner-popup-card" onClick={(e) => e.stopPropagation()}>
-                <h2>{selectedLearner.name}</h2>
-                <img
-                  src={`https://api.dicebear.com/8.x/initials/svg?seed=${selectedLearner.name}`}
-                  alt={selectedLearner.name}
-                  className="profile-avatar"
-                />
-                <p><strong>Email:</strong> {selectedLearner.email || 'Email not provided'}</p>
-                <p><strong>Phone:</strong> {selectedLearner.phone || 'Phone number not provided'}</p>
-                <p><strong>Total Marks:</strong> {selectedLearner.totalMarks}</p>
-                <p><strong>Rank:</strong> {leaderboard.findIndex(s => s.name === selectedLearner.name) + 1}</p>
-                <p><strong>Enrolled Courses:</strong> {selectedLearner.enrolledCourses?.length || 0}</p>
-                <p><strong>Date of Joined:</strong> {new Date(selectedLearner.DateofJoined).toLocaleDateString()}</p>
-                <button className="leaderboard-close-btn" onClick={() => setSelectedLearner(null)}>
-                  Close
-                </button>
-              </div>
-            </div>
-          )}
-        </>
-      )}
-
-
-      {/* Trainer Courses Section*/}
-{/* <section className="trainer-teaching-courses-section">
+      {/* Trainer Courses Section */}
+<section className="trainer-teaching-courses-section">
   <h2>Your Teaching Courses</h2>
   {loading ? (
-    <p>Loading courses...</p>
+    <TrainerEnrolledCoursesSkeleton count={4} />
   ) : teachingCourses.length > 0 ? (
     <div className="trainer-courses-container-cards">
       {teachingCourses.map((course) => (
@@ -318,19 +199,32 @@ function TrainerHome() {
   ) : (
     <p className="trainer-no-courses-text">No assigned courses found.</p>
   )}
-</section> */}
+</section>
 
 
     {/* Leaderboard Section */}
-    {/* <section className="leaderboard-section">
+    <section className="leaderboard-section">
         <h2>🏆 Learner Leaderboard</h2>
         {leaderboardError && <p className="error-message">{leaderboardError}</p>}
-        {leaderboard.length === 0 && <p>No leaderboard data available</p>}
-        {leaderboard.length > 0 && (
+        {/* {leaderboard.length === 0 && <p>No leaderboard data available</p>} */}
+        {loading ? (
+          <LeaderboardSkeleton count={11} />
+        ) : leaderboard.length === 0 ? (
+          <p>No leaderboard data available</p>
+        ) : (
+          <>
+            <p className="leaderboard-note">
+              Top 3 learners are highlighted with badges!
+            </p>
+            {/* ...rest of your leaderboard rendering code... */}
+          </>
+        )}
+        
+        {/* {leaderboard.length > 0 && (
           <p className="leaderboard-note">
             Top 3 Learners are highlighted with badges!
           </p>
-        )}
+        )} */}
 
         <div className="leaderboard-top3">
           {leaderboard.slice(0, 3).map((Learner, index) => (
@@ -377,9 +271,9 @@ function TrainerHome() {
             </div>
           ))}
         </div>
-      </section> */}
+      </section>
        {/* Learner Details Popup */}
-       {/* {selectedLearner && (
+       {selectedLearner && (
         <div className="Learner-popup-overlay" onClick={() => setSelectedLearner(null)}>
           <div className="Learner-popup-card" onClick={(e) => e.stopPropagation()}>
             <h2>{selectedLearner.name}</h2>
@@ -399,7 +293,7 @@ function TrainerHome() {
             </button>
           </div>
         </div>
-      )} */}
+      )}
 
       {/* Testimonials Section */}
       <section className="trainer-testimonials-container">
