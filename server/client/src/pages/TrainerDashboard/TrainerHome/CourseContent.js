@@ -37,40 +37,41 @@ function CourseContent() {
   // if (loading) {
   //   return <p>Loading course details...</p>;
   // }
-
 if (loading) {
-    return (
-      <div className="course-content-container">
-        <div className="left-sidebar">
-          <div className="skeleton skeleton-course-meta" />
-          <div className="skeleton skeleton-course-meta" />
-          <div className="skeleton skeleton-course-meta" />
+  return (
+    <div className="course-content-container">
+      {/* Left sidebar with 3 skeleton nav items */}
+      <div className="left-sidebar">
+        <div className="skeleton skeleton-side-nav" />
+        <div className="skeleton skeleton-side-nav" />
+        <div className="skeleton skeleton-side-nav" />
+      </div>
+
+      {/* Main content area */}
+      <div className="content-container">
+        {/* Center title and metadata */}
+        <div className="course-main-header">
+          <div className="skeleton skeleton-course-title" />
+          <div className="course-meta-row">
+            <div className="skeleton skeleton-course-meta" />
+            <div className="skeleton skeleton-course-meta" />
+            <div className="skeleton skeleton-course-meta" />
+          </div>
         </div>
 
-        <div className="content-container">
-          <div className="tab-content-container">
-            <div className="tab-content">
-              <div className="skeleton skeleton-course-title" />
-              <div className="skeleton skeleton-course-meta" />
-              <div className="skeleton skeleton-course-meta" />
-              <div className="skeleton skeleton-course-meta" />
-            </div>
-          </div>
-
-          <div className="course-actions">
-            <div className="course-content-box">
-              <div className="skeleton skeleton-course-title" />
-              <div className="action-buttons">
-                <div className="skeleton skeleton-course-btn" />
-                <div className="skeleton skeleton-course-btn" />
-                <div className="skeleton skeleton-course-btn" />
-              </div>
-            </div>
+        {/* Box with heading and buttons */}
+        <div className="course-action-box">
+          <div className="skeleton skeleton-box-heading" />
+          <div className="action-buttons-row">
+            <div className="skeleton skeleton-course-btn" />
+            <div className="skeleton skeleton-course-btn" />
+            <div className="skeleton skeleton-course-btn" />
           </div>
         </div>
       </div>
-    );
-  }
+    </div>
+  );
+}
 
   // ✅ Show error message if course is not found
   if (!course) {
