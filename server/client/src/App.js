@@ -72,6 +72,8 @@ function App() {
 
   return (
     <>
+        <div className="app-container">
+
       <Navbar isAdmin={isAdmin} isTrainer={isTrainer} isLearner={isLearner} />
       <Routes>
         {/* Public Routes */}
@@ -146,6 +148,8 @@ function App() {
         <Route path="*" element={<Navigate to={isLearner ? "/learner-dashboard" : isAdmin ? "/admin-dashboard" : isTrainer ? "/trainer-dashboard" : "/signin"} />} />
       </Routes>
       <Footer />
+      </div>
+      {/* Add a margin to the bottom of the page to prevent footer overlap */}
     </>
   );
 }

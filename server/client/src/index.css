@@ -12,35 +12,34 @@ code {
     monospace;
 }
 
-/* Global layout fix for big screens with responsiveness */
-#root {
-  display: flex;
-  justify-content: center;
+body {
+  margin: 0;
+  font-family: 'Work Sans', sans-serif;
 }
 
-#root > * {
+.app-container {
   width: 100%;
   padding: 0 20px;
-  max-width: 100%; /* Default: full width on small screens */
+  margin: 0 auto;
 }
 
 /* Tablets & small laptops */
 @media (min-width: 768px) {
-  #root > * {
+  .app-container {
     max-width: 1024px;
   }
 }
 
 /* Large desktops */
 @media (min-width: 1200px) {
-  #root > * {
+  .app-container {
     max-width: 1280px;
   }
 }
 
 /* Ultra-wide monitors */
 @media (min-width: 1600px) {
-  #root > * {
+  .app-container {
     max-width: 1440px;
   }
 }
