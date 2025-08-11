@@ -6,11 +6,11 @@ import "./CourseContent.css";
 const CourseContentSkeleton = () => {
   return (
     <div className="course-content-container">
-      {/* <div className="left-sidebar">
+      <div className="left-sidebar">
         <div className="skeleton skeleton-btn-tab" />
         <div className="skeleton skeleton-btn-tab" />
         <div className="skeleton skeleton-btn-tab" />
-      </div> */}
+      </div>
 
       <div className="content-container">
         <div className="tab-content-container">
