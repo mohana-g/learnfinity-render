@@ -96,6 +96,9 @@
     background-position: -200% 0;
   }
 }
+.trainer-profile-card {
+  margin-bottom: 20%;
+}
 
 .skeleton-title {
   width: 60%;
