@@ -171,26 +171,23 @@
 }
 
 /* Skeleton layout specific to CourseContent */
-.course-content-container {
-  display: flex; /* Keep sidebar & content side by side */
-  gap: 20px;
-}
-
-.left-sidebar {
+.sidebar {
   display: flex;
   flex-direction: column; /* Stack buttons vertically */
   gap: 10px;
   align-items: flex-start; /* Keep them to the left */
   padding-top: 10px; /* Little space from top */
+  width: 100px; /* Fixed width for sidebar */
 }
 
 .skeleton-btn-tab {
   width: 60px;  /* Only span small width, not full */
   height: 30px;
+
 }
 
 .skeleton-title-large {
-  width: 70%;
+  width: 50%;
   margin: 20px auto;
   height: 30px;
   margin-bottom: 16px;
@@ -203,22 +200,22 @@
 }
 
 .skeleton-paragraph {
-  width: 90%;
+  width: 100%;
   height: 25px;
   margin-bottom: 12px;
 }
 
-.skeleton-small-box {
+.skeleton-small-box1 {
+  width: 17%;
+  height: 16px;
+  margin: 10px 0;
+}
+
+.skeleton-small-box2 {
   width: 15%;
   height: 16px;
   margin: 10px 0;
 }
-/* 
-.skeleton-btn-tab {
-  width: 80%;
-  height: 36px;
-  margin: 12px auto;
-} */
 
 .skeleton-action-btn {
   width: 100px;

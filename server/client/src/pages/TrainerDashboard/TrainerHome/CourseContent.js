@@ -6,7 +6,7 @@ import "./CourseContent.css";
 const CourseContentSkeleton = () => {
   return (
     <div className="course-content-container">
-      <div className="left-sidebar">
+      <div className="sidebar">
         <div className="skeleton skeleton-btn-tab" />
         <div className="skeleton skeleton-btn-tab" />
         <div className="skeleton skeleton-btn-tab" />
@@ -19,8 +19,8 @@ const CourseContentSkeleton = () => {
           <div className="skeleton skeleton-paragraph" />
 
           <div className="course-stats">
-            <div className="skeleton skeleton-small-box" />
-            <div className="skeleton skeleton-small-box" />
+            <div className="skeleton skeleton-small-box1" />
+            <div className="skeleton skeleton-small-box2" />
           </div>
         </div>
       </div>
