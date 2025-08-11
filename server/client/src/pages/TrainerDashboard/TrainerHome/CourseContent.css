@@ -173,33 +173,34 @@
 /* Skeleton layout specific to CourseContent */
 .skeleton-title-large {
   width: 70%;
+  margin: 20px 0;
   height: 28px;
   margin-bottom: 16px;
 }
 
 .skeleton-title-medium {
-  width: 50%;
+  width: 30%;
   height: 24px;
   margin-bottom: 14px;
 }
 
 .skeleton-paragraph {
   width: 90%;
-  height: 16px;
+  height: 25px;
   margin-bottom: 12px;
 }
 
 .skeleton-small-box {
-  width: 40%;
+  width: 30%;
   height: 20px;
   margin: 10px 0;
 }
-
+/* 
 .skeleton-btn-tab {
   width: 80%;
   height: 36px;
   margin: 12px auto;
-}
+} */
 
 .skeleton-action-btn {
   width: 100px;

@@ -173,7 +173,7 @@ function TrainerHome() {
 <section className="trainer-teaching-courses-section">
   <h2>Your Teaching Courses</h2>
   {loading ? (
-    <TrainerEnrolledCoursesSkeleton count={4} />
+    <TrainerEnrolledCoursesSkeleton count={3} />
   ) : teachingCourses.length > 0 ? (
     <div className="trainer-courses-container-cards">
       {teachingCourses.map((course) => (
