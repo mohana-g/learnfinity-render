@@ -107,7 +107,17 @@
 
 .Tedit-account-container1 {
   margin-bottom: 20%;
+  padding: 20px;
+  max-width: 500px;
+  margin: 0 auto;
+  margin-top: 30px;
+  margin-bottom: 35px;
+  font-family: 'Work Sans', sans-serif;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  user-select: none; /* Prevent selection */
 }
+
 .skeleton-title {
   width: 60%;
   height: 28px;
