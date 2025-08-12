@@ -5,6 +5,7 @@
     margin: 20px;
     font-family: 'Work Sans', sans-serif;
     user-select: none; /* Prevent selection */
+    max-height: 2000px;
 }
 
 /* Course header */
