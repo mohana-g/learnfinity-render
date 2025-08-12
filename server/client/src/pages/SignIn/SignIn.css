@@ -7,6 +7,8 @@
     justify-content: center;
     align-items: center;
     user-select: none; /* Prevent selection */
+    min-height: calc(100vh - 60px); /* 60px for footer height */
+
 }
 
 .signin-page::before {
@@ -16,6 +18,7 @@
     left: 0;
     right: 0;
     bottom: 0;
+    min-height: calc(100vh - 60px); /* 60px for footer height */
     background-image: url('https://static.vecteezy.com/system/resources/thumbnails/023/170/834/small_2x/light-bulb-with-glowing-rays-with-book-learning-cartoon-style-stationery-symbol-of-creativity-doodles-concept-innovation-inspiration-invention-and-idea-3d-rendering-on-yellow-background-photo.jpg');
     background-size: cover;
     background-position: center;
@@ -92,3 +95,16 @@
     text-decoration: underline;
   }
   
+  @media (max-width: 768px) {
+  .signin-container {
+    width: 90%;
+    padding: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .signin-container {
+    width: 95%;
+    padding: 10px;
+  }
+}
