@@ -5,7 +5,7 @@ import './TEditAccount.css';
 
 // Skeleton loader for Trainer Edit Account
 const TEditAccountSkeleton = () => (
-  <div className="Tedit-account-container">
+  <div className="Tedit-account-container1">
     <div className="skeleton skeleton-title" />
     <form className="Tedit-account-form">
       <div className="Tform-group">
