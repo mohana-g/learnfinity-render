@@ -11,7 +11,7 @@ const About = () => {
       <section className="about-content">
         <div className="about-left">
           <img
-            src="server\uploads\e-learning-1-sito-EN.jpg"
+            src="https://hilms.onrender.com/uploads/E-Learning.png"
             alt="Education Illustration"
             className="about-image"
           />
@@ -25,23 +25,23 @@ const About = () => {
           <p>Whether you’re looking to improve your professional skills, train your workforce, or explore new career opportunities, Learnfinity provides the tools, resources, and support you need to succeed.</p>
           <p><strong>Empower your career, empower your future.</strong></p>
           <div className="about-features">
-  <div className="feature-card">
-    <span className="emoji">📊</span>
-    Business & Leadership Training
-  </div>
-  <div className="feature-card">
-    <span className="emoji">💻</span>
-    Technology & Software Skills
-  </div>
-  <div className="feature-card">
-    <span className="emoji">📜</span>
-    Accredited Certifications
-  </div>
-  <div className="feature-card">
-    <span className="emoji">🤝</span>
-    Corporate Collaboration Tools
-  </div>
-</div>
+          <div className="feature-card">
+            <span className="emoji">📊</span>
+            Business & Leadership Training
+          </div>
+          <div className="feature-card">
+            <span className="emoji">💻</span>
+            Technology & Software Skills
+          </div>
+          <div className="feature-card">
+            <span className="emoji">📜</span>
+            Accredited Certifications
+          </div>
+          <div className="feature-card">
+            <span className="emoji">🤝</span>
+            Corporate Collaboration Tools
+          </div>
+        </div>
 
         </div>
       </section>

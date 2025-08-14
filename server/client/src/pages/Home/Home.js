@@ -144,7 +144,7 @@ function Home() {
             <Link to="/trainer-signup" className="btn-secondary">Become a Trainer</Link>
           </div>
           <div className="teach-image">
-          <img src="https://hilms.onrender.com/uploads/E-Learning.png" alt="E-Learning Platform" />
+          <img src="https://hilms.onrender.com/uploads/istockphoto-1392125218-612x612.jpg" alt="Teaching Platform" />
           </div>
         </div>
       </section>

@@ -35,6 +35,7 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 0 50px;
+  margin-bottom: 30px;
 }
 
 .about-left {
@@ -69,7 +70,8 @@ body {
   color: #555;
 }
 
-/* Features Section */.about-features {
+/* Features Section */
+.about-features {
   display: flex;
   gap: 20px;
   flex-wrap: wrap;
@@ -86,7 +88,7 @@ body {
   font-weight: 600;
   color: #222;
   text-align: center;
-  flex: 1 1 calc(25% - 20px); /* 4 cards per row on desktop */
+  flex: 1 1 calc(50% - 15px); /* 2 cards per row on desktop */
   min-width: 200px;
   max-width: 250px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.08);
