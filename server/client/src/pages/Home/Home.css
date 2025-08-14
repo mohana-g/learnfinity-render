@@ -9,7 +9,8 @@
 .hero-section {
 position: relative;
 /* background-image: url("https://www.shutterstock.com/image-photo/education-internet-online-digital-technology-260nw-2342293899.jpg"); */
-background-image: url(https://www.zealousys.com/wp-content/uploads/2021/06/Customized-Learning-Management-System-LMS-for-Different-Industries.webp);
+/* background-image: url(https://www.zealousys.com/wp-content/uploads/2021/06/Customized-Learning-Management-System-LMS-for-Different-Industries.webp); */
+background-image: url("server/uploads/Customized-Learning-Management-System-LMS-for-Different-Industries.webp");
 background-size: cover;
 background-position: center;
 background-repeat: no-repeat;
@@ -228,7 +229,7 @@ background-color: #0000cc;
   }
 
   /* Testimonials Section */
-  .testimonials-container {
+  /* .testimonials-container {
     text-align: center;
     padding: 40px;
   }
@@ -299,11 +300,11 @@ background-color: #0000cc;
 
   .nav-button:hover {
     color: #0000cc;
-  }
+  } */
 
 
 /* Expert Instructors Section */
-.expert-instructors-section {
+/* .expert-instructors-section {
   padding: 50px 20px;
 }
 
@@ -370,7 +371,7 @@ background-color: #0000cc;
 
 .social-icon:hover {
   color: #0505fc;
-}
+} */
 
 /* Skeleton Loader Styles for Home Popular Courses */
 .skeleton {

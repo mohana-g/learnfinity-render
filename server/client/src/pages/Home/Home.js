@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FaInstagram, FaFacebookF, FaTwitter, FaArrowLeft, FaArrowRight } from 'react-icons/fa';
-import User1 from '../../assets/User1.jpg';
-import User2 from '../../assets/User2.jpg';
-import User3 from '../../assets/User3.avif';
-import User4 from '../../assets/User4.avif';
-import User5 from '../../assets/User5.avif';
+// import User1 from '../../assets/User1.jpg';
+// import User2 from '../../assets/User2.jpg';
+// import User3 from '../../assets/User3.avif';
+// import User4 from '../../assets/User4.avif';
+// import User5 from '../../assets/User5.avif';
 import './Home.css';
 
 // Add this above your Home component
@@ -26,33 +26,33 @@ function Home() {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const testimonials = [
-    {
-      name: 'Preetham',
-      quote: "I've learned so much from this platform. The courses are top-notch, and the instructors are experts in their fields.",
-      image: User5,
-    },
-    {
-      name: 'Chaitanya',
-      quote: 'The interactive lessons and quizzes have made my learning experience enjoyable and effective. I highly recommend it!',
-      image: User4,
-    },
-    {
-      name: 'Abhishikth',
-      quote: "This e-learning platform has been a game-changer for me. It's convenient, flexible, and has helped me advance in my career.",
-      image: User3,
-    },
-    {
-      name: 'Narasimha',
-      quote: "I can't believe how much I've grown as a learner. The variety of courses is impressive, and the support is outstanding.",
-      image: User1,
-    },
-    {
-      name: 'Manjith',
-      quote: "The quality of education here is unmatched. I'm grateful for the opportunity to expand my knowledge and skills.",
-      image: User2,
-    },
-  ];
+  // const testimonials = [
+  //   {
+  //     name: 'Preetham',
+  //     quote: "I've learned so much from this platform. The courses are top-notch, and the instructors are experts in their fields.",
+  //     image: User5,
+  //   },
+  //   {
+  //     name: 'Chaitanya',
+  //     quote: 'The interactive lessons and quizzes have made my learning experience enjoyable and effective. I highly recommend it!',
+  //     image: User4,
+  //   },
+  //   {
+  //     name: 'Abhishikth',
+  //     quote: "This e-learning platform has been a game-changer for me. It's convenient, flexible, and has helped me advance in my career.",
+  //     image: User3,
+  //   },
+  //   {
+  //     name: 'Narasimha',
+  //     quote: "I can't believe how much I've grown as a learner. The variety of courses is impressive, and the support is outstanding.",
+  //     image: User1,
+  //   },
+  //   {
+  //     name: 'Manjith',
+  //     quote: "The quality of education here is unmatched. I'm grateful for the opportunity to expand my knowledge and skills.",
+  //     image: User2,
+  //   },
+  // ];
 
   const handlePrevClick = () => {
     setCurrentIndex((prevIndex) => (prevIndex === 0 ? testimonials.length - 1 : prevIndex - 1));
@@ -144,13 +144,13 @@ function Home() {
             <Link to="/trainer-signup" className="btn-secondary">Become a Trainer</Link>
           </div>
           <div className="teach-image">
-            <img src="https://media.istockphoto.com/id/1392125218/photo/happy-teacher-and-schoolboy-giving-each-other-high-five-on-a-class.jpg?s=612x612&w=0&k=20&c=xn3BHSIvAzsLosNAYEn5SdZILHd_smpp3W4DR7fNTdM=" alt="Teaching Platform" />
+          <img src="server/uploads/istockphoto-1392125218-612x612.jpg" alt="Teaching Platform" />
           </div>
         </div>
       </section>
 
       {/* Testimonials Section */}
-      <section className="testimonials-container">
+      {/* <section className="testimonials-container">
         <h2>Learner Testimonials</h2>
         <div className="testimonial-slider">
           <button className="nav-button left" onClick={handlePrevClick}>
@@ -167,10 +167,10 @@ function Home() {
             <FaArrowRight />
           </button>
         </div>
-      </section>
+      </section> */}
 
       {/* Expert Instructors Section */}
-      <section className="expert-instructors-section">
+      {/* <section className="expert-instructors-section">
         <h2>Expert Instructors</h2>
         <div className="instructors-container">
           <div className="instructor-card">
@@ -296,7 +296,7 @@ function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
     </div>
   );
 }
