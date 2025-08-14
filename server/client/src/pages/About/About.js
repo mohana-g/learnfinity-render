@@ -11,27 +11,41 @@ const About = () => {
       <section className="about-content">
         <div className="about-left">
           <img
-            src="https://img.freepik.com/premium-vector/e-learning-vector-illustration_95561-12.jpg"
+            src="server\uploads\e-learning-1-sito-EN.jpg"
             alt="Education Illustration"
             className="about-image"
           />
         </div>
         <div className="about-right">
-          <h2>Welcome to Learnfinity!!</h2>
+          <h2>Welcome to Learnfinity – Your Partner in Professional Growth</h2>
           <p>
-            Education helps us get exposure to new ideas and concepts that we can use to
-            appreciate and improve the world around us and the world within us.
+            At Learnfinity, we believe that learning never stops. Our platform is designed for working professionals, organizations, and teams who aim to stay ahead in today’s fast-paced business world.
           </p>
-          <p>All things are possible because anything can be learned.</p>
+          <p>From leadership development to technical upskilling, our curated courses are crafted by industry experts to meet real-world challenges.</p>
+          <p>Whether you’re looking to improve your professional skills, train your workforce, or explore new career opportunities, Learnfinity provides the tools, resources, and support you need to succeed.</p>
+          <p><strong>Empower your career, empower your future.</strong></p>
           <div className="about-features">
-            <div className="feature-card">🎓 Quizzes</div>
-            <div className="feature-card">📜 Certificate</div>
-            <div className="feature-card">👨‍🏫 Skilled Instructors</div>
-            <div className="feature-card">🎥 Recorded Classes</div>
-          </div>
+  <div className="feature-card">
+    <span className="emoji">📊</span>
+    Business & Leadership Training
+  </div>
+  <div className="feature-card">
+    <span className="emoji">💻</span>
+    Technology & Software Skills
+  </div>
+  <div className="feature-card">
+    <span className="emoji">📜</span>
+    Accredited Certifications
+  </div>
+  <div className="feature-card">
+    <span className="emoji">🤝</span>
+    Corporate Collaboration Tools
+  </div>
+</div>
+
         </div>
       </section>
-      <section className="about-instructors-section">
+      {/* <section className="about-instructors-section">
         <h2>Meet Our Expert Instructors</h2>
         <div className="about-instructors-container">
           <div className="about-instructor-card">
@@ -157,7 +171,7 @@ const About = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
     </div>
   );
 };
