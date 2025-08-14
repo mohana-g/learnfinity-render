@@ -54,13 +54,13 @@ function Home() {
   //   },
   // ];
 
-  const handlePrevClick = () => {
-    setCurrentIndex((prevIndex) => (prevIndex === 0 ? testimonials.length - 1 : prevIndex - 1));
-  };
+  // const handlePrevClick = () => {
+  //   setCurrentIndex((prevIndex) => (prevIndex === 0 ? testimonials.length - 1 : prevIndex - 1));
+  // };
 
-  const handleNextClick = () => {
-    setCurrentIndex((prevIndex) => (prevIndex === testimonials.length - 1 ? 0 : prevIndex + 1));
-  };
+  // const handleNextClick = () => {
+  //   setCurrentIndex((prevIndex) => (prevIndex === testimonials.length - 1 ? 0 : prevIndex + 1));
+  // };
 
   // Fetch popular courses sorted by number of enrolled Learners
   const fetchPopularCourses = async () => {
