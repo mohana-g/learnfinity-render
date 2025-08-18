@@ -11,7 +11,7 @@ const About = () => {
       <section className="about-content">
         <div className="about-left">
           <img
-            src="https://hilms.onrender.com/uploads/E-Learning.png"
+            src="https://hilms.onrender.com/uploads/e90af6d9-1036-48b5-ac3d-6a2391bd6009.png"
             alt="Education Illustration"
             className="about-image"
           />
