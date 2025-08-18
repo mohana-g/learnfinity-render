@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FaInstagram, FaFacebookF, FaTwitter} from 'react-icons/fa';
 import './LearnerAbout.css';
 
 const About = () => {
+  
+     const [loading, setLoading] = useState(true);
+  
   return (
     <div className="about-container">
       <header className="about-header">
@@ -10,10 +13,13 @@ const About = () => {
       </header>
       <section className="about-content">
         <div className="about-left">
+          {loading && <div className="skeleton skeleton-course-aboimg"></div>}
           <img
-            src="https://img.freepik.com/premium-vector/e-learning-vector-illustration_95561-12.jpg"
+            src="https://hilms.onrender.com/uploads/e90af6d9-1036-48b5-ac3d-6a2391bd6009.png"
             alt="Education Illustration"
             className="about-image"
+            onLoad={() => setLoading(false)}
+            style={{ display: loading ? "none" : "block" }}
           />
         </div>
         <div className="about-right">
@@ -31,7 +37,7 @@ const About = () => {
           </div>
         </div>
       </section>
-      <section className="about-instructors-section">
+      {/* <section className="about-instructors-section">
         <h2>Meet Our Expert Instructors</h2>
         <div className="about-instructors-container">
           <div className="about-instructor-card">
@@ -157,7 +163,7 @@ const About = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
     </div>
   );
 };
