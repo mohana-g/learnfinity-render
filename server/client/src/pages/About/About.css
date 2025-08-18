@@ -200,7 +200,7 @@ body {
 .skeleton-course-img {
   width: 100%;
   max-width: 600px;
-  height: 400px; /* adjust based on your design */
+  height: 600px;
   margin: 0 auto;
   border-radius: 10px;
 }

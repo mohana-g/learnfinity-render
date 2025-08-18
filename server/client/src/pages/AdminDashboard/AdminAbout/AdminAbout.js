@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FaInstagram, FaFacebookF, FaTwitter} from 'react-icons/fa';
 import './AdminAbout.css';
 
 const About = () => {
+
+     const [loading, setLoading] = useState(true);
+  
   return (
     <div className="about-container">
       <header className="about-header">
@@ -10,10 +13,13 @@ const About = () => {
       </header>
       <section className="about-content">
         <div className="about-left">
+          {loading && <div className="skeleton skeleton-course-img"></div>}
           <img
             src="https://hilms.onrender.com/uploads/e90af6d9-1036-48b5-ac3d-6a2391bd6009.png"
             alt="Education Illustration"
             className="about-image"
+            onLoad={() => setLoading(false)}
+            style={{ display: loading ? "none" : "block" }}
           />
         </div>
         <div className="about-right">
