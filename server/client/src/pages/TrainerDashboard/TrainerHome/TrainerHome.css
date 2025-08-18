@@ -359,6 +359,7 @@
     max-width: 1000px;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 25px;
+    margin-bottom: 40px;
 }
 
 .leaderboard-grid-item {
