@@ -107,7 +107,7 @@ const CourseCardSkeleton = () => {
       <div className="skeleton skeleton-course-title"></div>
       <div className="skeleton skeleton-course-meta"></div>
       <div className="skeleton skeleton-course-meta"></div>
-      {/* <div className="skeleton skeleton-course-btn"></div> */}
+      <div className="skeleton skeleton-course-btn"></div>
     </div>
   );
 };
