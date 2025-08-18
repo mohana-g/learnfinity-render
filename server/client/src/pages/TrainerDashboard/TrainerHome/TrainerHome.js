@@ -9,11 +9,11 @@ import {
   FaArrowLeft,
   FaArrowRight,
 } from "react-icons/fa";
-import User1 from "../../../assets/User1.jpg";
-import User2 from "../../../assets/User2.jpg";
-import User3 from "../../../assets/User3.avif";
-import User4 from "../../../assets/User4.avif";
-import User5 from "../../../assets/User5.avif";
+// import User1 from "../../../assets/User1.jpg";
+// import User2 from "../../../assets/User2.jpg";
+// import User3 from "../../../assets/User3.avif";
+// import User4 from "../../../assets/User4.avif";
+// import User5 from "../../../assets/User5.avif";
 
 
 // Skeleton loader for enrolled courses
@@ -68,33 +68,33 @@ function TrainerHome() {
   const [leaderboardError, setLeaderboardError] = useState(null);
   const [selectedLearner, setSelectedLearner] = useState(null);
 
-  const testimonials = [
-    {
-      name: "Preetham",
-      quote: "The platform provides a seamless teaching experience with excellent support and tools for instructors.",
-      image: User5,
-    },
-    {
-      name: "Chaitanya",
-      quote: "Teaching here has been a rewarding experience. The community and resources make it easy to focus on delivering quality content.",
-      image: User4,
-    },
-    {
-      name: "Abhishikth",
-      quote: "As an instructor, I love the flexibility and control I have over my courses. Highly recommended!",
-      image: User3,
-    },
-    {
-      name: "Narasimha",
-      quote: "The ability to reach a global audience has made teaching on this platform an amazing opportunity.",
-      image: User1,
-    },
-    {
-      name: "Manjith",
-      quote: "The instructor tools are intuitive and powerful, making course creation a breeze.",
-      image: User2,
-    },
-  ];
+  // const testimonials = [
+  //   {
+  //     name: "Preetham",
+  //     quote: "The platform provides a seamless teaching experience with excellent support and tools for instructors.",
+  //     image: User5,
+  //   },
+  //   {
+  //     name: "Chaitanya",
+  //     quote: "Teaching here has been a rewarding experience. The community and resources make it easy to focus on delivering quality content.",
+  //     image: User4,
+  //   },
+  //   {
+  //     name: "Abhishikth",
+  //     quote: "As an instructor, I love the flexibility and control I have over my courses. Highly recommended!",
+  //     image: User3,
+  //   },
+  //   {
+  //     name: "Narasimha",
+  //     quote: "The ability to reach a global audience has made teaching on this platform an amazing opportunity.",
+  //     image: User1,
+  //   },
+  //   {
+  //     name: "Manjith",
+  //     quote: "The instructor tools are intuitive and powerful, making course creation a breeze.",
+  //     image: User2,
+  //   },
+  // ];
 
 // ✅ Fetch assigned courses from backend
   useEffect(() => {
@@ -116,17 +116,17 @@ function TrainerHome() {
     fetchCourses();
   }, []);
 
-  const handlePrevClick = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? testimonials.length - 1 : prevIndex - 1
-    );
-  };
+  // const handlePrevClick = () => {
+  //   setCurrentIndex((prevIndex) =>
+  //     prevIndex === 0 ? testimonials.length - 1 : prevIndex - 1
+  //   );
+  // };
 
-  const handleNextClick = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === testimonials.length - 1 ? 0 : prevIndex + 1
-    );
-  };
+  // const handleNextClick = () => {
+  //   setCurrentIndex((prevIndex) =>
+  //     prevIndex === testimonials.length - 1 ? 0 : prevIndex + 1
+  //   );
+  // };
 
   
     useEffect(() => {
@@ -296,7 +296,7 @@ function TrainerHome() {
       )}
 
       {/* Testimonials Section */}
-      <section className="trainer-testimonials-container">
+      {/* <section className="trainer-testimonials-container">
         <h2>Learner Testimonials</h2>
         <div className="trainer-testimonial-slider">
           <button className="trainer-nav-button left" onClick={handlePrevClick}>
@@ -317,9 +317,10 @@ function TrainerHome() {
             <FaArrowRight />
           </button>
         </div>
-      </section>
+      </section> */}
+
       {/* Expert Instructors Section */}
-      <section className="trainer-expert-instructors-section">
+      {/* <section className="trainer-expert-instructors-section">
         <h2>Expert Instructors</h2>
         <div className="trainer-instructors-container">
           <div className="trainer-instructor-card">
@@ -409,7 +410,7 @@ function TrainerHome() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
     </div>
   );
 }
