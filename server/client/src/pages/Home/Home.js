@@ -22,7 +22,7 @@ const HomeCourseSkeleton = () => (
 );
 
 function Home() {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  // const [currentIndex, setCurrentIndex] = useState(0);
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
 

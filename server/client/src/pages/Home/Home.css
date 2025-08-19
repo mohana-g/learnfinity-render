@@ -14,7 +14,7 @@ background-image: url("https://hilms.onrender.com/uploads/Customized-Learning-Ma
 background-size: cover;
 background-position: center;
 background-repeat: no-repeat;
-padding: 100px 20px;
+padding: 80px 20px;
 color: black;
 text-align: center;
 }
@@ -69,7 +69,7 @@ background-color: #0000cc;
 
 /* Popular Courses Section */
 .courses-section {
-  padding: 50px 20px;
+  padding: 40px 20px;
   text-align: center;
 }
 

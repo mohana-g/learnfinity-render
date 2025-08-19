@@ -59,7 +59,7 @@ const LeaderboardSkeleton = ({ count = 6 }) => {
 };
 
 function LearnerHome() {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  // const [currentIndex, setCurrentIndex] = useState(0);
   const [enrolledCourses, setEnrolledCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [leaderboard, setLeaderboard] = useState([]);
