@@ -415,3 +415,46 @@ background-color: #0000cc;
   margin: 18px auto 20px auto;
   border-radius: 5px;
 }
+
+
+.career-path-section {
+  padding: 40px 20px;
+  background: #f9f9f9;
+  text-align: center;
+}
+
+.career-paths-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.career-path-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  text-align: left;
+}
+
+.career-path-card h3 {
+  margin-bottom: 10px;
+  font-size: 1.3rem;
+  color: #333;
+}
+
+.career-path-card p {
+  font-size: 0.95rem;
+  margin-bottom: 15px;
+  color: #666;
+}
+
+.career-path-card ol {
+  padding-left: 20px;
+  color: #444;
+}
+
+.career-path-card li {
+  margin-bottom: 8px;
+}
