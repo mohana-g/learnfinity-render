@@ -30,6 +30,7 @@
 
 .trainer-header-content {
     position: relative;
+    margin-bottom: 10px;
     z-index: 2;
 }
 
