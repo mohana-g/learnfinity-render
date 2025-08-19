@@ -157,10 +157,10 @@ function LearnerHome() {
           <h1 className="learnerHeaderHeading">
             Welcome to Learnfinity - Empowering Your Learning Journey
           </h1>
-          <p className="learnerHeaderText">
+          {/* <p className="learnerHeaderText">
             Explore a wide range of courses designed to help you achieve your
             goals. Learn from top instructors and grow your skills today!
-          </p>
+          </p> */}
           <Link to="/learner-dashboard/courses">
             <button className="learnerHeaderButton">Explore Courses</button>
           </Link>
