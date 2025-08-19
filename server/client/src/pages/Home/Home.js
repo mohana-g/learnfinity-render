@@ -21,10 +21,62 @@ const HomeCourseSkeleton = () => (
   </div>
 );
 
+// New component to display a career path with related course recommendations
+const CareerPathBox = ({ path, onSelect }) => (
+  <div className="career-path-box" onClick={() => onSelect(path)}>
+    <h3>{path.title}</h3>
+    <p>{path.description}</p>
+    <p><strong>Level:</strong> {path.levels.join(' → ')}</p>
+  </div>
+);
+        
 function Home() {
   // const [currentIndex, setCurrentIndex] = useState(0);
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
+
+   // Career Paths - Replace this with fetch from backend if needed
+  const careerPaths = [
+    {
+      id: 'manager',
+      title: 'Manager Career Path',
+      description: 'Courses to become a qualified manager, from foundational skills to leadership excellence.',
+      levels: ['Beginner', 'Intermediate', 'Advanced'],
+      recommendedCourseIds: [
+        'course1', // Beginner courses ids 
+        'course2', // Intermediate course ids
+        'course3', // Advanced course ids
+      ],
+    },
+    {
+      id: 'developer',
+      title: 'Developer Career Path',
+      description: 'Learn programming, development tools and best practices to become a skilled software developer.',
+      levels: ['Beginner', 'Intermediate', 'Advanced'],
+      recommendedCourseIds: [
+        'course4',
+        'course5',
+        'course6',
+      ],
+    },
+    {
+      id: 'data_scientist',
+      title: 'Data Scientist Career Path',
+      description: 'Master data analysis, statistics, and machine learning to pursue data science roles.',
+      levels: ['Beginner', 'Intermediate', 'Advanced'],
+      recommendedCourseIds: [
+        'course7',
+        'course8',
+        'course9',
+      ],
+    },
+  ];
+
+  
+  // State to track selected career path and its courses
+  const [selectedCareerPath, setSelectedCareerPath] = useState(null);
+  const [careerCourses, setCareerCourses] = useState([]);
+  const [coursesLoading, setCoursesLoading] = useState(false);
 
   
   // const testimonials = [
@@ -79,6 +131,34 @@ function Home() {
     }
   };
 
+  
+  // Fetch detailed courses by IDs for selected career path
+  const fetchCoursesByIds = async (ids) => {
+    setCoursesLoading(true);
+    try {
+      // Assuming your API supports fetching multiple courses by IDs like this:
+      const response = await fetch(`https://hilms.onrender.com/api/courses?ids=${ids.join(',')}`);
+      if (!response.ok) throw new Error('Failed to fetch career path courses');
+      const data = await response.json();
+      setCareerCourses(data.data);
+    } catch (error) {
+      console.error(error.message);
+      setCareerCourses([]);
+    }
+    setCoursesLoading(false);
+  };
+
+  // Handle career path selection
+  const handleSelectCareerPath = (path) => {
+    setSelectedCareerPath(path);
+    if (path && path.recommendedCourseIds) {
+      fetchCoursesByIds(path.recommendedCourseIds);
+    } else {
+      setCareerCourses([]);
+    }
+  };
+
+
   useEffect(() => {
     fetchPopularCourses();
   }, []);
@@ -130,6 +210,47 @@ function Home() {
               ))
             ) : (
               <p>No popular courses available</p>
+            )}
+          </div>
+        )}
+      </section>
+
+       {/* Career Path Section */}
+      <section className="career-path-section">
+        <h2>Career Path Suggestions</h2>
+        <p>Select your desired career to see recommended courses tailored for your goal, from beginner to advanced levels.</p>
+        <div className="career-paths-grid">
+          {careerPaths.map((path) => (
+            <CareerPathBox key={path.id} path={path} onSelect={handleSelectCareerPath} />
+          ))}
+        </div>
+
+        {/* Show courses related to selected career path */}
+        {selectedCareerPath && (
+          <div style={{ marginTop: 40, textAlign: 'left', maxWidth: '960px', marginLeft: 'auto', marginRight: 'auto' }}>
+            <h3>{selectedCareerPath.title} - Recommended Courses</h3>
+            {coursesLoading ? (
+              <div className="courses-container-cards">
+                {Array.from({ length: 3 }).map((_, i) => <HomeCourseSkeleton key={i} />)}
+              </div>
+            ) : careerCourses && careerCourses.length > 0 ? (
+              <div className="courses-container-cards">
+                {careerCourses.map((course) => (
+                  <Link to={`/course-details/${course._id}`} key={course._id} className="courses-card-link">
+                    <div className="courses-card">
+                      <img src={course.imageurl} alt={course.title} className="courses-image" />
+                      <div className="courses-card-content">
+                        <h3>{course.title}</h3>
+                        <p><strong>Instructor:</strong> {course.trainer?.fullName}</p>
+                        <p><strong>Enrolled Learners:</strong> {course.learnerCount}</p>
+                      </div>
+                      <div className="btn-primary">Read More</div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            ) : (
+              <p>No courses found for this career path.</p>
             )}
           </div>
         )}
