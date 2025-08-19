@@ -9,7 +9,7 @@
  /* Learner Header Section */
     .learnerHeader {
     position: relative;
-    background-image: url("server/uploads/Learner banner.jpg");
+    background-image: url("https://hilms.onrender.com/uploads/Learner banner.jpg");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
