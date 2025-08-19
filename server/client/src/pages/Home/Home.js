@@ -26,31 +26,7 @@ function Home() {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
 
-
-  // Add inside Home.js
-const careerPaths = [
-  {
-    title: "Become a Project Manager",
-    description: "Master the skills to lead and manage successful projects.",
-    courses: [
-      { id: "1", title: "Leadership & Communication" },
-      { id: "2", title: "Project Management Basics" },
-      { id: "3", title: "Agile & Scrum Mastery" },
-      { id: "4", title: "Advanced Strategic Management" }
-    ]
-  },
-  {
-    title: "Web Development Career Path",
-    description: "From beginner to full-stack developer.",
-    courses: [
-      { id: "5", title: "HTML, CSS & JavaScript Fundamentals" },
-      { id: "6", title: "React.js for Beginners" },
-      { id: "7", title: "Node.js & Express.js" },
-      { id: "8", title: "Full-Stack Project Deployment" }
-    ]
-  }
-];
-
+  
   // const testimonials = [
   //   {
   //     name: 'Preetham',
@@ -158,27 +134,6 @@ const careerPaths = [
           </div>
         )}
       </section>
-      
-      {/* Career Path Section */}
-<section className="career-path-section">
-  <h2>Career Paths</h2>
-  <p>Choose your path and follow step-by-step courses to achieve your career goals.</p>
-  <div className="career-paths-container">
-    {careerPaths.map((path, i) => (
-      <div key={i} className="career-path-card">
-        <h3>{path.title}</h3>
-        <p>{path.description}</p>
-        <ol>
-          {path.courses.map((course) => (
-            <li key={course.id}>
-              <Link to={`/course-details/${course.id}`}>{course.title}</Link>
-            </li>
-          ))}
-        </ol>
-      </div>
-    ))}
-  </div>
-</section>
 
       
       {/* Teach Section */}
@@ -195,6 +150,23 @@ const careerPaths = [
         </div>
       </section>
 
+
+      {/* Career Path Section */}
+<section className="career-path-section">
+  <h2>Career Paths</h2>
+  <p>Choose your path and follow structured learning to reach your career goals.</p>
+
+  <div className="career-paths-grid">
+    {careerPaths.map((path, i) => (
+      <div key={i} className="career-path-box">
+        <h3>{path.title}</h3>
+        <p>{path.description}</p>
+        <button className="view-more-btn">View More →</button>
+      </div>
+    ))}
+  </div>
+</section>
+  
       {/* Testimonials Section */}
       {/* <section className="testimonials-container">
         <h2>Learner Testimonials</h2>
