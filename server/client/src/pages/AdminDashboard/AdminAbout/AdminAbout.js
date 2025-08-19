@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaInstagram, FaFacebookF, FaTwitter} from 'react-icons/fa';
+// import { FaInstagram, FaFacebookF, FaTwitter} from 'react-icons/fa';
 import './AdminAbout.css';
 
 const About = () => {

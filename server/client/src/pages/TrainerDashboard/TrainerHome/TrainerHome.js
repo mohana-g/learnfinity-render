@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import "./TrainerHome.css";
-import {
-  FaInstagram,
-  FaFacebookF,
-  FaTwitter,
-  FaArrowLeft,
-  FaArrowRight,
-} from "react-icons/fa";
+// import {
+//   FaInstagram,
+//   FaFacebookF,
+//   FaTwitter,
+//   FaArrowLeft,
+//   FaArrowRight,
+// } from "react-icons/fa";
 // import User1 from "../../../assets/User1.jpg";
 // import User2 from "../../../assets/User2.jpg";
 // import User3 from "../../../assets/User3.avif";

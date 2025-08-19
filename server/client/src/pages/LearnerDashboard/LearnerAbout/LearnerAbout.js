@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaInstagram, FaFacebookF, FaTwitter} from 'react-icons/fa';
+// import { FaInstagram, FaFacebookF, FaTwitter} from 'react-icons/fa';
 import './LearnerAbout.css';
 
 const About = () => {
@@ -50,7 +50,7 @@ const About = () => {
         </div>
       </div>
       </section>
-      
+
       {/* <section className="about-instructors-section">
         <h2>Meet Our Expert Instructors</h2>
         <div className="about-instructors-container">
