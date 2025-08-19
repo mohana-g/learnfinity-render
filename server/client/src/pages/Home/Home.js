@@ -26,6 +26,30 @@ function Home() {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // Add inside Home.js
+const careerPaths = [
+  {
+    title: "Become a Project Manager",
+    description: "Master the skills to lead and manage successful projects.",
+    courses: [
+      { id: "1", title: "Leadership & Communication" },
+      { id: "2", title: "Project Management Basics" },
+      { id: "3", title: "Agile & Scrum Mastery" },
+      { id: "4", title: "Advanced Strategic Management" }
+    ]
+  },
+  {
+    title: "Web Development Career Path",
+    description: "From beginner to full-stack developer.",
+    courses: [
+      { id: "5", title: "HTML, CSS & JavaScript Fundamentals" },
+      { id: "6", title: "React.js for Beginners" },
+      { id: "7", title: "Node.js & Express.js" },
+      { id: "8", title: "Full-Stack Project Deployment" }
+    ]
+  }
+];
+
   
   // const testimonials = [
   //   {
