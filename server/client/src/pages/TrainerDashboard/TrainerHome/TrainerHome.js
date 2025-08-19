@@ -157,12 +157,12 @@ function TrainerHome() {
         <div className="trainer-header-content">
           <h1>Trainer's Home Page</h1>
           <h1 className="trainer-header-heading">
-            Welcome to Learnfinity - Empowering Your Teaching Journey
+            Unlock Your Teaching Potential with Learnfinity
           </h1>
-          <p className="trainer-header-text">
+          {/* <p className="trainer-header-text">
             Create, manage, and share your knowledge with a global audience.
             Start teaching today and make an impact!
-          </p>
+          </p> */}
           <Link to="/add-course">
             <button className="trainer-header-button">Add Course</button>
           </Link>
