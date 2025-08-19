@@ -32,6 +32,7 @@
     .learnerHeader .learnerHeaderContent {
     position: relative;
     z-index: 2;
+    margin-bottom: 10px;
   }
   
     .learnerHeader h1 {
