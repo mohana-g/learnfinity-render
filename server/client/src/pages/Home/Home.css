@@ -416,81 +416,86 @@ background-color: #0000cc;
   border-radius: 5px;
 }
 
-/* Career Path Section */
-.career-path-section {
-  padding: 50px 20px;
-  text-align: center;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.career-path-section h2 {
-  font-size: 2rem;
-  margin-bottom: 10px;
-  font-weight: 700;
-  color: #222;
-}
-
-.career-path-section p {
-  color: #555;
-  margin-bottom: 30px;
-  font-size: 1.1rem;
-}
-
-/* Grid Layout for career paths */
-.career-paths-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 25px;
-  justify-items: stretch;
-}
-
-/* Career Path Box */
-.career-path-box {
-  background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-  color: white;
-  padding: 30px 20px;
+/* Career Flowchart Section Styling */
+.career-flowchart-section {
+  background: #fafdff;
   border-radius: 12px;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  cursor: pointer;
-  text-align: left;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  height: 220px;
+  padding: 2rem 1.5rem;
+  margin: 2.5rem 0;
+  box-shadow: 0 2px 18px #83add120;
 }
 
-.career-path-box h3 {
-  font-size: 1.4rem;
-  margin-bottom: 12px;
+.career-flowchart-section h2 {
+  font-size: 2rem;
+  color: #1a396e;
+  margin-bottom: 1.5rem;
   font-weight: 700;
 }
 
-.career-path-box p {
+/* Path Domain Header */
+.career-domain-header {
+  cursor: pointer;
+  font-size: 1.12rem;
+  background: #e6f0ff;
+  border-radius: 6px;
+  padding: 10px 16px;
+  margin-bottom: 0.3rem;
+  color: #114294;
+  font-weight: 600;
+  transition: background 0.18s;
+  border: 1.5px solid #d2e3ff;
+}
+.career-domain-header:hover {
+  background: #d3e4fd;
+  color: #267bda;
+}
+
+/* Expandable Domain Content */
+.career-levels {
+  margin-left: 18px;
+  margin-bottom: 18px;
+  border-left: 3px solid #e6f0ff;
+  padding-left: 10px;
+}
+
+/* Each Level Box */
+.career-level {
+  background: #f3f8ff;
+  margin: 10px 0 10px 0;
+  padding: 10px 16px 10px 12px;
+  border-radius: 6px;
+  border: 1px solid #e0eaff;
+  box-shadow: 0 1px 5px 0px #d5e8f940;
+}
+
+.career-level > div:first-child {
+  font-size: 1.04rem;
+  font-weight: 600;
+  color: #166ca7;
+  margin-bottom: 4px;
+}
+
+.career-level span {
+  font-weight: 500;
+  color: #1a425c;
+}
+
+/* Soft skills line */
+.career-levels > div:last-child {
+  margin-top: 0.7em;
   font-size: 1rem;
-  margin-bottom: 10px;
-  color: rgba(255, 255, 255, 0.85);
-  line-height: 1.4;
 }
 
-.career-path-box:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
-}
-
-/* Responsive text inside career path box */
-@media (max-width: 480px) {
-  .career-path-box {
-    height: auto;
-    padding: 25px 15px;
+@media (max-width: 700px) {
+  .career-flowchart-section {
+    padding: 1rem 0.6rem;
   }
-
-  .career-path-box h3 {
-    font-size: 1.2rem;
+  .career-domain-header {
+    font-size: 1rem;
+    padding: 7px 10px;
   }
-
-  .career-path-box p {
-    font-size: 0.95rem;
+  .career-level {
+    font-size: 0.97rem;
+    padding: 7px 7px 7px 10px;
   }
 }
