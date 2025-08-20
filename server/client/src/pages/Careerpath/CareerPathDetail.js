@@ -1,7 +1,6 @@
 // CareerPathDetail.js
 import React, { useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import FlowChart from 'react-simple-flowchart';
 
 import './CareerPathDetail.css'; // Assuming you have a CSS file for styling
 
@@ -162,7 +161,7 @@ const CareerPathDetail = () => {
     // Scroll to top when component mounts
     window.scrollTo(0, 0);
     }, []);
-
+    
   const careerPath = careerPaths.find((path) => path.id === pathId);
 
   if (!careerPath) {
@@ -188,19 +187,11 @@ const CareerPathDetail = () => {
     );
   }
 
-    // Build flowchart code dynamically from levels
-  const levels = careerPath.levels.map(level => level.name);
-  const flowNodes = levels.map((level, idx) => `${level}${idx === 0 ? '=>start' : '=>operation'}: ${level}`);
-  const flowConnections = levels.map((_, idx) => idx < levels.length - 1 ? `${levels[idx]}->${levels[idx + 1]}` : '');
-  const flowChartCode = `${flowNodes.join('\n')}\n${flowConnections.filter(Boolean).join('\n')}`;
-
-
   return (
-      <section className="career-detail-container">
+    <section className="career-detail-container">
       <h1>{careerPath.domain}</h1>
       <p className="career-detail-description">{careerPath.description}</p>
 
-      {/* Render career levels */}
       {careerPath.levels.map((level, idx) => (
         <div className="career-level-block" key={idx}>
           <h2>{level.name} Level</h2>
@@ -209,19 +200,11 @@ const CareerPathDetail = () => {
         </div>
       ))}
 
-      {/* Soft Skills */}
       <div className="career-soft-skills-block">
         <h3>Soft Skills</h3>
         <p>{careerPath.softSkills.join(', ')}</p>
       </div>
 
-      {/* Flowchart Diagram */}
-      <div className="career-flowchart-container" style={{ marginTop: '2rem' }}>
-        <h3>Career Progression Flowchart</h3>
-        <FlowChart chart={flowChartCode} />
-      </div>
-
-      {/* Navigation Buttons */}
       <div className="career-detail-buttons">
         <button onClick={() => navigate(-1)} className="btn btn-back">Back to Career Paths</button>
         <Link to="/signup" className="btn btn-join-now">Join Now</Link>
