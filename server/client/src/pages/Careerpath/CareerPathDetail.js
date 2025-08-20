@@ -1,132 +1,170 @@
 // CareerPathDetail.js
 import React, { useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import './CareerPathDetail.css';
 
-// Sample multi-level branched career path data with next connections
-const branchedCareerPath = {
-  id: 'operations-production',
-  domain: 'Operations & Production Path',
-  description: 'Lean manufacturing and production management career path.',
-  levels: [
-    [ // Level 1
-      { id: 'l1-1', label: 'Foundation Level', roles: ['CNC Operator'], skills: ['Shop-floor Safety', '5S Principles', 'Machine Operations'], next: ['l2-1', 'l2-2'] },
+import './CareerPathDetail.css'; // Assuming you have a CSS file for styling
+
+// Full Career Paths data (ideally move this to a shared file)
+const careerPaths = [
+  {
+    id: 'technical-engineering',
+    domain: 'Technical / Engineering Path',
+    description: 'Explore technical design, robotics, and manufacturing roles.',
+    levels: [
+      {
+        name: 'Foundation',
+        roles: ['Graduate Engineer Trainee'],
+        skills: ['CAD/CAM (AutoCAD, CATIA, SolidWorks)', 'Basics of Manufacturing'],
+      },
+      {
+        name: 'Intermediate',
+        roles: [
+          'BIW Design Engineer',
+          'Design Engineer',
+          'Die Design Engineer',
+          'Project Engineer – Controls',
+          'Robotics Engineer'
+        ],
+        skills: ['Robotics', 'PLC programming', 'CNC operations', 'IoT in Manufacturing'],
+      },
+      {
+        name: 'Advanced',
+        roles: ['Senior Engineer / Subject Matter Expert (SME)'],
+        skills: ['AI in Manufacturing', 'Digital Twin', 'Industry 4.0', 'Data Analytics for Engineers'],
+      }
     ],
-    [ // Level 2
-      { id: 'l2-1', label: 'Intermediate Role A', roles: ['Senior Technician – Die Tryout'], skills: ['Lean Manufacturing', 'Kaizen'], next: ['l3-1'] },
-      { id: 'l2-2', label: 'Intermediate Role B', roles: ['Proposal Processing Engineer'], skills: ['Six Sigma Green Belt'], next: ['l3-2'] },
+    softSkills: ['Problem-Solving', 'Innovation', 'Design Thinking', 'Communication']
+  },
+  {
+    id: 'operations-production',
+    domain: 'Operations & Production Path',
+    description: 'Lean manufacturing and production management career path.',
+    levels: [
+      {
+        name: 'Foundation',
+        roles: ['CNC Operator'],
+        skills: ['Shop-floor Safety', '5S Principles', 'Machine Operations'],
+      },
+      {
+        name: 'Intermediate',
+        roles: ['Senior Technician – Die Tryout', 'Proposal Processing Engineer', 'Estimation Engineer'],
+        skills: ['Lean Manufacturing', 'Kaizen', 'Six Sigma Green Belt'],
+      },
+      {
+        name: 'Advanced',
+        roles: ['Production/Operations Manager'],
+        skills: ['ERP (SAP/Oracle)', 'Supply Chain Optimization', 'Maintenance Planning'],
+      },
     ],
-    [ // Level 3
-      { id: 'l3-1', label: 'Advanced Skill A', roles: ['Estimation Engineer'], skills: ['ERP (SAP/Oracle)'], next: ['completed'] },
-      { id: 'l3-2', label: 'Advanced Skill B', roles: ['Production Manager'], skills: ['Supply Chain Optimization'], next: ['completed'] },
+    softSkills: ['Teamwork', 'Adaptability', 'Workplace Collaboration', 'Stress Management']
+  },
+  {
+    id: 'managerial',
+    domain: 'Managerial Path',
+    description: 'Path to leadership with project and people management skills.',
+    levels: [
+      {
+        name: 'Foundation',
+        roles: ['Project Engineer (with leadership responsibilities)', 'Project Manager'],
+        skills: ['People Management', 'Conflict Resolution', 'Emotional Intelligence', 'Agile', 'Scrum', 'PMP', 'JIRA/MS Project'],
+      },
+      {
+        name: 'Intermediate',
+        roles: ['Senior Manager'],
+        skills: ['Strategic Thinking', 'KPI & Metrics Analysis']
+      },
+      {
+        name: 'Advanced',
+        roles: ['Director / General Manager'],
+        skills: ['Change Management', 'Global Supply Chain Leadership'],
+      },
     ],
-    [ // Completed
-      { id: 'completed', label: 'Completed Career Path', roles: [], skills: [], next: [] },
+    softSkills: ['Decision-Making', 'Negotiation', 'Time Management', 'Communication']
+  },
+  {
+    id: 'quality-process-excellence',
+    domain: 'Quality & Process Excellence Path',
+    description: 'Quality control, auditing, and process improvement roles.',
+    levels: [
+      {
+        name: 'Foundation',
+        roles: ['Quality Inspector'],
+        skills: ['Basics of Quality Control', 'ISO Standards', 'SPC (Statistical Process Control)'],
+      },
+      {
+        name: 'Intermediate',
+        roles: ['Quality Engineer', 'Senior Quality Engineer'],
+        skills: ['Root Cause Analysis', 'FMEA', 'Six Sigma Green Belt']
+      },
+      {
+        name: 'Advanced',
+        roles: ['Quality Manager / Head of Quality'],
+        skills: ['Six Sigma Black Belt', 'TQM', 'Internal/External Auditing Techniques'],
+      },
     ],
-  ],
-  softSkills: ['Teamwork', 'Adaptability', 'Workplace Collaboration', 'Stress Management'],
-};
+    softSkills: ['Analytical Thinking', 'Report Writing', 'Critical Observation', 'Presentation Skills']
+  },
+  {
+    id: 'it-digital-transformation',
+    domain: 'IT & Digital Transformation Path',
+    description: 'Programming, cloud, cybersecurity and AI in manufacturing.',
+    levels: [
+      {
+        name: 'Foundation',
+        roles: ['Software Engineer – Programming Services'],
+        skills: ['HTML', 'CSS', 'JavaScript', 'Python/Java', 'SQL'],
+      },
+      {
+        name: 'Intermediate',
+        roles: ['System Analyst (future role)', 'Solution Architect'],
+        skills: ['React/Angular', 'Node.js', 'Cloud (AWS, Azure)', 'ERP Systems (SAP)'],
+      },
+      {
+        name: 'Advanced',
+        roles: ['Chief Digital Officer (long-term growth)'],
+        skills: ['Cybersecurity', 'DevOps', 'Data Science', 'AI/ML in Manufacturing'],
+      },
+    ],
+    softSkills: ['Technical Documentation', 'Problem-Solving', 'Continuous Learning', 'Creativity']
+  },
+  {
+    id: 'learning-development-hr',
+    domain: 'Learning & Development / HR Path',
+    description: 'Career focused on HR, training, talent and organizational development.',
+    levels: [
+      {
+        name: 'Foundation',
+        roles: ['HR / L&D Coordinator'],
+        skills: ['HR Basics', 'Employee Engagement', 'Training Needs Analysis'],
+      },
+      {
+        name: 'Intermediate',
+        roles: ['Training Specialist', 'HR / L&D Manager'],
+        skills: ['HR Analytics', 'Talent Management', 'Leadership Development Programs'],
+      },
+      {
+        name: 'Advanced',
+        roles: ['Head of HR / Organizational Development'],
+        skills: ['Organizational Development', 'HR Strategy & Policies', 'Change Management'],
+      },
+    ],
+    softSkills: ['Empathy', 'Coaching & Mentoring', 'Negotiation', 'Communication', 'People Development']
+  }
+];
 
-// Box component showing role/skills
-const FlowchartBox = ({ label, roles = [], skills = [] }) => (
-  <div className="flowchart-branch-box">
-    <h4>{label}</h4>
-    {roles.length > 0 && (
-      <>
-        <strong>Roles:</strong>
-        <ul>{roles.map((r, i) => <li key={i}>{r}</li>)}</ul>
-      </>
-    )}
-    {skills.length > 0 && (
-      <>
-        <strong>Skills & Courses:</strong>
-        <ul>{skills.map((s, i) => <li key={i}>{s}</li>)}</ul>
-      </>
-    )}
-  </div>
-);
-
-// Function to compute vertical positioning of rows
-const getRowCenterY = (rowIndex, rowHeight, rowGap) => 
-  rowIndex * (rowHeight + rowGap) + rowHeight / 2;
-
-const MultiBranchFlowchart = ({ path }) => {
-  const boxWidth = 250;
-  const boxHeight = 170;
-  const rowGap = 80;
-
-  // Map of node id to position
-  let positions = {};
-  path.levels.forEach((row, rowIndex) => {
-    row.forEach((node, nodeIndex) => {
-      positions[node.id] = {
-        x: nodeIndex * (boxWidth + 40) + 20,
-        y: getRowCenterY(rowIndex, boxHeight, rowGap)
-      };
-    });
-  });
-
-  return (
-    <div className="multi-branch-flowchart-container" style={{ position: 'relative', paddingBottom: '120px' }}>
-      {path.levels.map((row, rowIndex) => (
-        <div className="flowchart-row" key={rowIndex} style={{ display: 'flex', justifyContent: 'center', gap: '40px', marginBottom: `${rowGap}px` }}>
-          {row.map(node => (
-            <FlowchartBox
-              key={node.id}
-              label={node.label}
-              roles={node.roles}
-              skills={node.skills}
-            />
-          ))}
-        </div>
-      ))}
-
-      {/* SVG arrows for connections */}
-      <svg className="flowchart-svg-arrows" style={{ position: 'absolute', top: 0, left: 0, pointerEvents: 'none', width: '100%', height: '100%' }}>
-        {path.levels.flat().map(node => (
-          node.next.map(nextId => {
-            const from = positions[node.id];
-            const to = positions[nextId];
-            if (!from || !to) return null;
-            const startX = from.x + boxWidth;
-            const startY = from.y;
-            const endX = to.x;
-            const endY = to.y;
-
-            // Curved Bezier path from box to next
-            const controlX = (startX + endX) / 2;
-            const pathD = `M${startX},${startY} C${controlX},${startY} ${controlX},${endY} ${endX},${endY}`;
-            const arrowSize = 8;
-
-            // Calculate arrowhead points
-            const angle = Math.atan2(endY - startY, endX - startX);
-            const arrowX1 = endX - arrowSize * Math.cos(angle - Math.PI / 6);
-            const arrowY1 = endY - arrowSize * Math.sin(angle - Math.PI / 6);
-            const arrowX2 = endX - arrowSize * Math.cos(angle + Math.PI / 6);
-            const arrowY2 = endY - arrowSize * Math.sin(angle + Math.PI / 6);
-
-            return (
-              <g key={`${node.id}-to-${nextId}`}>
-                <path d={pathD} stroke="#4169e1" fill="none" strokeWidth="3" />
-                <polygon points={`${endX},${endY} ${arrowX1},${arrowY1} ${arrowX2},${arrowY2}`} fill="#4169e1" />
-              </g>
-            );
-          })
-        ))}
-      </svg>
-    </div>
-  );
-};
 
 const CareerPathDetail = () => {
   const { pathId } = useParams();
   const navigate = useNavigate();
 
-  useEffect(() => {
+    useEffect(() => {
+    // Scroll to top when component mounts
     window.scrollTo(0, 0);
-  }, []);
+    }, []);
+    
+  const careerPath = careerPaths.find((path) => path.id === pathId);
 
-  if (!branchedCareerPath || branchedCareerPath.id !== pathId) {
+  if (!careerPath) {
     return (
       <div style={{ padding: '2rem', textAlign: 'center' }}>
         <h2>Career Path Not Found</h2>
@@ -140,7 +178,7 @@ const CareerPathDetail = () => {
             border: 'none',
             backgroundColor: '#2c3a93',
             color: 'white',
-            fontSize: '1rem',
+            fontSize: '1rem'
           }}
         >
           Go Back
@@ -151,23 +189,23 @@ const CareerPathDetail = () => {
 
   return (
     <section className="career-detail-container">
-      <h1>{branchedCareerPath.domain}</h1>
-      <p className="career-detail-description">{branchedCareerPath.description}</p>
+      <h1>{careerPath.domain}</h1>
+      <p className="career-detail-description">{careerPath.description}</p>
 
-      {branchedCareerPath.levels.flat().map((level) => (
-        <div className="career-level-block" key={level.id}>
-          <h2>{level.label}</h2>
-          {level.roles && level.roles.length > 0 && <p><strong>Roles:</strong> {level.roles.join(', ')}</p>}
-          {level.skills && level.skills.length > 0 && <p><strong>Skills & Courses:</strong> {level.skills.join(', ')}</p>}
+      {careerPath.levels.map((level, idx) => (
+        <div className="career-level-block" key={idx}>
+          <h2>{level.name} Level</h2>
+          <p><strong>Roles:</strong> {level.roles.join(', ')}</p>
+          <p><strong>Skills & Courses:</strong> {level.skills.join(', ')}</p>
         </div>
       ))}
 
-      <MultiBranchFlowchart path={branchedCareerPath} />
-
       <div className="career-soft-skills-block">
         <h3>Soft Skills</h3>
-        <p>{branchedCareerPath.softSkills.join(', ')}</p>
+        <p>{careerPath.softSkills.join(', ')}</p>
       </div>
+
+      
 
       <div className="career-detail-buttons">
         <button onClick={() => navigate(-1)} className="btn btn-back">Back to Career Paths</button>

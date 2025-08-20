@@ -1,101 +1,84 @@
 .career-detail-container {
-  max-width: 1000px;
+  max-width: 900px;
   margin: 2rem auto;
   padding: 0 1rem;
   font-family: 'Work Sans', sans-serif;
   color: #1a237e;
-  line-height: 1.6;
+  line-height: 1.55;
+}
+
+.career-detail-container h1 {
+  font-size: 2.4rem;
+  font-weight: 700;
+  margin-bottom: 0.8rem;
+  text-decoration: none;
+}
+
+.career-detail-description {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  color: #2c3a93;
 }
 
 .career-level-block {
-  margin-bottom: 1.2rem;
-  border-left: 3px solid #4169e1;
+  margin-bottom: 2rem;
+  border-left: 4px solid #4169e1;
   padding-left: 1rem;
 }
 
+.career-level-block h2 {
+  font-size: 1.6rem;
+  color: #26418f;
+  margin-bottom: 0.4rem;
+}
+
+.career-level-block p {
+  font-size: 1.05rem;
+  margin-bottom: 0.25rem;
+  color: #333;
+}
+
 .career-soft-skills-block {
-  margin-top: 2rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 3rem;
 }
 
 .career-soft-skills-block h3 {
-  color: #26418f;
-  margin-bottom: 0.5rem;
-}
-
-/* Flowchart Styling */
-
-.multi-branch-flowchart-container {
-  position: relative;
-  margin-top: 3rem;
-  margin-bottom: 2rem;
-  min-height: 300px;
-}
-
-.flowchart-row {
-  display: flex;
-  justify-content: center;
-  gap: 40px;
-  margin-bottom: 80px;
-}
-
-.flowchart-branch-box {
-  background: #e3eaff;
-  border: 2px solid #4169e1;
-  border-radius: 10px;
-  box-shadow: 0 3px 6px rgba(65, 105, 225, 0.4);
-  padding: 1.1rem 1.6rem;
-  min-width: 220px;
-  color: #1a237e;
+  font-size: 1.5rem;
   font-weight: 600;
-  font-size: 0.95rem;
-  text-align: center;
+  color: #26418f;
+  margin-bottom: 0.6rem;
 }
 
-.flowchart-branch-box h4 {
-  margin-bottom: 0.8rem;
-  font-weight: 700;
-  color: #4169e1;
-}
-
-.flowchart-branch-box ul {
-  text-align: left;
-  margin: 0.2rem 0 0.6rem 1.4rem;
-  padding: 0;
-  list-style-type: disc;
+.career-soft-skills-block p {
+  font-size: 1.1rem;
+  color: #2a2a2a;
   font-weight: 500;
-  color: #263238;
-}
-
-.flowchart-svg-arrows {
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  position: absolute;
-  pointer-events: none;
 }
 
 .career-detail-buttons {
   display: flex;
-  gap: 1rem;
-  margin-top: 2rem;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  justify-content: flex-start;
 }
 
-.btn-back, .btn-join-now {
+.career-detail-buttons .btn {
   padding: 0.7rem 1.6rem;
+  font-size: 1rem;
   font-weight: 600;
   border-radius: 8px;
   border: none;
   cursor: pointer;
-  font-size: 1rem;
-  color: white;
-  font-family: 'Work Sans', sans-serif;
-  text-align: center;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.25s ease;
 }
 
 .btn-back {
   background-color: #4169e1;
+  color: #fff;
 }
 
 .btn-back:hover {
@@ -104,12 +87,21 @@
 
 .btn-join-now {
   background-color: #099ff2;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  color: #fff;
 }
 
 .btn-join-now:hover {
   background-color: #0667bf;
 }
+
+/* Responsive */
+@media (max-width: 600px) {
+  .career-detail-buttons {
+    flex-direction: column;
+  }
+  .career-detail-buttons .btn {
+    width: 100%;
+    text-align: center;
+  }
+}
+
