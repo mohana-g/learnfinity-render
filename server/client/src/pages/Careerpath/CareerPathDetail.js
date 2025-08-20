@@ -152,14 +152,16 @@ const careerPaths = [
   }
 ];
 
- useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
 
 const CareerPathDetail = () => {
   const { pathId } = useParams();
   const navigate = useNavigate();
 
+    useEffect(() => {
+    // Scroll to top when component mounts
+    window.scrollTo(0, 0);
+    }, []);
+    
   const careerPath = careerPaths.find((path) => path.id === pathId);
 
   if (!careerPath) {
