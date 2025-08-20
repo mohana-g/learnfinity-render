@@ -151,6 +151,10 @@ const careerPaths = [
   }
 ];
 
+ useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
 const CareerPathDetail = () => {
   const { pathId } = useParams();
   const navigate = useNavigate();

@@ -407,6 +407,8 @@ function Home() {
   // Navigate to career path details page on Read More click
   const handleReadMore = (pathId) => {
     navigate(`/career-path/${pathId}`);
+    window.scrollTo(0, 0); // Scroll to top on navigation
+
   };
 
   return (
