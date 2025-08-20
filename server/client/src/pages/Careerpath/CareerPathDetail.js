@@ -155,13 +155,18 @@ const CareerPathDetail = () => {
       <h1>{branchedCareerPath.domain}</h1>
       <p className="career-detail-description">{branchedCareerPath.description}</p>
 
-      {branchedCareerPath.levels.flat().map((level, idx) => (
-        <div className="career-level-block" key={level.id}>
-          <h2>{level.label}</h2>
-          {level.roles.length > 0 && <p><strong>Roles:</strong> {level.roles.join(', ')}</p>}
-          {level.skills.length > 0 && <p><strong>Skills & Courses:</strong> {level.skills.join(', ')}</p>}
-        </div>
-      ))}
+     {branchedCareerPath.levels.flat().map((level) => (
+  <div className="career-level-block" key={level.id}>
+    <h2>{level.label}</h2>
+    {level.roles && level.roles.length > 0 && (
+      <p><strong>Roles:</strong> {level.roles.join(', ')}</p>
+    )}
+    {level.skills && level.skills.length > 0 && (
+      <p><strong>Skills & Courses:</strong> {level.skills.join(', ')}</p>
+    )}
+  </div>
+))}
+
 
       {/* Branched Career Flowchart Visualization */}
       <MultiBranchFlowchart path={branchedCareerPath} />
