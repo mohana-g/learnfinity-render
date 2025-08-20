@@ -27,6 +27,7 @@
     "react-redux": "^9.2.0",
     "react-router-dom": "^6.28.0",
     "react-scripts": "5.0.1",
+    "react-simple-flowchart": "^1.2.4",
     "react-toastify": "^11.0.2",
     "react-transition-group": "^4.4.5",
     "redux-persist": "^6.0.0",

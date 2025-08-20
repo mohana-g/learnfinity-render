@@ -104,3 +104,56 @@
     text-align: center;
   }
 }
+
+.career-flowchart-container {
+  background: #f9fafc;
+  border: 1px solid #dde3eb;
+  border-radius: 8px;
+  padding: 1.2rem;
+}
+
+.career-detail-container {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  font-family: 'Work Sans', sans-serif;
+  color: #1a237e;
+  line-height: 1.55;
+}
+
+.career-detail-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.btn-back, .btn-join-now {
+  padding: 0.7rem 1.6rem;
+  font-weight: 600;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.btn-back {
+  background-color: #4169e1;
+  color: white;
+}
+
+.btn-back:hover {
+  background-color: #2c3a93;
+}
+
+.btn-join-now {
+  background-color: #099ff2;
+  color: white;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-join-now:hover {
+  background-color: #0667bf;
+}

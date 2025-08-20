@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './SignUp.css';
 
 const SignUp = () => {
@@ -93,6 +93,12 @@ const SignUp = () => {
       }
     }
   };
+
+    useEffect(() => {
+      // Scroll to top when component mounts
+      window.scrollTo(0, 0);
+      }, []);
+      
 
   return (
     <div className="signup-page">
