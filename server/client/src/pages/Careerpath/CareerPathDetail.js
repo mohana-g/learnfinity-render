@@ -151,14 +151,40 @@ const careerPaths = [
   }
 ];
 
-// Simple flowchart without external packages
-const CareerFlowchartSimple = ({ levels }) => {
+// Detailed career flowchart component
+const CareerFlowchartDetailed = ({ levels }) => {
   return (
-    <div className="simple-flowchart-container">
+    <div className="flowchart-detailed-container">
       {levels.map((level, idx) => (
-        <div key={level.name} className="flowchart-node">
-          <div className="node-box">{level.name}</div>
-          {idx < levels.length -1 && <div className="arrow">➔</div>}
+        <div key={level.name} className="flowchart-box-container">
+          <div className="flowchart-box">
+            <h4>{level.name} Level</h4>
+            <strong>Roles:</strong>
+            <ul>
+              {level.roles.map((role, i) => (
+                <li key={i}>{role}</li>
+              ))}
+            </ul>
+            <strong>Skills & Courses:</strong>
+            <ul>
+              {level.skills.map((skill, i) => (
+                <li key={i}>{skill}</li>
+              ))}
+            </ul>
+          </div>
+
+          {idx < levels.length - 1 && (
+            <svg
+              className="flowchart-arrow"
+              width="60"
+              height="40"
+              viewBox="0 0 60 40"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <line x1="5" y1="20" x2="55" y2="20" stroke="#4169e1" strokeWidth="3" strokeLinecap="round"/>
+              <polygon points="45,10 55,20 45,30" fill="#4169e1" />
+            </svg>
+          )}
         </div>
       ))}
     </div>
@@ -211,8 +237,8 @@ const CareerPathDetail = () => {
         </div>
       ))}
 
-      {/* Simple flowchart visualization */}
-      <CareerFlowchartSimple levels={careerPath.levels} />
+      {/* Detailed career flowchart */}
+      <CareerFlowchartDetailed levels={careerPath.levels} />
 
       <div className="career-soft-skills-block">
         <h3>Soft Skills</h3>
