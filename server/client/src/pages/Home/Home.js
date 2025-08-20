@@ -304,6 +304,7 @@
 
 // export default Home;
 
+
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Home.css';
@@ -321,296 +322,67 @@ const HomeCourseSkeleton = () => (
   </div>
 );
 
-// HIROTEC India Career Paths Data
-const careerPaths = [
+// Career path summaries for home cards view
+const careerPathSummaries = [
   {
-    domain: "Technical / Engineering Path",
-    levels: [
-      {
-        name: "Foundation",
-        roles: ["Graduate Engineer Trainee"],
-        skills: [
-          "CAD/CAM (AutoCAD, CATIA, SolidWorks)",
-          "Basics of Manufacturing"
-        ],
-      },
-      {
-        name: "Intermediate",
-        roles: [
-          "BIW Design Engineer",
-          "Design Engineer",
-          "Die Design Engineer",
-          "Project Engineer – Controls",
-          "Robotics Engineer",
-        ],
-        skills: [
-          "Robotics",
-          "PLC programming",
-          "CNC operations",
-          "IoT in Manufacturing"
-        ],
-      },
-      {
-        name: "Advanced",
-        roles: ["Senior Engineer / Subject Matter Expert (SME)"],
-        skills: [
-          "AI in Manufacturing",
-          "Digital Twin",
-          "Industry 4.0",
-          "Data Analytics for Engineers"
-        ],
-      },
-    ],
-    softSkills: ["Problem-Solving", "Innovation", "Design Thinking", "Communication"]
+    id: "technical-engineering",
+    title: "Technical / Engineering Path",
+    description: "Explore technical design, robotics, and manufacturing roles.",
+    levels: "Foundation → Intermediate → Advanced"
   },
   {
-    domain: "Operations & Production Path",
-    levels: [
-      {
-        name: "Foundation",
-        roles: ["CNC Operator"],
-        skills: [
-          "Shop-floor Safety",
-          "5S Principles",
-          "Machine Operations"
-        ],
-      },
-      {
-        name: "Intermediate",
-        roles: [
-          "Senior Technician – Die Tryout",
-          "Proposal Processing Engineer",
-          "Estimation Engineer",
-        ],
-        skills: [
-          "Lean Manufacturing",
-          "Kaizen",
-          "Six Sigma Green Belt"
-        ],
-      },
-      {
-        name: "Advanced",
-        roles: ["Production/Operations Manager"],
-        skills: [
-          "ERP (SAP/Oracle)",
-          "Supply Chain Optimization",
-          "Maintenance Planning"
-        ],
-      },
-    ],
-    softSkills: ["Teamwork", "Adaptability", "Workplace Collaboration", "Stress Management"]
+    id: "operations-production",
+    title: "Operations & Production Path",
+    description: "Lean manufacturing and production management career path.",
+    levels: "Foundation → Intermediate → Advanced"
   },
   {
-    domain: "Managerial Path",
-    levels: [
-      {
-        name: "Foundation",
-        roles: [
-          "Project Engineer (with leadership responsibilities)",
-          "Project Manager"
-        ],
-        skills: [
-          "People Management",
-          "Conflict Resolution",
-          "Emotional Intelligence",
-          "Agile",
-          "Scrum",
-          "PMP",
-          "JIRA/MS Project"
-        ],
-      },
-      {
-        name: "Intermediate",
-        roles: ["Senior Manager"],
-        skills: [
-          "Strategic Thinking",
-          "KPI & Metrics Analysis"
-        ]
-      },
-      {
-        name: "Advanced",
-        roles: ["Director / General Manager"],
-        skills: [
-          "Change Management",
-          "Global Supply Chain Leadership"
-        ],
-      },
-    ],
-    softSkills: ["Decision-Making", "Negotiation", "Time Management", "Communication"]
+    id: "managerial",
+    title: "Managerial Path",
+    description: "Path to leadership with project and people management skills.",
+    levels: "Foundation → Intermediate → Advanced"
   },
   {
-    domain: "Quality & Process Excellence Path",
-    levels: [
-      {
-        name: "Foundation",
-        roles: ["Quality Inspector"],
-        skills: [
-          "Basics of Quality Control",
-          "ISO Standards",
-          "SPC (Statistical Process Control)"
-        ],
-      },
-      {
-        name: "Intermediate",
-        roles: [
-          "Quality Engineer",
-          "Senior Quality Engineer"
-        ],
-        skills: [
-          "Root Cause Analysis",
-          "FMEA",
-          "Six Sigma Green Belt"
-        ]
-      },
-      {
-        name: "Advanced",
-        roles: ["Quality Manager / Head of Quality"],
-        skills: [
-          "Six Sigma Black Belt",
-          "TQM",
-          "Internal/External Auditing Techniques"
-        ],
-      },
-    ],
-    softSkills: ["Analytical Thinking", "Report Writing", "Critical Observation", "Presentation Skills"]
+    id: "quality-process-excellence",
+    title: "Quality & Process Excellence Path",
+    description: "Quality control, auditing, and process improvement roles.",
+    levels: "Foundation → Intermediate → Advanced"
   },
   {
-    domain: "IT & Digital Transformation Path",
-    levels: [
-      {
-        name: "Foundation",
-        roles: ["Software Engineer – Programming Services"],
-        skills: [
-          "HTML",
-          "CSS",
-          "JavaScript",
-          "Python/Java",
-          "SQL"
-        ],
-      },
-      {
-        name: "Intermediate",
-        roles: [
-          "System Analyst (future role)",
-          "Solution Architect"
-        ],
-        skills: [
-          "React/Angular",
-          "Node.js",
-          "Cloud (AWS, Azure)",
-          "ERP Systems (SAP)"
-        ],
-      },
-      {
-        name: "Advanced",
-        roles: ["Chief Digital Officer (long-term growth)"],
-        skills: [
-          "Cybersecurity",
-          "DevOps",
-          "Data Science",
-          "AI/ML in Manufacturing"
-        ],
-      },
-    ],
-    softSkills: ["Technical Documentation", "Problem-Solving", "Continuous Learning", "Creativity"]
+    id: "it-digital-transformation",
+    title: "IT & Digital Transformation Path",
+    description: "Programming, cloud, cybersecurity and AI in manufacturing.",
+    levels: "Foundation → Intermediate → Advanced"
   },
   {
-    domain: "Learning & Development / HR Path",
-    levels: [
-      {
-        name: "Foundation",
-        roles: ["HR / L&D Coordinator"],
-        skills: [
-          "HR Basics",
-          "Employee Engagement",
-          "Training Needs Analysis"
-        ],
-      },
-      {
-        name: "Intermediate",
-        roles: [
-          "Training Specialist",
-          "HR / L&D Manager"
-        ],
-        skills: [
-          "HR Analytics",
-          "Talent Management",
-          "Leadership Development Programs"
-        ],
-      },
-      {
-        name: "Advanced",
-        roles: ["Head of HR / Organizational Development"],
-        skills: [
-          "Organizational Development",
-          "HR Strategy & Policies",
-          "Change Management"
-        ],
-      },
-    ],
-    softSkills: [
-      "Empathy",
-      "Coaching & Mentoring",
-      "Negotiation",
-      "Communication",
-      "People Development"
-    ]
-  }
+    id: "learning-development-hr",
+    title: "Learning & Development / HR Path",
+    description: "Career focused on HR, training, talent and organizational development.",
+    levels: "Foundation → Intermediate → Advanced"
+  },
 ];
 
-// CareerFlowchart Component
-const CareerFlowchart = () => {
-  const navigate = useNavigate();
-
+function CareerPathCards({ onReadMore }) {
   return (
-    <section className="career-flowchart-section">
-      <h2>HIROTEC India Career Paths</h2>
-      <p className="career-flowchart-subtitle">
-        Explore detailed career paths with roles and skills, from foundation to advanced levels.
-      </p>
-
-      <div className="career-flowchart-cards">
-        {careerPaths.map((path, idx) => (
-          <div key={idx} className="career-path-card">
-            <h3 className="career-path-title">{path.domain}</h3>
-            <div className="levels-container">
-              {path.levels.map((level, i) => (
-                <div key={i} className="career-level-section">
-                  <h4 className="career-level-name">{level.name}</h4>
-                  <p><strong>Roles:</strong> {level.roles.join(', ')}</p>
-                  <p><strong>Skills & Courses:</strong> {level.skills.join(', ')}</p>
-                </div>
-              ))}
-            </div>
-            <p className="career-soft-skills">
-              <strong>Soft Skills:</strong> {path.softSkills.join(', ')}
-            </p>
-
-            <div className="career-buttons">
-              <button
-                className="btn-read-more"
-                onClick={() => navigate(`/career-paths/${idx}`)} // Adjust route as necessary
-              >
-                Read More
-              </button>
-              <button
-                className="btn-join-now"
-                onClick={() => window.location.href = "https://hilms.onrender.com/signup"}
-              >
-                Join Now
-              </button>
-            </div>
-          </div>
-        ))}
-      </div>
+    <section className="career-path-cards-container">
+      {careerPathSummaries.map((path) => (
+        <div key={path.id} className="career-path-card">
+          <h3>{path.title}</h3>
+          <p className="career-path-desc">{path.description}</p>
+          <p className="career-path-levels"><strong>Level:</strong> {path.levels}</p>
+          <button className="btn-read-more" onClick={() => onReadMore(path.id)}>
+            Read More
+          </button>
+        </div>
+      ))}
     </section>
   );
-};
+}
 
-// Main Home Component
 function Home() {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   // Fetch popular courses sorted by number of enrolled Learners
   const fetchPopularCourses = async () => {
@@ -632,12 +404,18 @@ function Home() {
     fetchPopularCourses();
   }, []);
 
+  // Navigate to career path details page on Read More click
+  const handleReadMore = (pathId) => {
+    navigate(`/career-path/${pathId}`);
+  };
+
   return (
     <div className="home-container">
       {/* Hero Section */}
       <section className="hero-section">
         <div className="hero-content">
           <h1>Unlock Your Potential</h1>
+          {/* Optional subtitle or paragraph can be added here */}
           <Link to="/signup" className="btn-primary">Join Now</Link>
         </div>
       </section>
@@ -682,14 +460,20 @@ function Home() {
         )}
       </section>
 
+      {/* Career Path Suggestions */}
+      <section>
+        <h2>Career Path Suggestions</h2>
+        <p>Select your desired career to see recommended courses tailored for your goal, from beginner to advanced levels.</p>
+        <CareerPathCards onReadMore={handleReadMore} />
+      </section>
+
       {/* Teach Section */}
       <section className="teach-section">
         <div className="teach-content">
           <div className="teach-text">
             <h2>Share your expertise on this platform</h2>
             <p>
-              Share your knowledge and expertise with Learners around the world.
-              Join our community of educators and help learners achieve their goals.
+              Share your knowledge and expertise with Learners around the world. Join our community of educators and help learners achieve their goals.
               Whether you're a seasoned professional or just starting, we welcome passionate individuals like you.
             </p>
             <Link to="/trainer-signup" className="btn-secondary">Become a Trainer</Link>
@@ -702,12 +486,8 @@ function Home() {
           </div>
         </div>
       </section>
-
-      {/* Career Paths Section */}
-      <CareerFlowchart />
     </div>
   );
 }
 
 export default Home;
-
