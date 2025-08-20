@@ -305,10 +305,10 @@
 // export default Home;
 
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './Home.css';
 
-// Add your popular courses skeleton card
+// Popular courses skeleton card
 const HomeCourseSkeleton = () => (
   <div className="courses-card skeleton-card">
     <div className="skeleton skeleton-course-img"></div>
@@ -321,7 +321,7 @@ const HomeCourseSkeleton = () => (
   </div>
 );
 
-// --- HIROTEC India Career Paths Data ---
+// HIROTEC India Career Paths Data
 const careerPaths = [
   {
     domain: "Technical / Engineering Path",
@@ -558,59 +558,56 @@ const careerPaths = [
   }
 ];
 
-// --- CareerFlowchart Component ---
+// CareerFlowchart Component
 const CareerFlowchart = () => {
-  const [openDomain, setOpenDomain] = useState(null);
+  const navigate = useNavigate();
 
   return (
     <section className="career-flowchart-section">
       <h2>HIROTEC India Career Paths</h2>
-      {careerPaths.map((path, idx) => (
-        <div key={idx} className="career-domain">
-          <div
-            className="career-domain-header"
-            onClick={() => setOpenDomain(openDomain === idx ? null : idx)}
-            style={{
-              cursor: "pointer",
-              fontWeight: "bold",
-              fontSize: "1.15rem",
-              margin: "1rem 0",
-              color: "#005",
-              background: "#e6f0ff",
-              borderRadius: "6px",
-              padding: "8px"
-            }}
-          >
-            {path.domain}
-          </div>
-          {openDomain === idx && (
-            <div className="career-levels" style={{marginLeft: '20px'}}>
-              {path.levels.map((level, lidx) => (
-                <div key={lidx} className="career-level" style={{margin: "10px 0"}}>
-                  <div style={{fontWeight: "600", color: "#0b3253"}}>{level.name}</div>
-                  <div>
-                    <span style={{fontWeight: 500}}>Roles:</span>{" "}
-                    {level.roles.join(", ")}
-                  </div>
-                  <div>
-                    <span style={{fontWeight: 500}}>Skills & Courses:</span>{" "}
-                    {level.skills.join(", ")}
-                  </div>
+      <p className="career-flowchart-subtitle">
+        Explore detailed career paths with roles and skills, from foundation to advanced levels.
+      </p>
+
+      <div className="career-flowchart-cards">
+        {careerPaths.map((path, idx) => (
+          <div key={idx} className="career-path-card">
+            <h3 className="career-path-title">{path.domain}</h3>
+            <div className="levels-container">
+              {path.levels.map((level, i) => (
+                <div key={i} className="career-level-section">
+                  <h4 className="career-level-name">{level.name}</h4>
+                  <p><strong>Roles:</strong> {level.roles.join(', ')}</p>
+                  <p><strong>Skills & Courses:</strong> {level.skills.join(', ')}</p>
                 </div>
               ))}
-              <div>
-                <span style={{fontWeight: 500}}>Soft Skills:</span>{" "}
-                {path.softSkills.join(", ")}
-              </div>
             </div>
-          )}
-        </div>
-      ))}
+            <p className="career-soft-skills">
+              <strong>Soft Skills:</strong> {path.softSkills.join(', ')}
+            </p>
+
+            <div className="career-buttons">
+              <button
+                className="btn-read-more"
+                onClick={() => navigate(`/career-paths/${idx}`)} // Adjust route as necessary
+              >
+                Read More
+              </button>
+              <button
+                className="btn-join-now"
+                onClick={() => window.location.href = "https://hilms.onrender.com/signup"}
+              >
+                Join Now
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
     </section>
   );
 };
 
-// --- Main Home Component ---
+// Main Home Component
 function Home() {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -641,8 +638,6 @@ function Home() {
       <section className="hero-section">
         <div className="hero-content">
           <h1>Unlock Your Potential</h1>
-          {/* <p>Learn, Grow, and Excel with Our Online Courses</p>
-          <p>Get Educated Online From Your Home. Register now and Enroll in the courses to break records.</p> */}
           <Link to="/signup" className="btn-primary">Join Now</Link>
         </div>
       </section>
@@ -692,16 +687,23 @@ function Home() {
         <div className="teach-content">
           <div className="teach-text">
             <h2>Share your expertise on this platform</h2>
-            <p>Share your knowledge and expertise with Learners around the world. Join our community of educators and help learners achieve their goals. Whether you're a seasoned professional or just starting, we welcome passionate individuals like you.</p>
+            <p>
+              Share your knowledge and expertise with Learners around the world.
+              Join our community of educators and help learners achieve their goals.
+              Whether you're a seasoned professional or just starting, we welcome passionate individuals like you.
+            </p>
             <Link to="/trainer-signup" className="btn-secondary">Become a Trainer</Link>
           </div>
           <div className="teach-image">
-            <img src="https://hilms.onrender.com/uploads/istockphoto-1392125218-612x612.jpg" alt="Teaching Platform" />
+            <img
+              src="https://hilms.onrender.com/uploads/istockphoto-1392125218-612x612.jpg"
+              alt="Teaching Platform"
+            />
           </div>
         </div>
       </section>
 
-      {/* HIROTEC India Career Paths Section */}
+      {/* Career Paths Section */}
       <CareerFlowchart />
     </div>
   );
