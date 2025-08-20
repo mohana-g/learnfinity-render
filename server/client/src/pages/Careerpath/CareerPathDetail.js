@@ -1,10 +1,9 @@
 // CareerPathDetail.js
 import React, { useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
+import './CareerPathDetail.css'; // Your CSS file for styling
 
-import './CareerPathDetail.css'; // Assuming you have a CSS file for styling
-
-// Full Career Paths data (ideally move this to a shared file)
+// Career paths data - ideally move to a separate file for maintainability
 const careerPaths = [
   {
     id: 'technical-engineering',
@@ -152,16 +151,28 @@ const careerPaths = [
   }
 ];
 
+// Simple flowchart without external packages
+const CareerFlowchartSimple = ({ levels }) => {
+  return (
+    <div className="simple-flowchart-container">
+      {levels.map((level, idx) => (
+        <div key={level.name} className="flowchart-node">
+          <div className="node-box">{level.name}</div>
+          {idx < levels.length -1 && <div className="arrow">➔</div>}
+        </div>
+      ))}
+    </div>
+  );
+};
 
 const CareerPathDetail = () => {
   const { pathId } = useParams();
   const navigate = useNavigate();
 
-    useEffect(() => {
-    // Scroll to top when component mounts
+  useEffect(() => {
     window.scrollTo(0, 0);
-    }, []);
-    
+  }, []);
+
   const careerPath = careerPaths.find((path) => path.id === pathId);
 
   if (!careerPath) {
@@ -178,7 +189,7 @@ const CareerPathDetail = () => {
             border: 'none',
             backgroundColor: '#2c3a93',
             color: 'white',
-            fontSize: '1rem'
+            fontSize: '1rem',
           }}
         >
           Go Back
@@ -199,6 +210,9 @@ const CareerPathDetail = () => {
           <p><strong>Skills & Courses:</strong> {level.skills.join(', ')}</p>
         </div>
       ))}
+
+      {/* Simple flowchart visualization */}
+      <CareerFlowchartSimple levels={careerPath.levels} />
 
       <div className="career-soft-skills-block">
         <h3>Soft Skills</h3>
