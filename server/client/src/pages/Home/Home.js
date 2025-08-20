@@ -461,7 +461,7 @@ function Home() {
       </section>
 
       {/* Career Path Suggestions */}
-      <section>
+      <section className='career-path-section'>
         <h2>Career Path Suggestions</h2>
         <p>Select your desired career to see recommended courses tailored for your goal, from beginner to advanced levels.</p>
         <CareerPathCards onReadMore={handleReadMore} />

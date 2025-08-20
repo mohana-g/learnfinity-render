@@ -416,6 +416,11 @@ background-color: #0000cc;
   border-radius: 5px;
 }
 
+.career-path-section {
+  padding: 50px 20px;
+  text-align: center;
+}
+
 .career-path-cards-container {
   display: flex;
   flex-wrap: wrap;

@@ -39,6 +39,7 @@ import UploadChaptersAndLessons from './pages/TrainerDashboard/TrainerHome/Uploa
 import AddQuiz from "./pages/TrainerDashboard/TrainerHome/AddQuiz";
 import CourseInteraction from "./pages/CourseInteraction/CourseInteraction";
 import MicrosoftLogin from "./pages/Login/MicrosoftLogin";
+import CareerPathDetail from './pages/Careerpath/CareerPathDetail';
 
 import { fetchTestMessage } from './utils/api';
 
@@ -89,6 +90,7 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/course-interaction/:courseId" element={<CourseInteraction />} />
+        <Route path="/career-path/:pathId" element={<CareerPathDetail />} />
 
         {/* Display backend message */}
         <Route
