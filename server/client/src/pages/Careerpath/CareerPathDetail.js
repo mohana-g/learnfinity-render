@@ -1,6 +1,7 @@
 // CareerPathDetail.js
-import React from 'react';
-import { useEffect, useParams, useNavigate, Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useParams, useNavigate, Link } from 'react-router-dom';
+
 import './CareerPathDetail.css'; // Assuming you have a CSS file for styling
 
 // Full Career Paths data (ideally move this to a shared file)
