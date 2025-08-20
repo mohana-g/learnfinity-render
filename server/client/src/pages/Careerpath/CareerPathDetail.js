@@ -24,10 +24,11 @@ const branchedCareerPath = {
       { id: 'completed', label: 'Completed Career Path', roles: [], skills: [], next: [] },
     ],
   ],
+  softSkills: ['Teamwork', 'Adaptability', 'Workplace Collaboration', 'Stress Management'],
 };
 
 // Box component showing role/skills
-const FlowchartBox = ({ label, roles, skills }) => (
+const FlowchartBox = ({ label, roles = [], skills = [] }) => (
   <div className="flowchart-branch-box">
     <h4>{label}</h4>
     {roles.length > 0 && (
@@ -45,7 +46,7 @@ const FlowchartBox = ({ label, roles, skills }) => (
   </div>
 );
 
-// Simple function to compute vertical spacing between rows for arrows
+// Function to compute vertical positioning of rows
 const getRowCenterY = (rowIndex, rowHeight, rowGap) => 
   rowIndex * (rowHeight + rowGap) + rowHeight / 2;
 
@@ -54,7 +55,7 @@ const MultiBranchFlowchart = ({ path }) => {
   const boxHeight = 170;
   const rowGap = 80;
 
-  // Flatten all nodes to create map from id to position
+  // Map of node id to position
   let positions = {};
   path.levels.forEach((row, rowIndex) => {
     row.forEach((node, nodeIndex) => {
@@ -80,7 +81,7 @@ const MultiBranchFlowchart = ({ path }) => {
         </div>
       ))}
 
-      {/* SVG arrows between connected nodes */}
+      {/* SVG arrows for connections */}
       <svg className="flowchart-svg-arrows" style={{ position: 'absolute', top: 0, left: 0, pointerEvents: 'none', width: '100%', height: '100%' }}>
         {path.levels.flat().map(node => (
           node.next.map(nextId => {
@@ -92,12 +93,12 @@ const MultiBranchFlowchart = ({ path }) => {
             const endX = to.x;
             const endY = to.y;
 
-            // Draw simple curved arrow path
+            // Curved Bezier path from box to next
             const controlX = (startX + endX) / 2;
             const pathD = `M${startX},${startY} C${controlX},${startY} ${controlX},${endY} ${endX},${endY}`;
             const arrowSize = 8;
 
-            // Arrowhead coordinates calculation
+            // Calculate arrowhead points
             const angle = Math.atan2(endY - startY, endX - startX);
             const arrowX1 = endX - arrowSize * Math.cos(angle - Math.PI / 6);
             const arrowY1 = endY - arrowSize * Math.sin(angle - Math.PI / 6);
@@ -117,7 +118,6 @@ const MultiBranchFlowchart = ({ path }) => {
   );
 };
 
-
 const CareerPathDetail = () => {
   const { pathId } = useParams();
   const navigate = useNavigate();
@@ -126,7 +126,6 @@ const CareerPathDetail = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  // For demo: Using fixed branchedCareerPath data. Replace to use careerPaths list if needed.
   if (!branchedCareerPath || branchedCareerPath.id !== pathId) {
     return (
       <div style={{ padding: '2rem', textAlign: 'center' }}>
@@ -155,20 +154,14 @@ const CareerPathDetail = () => {
       <h1>{branchedCareerPath.domain}</h1>
       <p className="career-detail-description">{branchedCareerPath.description}</p>
 
-     {branchedCareerPath.levels.flat().map((level) => (
-  <div className="career-level-block" key={level.id}>
-    <h2>{level.label}</h2>
-    {level.roles && level.roles.length > 0 && (
-      <p><strong>Roles:</strong> {level.roles.join(', ')}</p>
-    )}
-    {level.skills && level.skills.length > 0 && (
-      <p><strong>Skills & Courses:</strong> {level.skills.join(', ')}</p>
-    )}
-  </div>
-))}
+      {branchedCareerPath.levels.flat().map((level) => (
+        <div className="career-level-block" key={level.id}>
+          <h2>{level.label}</h2>
+          {level.roles && level.roles.length > 0 && <p><strong>Roles:</strong> {level.roles.join(', ')}</p>}
+          {level.skills && level.skills.length > 0 && <p><strong>Skills & Courses:</strong> {level.skills.join(', ')}</p>}
+        </div>
+      ))}
 
-
-      {/* Branched Career Flowchart Visualization */}
       <MultiBranchFlowchart path={branchedCareerPath} />
 
       <div className="career-soft-skills-block">
