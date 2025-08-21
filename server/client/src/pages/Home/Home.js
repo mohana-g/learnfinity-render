@@ -327,7 +327,6 @@ const CareerPathSkeleton = () => (
   <div className="career-path-card skeleton-card">
     <div className="skeleton skeleton-career-title"></div>
     <div className="skeleton skeleton-career-desc"></div>
-    <div className="skeleton skeleton-career-desc"></div>
     <div className="skeleton skeleton-career-levels"></div>
     <div className="skeleton skeleton-career-btn"></div>
   </div>
