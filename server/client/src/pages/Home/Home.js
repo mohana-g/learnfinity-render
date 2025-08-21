@@ -330,9 +330,15 @@ function CareerPathCards({ paths, onReadMore }) {
         <div key={path._id} className="career-path-card">
           <h3>{path.title}</h3>
           <p className="career-path-desc">{path.description}</p>
+
+          {/* ✅ Show levels properly */}
           <p className="career-path-levels">
-            <strong>Level:</strong> {path.levels}
+            <strong>Levels:</strong>{" "}
+            {path.levels && path.levels.length > 0
+              ? path.levels.map((level) => level.name).join(", ")
+              : "No levels"}
           </p>
+
           <button
             className="btn-read-more"
             onClick={() => onReadMore(path._id)}
@@ -344,6 +350,7 @@ function CareerPathCards({ paths, onReadMore }) {
     </section>
   );
 }
+
 
 function Home() {
   const [courses, setCourses] = useState([]);
