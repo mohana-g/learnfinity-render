@@ -322,6 +322,17 @@ const HomeCourseSkeleton = () => (
   </div>
 );
 
+// Career Path Skeleton Card
+const CareerPathSkeleton = () => (
+  <div className="career-path-card skeleton-card">
+    <div className="skeleton skeleton-career-title"></div>
+    <div className="skeleton skeleton-career-desc"></div>
+    <div className="skeleton skeleton-career-desc"></div>
+    <div className="skeleton skeleton-career-levels"></div>
+    <div className="skeleton skeleton-career-btn"></div>
+  </div>
+);
+
 // Career Path Cards
 function CareerPathCards({ paths, onReadMore }) {
   return (
@@ -472,10 +483,15 @@ function Home() {
           goal, from beginner to advanced levels.
         </p>
         {loadingPaths ? (
-          <p>Loading career paths...</p>
+          <div className="career-path-cards-container">
+            {Array.from({ length: 3 }).map((_, i) => (
+              <CareerPathSkeleton key={i} />
+            ))}
+          </div>
         ) : (
           <CareerPathCards paths={careerPaths} onReadMore={handleReadMore} />
         )}
+
       </section>
 
       {/* Teach Section */}
