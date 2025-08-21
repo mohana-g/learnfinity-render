@@ -416,6 +416,7 @@ background-color: #0000cc;
   border-radius: 5px;
 }
 
+
 /* Career Path Skeleton Styling */
 .skeleton-career-title {
   width: 70%;
@@ -446,106 +447,67 @@ background-color: #0000cc;
 }
 
 .career-path-section {
-  padding: 60px 20px;
+  padding: 50px 20px;
   text-align: center;
-  background: linear-gradient(135deg, #f8faff, #eef3ff);
-  font-family: "Poppins", sans-serif;
-}
-
-.career-path-section h2 {
-  font-size: 2.4rem;
-  font-weight: 700;
-  color: #222;
-  margin-bottom: 2rem;
 }
 
 .career-path-cards-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 2rem;
+  gap: 1.8rem;
+  padding: 2rem 1rem;
   max-width: 1200px;
   margin: 0 auto;
 }
 
 .career-path-card {
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border-radius: 18px;
-  padding: 2.2rem 1.8rem;
+  background: linear-gradient(135deg, #763af9, #099ff2);
+  color: white;
+  padding: 2rem 1.5rem;
+  border-radius: 12px;
   width: 320px;
-  color: #fff;
-  background: linear-gradient(135deg, rgba(118, 58, 249, 0.9), rgba(9, 159, 242, 0.9));
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 5px 20px rgb(100 86 243 / 0.3);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  transition: all 0.35s ease-in-out;
-  position: relative;
-  overflow: hidden;
-}
-
-.career-path-card::before {
-  content: "";
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
-  transform: rotate(25deg);
-  transition: all 0.6s ease;
-}
-
-.career-path-card:hover::before {
-  transform: rotate(0deg) scale(1.2);
+  transition: transform 0.3s ease;
 }
 
 .career-path-card:hover {
-  transform: translateY(-10px) scale(1.03);
-  box-shadow: 0 15px 40px rgba(9, 159, 242, 0.4);
+  transform: translateY(-8px);
+  box-shadow: 0 10px 28px rgb(100 86 243 / 0.5);
 }
 
 .career-path-card h3 {
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-  color: #fff;
+  font-size: 1.4rem;
+  margin-bottom: 0.8rem;
 }
 
 .career-path-desc {
   font-size: 1rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   flex-grow: 1;
-  line-height: 1.6;
-  color: #f0f4ff;
+  line-height: 1.4;
 }
 
 .career-path-levels {
   font-weight: 600;
-  margin-bottom: 1.8rem;
-  color: #dbe8ff;
-  font-size: 0.95rem;
-  letter-spacing: 0.5px;
+  margin-bottom: 1.5rem;
 }
 
 .btn-read-more {
-  background: linear-gradient(135deg, #fff, #f1f5ff);
+  background-color: white;
   color: #099ff2;
   border: none;
-  border-radius: 10px;
-  padding: 0.75rem 1.5rem;
-  font-weight: 600;
+  border-radius: 6px;
+  padding: 0.6rem 1.3rem;
+  font-weight: 700;
   font-size: 1rem;
   cursor: pointer;
-  transition: all 0.3s ease-in-out;
-  box-shadow: 0 4px 12px rgba(9, 159, 242, 0.25);
+  transition: background-color 0.2s ease;
 }
 
 .btn-read-more:hover {
-  background: #099ff2;
-  color: #fff;
-  box-shadow: 0 6px 18px rgba(9, 159, 242, 0.4);
-  transform: scale(1.05);
+  background-color: #e1f0ff;
 }
