@@ -6,18 +6,26 @@ const careerPathSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    domain: {
+      type: String,
+    },
     description: {
       type: String,
     },
-    levels: {
-      type: String, // e.g., "Foundation → Intermediate → Advanced"
-    },
-    courses: [
+    levels: [
       {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Course", // Link to existing Course schema
+        name: String, // Foundation, Intermediate, Advanced
+        roles: [String], // Array of role names
+        skills: [String], // Array of skills
+        courses: [
+          {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Course", // Links to your Course model
+          },
+        ],
       },
     ],
+    softSkills: [String], // e.g. ["Problem-Solving", "Collaboration"]
   },
   { timestamps: true, versionKey: false }
 );
