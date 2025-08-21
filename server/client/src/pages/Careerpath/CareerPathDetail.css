@@ -7,59 +7,53 @@
   line-height: 1.55;
 }
 
+/* Title */
 .career-detail-container h1 {
   font-size: 2.4rem;
   font-weight: 700;
-  margin-bottom: 0.8rem;
+  margin-bottom: 1rem;
   text-decoration: none;
+  color: #1a237e;
 }
 
+/* Description */
 .career-detail-description {
   font-size: 1.2rem;
   margin-bottom: 2rem;
   color: #2c3a93;
-}
-
-.career-level-block {
-  margin-bottom: 2rem;
-  border-left: 4px solid #4169e1;
-  padding-left: 1rem;
-}
-
-.career-level-block h2 {
-  font-size: 1.6rem;
-  color: #26418f;
-  margin-bottom: 0.4rem;
-}
-
-.career-level-block p {
-  font-size: 1.05rem;
-  margin-bottom: 0.25rem;
-  color: #333;
-}
-
-.career-soft-skills-block {
-  margin-bottom: 3rem;
-}
-
-.career-soft-skills-block h3 {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #26418f;
-  margin-bottom: 0.6rem;
-}
-
-.career-soft-skills-block p {
-  font-size: 1.1rem;
-  color: #2a2a2a;
   font-weight: 500;
 }
 
+/* Courses Section */
+.career-courses {
+  margin-bottom: 2rem;
+}
+
+.career-courses h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #26418f;
+  margin-bottom: 0.8rem;
+}
+
+.career-courses ul {
+  list-style: disc;
+  padding-left: 1.5rem;
+}
+
+.career-courses li {
+  font-size: 1.05rem;
+  margin-bottom: 0.4rem;
+  color: #333;
+}
+
+/* Buttons */
 .career-detail-buttons {
   display: flex;
   gap: 1.5rem;
   flex-wrap: wrap;
   justify-content: flex-start;
+  margin-top: 2rem;
 }
 
 .career-detail-buttons .btn {
@@ -73,9 +67,14 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: background-color 0.25s ease;
+  transition: background-color 0.25s ease, transform 0.2s ease;
 }
 
+.career-detail-buttons .btn:hover {
+  transform: translateY(-2px);
+}
+
+/* Button Variants */
 .btn-back {
   background-color: #4169e1;
   color: #fff;
@@ -104,4 +103,3 @@
     text-align: center;
   }
 }
-

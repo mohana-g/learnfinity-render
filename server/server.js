@@ -72,7 +72,7 @@ const chapterRoutes = require("./routes/chapterRoutes");
 const lessonRoutes = require("./routes/lessonRoutes");
 const quizRoutes = require("./routes/quizRoutes");
 const courseInteractionRoutes = require('./routes/CourseInteractionRoutes');
-
+const careerPathRoutes = require("./routes/careerPathRoutes");
 
 // Initialize App
 const app = express();
@@ -93,7 +93,8 @@ app.use("/api/trainer", trainerRoutes); // Trainer-related routes
 app.use("/api/chapters", chapterRoutes); // Chapter-related routes
 app.use("/api/lessons", lessonRoutes); // Lesson-related routes
 app.use("/api/quizzes", quizRoutes); // Quiz-related routes
-app.use('/api/course-interaction', courseInteractionRoutes);
+app.use('/api/course-interaction', courseInteractionRoutes); // Course interaction routes
+app.use("/api/career-paths", careerPathRoutes); // Career path routes
 
 // ✅ Add this test route to verify the backend
 app.get("/api/test", (req, res) => {

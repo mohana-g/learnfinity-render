@@ -322,55 +322,21 @@ const HomeCourseSkeleton = () => (
   </div>
 );
 
-// Career path summaries for home cards view
-const careerPathSummaries = [
-  {
-    id: "technical-engineering",
-    title: "Technical / Engineering Path",
-    description: "Explore technical design, robotics, and manufacturing roles.",
-    levels: "Foundation → Intermediate → Advanced"
-  },
-  {
-    id: "operations-production",
-    title: "Operations & Production Path",
-    description: "Lean manufacturing and production management career path.",
-    levels: "Foundation → Intermediate → Advanced"
-  },
-  {
-    id: "managerial",
-    title: "Managerial Path",
-    description: "Path to leadership with project and people management skills.",
-    levels: "Foundation → Intermediate → Advanced"
-  },
-  {
-    id: "quality-process-excellence",
-    title: "Quality & Process Excellence Path",
-    description: "Quality control, auditing, and process improvement roles.",
-    levels: "Foundation → Intermediate → Advanced"
-  },
-  {
-    id: "it-digital-transformation",
-    title: "IT & Digital Transformation Path",
-    description: "Programming, cloud, cybersecurity and AI in manufacturing.",
-    levels: "Foundation → Intermediate → Advanced"
-  },
-  {
-    id: "learning-development-hr",
-    title: "Learning & Development / HR Path",
-    description: "Career focused on HR, training, talent and organizational development.",
-    levels: "Foundation → Intermediate → Advanced"
-  },
-];
-
-function CareerPathCards({ onReadMore }) {
+// Career Path Cards
+function CareerPathCards({ paths, onReadMore }) {
   return (
     <section className="career-path-cards-container">
-      {careerPathSummaries.map((path) => (
-        <div key={path.id} className="career-path-card">
+      {paths.map((path) => (
+        <div key={path._id} className="career-path-card">
           <h3>{path.title}</h3>
           <p className="career-path-desc">{path.description}</p>
-          <p className="career-path-levels"><strong>Level:</strong> {path.levels}</p>
-          <button className="btn-read-more" onClick={() => onReadMore(path.id)}>
+          <p className="career-path-levels">
+            <strong>Level:</strong> {path.levels}
+          </p>
+          <button
+            className="btn-read-more"
+            onClick={() => onReadMore(path._id)}
+          >
             Read More
           </button>
         </div>
@@ -381,34 +347,56 @@ function CareerPathCards({ onReadMore }) {
 
 function Home() {
   const [courses, setCourses] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loadingCourses, setLoadingCourses] = useState(true);
+
+  const [careerPaths, setCareerPaths] = useState([]);
+  const [loadingPaths, setLoadingPaths] = useState(true);
+
   const navigate = useNavigate();
 
-  // Fetch popular courses sorted by number of enrolled Learners
+  // Fetch popular courses
   const fetchPopularCourses = async () => {
     try {
-      const response = await fetch('https://hilms.onrender.com/api/courses/popular');
-      if (!response.ok) {
-        throw new Error('Failed to fetch popular courses');
-      }
+      const response = await fetch(
+        'https://hilms.onrender.com/api/courses/popular'
+      );
+      if (!response.ok) throw new Error('Failed to fetch popular courses');
+
       const data = await response.json();
       setCourses(data.data);
     } catch (error) {
       console.error(error.message);
     } finally {
-      setLoading(false);
+      setLoadingCourses(false);
+    }
+  };
+
+  // Fetch career paths
+  const fetchCareerPaths = async () => {
+    try {
+      const response = await fetch(
+        'https://hilms.onrender.com/api/career-paths'
+      );
+      if (!response.ok) throw new Error('Failed to fetch career paths');
+
+      const data = await response.json();
+      setCareerPaths(data.data);
+    } catch (error) {
+      console.error(error.message);
+    } finally {
+      setLoadingPaths(false);
     }
   };
 
   useEffect(() => {
     fetchPopularCourses();
+    fetchCareerPaths();
   }, []);
 
-  // Navigate to career path details page on Read More click
+  // Navigate to career path details page
   const handleReadMore = (pathId) => {
     navigate(`/career-path/${pathId}`);
-    window.scrollTo(0, 0); // Scroll to top on navigation
-
+    window.scrollTo(0, 0);
   };
 
   return (
@@ -417,15 +405,16 @@ function Home() {
       <section className="hero-section">
         <div className="hero-content">
           <h1>Unlock Your Potential</h1>
-          {/* Optional subtitle or paragraph can be added here */}
-          <Link to="/signup" className="btn-primary">Join Now</Link>
+          <Link to="/signup" className="btn-primary">
+            Join Now
+          </Link>
         </div>
       </section>
 
       {/* Popular Courses */}
       <section className="courses-section">
         <h2>Popular Courses</h2>
-        {loading ? (
+        {loadingCourses ? (
           <div className="courses-container-cards">
             {Array.from({ length: 4 }).map((_, i) => (
               <HomeCourseSkeleton key={i} />
@@ -448,8 +437,14 @@ function Home() {
                     />
                     <div className="courses-card-content">
                       <h3>{course.title}</h3>
-                      <p><strong>Instructor:</strong> {course.trainer?.fullName}</p>
-                      <p><strong>Enrolled Learners:</strong> {course.learnerCount}</p>
+                      <p>
+                        <strong>Instructor:</strong>{' '}
+                        {course.trainer?.fullName || course.instructorName}
+                      </p>
+                      <p>
+                        <strong>Enrolled Learners:</strong>{' '}
+                        {course.learnerCount || 0}
+                      </p>
                     </div>
                     <div className="btn-primary">Read More</div>
                   </div>
@@ -463,10 +458,17 @@ function Home() {
       </section>
 
       {/* Career Path Suggestions */}
-      <section className='career-path-section'>
+      <section className="career-path-section">
         <h2>Career Path Suggestions</h2>
-        <p>Select your desired career to see recommended courses tailored for your goal, from beginner to advanced levels.</p>
-        <CareerPathCards onReadMore={handleReadMore} />
+        <p>
+          Select your desired career to see recommended courses tailored for your
+          goal, from beginner to advanced levels.
+        </p>
+        {loadingPaths ? (
+          <p>Loading career paths...</p>
+        ) : (
+          <CareerPathCards paths={careerPaths} onReadMore={handleReadMore} />
+        )}
       </section>
 
       {/* Teach Section */}
@@ -475,10 +477,14 @@ function Home() {
           <div className="teach-text">
             <h2>Share your expertise on this platform</h2>
             <p>
-              Share your knowledge and expertise with Learners around the world. Join our community of educators and help learners achieve their goals.
-              Whether you're a seasoned professional or just starting, we welcome passionate individuals like you.
+              Share your knowledge and expertise with Learners around the world.
+              Join our community of educators and help learners achieve their
+              goals. Whether you're a seasoned professional or just starting, we
+              welcome passionate individuals like you.
             </p>
-            <Link to="/trainer-signup" className="btn-secondary">Become a Trainer</Link>
+            <Link to="/trainer-signup" className="btn-secondary">
+              Become a Trainer
+            </Link>
           </div>
           <div className="teach-image">
             <img
@@ -493,3 +499,4 @@ function Home() {
 }
 
 export default Home;
+
