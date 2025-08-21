@@ -67,15 +67,20 @@ const CareerPathDetail = () => {
       <p className="career-detail-description">{careerPath.description}</p>
 
       <h2>Courses in this Path:</h2>
-      {careerPath.courses?.length > 0 ? (
-        <ul>
-          {careerPath.courses.map((course) => (
-            <li key={course._id}>{course.title}</li>
-          ))}
-        </ul>
-      ) : (
-        <p>No courses found for this path.</p>
-      )}
+      {careerPath.levels?.map((level, idx) => (
+        <div key={idx}>
+          <h3>{level.name}</h3>
+          {level.courses?.length > 0 ? (
+            <ul>
+              {level.courses.map((course) => (
+                <li key={course._id}>{course.title}</li>
+              ))}
+            </ul>
+          ) : (
+            <p>No courses in this level.</p>
+          )}
+        </div>
+      ))}
 
       <div className="career-detail-buttons">
         <button onClick={() => navigate(-1)} className="btn btn-back">
