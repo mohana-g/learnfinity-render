@@ -498,7 +498,7 @@ const AdminDashboard = () => {
                     />
                   ) : (
                     <div
-                      className="initial-avatar"
+                      className="initial-image"
                       style={{
                         background: getGradientFromName(trainer.fullName), // gradient background
                       }}

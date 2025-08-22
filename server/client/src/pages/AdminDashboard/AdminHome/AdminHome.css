@@ -153,6 +153,19 @@ h2 {
   object-fit: cover;
 }
 
+.initial-image {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+}
+
 /* Table Profile Image (for Manage Users table view) */
 .table-profile-image {
   width: 40px;
