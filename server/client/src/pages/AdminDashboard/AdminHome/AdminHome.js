@@ -72,6 +72,19 @@ const LeaderboardSkeleton = () => (
   </div>
 );
 
+  // Generate a consistent color from a string (name)
+  function stringToColor(str) {
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+      hash = str.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    const color = Math.floor(
+      (Math.abs(Math.sin(hash) * 16777215)) % 16777215
+    ).toString(16);
+    return "#" + ("000000" + color).slice(-6);
+  }
+
+
 
 const AdminDashboard = () => {
   const [activeSection, setActiveSection] = useState('manage-users');
@@ -347,16 +360,40 @@ const AdminDashboard = () => {
               <tr key={user._id}>
                           <td>{index + 1}</td> {/* <-- User number column */}
 
-                <td>
+                {/* <td>
                   <img
                     src={
                       user.profileImage ||
                       'https://static.vecteezy.com/system/resources/thumbnails/009/734/564/small/default-avatar-profile-icon-of-social-media-user-vector.jpg'
                     }
-              alt={`${fullName}'s profile`}
+                    alt={`${fullName}'s profile`}
+                          className="table-profile-image"
+                  />
+                </td> */}
+
+                <td>
+                {user.profileImage ? (
+                  <img
+                    src={user.profileImage}
+                    alt={`${fullName}'s profile`}
                     className="table-profile-image"
                   />
-                </td>
+                ) : (
+                  <div
+                    className="initial-avatar"
+                    style={{
+                      backgroundColor: stringToColor(fullName), // <-- Generate color from name
+                    }}
+                  >
+                    {fullName
+                      .split(" ")
+                      .map((n) => n[0])
+                      .join("")
+                      .toUpperCase()}
+                  </div>
+                )}
+              </td>
+
                 <td>{fullName}</td>
                 <td>{user.role === 0 ? 'Learner' : 'Trainer'}</td>
                 <td>{user.email}</td>

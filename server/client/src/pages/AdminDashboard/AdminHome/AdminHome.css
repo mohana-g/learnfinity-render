@@ -108,6 +108,26 @@ h2 {
   font-size: 15px;
 }
 
+.initial-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+}
+.table-profile-image {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+
 /* General Card Containers */
 .course-cards, .trainer-cards, .learner-cards {
   display: grid;
