@@ -66,7 +66,7 @@ const CareerPathDetail = () => {
       <h1>{careerPath.title}</h1>
       <p className="career-detail-description">{careerPath.description}</p>
 
-      <h2>Courses in this Path:</h2>
+      <h2>Courses in this Path</h2>
       {careerPath.levels?.map((level, idx) => (
         <div key={idx}>
           <h3>{level.name}</h3>

@@ -26,9 +26,11 @@
 .course-info-card h1 {
     color: #000;
     text-decoration: none;
+    font-size: 20px;
+    margin: 40px 20px;
 }
 
-.course-title {
+.course-details-title {
     font-weight: bold;
     color: #000;
     font-size: 1.5em;
@@ -37,12 +39,20 @@
 .ratings {
     color: #ffcc00;
     margin-top: 5px;
+    font-size: 1.2em;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
 }
 
 .course-meta {
     list-style-type: none;
     padding: 0;
     margin-top: 10px;
+    color: #555;
+    font-size: 1em;
 }
 
 .course-meta li {

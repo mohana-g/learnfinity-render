@@ -153,7 +153,7 @@ const CourseDetails = () => {
       <div className="course-details-page">
         <div className="course-header">
           <div className="course-info-card">
-            <h1>Course Title: <span className="course-title">{course.title || "Untitled Course"}</span></h1>
+            <h1>Course Title: <span className="course-details-title">{course.title || "Untitled Course"}</span></h1>
             <div className="ratings">
               ★ {course.averageRating || 0}/5 ({course.reviewCount || 0} Reviews)
             </div>
