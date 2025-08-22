@@ -73,7 +73,7 @@ const LeaderboardSkeleton = () => (
 );
 
   // Generate a consistent darker gradient from a string (name)
-function stringToGradient(str) {
+function stringToColor(str) {
   let hash = 0;
   for (let i = 0; i < str.length; i++) {
     hash = str.charCodeAt(i) + ((hash << 5) - hash);
