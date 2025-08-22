@@ -485,11 +485,32 @@ const AdminDashboard = () => {
             ) : (
               trainers.map((trainer) => (
                 <div className="trainer-card" key={trainer._id}>
-                  <img 
+                  {/* <img 
                     src={trainer.profileImage || "https://static.vecteezy.com/system/resources/thumbnails/009/734/564/small/default-avatar-profile-icon-of-social-media-user-vector.jpg"} 
                     alt={`${trainer.fullName}'s profile`} 
                     className="profile-image" 
-                  />
+                  /> */}
+                  {trainer.profileImage ? (
+                    <img
+                      src={trainer.profileImage}
+                      alt={`${trainer.fullName}'s profile`}
+                      className="profile-image"
+                    />
+                  ) : (
+                    <div
+                      className="initial-avatar"
+                      style={{
+                        background: getGradientFromName(trainer.fullName), // gradient background
+                      }}
+                    >
+                      {trainer.fullName
+                        .split(" ")
+                        .map((n) => n[0])
+                        .join("")
+                        .toUpperCase()}
+                    </div>
+                  )}
+
                   <p><strong>{trainer.fullName}</strong></p>
                   <p>Email: {trainer.email}</p>
                   <p>Phone: {trainer.phoneNumber || "N/A"}</p>
