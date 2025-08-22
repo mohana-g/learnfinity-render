@@ -72,17 +72,23 @@ const LeaderboardSkeleton = () => (
   </div>
 );
 
-  // Generate a consistent color from a string (name)
-  function stringToColor(str) {
-    let hash = 0;
-    for (let i = 0; i < str.length; i++) {
-      hash = str.charCodeAt(i) + ((hash << 5) - hash);
-    }
-    const color = Math.floor(
-      (Math.abs(Math.sin(hash) * 16777215)) % 16777215
-    ).toString(16);
-    return "#" + ("000000" + color).slice(-6);
+  // Generate a consistent darker gradient from a string (name)
+function stringToGradient(str) {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    hash = str.charCodeAt(i) + ((hash << 5) - hash);
   }
+
+  // Generate two darker colors (avoid very light ones)
+  const color1 =
+    "#" +
+    ("000000" + (((hash & 0x00ffffff) & 0x7f7f7f) | 0x202020).toString(16)).slice(-6);
+  const color2 =
+    "#" +
+    ("000000" + ((((hash >> 3) & 0x00ffffff) & 0x7f7f7f) | 0x202020).toString(16)).slice(-6);
+
+  return `linear-gradient(135deg, ${color1}, ${color2})`;
+}
 
 
 
