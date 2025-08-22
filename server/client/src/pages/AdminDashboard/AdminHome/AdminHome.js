@@ -73,7 +73,7 @@ const LeaderboardSkeleton = () => (
 );
 
   // Generate a consistent darker gradient from a string (name)
-function stringToColor(str) {
+function stringToGradient(str) {
   let hash = 0;
   for (let i = 0; i < str.length; i++) {
     hash = str.charCodeAt(i) + ((hash << 5) - hash);
@@ -388,7 +388,7 @@ const AdminDashboard = () => {
                   <div
                     className="initial-avatar"
                     style={{
-                      backgroundColor: stringToColor(fullName), // <-- Generate color from name
+                      backgroundColor: stringToGradient(fullName), // <-- Generate color from name
                     }}
                   >
                     {fullName
