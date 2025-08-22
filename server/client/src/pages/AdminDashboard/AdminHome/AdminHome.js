@@ -72,22 +72,24 @@ const LeaderboardSkeleton = () => (
   </div>
 );
 
-  // Generate a consistent darker gradient from a string (name)
-function stringToGradient(str) {
+const gradients = [
+  "linear-gradient(135deg, #ff7e5f, #feb47b)", // orange → peach
+  "linear-gradient(135deg, #6a11cb, #2575fc)", // purple → blue
+  "linear-gradient(135deg, #00c6ff, #0072ff)", // cyan → blue
+  "linear-gradient(135deg, #f7971e, #ffd200)", // orange → yellow
+  "linear-gradient(135deg, #11998e, #38ef7d)", // green → light green
+  "linear-gradient(135deg, #ff416c, #ff4b2b)", // pink → red
+  "linear-gradient(135deg, #833ab4, #fd1d1d)", // violet → red
+  "linear-gradient(135deg, #00b09b, #96c93d)", // teal → lime
+];
+
+function getGradientFromName(name) {
   let hash = 0;
-  for (let i = 0; i < str.length; i++) {
-    hash = str.charCodeAt(i) + ((hash << 5) - hash);
+  for (let i = 0; i < name.length; i++) {
+    hash = name.charCodeAt(i) + ((hash << 5) - hash);
   }
-
-  // Generate two darker colors (avoid very light ones)
-  const color1 =
-    "#" +
-    ("000000" + (((hash & 0x00ffffff) & 0x7f7f7f) | 0x202020).toString(16)).slice(-6);
-  const color2 =
-    "#" +
-    ("000000" + ((((hash >> 3) & 0x00ffffff) & 0x7f7f7f) | 0x202020).toString(16)).slice(-6);
-
-  return `linear-gradient(135deg, ${color1}, ${color2})`;
+  const index = Math.abs(hash) % gradients.length;
+  return gradients[index];
 }
 
 
@@ -378,27 +380,28 @@ const AdminDashboard = () => {
                 </td> */}
 
                 <td>
-                {user.profileImage ? (
-                  <img
-                    src={user.profileImage}
-                    alt={`${fullName}'s profile`}
-                    className="table-profile-image"
-                  />
-                ) : (
-                  <div
-                    className="initial-avatar"
-                    style={{
-                      backgroundColor: stringToGradient(fullName), // <-- Generate color from name
-                    }}
-                  >
-                    {fullName
-                      .split(" ")
-                      .map((n) => n[0])
-                      .join("")
-                      .toUpperCase()}
-                  </div>
-                )}
-              </td>
+                  {user.profileImage ? (
+                    <img
+                      src={user.profileImage}
+                      alt={`${fullName}'s profile`}
+                      className="table-profile-image"
+                    />
+                  ) : (
+                    <div
+                      className="initial-avatar"
+                      style={{
+                        background: getGradientFromName(fullName), // 🎨 controlled gradient
+                      }}
+                    >
+                      {fullName
+                        .split(" ")
+                        .map((n) => n[0])
+                        .join("")
+                        .toUpperCase()}
+                    </div>
+                  )}
+                </td>
+
 
                 <td>{fullName}</td>
                 <td>{user.role === 0 ? 'Learner' : 'Trainer'}</td>
