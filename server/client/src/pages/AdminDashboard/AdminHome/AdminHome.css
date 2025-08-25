@@ -218,6 +218,20 @@ h2 {
   background-color: #c0392b;
 }
 
+.add-careerpath-btn {
+  background-color: #4cafef;
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.add-careerpath-btn:hover {
+  background-color: #3a9dd6;
+}
+
 /* Align buttons inside card layouts */
 .course-card button, .trainer-card button {
   margin-right: 10px;

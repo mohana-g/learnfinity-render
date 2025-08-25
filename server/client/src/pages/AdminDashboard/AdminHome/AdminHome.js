@@ -438,17 +438,18 @@ const AdminDashboard = () => {
             <h2>Manage Courses</h2>
 
              {/* Search bar */}
-    <div className="admin-search-container">
-      <input
-        type="text"
-        placeholder="Search courses by title or description... 🔍"
-        className="admin-search-input"
-        value={searchCourseQuery}
-        onChange={(e) => setSearchCourseQuery(e.target.value)}
-      />
-    </div>
+          <div className="admin-search-container">
+            <input
+              type="text"
+              placeholder="Search courses by title or description... 🔍"
+              className="admin-search-input"
+              value={searchCourseQuery}
+              onChange={(e) => setSearchCourseQuery(e.target.value)}
+            />
+          </div>
 
             <button className="add-course-btn" onClick={navigateToAddCourse}>Add Course</button>
+            <button className="add-careerpath-btn" onClick={navigateToAddCareerPath}>Add Career Path</button>
            <div className="course-cards">
             {coursesLoading ? (
               Array.from({ length: 4 }).map((_, i) => <CourseCardSkeleton key={i} />)
