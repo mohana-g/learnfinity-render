@@ -1,3 +1,7 @@
+* {
+    font-family: 'Work Sans', sans-serif;
+}
+
 .add-careerpath-page {
   max-width: 950px;
   margin: 30px auto;
@@ -35,7 +39,15 @@
 }
 
 .careerpath-form input,
-.careerpath-form textarea,
+.careerpath-form textarea {
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  transition: border 0.2s ease;
+}
+
 .careerpath-form select {
   width: 100%;
   padding: 10px 12px;
@@ -85,13 +97,13 @@
 }
 
 .careerpath-form button[type="submit"] {
-  background: #4cafef;
+  background: #0505fc;
   color: #fff;
   margin-top: 10px;
 }
 
 .careerpath-form button[type="submit"]:hover {
-  background: #3a9dd6;
+  background: #0000cc;
   transform: scale(1.02);
 }
 
@@ -188,4 +200,19 @@
     gap: 10px;
     align-items: flex-start;
   }
+}
+
+.form-container {
+  background: #fff;
+  padding: 25px 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  margin-bottom: 40px;
+}
+
+.careerpath-list {
+  background: #f9fafc;
+  padding: 25px 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }

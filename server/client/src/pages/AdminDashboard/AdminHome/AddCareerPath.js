@@ -167,7 +167,9 @@ const AddCareerPath = () => {
   };
 
   return (
-    <div className="add-careerpath-page">
+  <div className="add-careerpath-page">
+    {/* Form Section */}
+    <div className="form-container">
       <h2>{editId ? "Edit Career Path" : "Add Career Path"}</h2>
 
       <form onSubmit={handleSubmit} className="careerpath-form">
@@ -249,7 +251,10 @@ const AddCareerPath = () => {
                     handleSkillChange(cIndex, sIndex, e.target.value)
                   }
                 />
-                <button type="button" onClick={() => removeSkill(cIndex, sIndex)}>
+                <button
+                  type="button"
+                  onClick={() => removeSkill(cIndex, sIndex)}
+                >
                   Remove
                 </button>
               </div>
@@ -269,7 +274,10 @@ const AddCareerPath = () => {
         <br />
         <button type="submit">{editId ? "Update" : "Submit"}</button>
       </form>
+    </div>
 
+    {/* Existing Career Paths Section */}
+    <div className="careerpath-list">
       <h3>Existing Career Paths</h3>
       {careerPaths.length === 0 ? (
         <p>No career paths found.</p>
@@ -285,7 +293,7 @@ const AddCareerPath = () => {
         </ul>
       )}
     </div>
-  );
+  </div>
+);
 };
-
 export default AddCareerPath;
