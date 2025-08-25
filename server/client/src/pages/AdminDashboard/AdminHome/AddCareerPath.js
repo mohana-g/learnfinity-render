@@ -165,111 +165,95 @@ const AddCareerPath = () => {
       .then(() => fetchCareerPaths())
       .catch((err) => console.error("Error deleting career path:", err));
   };
+return (
+  <div className="add-careerpath-page">
+    <h2>{editId ? "Edit Career Path" : "Add Career Path"}</h2>
 
-  return (
-    <div className="add-careerpath-page">
-      <h2>{editId ? "Edit Career Path" : "Add Career Path"}</h2>
+    {/* Form Section */}
+    <form onSubmit={handleSubmit} className="careerpath-form">
+      <input
+        type="text"
+        name="title"
+        placeholder="Career Path Title"
+        value={careerPath.title}
+        onChange={handleChange}
+        required
+      />
+      <textarea
+        name="description"
+        placeholder="Description"
+        value={careerPath.description}
+        onChange={handleChange}
+        required
+      />
 
-      <form onSubmit={handleSubmit} className="careerpath-form">
-        <input
-          type="text"
-          name="title"
-          placeholder="Career Path Title"
-          value={careerPath.title}
-          onChange={handleChange}
-          required
-        />
-        <textarea
-          name="description"
-          placeholder="Description"
-          value={careerPath.description}
-          onChange={handleChange}
-          required
-        />
+      <h4>Roles</h4>
+      {careerPath.roles.map((role, index) => (
+        <div key={index}>
+          <input
+            type="text"
+            value={role}
+            onChange={(e) => handleRoleChange(index, e.target.value)}
+          />
+          <button type="button" onClick={() => removeRole(index)}>
+            Remove
+          </button>
+        </div>
+      ))}
+      <button type="button" onClick={addRole}>Add Role</button>
 
-        <h4>Roles</h4>
-        {careerPath.roles.map((role, index) => (
-          <div key={index}>
-            <input
-              type="text"
-              value={role}
-              onChange={(e) => handleRoleChange(index, e.target.value)}
-            />
-            <button type="button" onClick={() => removeRole(index)}>
-              Remove
-            </button>
-          </div>
-        ))}
-        <button type="button" onClick={addRole}>
-          Add Role
-        </button>
-
-        <h4>Courses</h4>
-        {careerPath.courses.map((course, cIndex) => (
-          <div key={cIndex} className="selected-course">
-            <select
-              value={course.courseId}
-              onChange={(e) =>
-                handleCourseChange(cIndex, "courseId", e.target.value)
-              }
-              required
-            >
-              <option value="">Select Course</option>
-              {courses.map((c) => (
-                <option key={c._id} value={c._id}>
-                  {c.title}
-                </option>
-              ))}
-            </select>
-
-            <input
-              type="text"
-              placeholder="Level"
-              value={course.level}
-              onChange={(e) =>
-                handleCourseChange(cIndex, "level", e.target.value)
-              }
-            />
-            <input
-              type="text"
-              placeholder="Duration"
-              value={course.duration}
-              onChange={(e) =>
-                handleCourseChange(cIndex, "duration", e.target.value)
-              }
-            />
-
-            <h5>Skills Learnt</h5>
-            {course.skillsLearnt.map((skill, sIndex) => (
-              <div key={sIndex}>
-                <input
-                  type="text"
-                  value={skill}
-                  onChange={(e) =>
-                    handleSkillChange(cIndex, sIndex, e.target.value)
-                  }
-                />
-                <button type="button" onClick={() => removeSkill(cIndex, sIndex)}>
-                  Remove
-                </button>
-              </div>
+      <h4>Courses</h4>
+      {careerPath.courses.map((course, cIndex) => (
+        <div key={cIndex} className="selected-course">
+          <select
+            value={course.courseId}
+            onChange={(e) => handleCourseChange(cIndex, "courseId", e.target.value)}
+            required
+          >
+            <option value="">Select Course</option>
+            {courses.map((c) => (
+              <option key={c._id} value={c._id}>{c.title}</option>
             ))}
-            <button type="button" onClick={() => addSkill(cIndex)}>
-              Add Skill
-            </button>
-            <button type="button" onClick={() => removeCourse(cIndex)}>
-              Remove Course
-            </button>
-          </div>
-        ))}
-        <button type="button" onClick={addCourse}>
-          Add Course
-        </button>
+          </select>
 
-        <br />
-        <button type="submit">{editId ? "Update" : "Submit"}</button>
-      </form>
+          <input
+            type="text"
+            placeholder="Level"
+            value={course.level}
+            onChange={(e) => handleCourseChange(cIndex, "level", e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Duration"
+            value={course.duration}
+            onChange={(e) => handleCourseChange(cIndex, "duration", e.target.value)}
+          />
 
+          <h5>Skills Learnt</h5>
+          {course.skillsLearnt.map((skill, sIndex) => (
+            <div key={sIndex}>
+              <input
+                type="text"
+                value={skill}
+                onChange={(e) => handleSkillChange(cIndex, sIndex, e.target.value)}
+              />
+              <button type="button" onClick={() => removeSkill(cIndex, sIndex)}>
+                Remove
+              </button>
+            </div>
+          ))}
+          <button type="button" onClick={() => addSkill(cIndex)}>Add Skill</button>
+          <button type="button" onClick={() => removeCourse(cIndex)}>Remove Course</button>
+        </div>
+      ))}
+      <button type="button" onClick={addCourse}>Add Course</button>
+
+      <br />
+      <button type="submit">{editId ? "Update" : "Submit"}</button>
+    </form>
+
+    {/* Existing Career Paths Section */}
+    <div className="existing-careerpaths">
       <h3>Existing Career Paths</h3>
       {careerPaths.length === 0 ? (
         <p>No career paths found.</p>
@@ -285,7 +269,8 @@ const AddCareerPath = () => {
         </ul>
       )}
     </div>
-  );
+  </div>
+);
 };
 
 export default AddCareerPath;

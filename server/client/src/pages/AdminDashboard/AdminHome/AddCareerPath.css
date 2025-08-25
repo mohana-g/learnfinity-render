@@ -1,5 +1,5 @@
 * {
-    font-family: 'Work Sans', sans-serif;
+  font-family: 'Work Sans', sans-serif;
 }
 
 .add-careerpath-page {
@@ -12,7 +12,7 @@
   font-family: "Work Sans", sans-serif;
 }
 
-/* Heading */
+/* Headings */
 .add-careerpath-page h2 {
   text-align: center;
   margin-bottom: 25px;
@@ -31,6 +31,12 @@
   font-size: 1.2rem;
 }
 
+.selected-course h5 {
+  margin: 12px 0 8px;
+  font-size: 1rem;
+  color: #2b3a4a;
+}
+
 /* Form */
 .careerpath-form {
   display: flex;
@@ -39,23 +45,14 @@
 }
 
 .careerpath-form input,
-.careerpath-form textarea {
-  padding: 10px 12px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 1rem;
-  outline: none;
-  transition: border 0.2s ease;
-}
-
+.careerpath-form textarea,
 .careerpath-form select {
-  width: 100%;
   padding: 10px 12px;
   border: 1px solid #ccc;
   border-radius: 8px;
   font-size: 1rem;
   outline: none;
-  transition: border 0.2s ease;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
 }
 
 .careerpath-form input:focus,
@@ -70,19 +67,13 @@
   resize: vertical;
 }
 
-/* Dynamic blocks (roles, courses, skills) */
+/* Dynamic blocks */
 .selected-course {
   background: #f9fafc;
   border: 1px solid #e1e5eb;
   border-radius: 10px;
   padding: 15px;
   margin-top: 10px;
-}
-
-.selected-course h5 {
-  margin: 12px 0 8px;
-  font-size: 1rem;
-  color: #2b3a4a;
 }
 
 /* Buttons */
@@ -96,6 +87,7 @@
   transition: background 0.2s ease, transform 0.1s ease;
 }
 
+/* Submit button */
 .careerpath-form button[type="submit"] {
   background: #0505fc;
   color: #fff;
@@ -111,7 +103,7 @@
   background: #3389bb;
 }
 
-/* Add/remove buttons inside dynamic fields */
+/* General add/remove buttons */
 .careerpath-form button[type="button"] {
   margin-top: 8px;
   background: #eee;
@@ -122,15 +114,14 @@
   background: #ddd;
 }
 
-.careerpath-form .remove-btn,
-.careerpath-form button:contains("Remove") {
-  background: #ff5c5c;
-  color: #fff;
+/* Add a utility class for destructive buttons in JSX */
+.remove-btn {
+  background: #ff5c5c !important;
+  color: #fff !important;
 }
 
-.careerpath-form .remove-btn:hover,
-.careerpath-form button:contains("Remove"):hover {
-  background: #e14c4c;
+.remove-btn:hover {
+  background: #e14c4c !important;
 }
 
 /* Career paths list */
@@ -156,28 +147,21 @@
   color: #2b3a4a;
 }
 
-.add-careerpath-page li button {
-  padding: 6px 12px;
-  margin-left: 8px;
-  border-radius: 6px;
-  font-size: 0.9rem;
-}
-
-.add-careerpath-page li button:first-of-type {
+.add-careerpath-page li .edit-btn {
   background: #4cafef;
   color: #fff;
 }
 
-.add-careerpath-page li button:first-of-type:hover {
+.add-careerpath-page li .edit-btn:hover {
   background: #3a9dd6;
 }
 
-.add-careerpath-page li button:last-of-type {
+.add-careerpath-page li .delete-btn {
   background: #ff5c5c;
   color: #fff;
 }
 
-.add-careerpath-page li button:last-of-type:hover {
+.add-careerpath-page li .delete-btn:hover {
   background: #e14c4c;
 }
 
@@ -201,4 +185,3 @@
     align-items: flex-start;
   }
 }
-
