@@ -23,11 +23,25 @@ const AddCareerPath = () => {
 
   // fetch courses
   useEffect(() => {
-    axios
-      .get("https://hilms.onrender.com/api/courses")
-      .then((res) => setCourses(Array.isArray(res.data) ? res.data : []))
-      .catch((err) => console.error("Error fetching courses:", err));
-  }, []);
+  axios
+    .get("https://hilms.onrender.com/api/courses")
+    .then((res) => {
+      const data = res.data;
+      // handle if backend sends { data: [...] } or just [...]
+      if (Array.isArray(data)) {
+        setCourses(data);
+      } else if (Array.isArray(data.data)) {
+        setCourses(data.data);
+      } else {
+        setCourses([]);
+      }
+    })
+    .catch((err) => {
+      console.error("Error fetching courses:", err);
+      setCourses([]);
+    });
+}, []);
+
 
   // fetch existing career paths
   const fetchCareerPaths = () => {
@@ -212,7 +226,9 @@ return (
           >
             <option value="">Select Course</option>
             {courses.map((c) => (
-              <option key={c._id} value={c._id}>{c.title}</option>
+            <option key={c._id} value={c._id}>
+            {c.title || c.name}
+            </option>
             ))}
           </select>
 
