@@ -1,0 +1,107 @@
+.add-careerpath-page {
+  max-width: 800px;
+  margin: 30px auto;
+  padding: 25px 30px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  font-family: "Work Sans", sans-serif;
+}
+
+.add-careerpath-page h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #333;
+  font-size: 1.8rem;
+}
+
+.careerpath-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* Labels */
+.careerpath-form label {
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: #444;
+}
+
+/* Inputs & textarea */
+.careerpath-form input,
+.careerpath-form textarea,
+.careerpath-form select {
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  font-size: 1rem;
+  transition: border 0.2s ease;
+}
+
+.careerpath-form input:focus,
+.careerpath-form textarea:focus,
+.careerpath-form select:focus {
+  border-color: #4cafef;
+  box-shadow: 0 0 0 3px rgba(76, 175, 239, 0.15);
+}
+
+.careerpath-form textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+/* Selected course section */
+.selected-course {
+  background: #f9fafc;
+  border: 1px solid #e1e5eb;
+  border-radius: 10px;
+  padding: 15px;
+  margin-top: 10px;
+}
+
+.selected-course h4 {
+  margin: 0 0 12px 0;
+  font-size: 1.1rem;
+  color: #2b3a4a;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 6px;
+}
+
+/* Buttons */
+.submit-btn {
+  background: #4cafef;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 18px;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.submit-btn:hover {
+  background: #3a9dd6;
+  transform: scale(1.02);
+}
+
+.submit-btn:active {
+  background: #3389bb;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+  .add-careerpath-page {
+    padding: 20px;
+  }
+
+  .careerpath-form {
+    gap: 14px;
+  }
+
+  .submit-btn {
+    width: 100%;
+  }
+}
