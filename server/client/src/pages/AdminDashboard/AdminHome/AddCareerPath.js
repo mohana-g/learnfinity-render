@@ -1,181 +1,273 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import "./AddCareerPath.css";
 
 const AddCareerPath = () => {
-  const [careerPathData, setCareerPathData] = useState({
+  const [careerPath, setCareerPath] = useState({
     title: "",
-    roles: "",
     description: "",
-    courses: [], // ✅ always an array
+    roles: [""], // always an array
+    courses: [
+      {
+        courseId: "",
+        level: "",
+        duration: "",
+        skillsLearnt: [""],
+      },
+    ],
   });
 
-  const [allCourses, setAllCourses] = useState([]);
-  const [careerPaths, setCareerPaths] = useState([]);
-  const [editingId, setEditingId] = useState(null);
+  const [courses, setCourses] = useState([]); // from DB
+  const [careerPaths, setCareerPaths] = useState([]); // for listing/editing
+  const [editId, setEditId] = useState(null);
 
-  // Fetch all available courses
+  // fetch all courses to choose from
   useEffect(() => {
-    axios.get("/api/courses").then((res) => setAllCourses(res.data));
-    fetchCareerPaths();
+    axios
+      .get("http://localhost:5000/api/courses")
+      .then((res) => setCourses(res.data))
+      .catch((err) => console.error(err));
   }, []);
 
-  const fetchCareerPaths = async () => {
-    const res = await axios.get("/api/careerpaths");
-    setCareerPaths(res.data);
+  // fetch existing career paths
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/api/careerpaths")
+      .then((res) => setCareerPaths(res.data))
+      .catch((err) => console.error(err));
+  }, []);
+
+  const handleChange = (e) => {
+    setCareerPath({ ...careerPath, [e.target.name]: e.target.value });
   };
 
-  const handleInputChange = (e) => {
-    setCareerPathData({ ...careerPathData, [e.target.name]: e.target.value });
+  // handle roles change
+  const handleRoleChange = (index, value) => {
+    const updatedRoles = [...careerPath.roles];
+    updatedRoles[index] = value;
+    setCareerPath({ ...careerPath, roles: updatedRoles });
   };
 
+  const addRole = () => {
+    setCareerPath({ ...careerPath, roles: [...careerPath.roles, ""] });
+  };
+
+  const removeRole = (index) => {
+    const updatedRoles = careerPath.roles.filter((_, i) => i !== index);
+    setCareerPath({ ...careerPath, roles: updatedRoles });
+  };
+
+  // handle courses change
   const handleCourseChange = (index, field, value) => {
-    const updatedCourses = [...careerPathData.courses];
+    const updatedCourses = [...careerPath.courses];
     updatedCourses[index][field] = value;
-    setCareerPathData({ ...careerPathData, courses: updatedCourses });
+    setCareerPath({ ...careerPath, courses: updatedCourses });
   };
 
-  const addCourseField = () => {
-    setCareerPathData({
-      ...careerPathData,
+  // handle skills inside courses
+  const handleSkillChange = (cIndex, sIndex, value) => {
+    const updatedCourses = [...careerPath.courses];
+    updatedCourses[cIndex].skillsLearnt[sIndex] = value;
+    setCareerPath({ ...careerPath, courses: updatedCourses });
+  };
+
+  const addCourse = () => {
+    setCareerPath({
+      ...careerPath,
       courses: [
-        ...careerPathData.courses,
-        { courseId: "", level: "", duration: "", skills: "" },
+        ...careerPath.courses,
+        { courseId: "", level: "", duration: "", skillsLearnt: [""] },
       ],
     });
   };
 
-  const removeCourseField = (index) => {
-    const updatedCourses = careerPathData.courses.filter((_, i) => i !== index);
-    setCareerPathData({ ...careerPathData, courses: updatedCourses });
+  const removeCourse = (index) => {
+    const updatedCourses = careerPath.courses.filter((_, i) => i !== index);
+    setCareerPath({ ...careerPath, courses: updatedCourses });
   };
 
-  const handleSubmit = async (e) => {
+  const addSkill = (cIndex) => {
+    const updatedCourses = [...careerPath.courses];
+    updatedCourses[cIndex].skillsLearnt.push("");
+    setCareerPath({ ...careerPath, courses: updatedCourses });
+  };
+
+  const removeSkill = (cIndex, sIndex) => {
+    const updatedCourses = [...careerPath.courses];
+    updatedCourses[cIndex].skillsLearnt = updatedCourses[cIndex].skillsLearnt.filter(
+      (_, i) => i !== sIndex
+    );
+    setCareerPath({ ...careerPath, courses: updatedCourses });
+  };
+
+  // submit
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if (editingId) {
-      await axios.put(`/api/careerpaths/${editingId}`, careerPathData);
+    if (editId) {
+      axios
+        .put(`http://localhost:5000/api/careerpaths/${editId}`, careerPath)
+        .then(() => {
+          setEditId(null);
+          resetForm();
+          fetchCareerPaths();
+        })
+        .catch((err) => console.error(err));
     } else {
-      await axios.post("/api/careerpaths", careerPathData);
+      axios
+        .post("http://localhost:5000/api/careerpaths", careerPath)
+        .then(() => {
+          resetForm();
+          fetchCareerPaths();
+        })
+        .catch((err) => console.error(err));
     }
-    setCareerPathData({ title: "", roles: "", description: "", courses: [] });
-    setEditingId(null);
-    fetchCareerPaths();
+  };
+
+  const fetchCareerPaths = () => {
+    axios
+      .get("http://localhost:5000/api/careerpaths")
+      .then((res) => setCareerPaths(res.data))
+      .catch((err) => console.error(err));
+  };
+
+  const resetForm = () => {
+    setCareerPath({
+      title: "",
+      description: "",
+      roles: [""],
+      courses: [
+        { courseId: "", level: "", duration: "", skillsLearnt: [""] },
+      ],
+    });
   };
 
   const handleEdit = (path) => {
-    setCareerPathData({
+    setCareerPath({
       title: path.title,
-      roles: path.roles,
       description: path.description,
-      courses: Array.isArray(path.courses) ? path.courses : [], // ✅ safe
+      roles: path.roles && path.roles.length ? path.roles : [""],
+      courses:
+        path.courses && path.courses.length
+          ? path.courses
+          : [{ courseId: "", level: "", duration: "", skillsLearnt: [""] }],
     });
-    setEditingId(path._id);
+    setEditId(path._id);
   };
 
-  const handleDelete = async (id) => {
-    await axios.delete(`/api/careerpaths/${id}`);
-    fetchCareerPaths();
+  const handleDelete = (id) => {
+    axios
+      .delete(`http://localhost:5000/api/careerpaths/${id}`)
+      .then(() => fetchCareerPaths())
+      .catch((err) => console.error(err));
   };
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h2>{editingId ? "Update Career Path" : "Add Career Path"}</h2>
+    <div>
+      <h2>{editId ? "Edit Career Path" : "Add Career Path"}</h2>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
           name="title"
-          placeholder="Career Path Title (e.g. Developer, Designer)"
-          value={careerPathData.title}
-          onChange={handleInputChange}
+          placeholder="Career Path Title"
+          value={careerPath.title}
+          onChange={handleChange}
           required
         />
-        <br />
-
-        <input
-          type="text"
-          name="roles"
-          placeholder="Roles (comma separated, e.g. Software Engineer, Analyst)"
-          value={careerPathData.roles}
-          onChange={handleInputChange}
-          required
-        />
-        <br />
-
         <textarea
           name="description"
-          placeholder="Description about the Career Path"
-          value={careerPathData.description}
-          onChange={handleInputChange}
+          placeholder="Description"
+          value={careerPath.description}
+          onChange={handleChange}
           required
         />
-        <br />
 
-        <h3>Courses</h3>
-        {Array.isArray(careerPathData.courses) &&
-          careerPathData.courses.map((course, index) => (
-            <div key={index} style={{ marginBottom: "10px" }}>
-              <select
-                value={course.courseId}
-                onChange={(e) =>
-                  handleCourseChange(index, "courseId", e.target.value)
-                }
-                required
-              >
-                <option value="">Select Course</option>
-                {allCourses.map((c) => (
-                  <option key={c._id} value={c._id}>
-                    {c.title}
-                  </option>
-                ))}
-              </select>
-
-              <input
-                type="text"
-                placeholder="Level (Beginner, Intermediate, Advanced)"
-                value={course.level}
-                onChange={(e) =>
-                  handleCourseChange(index, "level", e.target.value)
-                }
-                required
-              />
-
-              <input
-                type="text"
-                placeholder="Duration (e.g. 3 weeks)"
-                value={course.duration}
-                onChange={(e) =>
-                  handleCourseChange(index, "duration", e.target.value)
-                }
-                required
-              />
-
-              <input
-                type="text"
-                placeholder="Skills (comma separated)"
-                value={course.skills}
-                onChange={(e) =>
-                  handleCourseChange(index, "skills", e.target.value)
-                }
-                required
-              />
-
-              <button type="button" onClick={() => removeCourseField(index)}>
-                Remove
-              </button>
-            </div>
-          ))}
-
-        <button type="button" onClick={addCourseField}>
-          + Add Course
+        <h4>Roles</h4>
+        {careerPath.roles.map((role, index) => (
+          <div key={index}>
+            <input
+              type="text"
+              value={role}
+              onChange={(e) => handleRoleChange(index, e.target.value)}
+            />
+            <button type="button" onClick={() => removeRole(index)}>
+              Remove
+            </button>
+          </div>
+        ))}
+        <button type="button" onClick={addRole}>
+          Add Role
         </button>
+
+        <h4>Courses</h4>
+        {careerPath.courses.map((course, cIndex) => (
+          <div key={cIndex} style={{ border: "1px solid #ccc", margin: "10px" }}>
+            <select
+              value={course.courseId}
+              onChange={(e) =>
+                handleCourseChange(cIndex, "courseId", e.target.value)
+              }
+              required
+            >
+              <option value="">Select Course</option>
+              {courses.map((c) => (
+                <option key={c._id} value={c._id}>
+                  {c.title}
+                </option>
+              ))}
+            </select>
+            <input
+              type="text"
+              placeholder="Level"
+              value={course.level}
+              onChange={(e) =>
+                handleCourseChange(cIndex, "level", e.target.value)
+              }
+            />
+            <input
+              type="text"
+              placeholder="Duration"
+              value={course.duration}
+              onChange={(e) =>
+                handleCourseChange(cIndex, "duration", e.target.value)
+              }
+            />
+
+            <h5>Skills Learnt</h5>
+            {course.skillsLearnt.map((skill, sIndex) => (
+              <div key={sIndex}>
+                <input
+                  type="text"
+                  value={skill}
+                  onChange={(e) =>
+                    handleSkillChange(cIndex, sIndex, e.target.value)
+                  }
+                />
+                <button type="button" onClick={() => removeSkill(cIndex, sIndex)}>
+                  Remove
+                </button>
+              </div>
+            ))}
+            <button type="button" onClick={() => addSkill(cIndex)}>
+              Add Skill
+            </button>
+            <button type="button" onClick={() => removeCourse(cIndex)}>
+              Remove Course
+            </button>
+          </div>
+        ))}
+        <button type="button" onClick={addCourse}>
+          Add Course
+        </button>
+
         <br />
-        <button type="submit">{editingId ? "Update" : "Submit"}</button>
+        <button type="submit">{editId ? "Update" : "Submit"}</button>
       </form>
 
-      <h2>Existing Career Paths</h2>
+      <h3>Existing Career Paths</h3>
       <ul>
         {careerPaths.map((path) => (
           <li key={path._id}>
-            <strong>{path.title}</strong> – {path.roles}
+            <strong>{path.title}</strong> - {path.description}
             <button onClick={() => handleEdit(path)}>Edit</button>
             <button onClick={() => handleDelete(path._id)}>Delete</button>
           </li>
