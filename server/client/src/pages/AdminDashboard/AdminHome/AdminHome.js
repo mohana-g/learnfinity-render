@@ -188,6 +188,7 @@ const AdminDashboard = () => {
   const handleSectionChange = (section) => setActiveSection(section);
 
   const navigateToAddCourse = () => navigate('/admin/add-course');
+  const navigateToAddCareerPath = () => navigate('/admin/add-careerpath');
 
   const confirmAction = (message, action) => {
     if (window.confirm(message)) {

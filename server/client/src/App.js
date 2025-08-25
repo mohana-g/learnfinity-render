@@ -16,6 +16,8 @@ import ForgotPassword from './pages/ForgotPassword/ForgotPassword';
 import ResetPassword from './pages/ForgotPassword/ResetPassword';
 import AdminHome from './pages/AdminDashboard/AdminHome/AdminHome';
 import AddCourse from './pages/AdminDashboard/AdminHome/AddCourse';
+import AddCareerPath from "./pages/AdminDashboard/AdminHome/AddCareerPath";
+
 import AdminSendMail from './pages/AdminDashboard/AdminSendMail/AdminSendMail';
 import AdminFAQ from './pages/AdminDashboard/AdminFAQ/AdminFAQ';
 import AdminCourses from './pages/AdminDashboard/AdminCourses/AdminCourses';
@@ -108,6 +110,7 @@ function App() {
           <>
             <Route path="/admin-dashboard" element={<AdminHome />} />
             <Route path="/admin/add-course" element={<AddCourse />} />
+            <Route path="/admin/add-careerpath" element={<AddCareerPath />} />
             <Route path="/admin/send-mail" element={<AdminSendMail />} />
             <Route path="/admin/faq" element={<AdminFAQ />} />
             <Route path="/admin/courses" element={<AdminCourses />} />
