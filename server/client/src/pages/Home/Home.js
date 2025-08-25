@@ -332,34 +332,33 @@ const CareerPathSkeleton = () => (
   </div>
 );
 
-// Career Path Cards
-function CareerPathCards({ paths, onReadMore }) {
+// Career Path Cards Component
+function CareerPathCards({ paths = [], onReadMore }) {
   return (
     <section className="career-path-cards-container">
-      {paths.map((path) => (
-        <div key={path._id} className="career-path-card">
-          <h3>{path.title}</h3>
-          <p className="career-path-desc">{path.description}</p>
-
-          {/* ✅ Show levels properly */}
-          <p className="career-path-levels">
-            <strong>Levels:</strong>{" "}
-            {path.levels && path.levels.length > 0
-              ? path.levels.map((level) => level.name).join(", ")
-              : "No levels"}
-          </p>
-
-          <button
-            className="btn-read-more"
-            onClick={() => onReadMore(path._id)}
-          >
-            Read More
-          </button>
-        </div>
-      ))}
+      {paths.length > 0 ? (
+        paths.map((path) => (
+          <div key={path._id} className="career-path-card">
+            <h3>{path.title}</h3>
+            <p className="career-path-desc">{path.description}</p>
+            <p className="career-path-levels">
+              <strong>Levels:</strong>{" "}
+              {path.levels && path.levels.length > 0
+                ? path.levels.map((level) => level.name).join(", ")
+                : "No levels"}
+            </p>
+            <button className="btn-read-more" onClick={() => onReadMore(path._id)}>
+              Read More
+            </button>
+          </div>
+        ))
+      ) : (
+        <p>No career paths available</p>
+      )}
     </section>
   );
 }
+
 
 
 function Home() {
@@ -388,22 +387,24 @@ function Home() {
     }
   };
 
-  // Fetch career paths
-  const fetchCareerPaths = async () => {
-    try {
-      const response = await fetch(
-        'https://hilms.onrender.com/api/career-paths'
-      );
-      if (!response.ok) throw new Error('Failed to fetch career paths');
+ // Fetch career paths
+const fetchCareerPaths = async () => {
+  try {
+    const response = await fetch('https://hilms.onrender.com/api/career-paths');
+    if (!response.ok) throw new Error('Failed to fetch career paths');
 
-      const data = await response.json();
-      setCareerPaths(data.data);
-    } catch (error) {
-      console.error(error.message);
-    } finally {
-      setLoadingPaths(false);
-    }
-  };
+    const data = await response.json();
+
+    // If API returns array directly
+    setCareerPaths(Array.isArray(data) ? data : data.data || []);
+  } catch (error) {
+    console.error(error.message);
+    setCareerPaths([]); // fallback to empty array
+  } finally {
+    setLoadingPaths(false);
+  }
+};
+
 
   useEffect(() => {
     fetchPopularCourses();
