@@ -194,3 +194,81 @@
     align-items: flex-start;
   }
 }
+
+/* Existing Career Paths Section */
+.existing-careerpaths {
+  background: #f9fafb;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  max-width: 600px;
+  margin: 20px auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.existing-careerpaths h3 {
+  margin-bottom: 15px;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+  text-align: center;
+}
+
+.existing-careerpaths ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.existing-careerpaths li {
+  background: #fff;
+  margin-bottom: 12px;
+  padding: 15px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.existing-careerpaths li:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.existing-careerpaths strong {
+  color: #222;
+  font-size: 1rem;
+}
+
+.existing-careerpaths button {
+  margin-left: 8px;
+  padding: 6px 12px;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease-in-out;
+}
+
+.existing-careerpaths button:hover {
+  transform: scale(1.05);
+}
+
+.existing-careerpaths button:first-of-type {
+  background: #3b82f6;
+  color: #fff;
+}
+
+.existing-careerpaths button:first-of-type:hover {
+  background: #2563eb;
+}
+
+.existing-careerpaths button:last-of-type {
+  background: #ef4444;
+  color: #fff;
+}
+
+.existing-careerpaths button:last-of-type:hover {
+  background: #dc2626;
+}

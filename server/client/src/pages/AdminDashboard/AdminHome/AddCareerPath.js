@@ -17,31 +17,32 @@ const AddCareerPath = () => {
     ],
   });
 
-  const [courses, setCourses] = useState([]); // available courses from DB
-  const [careerPaths, setCareerPaths] = useState([]); // all saved career paths
+  const [courses, setCourses] = useState([]);
+  const [careerPaths, setCareerPaths] = useState([]);
   const [editId, setEditId] = useState(null);
+
+  // ✅ new: state for messages
+  const [message, setMessage] = useState({ type: "", text: "" });
 
   // fetch courses
   useEffect(() => {
-  axios
-    .get("https://hilms.onrender.com/api/courses")
-    .then((res) => {
-      const data = res.data;
-      // handle if backend sends { data: [...] } or just [...]
-      if (Array.isArray(data)) {
-        setCourses(data);
-      } else if (Array.isArray(data.data)) {
-        setCourses(data.data);
-      } else {
+    axios
+      .get("https://hilms.onrender.com/api/courses")
+      .then((res) => {
+        const data = res.data;
+        if (Array.isArray(data)) {
+          setCourses(data);
+        } else if (Array.isArray(data.data)) {
+          setCourses(data.data);
+        } else {
+          setCourses([]);
+        }
+      })
+      .catch((err) => {
+        console.error("Error fetching courses:", err);
         setCourses([]);
-      }
-    })
-    .catch((err) => {
-      console.error("Error fetching courses:", err);
-      setCourses([]);
-    });
-}, []);
-
+      });
+  }, []);
 
   // fetch existing career paths
   const fetchCareerPaths = () => {
@@ -57,6 +58,12 @@ const AddCareerPath = () => {
   useEffect(() => {
     fetchCareerPaths();
   }, []);
+
+  // utility: show message
+  const showMessage = (type, text) => {
+    setMessage({ type, text });
+    setTimeout(() => setMessage({ type: "", text: "" }), 3000); // auto-hide
+  };
 
   // general input
   const handleChange = (e) => {
@@ -133,16 +140,18 @@ const AddCareerPath = () => {
           setEditId(null);
           resetForm();
           fetchCareerPaths();
+          showMessage("success", "Career path updated successfully!");
         })
-        .catch((err) => console.error("Error updating career path:", err));
+        .catch(() => showMessage("error", "Failed to update career path."));
     } else {
       axios
         .post("https://hilms.onrender.com/api/career-paths", careerPath)
         .then(() => {
           resetForm();
           fetchCareerPaths();
+          showMessage("success", "Career path added successfully!");
         })
-        .catch((err) => console.error("Error adding career path:", err));
+        .catch(() => showMessage("error", "Failed to add career path."));
     }
   };
 
@@ -152,9 +161,7 @@ const AddCareerPath = () => {
       title: "",
       description: "",
       roles: [""],
-      courses: [
-        { courseId: "", level: "", duration: "", skillsLearnt: [""] },
-      ],
+      courses: [{ courseId: "", level: "", duration: "", skillsLearnt: [""] }],
     });
   };
 
@@ -176,117 +183,126 @@ const AddCareerPath = () => {
   const handleDelete = (id) => {
     axios
       .delete(`https://hilms.onrender.com/api/career-paths/${id}`)
-      .then(() => fetchCareerPaths())
-      .catch((err) => console.error("Error deleting career path:", err));
+      .then(() => {
+        fetchCareerPaths();
+        showMessage("success", "Career path deleted successfully!");
+      })
+      .catch(() => showMessage("error", "Failed to delete career path."));
   };
-return (
-  <div className="add-careerpath-page">
-    <h2>{editId ? "Edit Career Path" : "Add Career Path"}</h2>
 
-    {/* Form Section */}
-    <form onSubmit={handleSubmit} className="careerpath-form">
-      <input
-        type="text"
-        name="title"
-        placeholder="Career Path Title"
-        value={careerPath.title}
-        onChange={handleChange}
-        required
-      />
-      <textarea
-        name="description"
-        placeholder="Description"
-        value={careerPath.description}
-        onChange={handleChange}
-        required
-      />
+  return (
+    <div className="add-careerpath-page">
+      <h2>{editId ? "Edit Career Path" : "Add Career Path"}</h2>
 
-      <h4>Roles</h4>
-      {careerPath.roles.map((role, index) => (
-        <div key={index}>
-          <input
-            type="text"
-            value={role}
-            onChange={(e) => handleRoleChange(index, e.target.value)}
-          />
-          <button type="button" onClick={() => removeRole(index)}>
-            Remove
-          </button>
+      {/* ✅ success/error message */}
+      {message.text && (
+        <div className={`alert ${message.type === "success" ? "alert-success" : "alert-error"}`}>
+          {message.text}
         </div>
-      ))}
-      <button type="button" onClick={addRole}>Add Role</button>
-
-      <h4>Courses</h4>
-      {careerPath.courses.map((course, cIndex) => (
-        <div key={cIndex} className="selected-course">
-          <select
-            value={course.courseId}
-            onChange={(e) => handleCourseChange(cIndex, "courseId", e.target.value)}
-            required
-          >
-            <option value="">Select Course</option>
-            {courses.map((c) => (
-            <option key={c._id} value={c._id}>
-            {c.title || c.name}
-            </option>
-            ))}
-          </select>
-
-          <input
-            type="text"
-            placeholder="Level"
-            value={course.level}
-            onChange={(e) => handleCourseChange(cIndex, "level", e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="Duration"
-            value={course.duration}
-            onChange={(e) => handleCourseChange(cIndex, "duration", e.target.value)}
-          />
-
-          <h5>Skills Learnt</h5>
-          {course.skillsLearnt.map((skill, sIndex) => (
-            <div key={sIndex}>
-              <input
-                type="text"
-                value={skill}
-                onChange={(e) => handleSkillChange(cIndex, sIndex, e.target.value)}
-              />
-              <button type="button" onClick={() => removeSkill(cIndex, sIndex)}>
-                Remove
-              </button>
-            </div>
-          ))}
-          <button type="button" onClick={() => addSkill(cIndex)}>Add Skill</button>
-          <button type="button" onClick={() => removeCourse(cIndex)}>Remove Course</button>
-        </div>
-      ))}
-      <button type="button" onClick={addCourse}>Add Course</button>
-
-      <br />
-      <button type="submit">{editId ? "Update" : "Submit"}</button>
-    </form>
-
-    {/* Existing Career Paths Section */}
-    <div className="existing-careerpaths">
-      <h3>Existing Career Paths</h3>
-      {careerPaths.length === 0 ? (
-        <p>No career paths found.</p>
-      ) : (
-        <ul>
-          {careerPaths.map((path) => (
-            <li key={path._id}>
-              <strong>{path.title}</strong> - {path.description}
-              <button onClick={() => handleEdit(path)}>Edit</button>
-              <button onClick={() => handleDelete(path._id)}>Delete</button>
-            </li>
-          ))}
-        </ul>
       )}
+
+      {/* Form Section */}
+      <form onSubmit={handleSubmit} className="careerpath-form">
+        <input
+          type="text"
+          name="title"
+          placeholder="Career Path Title"
+          value={careerPath.title}
+          onChange={handleChange}
+          required
+        />
+        <textarea
+          name="description"
+          placeholder="Description"
+          value={careerPath.description}
+          onChange={handleChange}
+          required
+        />
+
+        <h4>Roles</h4>
+        {careerPath.roles.map((role, index) => (
+          <div key={index}>
+            <input
+              type="text"
+              value={role}
+              onChange={(e) => handleRoleChange(index, e.target.value)}
+            />
+            <button type="button" onClick={() => removeRole(index)}>Remove</button>
+          </div>
+        ))}
+        <button type="button" onClick={addRole}>Add Role</button>
+
+        <h4>Courses</h4>
+        {careerPath.courses.map((course, cIndex) => (
+          <div key={cIndex} className="selected-course">
+            <select
+              value={course.courseId}
+              onChange={(e) => handleCourseChange(cIndex, "courseId", e.target.value)}
+              required
+            >
+              <option value="">Select Course</option>
+              {courses.map((c) => (
+                <option key={c._id} value={c._id}>
+                  {c.title || c.name}
+                </option>
+              ))}
+            </select>
+
+            <input
+              type="text"
+              placeholder="Level"
+              value={course.level}
+              onChange={(e) => handleCourseChange(cIndex, "level", e.target.value)}
+            />
+            <input
+              type="text"
+              placeholder="Duration"
+              value={course.duration}
+              onChange={(e) => handleCourseChange(cIndex, "duration", e.target.value)}
+            />
+
+            <h5>Skills Learnt</h5>
+            {course.skillsLearnt.map((skill, sIndex) => (
+              <div key={sIndex}>
+                <input
+                  type="text"
+                  value={skill}
+                  onChange={(e) => handleSkillChange(cIndex, sIndex, e.target.value)}
+                />
+                <button type="button" onClick={() => removeSkill(cIndex, sIndex)}>
+                  Remove
+                </button>
+              </div>
+            ))}
+            <button type="button" onClick={() => addSkill(cIndex)}>Add Skill</button>
+            <button type="button" onClick={() => removeCourse(cIndex)}>Remove Course</button>
+          </div>
+        ))}
+        <button type="button" onClick={addCourse}>Add Course</button>
+
+        <br />
+        <button type="submit">{editId ? "Update" : "Submit"}</button>
+      </form>
+
+      {/* Existing Career Paths Section */}
+      <div className="existing-careerpaths">
+        <h3>Existing Career Paths</h3>
+        {careerPaths.length === 0 ? (
+          <p>No career paths found.</p>
+        ) : (
+          <ul>
+            {careerPaths.map((path) => (
+              <li key={path._id}>
+                <strong>{path.title}</strong> - {path.description}
+                <button onClick={() => handleEdit(path)}>Edit</button>
+                <button onClick={() => handleDelete(path._id)}>Delete</button>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
     </div>
-  </div>
-);
+  );
 };
 
 export default AddCareerPath;
