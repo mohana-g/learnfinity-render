@@ -45,11 +45,20 @@
 }
 
 .careerpath-form input,
-.careerpath-form textarea,
+.careerpath-form textarea {
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
 .careerpath-form select {
   padding: 10px 12px;
   border: 1px solid #ccc;
   border-radius: 8px;
+  width: 100%;
   font-size: 1rem;
   outline: none;
   transition: border 0.2s ease, box-shadow 0.2s ease;
@@ -100,7 +109,7 @@
 }
 
 .careerpath-form button[type="submit"]:active {
-  background: #3389bb;
+  background: #33bb33;
 }
 
 /* General add/remove buttons */
