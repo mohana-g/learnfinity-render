@@ -224,6 +224,7 @@ h2 {
   border: none;
   padding: 8px 14px;
   border-radius: 6px;
+  margin-left: 20px;
   cursor: pointer;
   transition: 0.2s ease;
 }
