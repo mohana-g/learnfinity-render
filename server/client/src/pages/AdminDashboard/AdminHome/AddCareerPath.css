@@ -1,5 +1,5 @@
 .add-careerpath-page {
-  max-width: 900px;
+  max-width: 950px;
   margin: 30px auto;
   padding: 25px 30px;
   background: #fff;
@@ -16,38 +16,49 @@
   font-size: 1.8rem;
 }
 
-/* Form structure */
-.add-careerpath-page form {
+.add-careerpath-page h3 {
+  margin-top: 40px;
+  color: #2b3a4a;
+}
+
+.add-careerpath-page h4 {
+  margin-top: 20px;
+  color: #444;
+  font-size: 1.2rem;
+}
+
+/* Form */
+.careerpath-form {
   display: flex;
   flex-direction: column;
   gap: 18px;
 }
 
-/* Inputs & textarea & select */
-.add-careerpath-page input,
-.add-careerpath-page textarea,
-.add-careerpath-page select {
+.careerpath-form input,
+.careerpath-form textarea,
+.careerpath-form select {
+  width: 100%;
   padding: 10px 12px;
   border: 1px solid #ccc;
   border-radius: 8px;
-  outline: none;
   font-size: 1rem;
+  outline: none;
   transition: border 0.2s ease;
 }
 
-.add-careerpath-page input:focus,
-.add-careerpath-page textarea:focus,
-.add-careerpath-page select:focus {
+.careerpath-form input:focus,
+.careerpath-form textarea:focus,
+.careerpath-form select:focus {
   border-color: #4cafef;
   box-shadow: 0 0 0 3px rgba(76, 175, 239, 0.15);
 }
 
-.add-careerpath-page textarea {
+.careerpath-form textarea {
   min-height: 100px;
   resize: vertical;
 }
 
-/* Selected course block */
+/* Dynamic blocks (roles, courses, skills) */
 .selected-course {
   background: #f9fafc;
   border: 1px solid #e1e5eb;
@@ -56,16 +67,14 @@
   margin-top: 10px;
 }
 
-.selected-course h4 {
-  margin: 0 0 12px 0;
-  font-size: 1.1rem;
+.selected-course h5 {
+  margin: 12px 0 8px;
+  font-size: 1rem;
   color: #2b3a4a;
-  border-bottom: 1px solid #ddd;
-  padding-bottom: 6px;
 }
 
 /* Buttons */
-.add-careerpath-page button {
+.careerpath-form button {
   font-size: 0.95rem;
   font-weight: 600;
   border: none;
@@ -75,37 +84,48 @@
   transition: background 0.2s ease, transform 0.1s ease;
 }
 
-/* Submit button */
-.add-careerpath-page button[type="submit"] {
+.careerpath-form button[type="submit"] {
   background: #4cafef;
   color: #fff;
+  margin-top: 10px;
 }
 
-.add-careerpath-page button[type="submit"]:hover {
+.careerpath-form button[type="submit"]:hover {
   background: #3a9dd6;
   transform: scale(1.02);
 }
 
-.add-careerpath-page button[type="submit"]:active {
+.careerpath-form button[type="submit"]:active {
   background: #3389bb;
 }
 
-/* Add/Remove course buttons */
-.add-careerpath-page button[type="button"] {
+/* Add/remove buttons inside dynamic fields */
+.careerpath-form button[type="button"] {
+  margin-top: 8px;
   background: #eee;
   color: #333;
-  margin-top: 8px;
 }
 
-.add-careerpath-page button[type="button"]:hover {
+.careerpath-form button[type="button"]:hover {
   background: #ddd;
+}
+
+.careerpath-form .remove-btn,
+.careerpath-form button:contains("Remove") {
+  background: #ff5c5c;
+  color: #fff;
+}
+
+.careerpath-form .remove-btn:hover,
+.careerpath-form button:contains("Remove"):hover {
+  background: #e14c4c;
 }
 
 /* Career paths list */
 .add-careerpath-page ul {
   list-style: none;
   padding: 0;
-  margin-top: 30px;
+  margin-top: 20px;
 }
 
 .add-careerpath-page li {
@@ -124,16 +144,16 @@
   color: #2b3a4a;
 }
 
-/* Edit & Delete buttons */
 .add-careerpath-page li button {
-  margin-left: 8px;
   padding: 6px 12px;
-  font-size: 0.85rem;
+  margin-left: 8px;
+  border-radius: 6px;
+  font-size: 0.9rem;
 }
 
 .add-careerpath-page li button:first-of-type {
   background: #4cafef;
-  color: white;
+  color: #fff;
 }
 
 .add-careerpath-page li button:first-of-type:hover {
@@ -142,7 +162,7 @@
 
 .add-careerpath-page li button:last-of-type {
   background: #ff5c5c;
-  color: white;
+  color: #fff;
 }
 
 .add-careerpath-page li button:last-of-type:hover {
@@ -150,22 +170,22 @@
 }
 
 /* Mobile responsiveness */
-@media (max-width: 600px) {
+@media (max-width: 650px) {
   .add-careerpath-page {
     padding: 20px;
   }
 
-  .add-careerpath-page form {
+  .careerpath-form {
     gap: 14px;
   }
 
-  .add-careerpath-page button[type="submit"] {
+  .careerpath-form button[type="submit"] {
     width: 100%;
   }
 
   .add-careerpath-page li {
     flex-direction: column;
-    gap: 8px;
+    gap: 10px;
     align-items: flex-start;
   }
 }

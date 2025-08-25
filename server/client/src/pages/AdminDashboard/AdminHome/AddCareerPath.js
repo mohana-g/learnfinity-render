@@ -6,7 +6,7 @@ const AddCareerPath = () => {
   const [careerPath, setCareerPath] = useState({
     title: "",
     description: "",
-    roles: [""], // always an array
+    roles: [""],
     courses: [
       {
         courseId: "",
@@ -17,31 +17,39 @@ const AddCareerPath = () => {
     ],
   });
 
-  const [courses, setCourses] = useState([]); // from DB
-  const [careerPaths, setCareerPaths] = useState([]); // for listing/editing
+  const [courses, setCourses] = useState([]); // available courses from DB
+  const [careerPaths, setCareerPaths] = useState([]); // all saved career paths
   const [editId, setEditId] = useState(null);
 
-  // fetch all courses to choose from
+  // fetch courses
   useEffect(() => {
     axios
       .get("http://localhost:5000/api/courses")
-      .then((res) => setCourses(res.data))
-      .catch((err) => console.error(err));
+      .then((res) => setCourses(Array.isArray(res.data) ? res.data : []))
+      .catch((err) => console.error("Error fetching courses:", err));
   }, []);
 
   // fetch existing career paths
-  useEffect(() => {
+  const fetchCareerPaths = () => {
     axios
       .get("http://localhost:5000/api/careerpaths")
-      .then((res) => setCareerPaths(res.data))
-      .catch((err) => console.error(err));
+      .then((res) => setCareerPaths(Array.isArray(res.data) ? res.data : []))
+      .catch((err) => {
+        console.error("Error fetching career paths:", err);
+        setCareerPaths([]);
+      });
+  };
+
+  useEffect(() => {
+    fetchCareerPaths();
   }, []);
 
+  // general input
   const handleChange = (e) => {
     setCareerPath({ ...careerPath, [e.target.name]: e.target.value });
   };
 
-  // handle roles change
+  // roles
   const handleRoleChange = (index, value) => {
     const updatedRoles = [...careerPath.roles];
     updatedRoles[index] = value;
@@ -57,17 +65,10 @@ const AddCareerPath = () => {
     setCareerPath({ ...careerPath, roles: updatedRoles });
   };
 
-  // handle courses change
+  // courses
   const handleCourseChange = (index, field, value) => {
     const updatedCourses = [...careerPath.courses];
     updatedCourses[index][field] = value;
-    setCareerPath({ ...careerPath, courses: updatedCourses });
-  };
-
-  // handle skills inside courses
-  const handleSkillChange = (cIndex, sIndex, value) => {
-    const updatedCourses = [...careerPath.courses];
-    updatedCourses[cIndex].skillsLearnt[sIndex] = value;
     setCareerPath({ ...careerPath, courses: updatedCourses });
   };
 
@@ -83,6 +84,13 @@ const AddCareerPath = () => {
 
   const removeCourse = (index) => {
     const updatedCourses = careerPath.courses.filter((_, i) => i !== index);
+    setCareerPath({ ...careerPath, courses: updatedCourses });
+  };
+
+  // skills inside course
+  const handleSkillChange = (cIndex, sIndex, value) => {
+    const updatedCourses = [...careerPath.courses];
+    updatedCourses[cIndex].skillsLearnt[sIndex] = value;
     setCareerPath({ ...careerPath, courses: updatedCourses });
   };
 
@@ -103,6 +111,7 @@ const AddCareerPath = () => {
   // submit
   const handleSubmit = (e) => {
     e.preventDefault();
+
     if (editId) {
       axios
         .put(`http://localhost:5000/api/careerpaths/${editId}`, careerPath)
@@ -111,7 +120,7 @@ const AddCareerPath = () => {
           resetForm();
           fetchCareerPaths();
         })
-        .catch((err) => console.error(err));
+        .catch((err) => console.error("Error updating career path:", err));
     } else {
       axios
         .post("http://localhost:5000/api/careerpaths", careerPath)
@@ -119,17 +128,11 @@ const AddCareerPath = () => {
           resetForm();
           fetchCareerPaths();
         })
-        .catch((err) => console.error(err));
+        .catch((err) => console.error("Error adding career path:", err));
     }
   };
 
-  const fetchCareerPaths = () => {
-    axios
-      .get("http://localhost:5000/api/careerpaths")
-      .then((res) => setCareerPaths(res.data))
-      .catch((err) => console.error(err));
-  };
-
+  // reset form
   const resetForm = () => {
     setCareerPath({
       title: "",
@@ -141,30 +144,33 @@ const AddCareerPath = () => {
     });
   };
 
+  // edit mode
   const handleEdit = (path) => {
     setCareerPath({
-      title: path.title,
-      description: path.description,
-      roles: path.roles && path.roles.length ? path.roles : [""],
+      title: path.title || "",
+      description: path.description || "",
+      roles: Array.isArray(path.roles) && path.roles.length ? path.roles : [""],
       courses:
-        path.courses && path.courses.length
+        Array.isArray(path.courses) && path.courses.length
           ? path.courses
           : [{ courseId: "", level: "", duration: "", skillsLearnt: [""] }],
     });
     setEditId(path._id);
   };
 
+  // delete
   const handleDelete = (id) => {
     axios
       .delete(`http://localhost:5000/api/careerpaths/${id}`)
       .then(() => fetchCareerPaths())
-      .catch((err) => console.error(err));
+      .catch((err) => console.error("Error deleting career path:", err));
   };
 
   return (
-    <div>
+    <div className="add-careerpath-page">
       <h2>{editId ? "Edit Career Path" : "Add Career Path"}</h2>
-      <form onSubmit={handleSubmit}>
+
+      <form onSubmit={handleSubmit} className="careerpath-form">
         <input
           type="text"
           name="title"
@@ -200,7 +206,7 @@ const AddCareerPath = () => {
 
         <h4>Courses</h4>
         {careerPath.courses.map((course, cIndex) => (
-          <div key={cIndex} style={{ border: "1px solid #ccc", margin: "10px" }}>
+          <div key={cIndex} className="selected-course">
             <select
               value={course.courseId}
               onChange={(e) =>
@@ -215,6 +221,7 @@ const AddCareerPath = () => {
                 </option>
               ))}
             </select>
+
             <input
               type="text"
               placeholder="Level"
@@ -264,15 +271,19 @@ const AddCareerPath = () => {
       </form>
 
       <h3>Existing Career Paths</h3>
-      <ul>
-        {careerPaths.map((path) => (
-          <li key={path._id}>
-            <strong>{path.title}</strong> - {path.description}
-            <button onClick={() => handleEdit(path)}>Edit</button>
-            <button onClick={() => handleDelete(path._id)}>Delete</button>
-          </li>
-        ))}
-      </ul>
+      {careerPaths.length === 0 ? (
+        <p>No career paths found.</p>
+      ) : (
+        <ul>
+          {careerPaths.map((path) => (
+            <li key={path._id}>
+              <strong>{path.title}</strong> - {path.description}
+              <button onClick={() => handleEdit(path)}>Edit</button>
+              <button onClick={() => handleDelete(path._id)}>Delete</button>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };
