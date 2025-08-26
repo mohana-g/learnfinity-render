@@ -420,28 +420,28 @@ background-color: #0000cc;
 /* Career Path Skeleton Styling */
 .skeleton-career-title {
   width: 70%;
-  height: 22px;
+  height: 25px;
   margin: 12px auto;
   border-radius: 6px;
 }
 
-.skeleton-career-desc {
+/* .skeleton-career-desc {
   width: 90%;
   height: 18px;
   margin: 8px auto;
   border-radius: 6px;
-}
+} */
 
 .skeleton-career-levels {
   width: 60%;
-  height: 16px;
+  height: 18px;
   margin: 16px auto;
   border-radius: 6px;
 }
 
 .skeleton-career-btn {
   width: 50%;
-  height: 36px;
+  height: 38px;
   margin: 18px auto;
   border-radius: 8px;
 }
