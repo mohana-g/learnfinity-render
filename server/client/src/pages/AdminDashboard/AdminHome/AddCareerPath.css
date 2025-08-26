@@ -134,16 +134,16 @@
 .careerpath-list-container {
   flex: 1;
   background: #fff;
-  padding: 5px 20px;
+  padding: 20px;
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
 }
 
 .careerpath-list-container h3 {
-  margin-bottom: 15px;
+  margin-bottom: 25px;
   font-size: 1.5rem;
   font-weight: 600;
-  color: #333;
+  color: #000;
   text-align: center;
 }
 
@@ -244,4 +244,40 @@
   .careerpath-list-container {
     width: 100%;
   }
+}
+
+/* Skeleton Base */
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e6e6e6 37%, #f0f0f0 63%);
+  background-size: 400% 100%;
+  animation: shimmer 1.4s ease infinite;
+  border-radius: 6px;
+}
+
+@keyframes shimmer {
+  0% { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+
+/* Career Path Skeleton */
+.careerpath-skeleton {
+  background: #fff;
+  border: 1px solid #e1e5eb;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.skeleton-title {
+  width: 150px;
+  height: 18px;
+}
+
+.skeleton-btn {
+  width: 60px;
+  height: 28px;
+  border-radius: 6px;
 }

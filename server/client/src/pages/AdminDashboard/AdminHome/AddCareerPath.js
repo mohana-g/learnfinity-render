@@ -2,6 +2,17 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./AddCareerPath.css";
 
+// Skeleton for career path list item
+const CareerPathSkeleton = () => {
+  return (
+    <li className="careerpath-skeleton">
+      <div className="skeleton skeleton-title"></div>
+      <div className="skeleton skeleton-btn"></div>
+      <div className="skeleton skeleton-btn"></div>
+    </li>
+  );
+};
+
 const Toast = ({ type, message, onClose }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -323,7 +334,14 @@ return (
     {/* Existing Career Paths Section */}
     <div className="careerpath-list-container">
       <h3>Existing Career Paths</h3>
-      {careerPaths.length === 0 ? (
+      {careerPaths === null ? (
+        <ul>
+          {/* Show 3 skeletons while loading */}
+          {[...Array(3)].map((_, i) => (
+            <CareerPathSkeleton key={i} />
+          ))}
+        </ul>
+      ) : careerPaths.length === 0 ? (
         <p>No career paths found.</p>
       ) : (
         <ul>
@@ -337,6 +355,7 @@ return (
         </ul>
       )}
     </div>
+
   </div>
 );
 
