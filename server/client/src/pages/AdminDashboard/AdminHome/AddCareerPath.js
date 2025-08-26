@@ -32,12 +32,16 @@ const AddCareerPath = () => {
     ],
   });
 
+  
   const [courses, setCourses] = useState([]);
   const [careerPaths, setCareerPaths] = useState([]);
   const [editId, setEditId] = useState(null);
 
-  // ✅ new: state for messages
-  const [message, setMessage] = useState({ type: "", text: "" });
+    // ✅ Toast state
+  const [toast, setToast] = useState(null);
+
+  // // ✅ new: state for messages
+  // const [message, setMessage] = useState({ type: "", text: "" });
 
   // fetch courses
   useEffect(() => {
@@ -75,9 +79,14 @@ const AddCareerPath = () => {
   }, []);
 
   // utility: show message
+  // const showMessage = (type, text) => {
+  //   setMessage({ type, text });
+  //   setTimeout(() => setMessage({ type: "", text: "" }), 3000); // auto-hide
+  // };
+
+    // utility: show toast
   const showMessage = (type, text) => {
-    setMessage({ type, text });
-    setTimeout(() => setMessage({ type: "", text: "" }), 3000); // auto-hide
+    setToast({ type, text });
   };
 
   // general input
@@ -217,7 +226,7 @@ const AddCareerPath = () => {
           onClose={() => setToast(null)}
         />
       )}
-      
+
       {/* ✅ success/error message
       {message.text && (
         <div className={`alert ${message.type === "success" ? "alert-success" : "alert-error"}`}>
