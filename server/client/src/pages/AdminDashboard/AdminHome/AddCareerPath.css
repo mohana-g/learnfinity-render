@@ -2,30 +2,32 @@
   font-family: 'Work Sans', sans-serif;
 }
 
+/* Main container */
 .add-careerpath-page {
-  max-width: 950px;
+  max-width: 1100px;
   margin: 30px auto;
-  padding: 25px 30px;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-  font-family: "Work Sans", sans-serif;
+  display: flex;
+  gap: 30px;
+  align-items: flex-start;
 }
 
-/* Headings */
-.add-careerpath-page h2 {
+/* Form container */
+.careerpath-form-container {
+  flex: 2;
+  background: #fff;
+  padding: 25px 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.careerpath-form-container h2 {
   text-align: center;
   margin-bottom: 25px;
   color: #333;
   font-size: 1.8rem;
 }
 
-.add-careerpath-page h3 {
-  margin-top: 40px;
-  color: #2b3a4a;
-}
-
-.add-careerpath-page h4 {
+.careerpath-form-container h4 {
   margin-top: 20px;
   color: #444;
   font-size: 1.2rem;
@@ -45,23 +47,15 @@
 }
 
 .careerpath-form input,
-.careerpath-form textarea {
-  padding: 10px 12px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 1rem;
-  outline: none;
-  transition: border 0.2s ease, box-shadow 0.2s ease;
-}
-
+.careerpath-form textarea,
 .careerpath-form select {
   padding: 10px 12px;
   border: 1px solid #ccc;
   border-radius: 8px;
-  width: 100%;
   font-size: 1rem;
   outline: none;
   transition: border 0.2s ease, box-shadow 0.2s ease;
+  width: 100%;
 }
 
 .careerpath-form input:focus,
@@ -85,7 +79,7 @@
   margin-top: 10px;
 }
 
-/* Buttons */
+/* Buttons inside form */
 .careerpath-form button {
   font-size: 0.95rem;
   font-weight: 600;
@@ -96,51 +90,62 @@
   transition: background 0.2s ease, transform 0.1s ease;
 }
 
-/* Submit button */
+/* Submit */
 .careerpath-form button[type="submit"] {
   background: #0505fc;
   color: #fff;
   margin-top: 10px;
 }
-
 .careerpath-form button[type="submit"]:hover {
   background: #0000cc;
   transform: scale(1.02);
 }
-
 .careerpath-form button[type="submit"]:active {
   background: #33bb33;
 }
 
-/* General add/remove buttons */
+/* General add/remove */
 .careerpath-form button[type="button"] {
   margin-top: 8px;
   background: #eee;
   color: #333;
 }
-
 .careerpath-form button[type="button"]:hover {
   background: #ddd;
 }
 
-/* Add a utility class for destructive buttons in JSX */
 .remove-btn {
   background: #ff5c5c !important;
   color: #fff !important;
 }
-
 .remove-btn:hover {
   background: #e14c4c !important;
 }
 
-/* Career paths list */
-.add-careerpath-page ul {
-  list-style: none;
-  padding: 0;
-  margin-top: 20px;
+/* Existing Career Paths container */
+.careerpath-list-container {
+  flex: 1;
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
 }
 
-.add-careerpath-page li {
+.careerpath-list-container h3 {
+  margin-bottom: 15px;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+  text-align: center;
+}
+
+.careerpath-list-container ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.careerpath-list-container li {
   background: #f7f9fc;
   border: 1px solid #e1e5eb;
   border-radius: 10px;
@@ -149,89 +154,20 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-
-.add-careerpath-page li strong {
-  font-size: 1.1rem;
-  color: #2b3a4a;
-}
-
-.add-careerpath-page li .edit-btn {
-  background: #4cafef;
-  color: #fff;
-}
-
-.add-careerpath-page li .edit-btn:hover {
-  background: #3a9dd6;
-}
-
-.add-careerpath-page li .delete-btn {
-  background: #ff5c5c;
-  color: #fff;
-}
-
-.add-careerpath-page li .delete-btn:hover {
-  background: #e14c4c;
-}
-
-/* Mobile responsiveness */
-@media (max-width: 650px) {
-  .add-careerpath-page {
-    padding: 20px;
-  }
-
-  .careerpath-form {
-    gap: 14px;
-  }
-
-  .careerpath-form button[type="submit"] {
-    width: 100%;
-  }
-
-  .add-careerpath-page li {
-    flex-direction: column;
-    gap: 10px;
-    align-items: flex-start;
-  }
-}
-
-/* Existing Career Paths Section */
-.existing-careerpaths h3 {
-  margin-bottom: 15px;
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #333;
-  text-align: center;
-}
-
-.existing-careerpaths ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.existing-careerpaths li {
-  background: #fff;
-  margin-bottom: 12px;
-  padding: 15px;
-  border-radius: 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.existing-careerpaths li:hover {
+.careerpath-list-container li:hover {
   transform: translateY(-3px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
 }
 
-.existing-careerpaths strong {
+.careerpath-list-container strong {
   color: #222;
   font-size: 1rem;
 }
 
-.existing-careerpaths button {
+.careerpath-list-container button {
   margin-left: 8px;
   padding: 6px 12px;
   font-size: 0.9rem;
@@ -241,30 +177,28 @@
   transition: background 0.2s ease, transform 0.1s ease-in-out;
 }
 
-.existing-careerpaths button:hover {
+.careerpath-list-container button:hover {
   transform: scale(1.05);
 }
 
-.existing-careerpaths button:first-of-type {
+.careerpath-list-container button:first-of-type {
   background: #0505fc;
   color: #fff;
   margin-left: auto;
 }
-
-.existing-careerpaths button:first-of-type:hover {
+.careerpath-list-container button:first-of-type:hover {
   background: #0000cc;
 }
 
-.existing-careerpaths button:last-of-type {
+.careerpath-list-container button:last-of-type {
   background: #ef4444;
   color: #fff;
 }
-
-.existing-careerpaths button:last-of-type:hover {
+.careerpath-list-container button:last-of-type:hover {
   background: #dc2626;
 }
 
-/* Toast.css */
+/* Toast */
 .toast {
   position: fixed;
   top: 20px;
@@ -278,29 +212,28 @@
   animation: slideIn 0.4s ease, fadeOut 0.5s ease 2.5s forwards;
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
-
 .toast-success {
   background: #4caf50;
 }
-
 .toast-error {
   background: #f44336;
 }
 
 @keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateX(100%);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+  from { opacity: 0; transform: translateX(100%); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes fadeOut {
+  to { opacity: 0; transform: translateX(100%); }
 }
 
-@keyframes fadeOut {
-  to {
-    opacity: 0;
-    transform: translateX(100%);
+/* Mobile */
+@media (max-width: 768px) {
+  .add-careerpath-page {
+    flex-direction: column;
+  }
+  .careerpath-form-container,
+  .careerpath-list-container {
+    width: 100%;
   }
 }
