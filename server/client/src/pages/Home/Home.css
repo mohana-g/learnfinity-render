@@ -421,7 +421,7 @@ background-color: #0000cc;
 .skeleton-career-title {
   width: 70%;
   height: 25px;
-  margin: 12px auto;
+  margin: 8px auto;
   border-radius: 6px;
 }
 
@@ -435,14 +435,14 @@ background-color: #0000cc;
 .skeleton-career-levels {
   width: 60%;
   height: 18px;
-  margin: 16px auto;
+  margin: 6px auto;
   border-radius: 6px;
 }
 
 .skeleton-career-btn {
   width: 50%;
   height: 38px;
-  margin: 18px auto;
+  margin: 8px auto;
   border-radius: 8px;
 }
 
