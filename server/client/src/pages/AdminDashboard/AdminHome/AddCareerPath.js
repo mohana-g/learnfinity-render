@@ -293,7 +293,7 @@ const AddCareerPath = () => {
           <ul>
             {careerPaths.map((path) => (
               <li key={path._id}>
-                <strong>{path.title}</strong> - {path.description}
+                <strong>{path.title}</strong>
                 <button onClick={() => handleEdit(path)}>Edit</button>
                 <button onClick={() => handleDelete(path._id)}>Delete</button>
               </li>
