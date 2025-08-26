@@ -67,13 +67,14 @@ const AddCareerPath = () => {
   const [courses, setCourses] = useState([]);
   const [careerPaths, setCareerPaths] = useState(null); // null = loading, [] = empty
   const [editId, setEditId] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
     // ✅ Toast state
   const [toast, setToast] = useState(null);
 
   // fetch courses
   useEffect(() => {
+    setLoading(true);
     axios
       .get("https://hilms.onrender.com/api/courses")
       .then((res) => {
@@ -89,8 +90,10 @@ const AddCareerPath = () => {
       .catch((err) => {
         console.error("Error fetching courses:", err);
         setCourses([]);
-      });
+      })
+      .finally(() => setLoading(false));   // ✅ turn loading off
   }, []);
+
 
   // fetch existing career paths
  const fetchCareerPaths = () => {
@@ -185,6 +188,7 @@ const AddCareerPath = () => {
   // submit
   const handleSubmit = (e) => {
     e.preventDefault();
+    setLoading(true);
 
     if (editId) {
       axios
@@ -195,7 +199,8 @@ const AddCareerPath = () => {
           fetchCareerPaths();
           showMessage("success", "Career path updated successfully!");
         })
-        .catch(() => showMessage("error", "Failed to update career path."));
+        .catch(() => showMessage("error", "Failed to update career path."))
+        .finally(() => setLoading(false));
     } else {
       axios
         .post("https://hilms.onrender.com/api/career-paths", careerPath)
@@ -204,9 +209,11 @@ const AddCareerPath = () => {
           fetchCareerPaths();
           showMessage("success", "Career path added successfully!");
         })
-        .catch(() => showMessage("error", "Failed to add career path."));
+        .catch(() => showMessage("error", "Failed to add career path."))
+        .finally(() => setLoading(false));
     }
   };
+
 
   // reset form
   const resetForm = () => {
