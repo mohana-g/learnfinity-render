@@ -6,10 +6,31 @@ import "./AddCareerPath.css";
 const CareerPathSkeleton = () => {
   return (
     <li className="careerpath-skeleton">
-      <div className="skeleton skeleton-title"></div>
-      <div className="skeleton skeleton-btn"></div>
-      <div className="skeleton skeleton-btn"></div>
+      <div className="skeleton skeleton-title-list"></div>
+      <div className="skeleton skeleton-btn-list"></div>
+      <div className="skeleton skeleton-btn-list"></div>
     </li>
+  );
+};
+
+const CareerPathFormSkeleton = () => {
+  return (
+    <div className="careerpath-form-skeleton">
+      <div className="skeleton skeleton-title"></div>
+      <div className="skeleton skeleton-textarea"></div>
+
+      <div className="skeleton skeleton-subtitle"></div>
+      <div className="skeleton skeleton-input"></div>
+      <div className="skeleton skeleton-btn"></div>
+
+      <div className="skeleton skeleton-subtitle"></div>
+      <div className="skeleton skeleton-select"></div>
+      <div className="skeleton skeleton-input"></div>
+      <div className="skeleton skeleton-input"></div>
+      <div className="skeleton skeleton-btn"></div>
+
+      <div className="skeleton skeleton-submit"></div>
+    </div>
   );
 };
 
@@ -233,6 +254,9 @@ return (
     )}
 
     {/* Add Career Path Section */}
+    {loading ? (
+      <CareerPathFormSkeleton />
+    ) : (
     <div className="careerpath-form-container">
       <h2>{editId ? "Edit Career Path" : "Add Career Path"}</h2>
       <form onSubmit={handleSubmit} className="careerpath-form">
@@ -336,6 +360,7 @@ return (
         <button type="submit">{editId ? "Update" : "Submit"}</button>
       </form>
     </div>
+    )}
 
     {/* Existing Career Paths Section */}
     <div className="careerpath-list-container">
