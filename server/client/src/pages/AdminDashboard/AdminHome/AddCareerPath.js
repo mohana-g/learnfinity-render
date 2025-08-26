@@ -44,7 +44,7 @@ const AddCareerPath = () => {
   });
 
   const [courses, setCourses] = useState([]);
-  const [careerPaths, setCareerPaths] = useState([]);
+  const [careerPaths, setCareerPaths] = useState(null); // null = loading, [] = empty
   const [editId, setEditId] = useState(null);
 
     // ✅ Toast state
@@ -71,15 +71,21 @@ const AddCareerPath = () => {
   }, []);
 
   // fetch existing career paths
-  const fetchCareerPaths = () => {
-    axios
-      .get("https://hilms.onrender.com/api/career-paths")
-      .then((res) => setCareerPaths(Array.isArray(res.data) ? res.data : []))
-      .catch((err) => {
-        console.error("Error fetching career paths:", err);
-        setCareerPaths([]);
-      });
-  };
+ const fetchCareerPaths = () => {
+  axios
+    .get("https://hilms.onrender.com/api/career-paths")
+    .then((res) => {
+      if (Array.isArray(res.data)) {
+        setCareerPaths(res.data);
+      } else {
+        setCareerPaths([]); // not null → real "empty" state
+      }
+    })
+    .catch((err) => {
+      console.error("Error fetching career paths:", err);
+      setCareerPaths([]); // avoid infinite skeleton
+    });
+};
 
   useEffect(() => {
     fetchCareerPaths();
