@@ -316,7 +316,7 @@ const HomeCourseSkeleton = () => (
     <div className="courses-card-content">
       <div className="skeleton skeleton-course-title"></div>
       <div className="skeleton skeleton-course-meta"></div>
-      <div className="skeleton skeleton-course-meta"></div>
+      {/* <div className="skeleton skeleton-course-meta"></div> */}
     </div>
     <div className="skeleton skeleton-course-btn"></div>
   </div>
@@ -340,7 +340,7 @@ function CareerPathCards({ paths = [], onReadMore }) {
         paths.map((path) => (
           <div key={path._id} className="career-path-card">
             <h3>{path.title}</h3>
-            <p className="career-path-desc">{path.description}</p>
+            {/* <p className="career-path-desc">{path.description}</p> */}
             <p className="career-path-levels">
               <strong>Levels:</strong>{" "}
               {path.levelSummary || "No levels"}
