@@ -4,11 +4,11 @@
 
 /* Main container */
 .add-careerpath-page {
-  max-width: 1100px;
-  margin: 30px auto;
-  display: flex;
-  gap: 30px;
-  align-items: flex-start;
+    align-items: flex-start;
+    display: flex;
+    gap: 30px;
+    margin: 30px auto;
+    max-width: 1400px;
 }
 
 /* Form container */
@@ -23,7 +23,7 @@
 .careerpath-form-container h2 {
   text-align: center;
   margin-bottom: 25px;
-  color: #333;
+  color: #000;
   font-size: 1.8rem;
 }
 
@@ -47,7 +47,15 @@
 }
 
 .careerpath-form input,
-.careerpath-form textarea,
+.careerpath-form textarea {
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
 .careerpath-form select {
   padding: 10px 12px;
   border: 1px solid #ccc;
@@ -126,7 +134,7 @@
 .careerpath-list-container {
   flex: 1;
   background: #fff;
-  padding: 20px;
+  padding: 5px 20px;
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
 }

@@ -205,7 +205,6 @@ const AddCareerPath = () => {
   };
 return (
   <div className="add-careerpath-page">
-    <h2>{editId ? "Edit Career Path" : "Add Career Path"}</h2>
 
     {/* ✅ Toast */}
     {toast && (
@@ -218,6 +217,7 @@ return (
 
     {/* Add Career Path Section */}
     <div className="careerpath-form-container">
+      <h2>{editId ? "Edit Career Path" : "Add Career Path"}</h2>
       <form onSubmit={handleSubmit} className="careerpath-form">
         <input
           type="text"
