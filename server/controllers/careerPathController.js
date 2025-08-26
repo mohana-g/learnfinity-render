@@ -134,18 +134,66 @@ exports.getCareerPaths = async (req, res) => {
 };
 
 // GET single career path by ID
+// exports.getCareerPathById = async (req, res) => {
+//   try {
+//     const path = await CareerPath.findById(req.params.id)
+//       .populate("courses.courseId", "title description imageurl trainer");
+
+//     if (!path) {
+//       return res.status(404).json({ error: "CareerPath not found" });
+//     }
+
+//     res.json({ success: true, data: path });
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({ error: "Server error" });
+//   }
+// };
+
+
+// GET single career path by ID
 exports.getCareerPathById = async (req, res) => {
   try {
     const path = await CareerPath.findById(req.params.id)
-      .populate("courses.courseId", "title description imageurl trainer");
+      .select("title description level duration skillsLearnt roles courses") // attach new fields
+      .populate({
+        path: "courses.courseId",
+        select: "title description imageurl trainer chapters", // course-level fields
+        populate: [
+          {
+            path: "trainer", // assuming Course has a 'trainer' field
+            select: "fullName profileImage bio", // trainer details
+          },
+          {
+            path: "chapters",
+            select: "name lessons", // each chapter with lessons
+            populate: {
+              path: "lessons",
+              select: "title content videoUrl duration", // lesson details
+            },
+          },
+        ],
+      });
 
     if (!path) {
       return res.status(404).json({ error: "CareerPath not found" });
     }
 
-    res.json({ success: true, data: path });
+    res.json({
+      success: true,
+      data: {
+        _id: path._id,
+        title: path.title,
+        description: path.description,
+        level: path.level, // attached here
+        duration: path.duration, // attached here
+        skillsLearnt: path.skillsLearnt, // attached here
+        roles: path.roles, // attached here
+        courses: path.courses, // populated as before
+      },
+    });
   } catch (err) {
-    console.error(err);
+    console.error("Error fetching career path:", err);
     res.status(500).json({ error: "Server error" });
   }
 };

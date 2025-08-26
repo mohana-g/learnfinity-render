@@ -1,105 +1,99 @@
 .career-detail-container {
-  max-width: 900px;
-  margin: 2rem auto;
-  padding: 0 1rem;
-  font-family: 'Work Sans', sans-serif;
-  color: #1a237e;
-  line-height: 1.55;
+  padding: 2rem;
+  max-width: 1000px;
+  margin: auto;
+  font-family: "Segoe UI", sans-serif;
 }
 
-/* Title */
-.career-detail-container h1 {
-  font-size: 2.4rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-  text-decoration: none;
-  color: #1a237e;
+.career-header {
+  text-align: center;
+  margin-bottom: 2rem;
 }
 
-/* Description */
 .career-detail-description {
-  font-size: 1.2rem;
-  margin-bottom: 2rem;
+  font-size: 1.1rem;
+  margin: 1rem 0;
+  color: #555;
+}
+
+.career-meta p {
+  margin: 0.5rem 0;
+}
+
+.section-title {
+  margin: 2rem 0 1rem;
   color: #2c3a93;
-  font-weight: 500;
 }
 
-/* Courses Section */
-.career-courses {
-  margin-bottom: 2rem;
+.course-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
-.career-courses h2 {
-  font-size: 1.8rem;
-  font-weight: 600;
-  color: #26418f;
-  margin-bottom: 0.8rem;
-}
-
-.career-courses ul {
-  list-style: disc;
-  padding-left: 1.5rem;
-}
-
-.career-courses li {
-  font-size: 1.05rem;
-  margin-bottom: 0.4rem;
-  color: #333;
-}
-
-/* Buttons */
-.career-detail-buttons {
+.course-card {
   display: flex;
   gap: 1.5rem;
-  flex-wrap: wrap;
-  justify-content: flex-start;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.course-img {
+  width: 150px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.course-info h3 {
+  margin: 0;
+  color: #222;
+}
+
+.trainer-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 1rem;
+}
+
+.trainer-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.chapters {
+  margin-top: 1rem;
+}
+
+.lessons {
+  margin-left: 1.5rem;
+  list-style: disc;
+}
+
+.career-detail-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
   margin-top: 2rem;
 }
 
-.career-detail-buttons .btn {
-  padding: 0.7rem 1.6rem;
+.btn {
+  padding: 10px 20px;
+  border-radius: 6px;
   font-size: 1rem;
-  font-weight: 600;
-  border-radius: 8px;
-  border: none;
   cursor: pointer;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition: background-color 0.25s ease, transform 0.2s ease;
+  border: none;
 }
 
-.career-detail-buttons .btn:hover {
-  transform: translateY(-2px);
-}
-
-/* Button Variants */
 .btn-back {
-  background-color: #4169e1;
-  color: #fff;
-}
-
-.btn-back:hover {
-  background-color: #2c3a93;
+  background-color: #ccc;
 }
 
 .btn-join-now {
-  background-color: #099ff2;
+  background-color: #2c3a93;
   color: #fff;
-}
-
-.btn-join-now:hover {
-  background-color: #0667bf;
-}
-
-/* Responsive */
-@media (max-width: 600px) {
-  .career-detail-buttons {
-    flex-direction: column;
-  }
-  .career-detail-buttons .btn {
-    width: 100%;
-    text-align: center;
-  }
 }
