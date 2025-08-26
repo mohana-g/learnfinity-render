@@ -67,6 +67,7 @@ const AddCareerPath = () => {
   const [courses, setCourses] = useState([]);
   const [careerPaths, setCareerPaths] = useState(null); // null = loading, [] = empty
   const [editId, setEditId] = useState(null);
+  const [loading, setLoading] = useState(false);
 
     // ✅ Toast state
   const [toast, setToast] = useState(null);
