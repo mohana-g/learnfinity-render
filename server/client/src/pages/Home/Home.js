@@ -343,9 +343,7 @@ function CareerPathCards({ paths = [], onReadMore }) {
             <p className="career-path-desc">{path.description}</p>
             <p className="career-path-levels">
               <strong>Levels:</strong>{" "}
-              {path.levels && path.levels.length > 0
-                ? path.levels.map((level) => level.name).join(", ")
-                : "No levels"}
+              {path.levelSummary || "No levels"}
             </p>
             <button className="btn-read-more" onClick={() => onReadMore(path._id)}>
               Read More
