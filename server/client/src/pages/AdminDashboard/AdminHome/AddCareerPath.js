@@ -2,6 +2,21 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./AddCareerPath.css";
 
+const Toast = ({ type, message, onClose }) => {
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      onClose();
+    }, 3000); // auto-close after 3 seconds
+    return () => clearTimeout(timer);
+  }, [onClose]);
+
+  return (
+    <div className={`toast toast-${type}`}>
+      {message}
+    </div>
+  );
+};
+
 const AddCareerPath = () => {
   const [careerPath, setCareerPath] = useState({
     title: "",
@@ -194,12 +209,21 @@ const AddCareerPath = () => {
     <div className="add-careerpath-page">
       <h2>{editId ? "Edit Career Path" : "Add Career Path"}</h2>
 
-      {/* ✅ success/error message */}
+      {/* ✅ Toast */}
+      {toast && (
+        <Toast
+          type={toast.type}
+          message={toast.text}
+          onClose={() => setToast(null)}
+        />
+      )}
+      
+      {/* ✅ success/error message
       {message.text && (
         <div className={`alert ${message.type === "success" ? "alert-success" : "alert-error"}`}>
           {message.text}
         </div>
-      )}
+      )} */}
 
       {/* Form Section */}
       <form onSubmit={handleSubmit} className="careerpath-form">
