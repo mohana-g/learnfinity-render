@@ -150,7 +150,7 @@ const CareerPathDetail = () => {
 
   return (
     <section className="career-detail-container">
-      <header className="career-header-page">
+      <header className="career-path-header-page">
         <h1>{careerPath.title}</h1>
         <p className="career-detail-description">{careerPath.description}</p>
 
