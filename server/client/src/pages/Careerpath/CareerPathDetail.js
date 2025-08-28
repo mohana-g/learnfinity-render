@@ -104,59 +104,32 @@ import "./CareerPathDetail.css";
 
 const CareerPathDetailSkeleton = () => (
   <section className="career-detail-container">
-    {/* Header */}
     <header className="career-path-header-page">
       <div className="skeleton skeleton-title" />
       <div className="skeleton skeleton-meta" />
       <div className="skeleton skeleton-meta" />
     </header>
 
-    {/* Courses */}
     <h2 className="section-title">
       <div className="skeleton skeleton-section-title" />
     </h2>
 
     <div className="course-list">
-      {[1, 2].map((i) => (
+      {[1, 2, 3].map((i) => (
         <div className="career-course-card" key={i}>
           <div className="skeleton skeleton-image" />
           <div className="course-info">
             <div className="skeleton skeleton-title" />
             <div className="skeleton skeleton-meta" />
             <div className="skeleton skeleton-meta" />
-
-            {/* Trainer */}
-            <div className="trainer-info-path">
-              <div className="skeleton skeleton-meta" style={{ width: "40%" }} />
-            </div>
-
-            {/* Chapters */}
-            <div className="chapters">
-              <div className="skeleton skeleton-section-title" />
-              <ul>
-                {[1, 2].map((ch) => (
-                  <li key={ch}>
-                    <div className="skeleton skeleton-meta" style={{ width: "50%" }} />
-                    <ul className="lessons">
-                      {[1, 2, 3].map((ls) => (
-                        <li key={ls}>
-                          <div
-                            className="skeleton skeleton-meta"
-                            style={{ width: "70%", marginBottom: "8px" }}
-                          />
-                        </li>
-                      ))}
-                    </ul>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            <div className="skeleton skeleton-meta" />
+            <div className="skeleton skeleton-block" />
+            <div className="skeleton skeleton-block" />
           </div>
         </div>
       ))}
     </div>
 
-    {/* Buttons */}
     <div className="career-detail-buttons">
       <div className="skeleton skeleton-btn" />
       <div className="skeleton skeleton-btn" />

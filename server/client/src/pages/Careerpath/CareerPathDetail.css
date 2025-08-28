@@ -100,7 +100,7 @@
   text-decoration: none;
 }
 
-/*code for loading*/
+/* Base shimmer effect */
 .skeleton {
   background: linear-gradient(90deg, #ececec 25%, #f5f5f5 50%, #ececec 75%);
   background-size: 200% 100%;
@@ -113,11 +113,11 @@
   100% { background-position: -200% 0; }
 }
 
-/* tighter for career path */
+/* Header */
 .career-path-header-page .skeleton-title {
   width: 60%;
   height: 28px;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
 .career-path-header-page .skeleton-meta {
@@ -126,20 +126,58 @@
   margin-bottom: 8px;
 }
 
+/* Section title */
+.section-title .skeleton-section-title {
+  width: 30%;
+  height: 22px;
+  margin: 16px 0;
+}
+
+/* Course cards */
+.career-course-card {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  margin-bottom: 20px;
+}
+
+.career-course-card .skeleton-image {
+  width: 100%;
+  height: 160px;
+  margin-bottom: 14px;
+  border-radius: 8px;
+}
+
 .career-course-card .skeleton-title {
   width: 50%;
   height: 22px;
   margin-bottom: 10px;
 }
 
-.chapters .skeleton-section-title {
-  width: 30%;
+.career-course-card .skeleton-meta {
+  width: 70%;
+  height: 16px;
+  margin-bottom: 8px;
+}
+
+.career-course-card .skeleton-block {
+  width: 100%;
   height: 18px;
-  margin: 12px 0;
+  margin-bottom: 10px;
+}
+
+/* Buttons */
+.career-detail-buttons {
+  display: flex;
+  gap: 16px;
+  margin-top: 24px;
 }
 
 .career-detail-buttons .skeleton-btn {
-  width: 160px;
-  height: 40px;
-  margin: 10px;
+  width: 150px;
+  height: 42px;
+  border-radius: 8px;
 }
