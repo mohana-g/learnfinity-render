@@ -96,21 +96,22 @@ const AddCareerPath = () => {
 
 
   // fetch existing career paths
- const fetchCareerPaths = () => {
-  axios
-    .get("https://hilms.onrender.com/api/career-paths")
-    .then((res) => {
-      if (Array.isArray(res.data)) {
-        setCareerPaths(res.data);
-      } else {
-        setCareerPaths([]); // not null → real "empty" state
-      }
-    })
-    .catch((err) => {
-      console.error("Error fetching career paths:", err);
-      setCareerPaths([]); // avoid infinite skeleton
-    });
-};
+  const fetchCareerPaths = () => {
+    axios
+      .get("https://hilms.onrender.com/api/career-paths")
+      .then((res) => {
+        if (Array.isArray(res.data.data)) {
+          setCareerPaths(res.data.data); // ✅ use nested "data"
+        } else {
+          setCareerPaths([]); // keep proper empty state
+        }
+      })
+      .catch((err) => {
+        console.error("Error fetching career paths:", err);
+        setCareerPaths([]); // safe fallback
+      });
+  };
+
 
   useEffect(() => {
     fetchCareerPaths();
