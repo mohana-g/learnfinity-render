@@ -113,6 +113,12 @@
   100% { background-position: -200% 0; }
 }
 
+.career-detail-scontainer {
+  padding: 24px;
+  max-width: 1200px;
+  margin: auto;
+}
+
 /* Header */
 .career-path-sheader-page {
   text-align: center; /* center container content */
@@ -170,6 +176,7 @@
   width: 50%;
   height: 22px;
   margin-bottom: 10px;
+  text-align: left;
 }
 
 .career-scourse-card .skeleton-meta {
@@ -182,6 +189,7 @@
   width: 50%;
   height: 18px;
   margin-bottom: 10px;
+  margin-left: 20px;
 }
 
 /* Buttons */
