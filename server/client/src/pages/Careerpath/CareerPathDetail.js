@@ -103,20 +103,20 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import "./CareerPathDetail.css";
 
 const CareerPathDetailSkeleton = () => (
-  <section className="career-detail-container">
-    <header className="career-path-header-page">
+  <section className="career-detail-scontainer">
+    <header className="career-path-sheader-page">
       <div className="skeleton skeleton-title" />
       <div className="skeleton skeleton-meta" />
       <div className="skeleton skeleton-meta" />
     </header>
 
-    <h2 className="section-title">
+    <h2 className="section-stitle">
       <div className="skeleton skeleton-section-title" />
     </h2>
 
     <div className="course-list">
-      {[1, 2, 3].map((i) => (
-        <div className="career-course-card" key={i}>
+      {[1, 2].map((i) => (
+        <div className="career-scourse-card" key={i}>
           <div className="skeleton skeleton-image" />
           <div className="course-info">
             <div className="skeleton skeleton-title" />
@@ -130,7 +130,7 @@ const CareerPathDetailSkeleton = () => (
       ))}
     </div>
 
-    <div className="career-detail-buttons">
+    <div className="career-sdetail-buttons">
       <div className="skeleton skeleton-btn" />
       <div className="skeleton skeleton-btn" />
     </div>
