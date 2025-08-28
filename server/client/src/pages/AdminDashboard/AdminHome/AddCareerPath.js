@@ -227,18 +227,40 @@ const AddCareerPath = () => {
   };
 
   // edit mode
+  // const handleEdit = (path) => {
+  //   setCareerPath({
+  //     title: path.title || "",
+  //     description: path.description || "",
+  //     roles: Array.isArray(path.roles) && path.roles.length ? path.roles : [""],
+  //     courses:
+  //       Array.isArray(path.courses) && path.courses.length
+  //         ? path.courses
+  //         : [{ courseId: "", level: "", duration: "", skillsLearnt: [""] }],
+  //   });
+  //   setEditId(path._id);
+  // };
+
   const handleEdit = (path) => {
-    setCareerPath({
-      title: path.title || "",
-      description: path.description || "",
-      roles: Array.isArray(path.roles) && path.roles.length ? path.roles : [""],
-      courses:
-        Array.isArray(path.courses) && path.courses.length
-          ? path.courses
-          : [{ courseId: "", level: "", duration: "", skillsLearnt: [""] }],
-    });
-    setEditId(path._id);
-  };
+  setCareerPath({
+    title: path.title || "",
+    description: path.description || "",
+    roles: Array.isArray(path.roles) && path.roles.length ? path.roles : [""],
+    courses:
+      Array.isArray(path.courses) && path.courses.length
+        ? path.courses.map((c) => ({
+            courseId: c.courseId?._id || c.courseId || "", // force string id
+            level: c.level || "",
+            duration: c.duration || "",
+            skillsLearnt:
+              Array.isArray(c.skillsLearnt) && c.skillsLearnt.length
+                ? c.skillsLearnt
+                : [""],
+          }))
+        : [{ courseId: "", level: "", duration: "", skillsLearnt: [""] }],
+  });
+  setEditId(path._id);
+};
+
 
   // delete
   const handleDelete = (id) => {
