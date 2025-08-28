@@ -155,16 +155,16 @@ const CareerPathDetail = () => {
         <p className="career-detail-description">{careerPath.description}</p>
 
         <div className="career-meta">
-          <p><strong>Duration:</strong> {careerPath.duration}</p>
+          {/* <p><strong>Duration:</strong> {careerPath.duration}</p> */}
           {careerPath.roles?.length > 0 && (
             <p><strong>Roles:</strong> {careerPath.roles.join(", ")}</p>
           )}
-          {careerPath.skillsLearnt?.length > 0 && (
+          {/* {careerPath.skillsLearnt?.length > 0 && (
             <p>
               <strong>Skills:</strong>{" "}
               {careerPath.skillsLearnt.join(", ")}
             </p>
-          )}
+          )} */}
         </div>
       </header>
 
@@ -173,7 +173,7 @@ const CareerPathDetail = () => {
         {careerPath.courses?.map((courseRef, idx) => {
           const course = courseRef.courseId;
           return (
-            <div className="course-card" key={idx}>
+            <div className="career-course-card" key={idx}>
               <img
                 src={course.imageurl}
                 alt={course.title}
@@ -193,14 +193,14 @@ const CareerPathDetail = () => {
 
                 {course.trainer && (
                   <div className="trainer-info">
-                    <img
+                    {/* <img
                       src={course.trainer.profileImage}
                       alt={course.trainer.fullName}
                       className="trainer-img"
-                    />
+                    /> */}
                     <div>
-                      <strong>{course.trainer.fullName}</strong>
-                      <p>{course.trainer.bio}</p>
+                      <p>Trainer Name: <strong>{course.trainer.fullName}</strong></p>
+                      {/* <p>{course.trainer.bio}</p> */}
                     </div>
                   </div>
                 )}

@@ -1,8 +1,8 @@
 .career-detail-container {
   padding: 2rem;
-  max-width: 1000px;
+  max-width: 1500px;
   margin: auto;
-  font-family: "Segoe UI", sans-serif;
+  font-family: 'work-sans', sans-serif;
 }
 
 .career-header {
@@ -12,8 +12,9 @@
 
 .career-detail-description {
   font-size: 1.1rem;
-  margin: 1rem 0;
+  margin: 1rem 1rem;
   color: #555;
+  text-align: justify;
 }
 
 .career-meta p {
@@ -31,7 +32,7 @@
   gap: 1.5rem;
 }
 
-.course-card {
+.career-course-card {
   display: flex;
   gap: 1.5rem;
   border: 1px solid #eee;
@@ -59,11 +60,11 @@
   margin-top: 1rem;
 }
 
-.trainer-img {
+/* .trainer-img {
   width: 50px;
   height: 50px;
   border-radius: 50%;
-}
+} */
 
 .chapters {
   margin-top: 1rem;
@@ -90,10 +91,11 @@
 }
 
 .btn-back {
-  background-color: #ccc;
+  background-color: #b62c2c;
 }
 
 .btn-join-now {
-  background-color: #2c3a93;
+  background-color: #0505fc;
   color: #fff;
+  text-decoration: none;
 }
