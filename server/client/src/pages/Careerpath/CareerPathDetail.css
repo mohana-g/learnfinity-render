@@ -1,11 +1,15 @@
+* {
+  font-family: 'work-sans', sans-serif;
+}
+
 .career-detail-container {
-  padding: 2rem;
-  max-width: 1500px;
+  padding: 1.5rem;
+  max-width: 1400px;
   margin: auto;
   font-family: 'work-sans', sans-serif;
 }
 
-.career-header {
+.career-header-page{
   text-align: center;
   margin-bottom: 2rem;
 }
@@ -15,6 +19,7 @@
   margin: 1rem 1rem;
   color: #555;
   text-align: justify;
+  line-height: 30px;
 }
 
 .career-meta p {
@@ -42,8 +47,7 @@
 }
 
 .course-img {
-  width: 150px;
-  height: 100px;
+  height: 150px;
   object-fit: cover;
   border-radius: 8px;
 }
@@ -53,11 +57,8 @@
   color: #222;
 }
 
-.trainer-info {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 1rem;
+.trainer-info-path {
+  color: #000
 }
 
 /* .trainer-img {
@@ -92,6 +93,7 @@
 
 .btn-back {
   background-color: #b62c2c;
+  color: #fff;
 }
 
 .btn-join-now {

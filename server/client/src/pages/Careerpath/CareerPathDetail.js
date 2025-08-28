@@ -150,7 +150,7 @@ const CareerPathDetail = () => {
 
   return (
     <section className="career-detail-container">
-      <header className="career-header">
+      <header className="career-header-page">
         <h1>{careerPath.title}</h1>
         <p className="career-detail-description">{careerPath.description}</p>
 
@@ -168,7 +168,7 @@ const CareerPathDetail = () => {
         </div>
       </header>
 
-      <h2 className="section-title">Courses in this Path</h2>
+      <h2 className="section-title">Courses</h2>
       <div className="course-list">
         {careerPath.courses?.map((courseRef, idx) => {
           const course = courseRef.courseId;
@@ -192,14 +192,14 @@ const CareerPathDetail = () => {
                 )}
 
                 {course.trainer && (
-                  <div className="trainer-info">
+                  <div className="trainer-info-path">
                     {/* <img
                       src={course.trainer.profileImage}
                       alt={course.trainer.fullName}
                       className="trainer-img"
                     /> */}
                     <div>
-                      <p>Trainer Name: <strong>{course.trainer.fullName}</strong></p>
+                      <strong>Trainer Name: </strong>{course.trainer.fullName}
                       {/* <p>{course.trainer.bio}</p> */}
                     </div>
                   </div>
@@ -208,7 +208,7 @@ const CareerPathDetail = () => {
                 {course.chapters?.length > 0 && (
                   <div className="chapters">
                     <h4>Chapters</h4>
-                    <ul>
+                    <ol>
                       {course.chapters.map((ch) => (
                         <li key={ch._id}>
                           <strong>{ch.name}</strong>
@@ -223,7 +223,7 @@ const CareerPathDetail = () => {
                           )}
                         </li>
                       ))}
-                    </ul>
+                    </ol>
                   </div>
                 )}
               </div>
