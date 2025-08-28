@@ -115,7 +115,7 @@
 
 .career-detail-scontainer {
   padding: 24px;
-  max-width: 1200px;
+  max-width: 1500px;
   margin: auto;
 }
 
@@ -131,7 +131,7 @@
 }
 
 .career-path-sheader-page .skeleton-meta {
-  width: 40%;
+  width: 80%;
   height: 20px;
   margin: 0 auto 8px; /* center horizontally */
 }
@@ -172,7 +172,7 @@
   flex-direction: column;
 }
 
-.career-scourse-card .skeleton-title {
+.career-scourse-card .course-info .skeleton-title {
   width: 50%;
   height: 22px;
   margin-bottom: 10px;
@@ -189,7 +189,7 @@
   width: 50%;
   height: 18px;
   margin-bottom: 10px;
-  margin-left: 20px;
+  margin-left: 30px;
 }
 
 /* Buttons */
