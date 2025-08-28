@@ -226,7 +226,7 @@ const AddCareerPath = () => {
     });
   };
 
-  // edit mode
+  // edit mode -- This code is commented out to fix the issue of courseId being an object instead of a string ID
   // const handleEdit = (path) => {
   //   setCareerPath({
   //     title: path.title || "",
