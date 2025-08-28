@@ -119,7 +119,7 @@ const CareerPathDetailSkeleton = () => (
         <div className="career-scourse-card" key={i}>
           <div className="skeleton skeleton-image" />
           <div className="course-info">
-            <div className="skeleton skeleton-title" />
+            <div className="skeleton skeleton-ctitle" />
             <div className="skeleton skeleton-meta" />
             <div className="skeleton skeleton-meta" />
             <div className="skeleton skeleton-meta" />
