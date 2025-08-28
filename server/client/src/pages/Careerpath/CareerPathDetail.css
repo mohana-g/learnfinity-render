@@ -114,71 +114,80 @@
 }
 
 /* Header */
+.career-path-sheader-page {
+  text-align: center; /* center container content */
+}
+
 .career-path-sheader-page .skeleton-title {
   width: 60%;
   height: 28px;
-  margin-bottom: 12px;
-  justify-content: center;
+  margin: 0 auto 12px; /* center horizontally */
 }
 
 .career-path-sheader-page .skeleton-meta {
   width: 40%;
   height: 20px;
-  margin-bottom: 8px;
-  justify-content: center;
+  margin: 0 auto 8px; /* center horizontally */
 }
 
 /* Section title */
+.section-stitle {
+  text-align: center;
+}
+
 .section-stitle .skeleton-section-title {
   width: 30%;
   height: 22px;
-  margin: 16px 0;
-  justify-content: center;
+  margin: 16px auto; /* center horizontally */
 }
 
 /* Course cards */
 .career-scourse-card {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;   /* image left, content right */
+  align-items: flex-start;
   padding: 16px;
   border-radius: 10px;
   background: #fff;
   box-shadow: 0 1px 3px rgba(0,0,0,0.08);
   margin-bottom: 20px;
+  gap: 16px; /* space between image & content */
 }
 
 .career-scourse-card .skeleton-image {
-  width: 30%;
+  flex: 0 0 25%;  /* lock image width at 30% */
   height: 160px;
-  margin-bottom: 14px;
   border-radius: 8px;
+}
+
+.career-scourse-card .course-info {
+  flex: 1; /* take up remaining space */
   display: flex;
+  flex-direction: column;
 }
 
 .career-scourse-card .skeleton-title {
   width: 50%;
   height: 22px;
   margin-bottom: 10px;
-  display: flex;
 }
 
 .career-scourse-card .skeleton-meta {
   width: 70%;
   height: 16px;
   margin-bottom: 8px;
-  display: flex;
 }
 
 .career-scourse-card .skeleton-block {
-  width: 100%;
+  width: 50%;
   height: 18px;
   margin-bottom: 10px;
-  display: flex;
 }
 
 /* Buttons */
 .career-sdetail-buttons {
   display: flex;
+  justify-content: center; /* center buttons */
   gap: 16px;
   margin-top: 24px;
 }

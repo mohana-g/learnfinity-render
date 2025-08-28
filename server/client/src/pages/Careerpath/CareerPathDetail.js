@@ -123,6 +123,7 @@ const CareerPathDetailSkeleton = () => (
             <div className="skeleton skeleton-meta" />
             <div className="skeleton skeleton-meta" />
             <div className="skeleton skeleton-meta" />
+            <div className="skeleton skeleton-meta" />
             <div className="skeleton skeleton-block" />
             <div className="skeleton skeleton-block" />
           </div>
