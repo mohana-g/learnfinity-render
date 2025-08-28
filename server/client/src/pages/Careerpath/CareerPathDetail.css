@@ -172,11 +172,11 @@
   flex-direction: column;
 }
 
-.career-scourse-card .course-info .skeleton-title {
+.career-scourse-card .skeleton-title {
   width: 50%;
   height: 22px;
   margin-bottom: 10px;
-  text-align: left;
+  justify-content: flex-start;
 }
 
 .career-scourse-card .skeleton-meta {
