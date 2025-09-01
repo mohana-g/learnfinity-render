@@ -357,23 +357,35 @@ const CareerPathDetail = () => {
   }, [pathId]);
 
   // fetch learner progress if logged in
-  useEffect(() => {
-    const fetchProgress = async () => {
-      if (role === "learner" && learnerId) {
-        try {
-          const res = await fetch(
-            `https://hilms.onrender.com/api/learner/progress/${learnerId}`
-          );
-          if (!res.ok) throw new Error("Failed to fetch progress");
-          const data = await res.json();
-          setCompletedCourses(data.completedCourses || []); // expects array of courseIds
-        } catch (err) {
-          console.error(err.message);
-        }
+ useEffect(() => {
+  const fetchProgress = async () => {
+    if (role === "learner" && learnerId) {
+      try {
+        const res = await fetch(
+          `https://hilms.onrender.com/api/learner/progress`, // no learnerId in URL (uses req.user.id)
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`, // make sure JWT is sent
+            },
+          }
+        );
+        if (!res.ok) throw new Error("Failed to fetch progress");
+        const data = await res.json();
+
+        // collect fully completed courses
+        const completed = data.enrolledCourses
+          .filter(c => Number(c.progressPercent) === 100)
+          .map(c => c.courseId); // you’d need to include courseId in backend response!
+        
+        setCompletedCourses(completed);
+      } catch (err) {
+        console.error(err.message);
       }
-    };
-    fetchProgress();
-  }, [role, learnerId]);
+    }
+  };
+  fetchProgress();
+}, [role, learnerId]);
+
 
   if (loading) {
     return <CareerPathDetailSkeleton />;
