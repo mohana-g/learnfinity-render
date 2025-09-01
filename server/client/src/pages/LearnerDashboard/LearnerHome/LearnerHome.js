@@ -18,26 +18,26 @@ import "./LearnerHome.css";
 
 // Career Path Skeleton Card
 const CareerPathSkeleton = () => (
-  <div className="career-path-card skeleton-card">
-    <div className="skeleton skeleton-career-title"></div>
-    <div className="skeleton skeleton-career-levels"></div>
-    <div className="skeleton skeleton-career-btn"></div>
+  <div className="Lcareer-path-card skeleton-card">
+    <div className="skeleton skeleton-Lcareer-title"></div>
+    <div className="skeleton skeleton-Lcareer-levels"></div>
+    <div className="skeleton skeleton-Lcareer-btn"></div>
   </div>
 );
 
 // Career Path Cards Component
 function CareerPathCards({ paths = [], onReadMore }) {
   return (
-    <section className="career-path-cards-container">
+    <section className="Lcareer-path-cards-container">
       {paths.length > 0 ? (
         paths.map((path) => (
-          <div key={path._id} className="career-path-card">
+          <div key={path._id} className="Lcareer-path-card">
             <h3>{path.title}</h3>
-            <p className="career-path-levels">
+            <p className="Lcareer-path-levels">
               <strong>Levels:</strong> {path.levelSummary || "No levels"}
             </p>
             <button
-              className="btn-read-more"
+              className="Lbtn-read-more"
               onClick={() => onReadMore(path._id)}
             >
               Read More
@@ -382,14 +382,14 @@ function LearnerHome() {
       )}
 
       {/* Career Path Suggestions Section */}
-      <section className="career-path-section">
+      <section className="Lcareer-path-section">
         <h2>Career Path Suggestions</h2>
         <p>
           Select your desired career to see recommended courses tailored for your
           goal, from beginner to advanced levels.
         </p>
         {loadingPaths ? (
-          <div className="career-path-cards-container">
+          <div className="Lcareer-path-cards-container">
             {Array.from({ length: 3 }).map((_, i) => (
               <CareerPathSkeleton key={i} />
             ))}

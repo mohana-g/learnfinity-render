@@ -198,12 +198,12 @@ background-color: #0000cc;
   margin-bottom: 0.8rem;
 }
 
-.career-path-desc {
+/* .career-path-desc {
   font-size: 1rem;
   margin-bottom: 1rem;
   flex-grow: 1;
   line-height: 1.4;
-}
+} */
 
 .career-path-levels {
   font-weight: 600;
