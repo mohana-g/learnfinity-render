@@ -110,8 +110,11 @@
 
 // export default Navbar;
 
+
+
+// ✅ Updated Navbar.js with active link highlighting and other improvements
 import React, { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom'; // ✅ use NavLink instead of Link
+import { NavLink } from 'react-router-dom'; // ✅ use NavLink
 import { useMsal } from "@azure/msal-react";
 import MicrosoftLogin from '../../pages/Login/MicrosoftLogin';
 import './Navbar.css';
@@ -131,7 +134,7 @@ function Navbar() {
     updateRoleState();
 
     const handleStorage = () => updateRoleState();
-    const interval = setInterval(updateRoleState, 300); // Ensure updates even without event
+    const interval = setInterval(updateRoleState, 300);
 
     window.addEventListener('storage', handleStorage);
     return () => {
@@ -165,7 +168,7 @@ function Navbar() {
     <header className="navbar">
       <div className="navbar-container">
         <div className="logo">
-          <NavLink to="/" onClick={closeMenu}>Learnfinity</NavLink>
+          <NavLink to="/" end onClick={closeMenu}>Learnfinity</NavLink>
         </div>
         <button className="hamburger" onClick={() => setIsMenuOpen(prev => !prev)}>☰</button>
 
@@ -173,7 +176,7 @@ function Navbar() {
           <ul className="nav-links">
             {userRole === "admin" && (
               <>
-                <li><NavLink to="/admin-dashboard" onClick={closeMenu} className={getNavLinkClass}>Home</NavLink></li>
+                <li><NavLink to="/admin-dashboard" end onClick={closeMenu} className={getNavLinkClass}>Home</NavLink></li>
                 <li><NavLink to="/admin/courses" onClick={closeMenu} className={getNavLinkClass}>Courses</NavLink></li>
                 <li><NavLink to="/admin/about" onClick={closeMenu} className={getNavLinkClass}>About</NavLink></li>
                 <li><NavLink to="/admin/faq" onClick={closeMenu} className={getNavLinkClass}>FAQ</NavLink></li>
@@ -183,7 +186,7 @@ function Navbar() {
 
             {userRole === "trainer" && (
               <>
-                <li><NavLink to="/trainer-dashboard" onClick={closeMenu} className={getNavLinkClass}>Home</NavLink></li>
+                <li><NavLink to="/trainer-dashboard" end onClick={closeMenu} className={getNavLinkClass}>Home</NavLink></li>
                 <li><NavLink to="/trainer-dashboard/courses" onClick={closeMenu} className={getNavLinkClass}>Courses</NavLink></li>
                 <li><NavLink to="/trainer-dashboard/about" onClick={closeMenu} className={getNavLinkClass}>About</NavLink></li>
                 <li><NavLink to="/trainer-dashboard/faq" onClick={closeMenu} className={getNavLinkClass}>FAQ</NavLink></li>
@@ -193,7 +196,7 @@ function Navbar() {
 
             {userRole === "learner" && (
               <>
-                <li><NavLink to="/learner-dashboard" onClick={closeMenu} className={getNavLinkClass}>Home</NavLink></li>
+                <li><NavLink to="/learner-dashboard" end onClick={closeMenu} className={getNavLinkClass}>Home</NavLink></li>
                 <li><NavLink to="/learner-dashboard/courses" onClick={closeMenu} className={getNavLinkClass}>Courses</NavLink></li>
                 <li><NavLink to="/learner-dashboard/about" onClick={closeMenu} className={getNavLinkClass}>About</NavLink></li>
                 <li><NavLink to="/learner-dashboard/faq" onClick={closeMenu} className={getNavLinkClass}>FAQ</NavLink></li>
@@ -203,11 +206,19 @@ function Navbar() {
 
             {!userRole && (
               <>
-                <li><NavLink to="/" onClick={closeMenu} className={getNavLinkClass}>Home</NavLink></li>
+                <li><NavLink to="/" end onClick={closeMenu} className={getNavLinkClass}>Home</NavLink></li>
                 <li><NavLink to="/courses" onClick={closeMenu} className={getNavLinkClass}>Courses</NavLink></li>
                 <li><NavLink to="/about" onClick={closeMenu} className={getNavLinkClass}>About</NavLink></li>
                 <li><NavLink to="/faq" onClick={closeMenu} className={getNavLinkClass}>FAQ</NavLink></li>
-                <li><NavLink to="/signup" className={({ isActive }) => isActive ? "active-link signup-link" : "signup-link"} onClick={closeMenu}>Sign Up</NavLink></li>
+                <li>
+                  <NavLink 
+                    to="/signup" 
+                    onClick={closeMenu} 
+                    className={({ isActive }) => isActive ? "active-link signup-link" : "signup-link"}
+                  >
+                    Sign Up
+                  </NavLink>
+                </li>
                 <li><NavLink to="/signin" onClick={closeMenu} className={getNavLinkClass}>Sign In</NavLink></li>
                 <li><MicrosoftLogin /></li>
               </>
