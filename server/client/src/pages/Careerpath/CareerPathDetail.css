@@ -155,7 +155,7 @@
   padding: 16px;
   border-radius: 10px;
   background: #fff;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   margin-bottom: 20px;
   gap: 16px; /* space between image & content */
 }
