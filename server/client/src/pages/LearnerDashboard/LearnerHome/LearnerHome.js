@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import "./LearnerHome.css";
 // import {
@@ -14,6 +14,42 @@ import "./LearnerHome.css";
 // import User3 from '../../../assets/User3.avif';
 // import User4 from '../../../assets/User4.avif';
 // import User5 from '../../../assets/User5.avif';
+
+
+// Career Path Skeleton Card
+const CareerPathSkeleton = () => (
+  <div className="career-path-card skeleton-card">
+    <div className="skeleton skeleton-career-title"></div>
+    <div className="skeleton skeleton-career-levels"></div>
+    <div className="skeleton skeleton-career-btn"></div>
+  </div>
+);
+
+// Career Path Cards Component
+function CareerPathCards({ paths = [], onReadMore }) {
+  return (
+    <section className="career-path-cards-container">
+      {paths.length > 0 ? (
+        paths.map((path) => (
+          <div key={path._id} className="career-path-card">
+            <h3>{path.title}</h3>
+            <p className="career-path-levels">
+              <strong>Levels:</strong> {path.levelSummary || "No levels"}
+            </p>
+            <button
+              className="btn-read-more"
+              onClick={() => onReadMore(path._id)}
+            >
+              Read More
+            </button>
+          </div>
+        ))
+      ) : (
+        <p>No career paths available</p>
+      )}
+    </section>
+  );
+}
 
 // Skeleton loader for enrolled courses
 const LearnerEnrolledCoursesSkeleton = ({ count = 3 }) => (
@@ -65,7 +101,27 @@ function LearnerHome() {
   const [leaderboard, setLeaderboard] = useState([]);
   const [leaderboardError, setLeaderboardError] = useState(null);
   const [selectedLearner, setSelectedLearner] = useState(null);
-  
+  const [careerPaths, setCareerPaths] = useState([]);
+  const [loadingPaths, setLoadingPaths] = useState(true);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchCareerPaths = async () => {
+      try {
+        const response = await axios.get("https://hilms.onrender.com/api/career-paths");
+        setCareerPaths(Array.isArray(response.data) ? response.data : response.data.data || []);
+      } catch (error) {
+        console.error("Error fetching career paths:", error);
+        setCareerPaths([]);
+      } finally {
+        setLoadingPaths(false);
+      }
+    };
+
+    fetchCareerPaths();
+  }, []);
+
 
   // const testimonials = [
   //   {
@@ -146,6 +202,11 @@ function LearnerHome() {
     if (rank === 1) return '🥈';
     if (rank === 2) return '🥉';
     return '';
+  };
+
+  const handleReadMore = (pathId) => {
+    navigate(`/career-path/${pathId}`);
+    window.scrollTo(0, 0);
   };
 
   return (
@@ -319,6 +380,25 @@ function LearnerHome() {
           </div>
         </div>
       )}
+
+      {/* Career Path Suggestions Section */}
+      <section className="career-path-section">
+        <h2>Career Path Suggestions</h2>
+        <p>
+          Select your desired career to see recommended courses tailored for your
+          goal, from beginner to advanced levels.
+        </p>
+        {loadingPaths ? (
+          <div className="career-path-cards-container">
+            {Array.from({ length: 3 }).map((_, i) => (
+              <CareerPathSkeleton key={i} />
+            ))}
+          </div>
+        ) : (
+          <CareerPathCards paths={careerPaths} onReadMore={handleReadMore} />
+        )}
+      </section>
+
 
 
       {/* Testimonials Section */}
