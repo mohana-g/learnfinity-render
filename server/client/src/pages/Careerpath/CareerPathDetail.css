@@ -106,6 +106,14 @@
   text-decoration: none;
 }
 
+.progress-container {
+  min-height: 24px; /* adjust to match height of progress + badge */
+}
+.progress-placeholder {
+  visibility: hidden; /* invisible but takes up space */
+}
+
+
 .career-course-card.completed-card {
   border: 2px solid #4caf50; /* green */
   background-color: #e8f5e9; /* light green */

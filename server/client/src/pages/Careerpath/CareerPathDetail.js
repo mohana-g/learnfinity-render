@@ -223,19 +223,19 @@ const CareerPathDetail = () => {
           const course = courseRef.courseId;
           let courseProgress = null;
           if (localStorage.getItem("role") === "learner") {
-courseProgress = learnerProgress.find(
-  (p) => p.courseTitle === course.title
-);
+          courseProgress = learnerProgress.find(
+            (p) => p.courseTitle === course.title
+          );
 
 
           }
 
-const isCompleted = Number(courseProgress?.progressPercent) === 100;
-          return (
-            <div
-  className={`career-course-card ${isCompleted ? "completed-card" : ""}`}
-  key={idx}
->
+              const isCompleted = Number(courseProgress?.progressPercent) === 100;
+                        return (
+                          <div
+                className={`career-course-card ${isCompleted ? "completed-card" : ""}`}
+                key={idx}
+              >
               <img
                 src={course.imageurl}
                 alt={course.title}
@@ -244,14 +244,15 @@ const isCompleted = Number(courseProgress?.progressPercent) === 100;
               <div className="course-info">
                 <h3>{course.title}</h3>
 
-                {courseProgress && (
-      <p className="progress">
-        Progress: {courseProgress.progressPercent}%
-      </p>
-    )}
+              <div className="progress-container">
+                {courseProgress ? (
+                  <p className="progress"><strong>Progress:</strong> {courseProgress.progressPercent}%</p>
+                ) : (
+                  <p className="progress-placeholder">&nbsp;</p> // blank line keeps height consistent
+                )}
+                {isCompleted && <span className="completed-badge">✅ Completed</span>}
+              </div>
 
-    {isCompleted && <span className="completed-badge">✅ Completed</span>}
-    
                 <p>{course.description}</p>
                 <p><strong>Level:</strong> {courseRef.level}</p>
                 <p><strong>Duration:</strong> {courseRef.duration}</p>
