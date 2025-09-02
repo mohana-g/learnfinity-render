@@ -163,7 +163,7 @@ const CareerPathDetail = () => {
       if (localStorage.getItem("role") === "learner") {
         const token = localStorage.getItem("token");
         const progressRes = await fetch(
-          `https://hilms.onrender.com/api/learners/progress`,
+          `https://hilms.onrender.com/api/learner/progress`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
         if (progressRes.ok) {
