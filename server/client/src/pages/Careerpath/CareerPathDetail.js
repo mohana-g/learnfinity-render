@@ -144,18 +144,46 @@ const CareerPathDetail = () => {
   const navigate = useNavigate();
   const [careerPath, setCareerPath] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [learnerProgress, setLearnerProgress] = useState([]);
+  const [allCompleted, setAllCompleted] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
 
-    const fetchPath = async () => {
+    const fetchData = async () => {
       try {
+        // Fetch Career Path
         const res = await fetch(
           `https://hilms.onrender.com/api/career-paths/${pathId}`
         );
         if (!res.ok) throw new Error("Failed to fetch career path");
         const data = await res.json();
+
         setCareerPath(data.data);
+
+        // If learner is logged in → fetch learner progress
+        if (localStorage.getItem("role") === "learner") {
+          const token = localStorage.getItem("token");
+          const progressRes = await fetch(
+            `https://hilms.onrender.com/api/learners/progress`,
+            {
+              headers: { Authorization: `Bearer ${token}` },
+            }
+          );
+          if (progressRes.ok) {
+            const progressData = await progressRes.json();
+            setLearnerProgress(progressData.enrolledCourses);
+
+            // check if all courses completed
+            const completed = data.data.courses.every((courseRef) => {
+              const courseProgress = progressData.enrolledCourses.find(
+                (c) => c.courseTitle === courseRef.courseId.title
+              );
+              return courseProgress?.progressPercent === "100";
+            });
+            setAllCompleted(completed);
+          }
+        }
       } catch (err) {
         console.error(err.message);
       } finally {
@@ -163,8 +191,9 @@ const CareerPathDetail = () => {
       }
     };
 
-    fetchPath();
+    fetchData();
   }, [pathId]);
+
 
   if (loading) {
     return <CareerPathDetailSkeleton />;
@@ -187,6 +216,10 @@ const CareerPathDetail = () => {
         <h1>{careerPath.title}</h1>
         <p className="career-detail-description">{careerPath.description}</p>
 
+        {allCompleted && (
+          <div className="completed-badge">✅ Career Path Completed!</div>
+        )}
+
         <div className="career-meta">
           {/* <p><strong>Duration:</strong> {careerPath.duration}</p> */}
           {careerPath.roles?.length > 0 && (
@@ -205,8 +238,23 @@ const CareerPathDetail = () => {
       <div className="course-list">
         {careerPath.courses?.map((courseRef, idx) => {
           const course = courseRef.courseId;
+
+          // Check learner’s progress
+          let isCompleted = false;
+          if (localStorage.getItem("role") === "learner") {
+            const courseProgress = learnerProgress.find(
+              (c) => c.courseTitle === course.title
+            );
+            isCompleted = courseProgress?.progressPercent === "100";
+          }
+
           return (
-            <div className="career-course-card" key={idx}>
+              <div
+                className={`career-course-card ${
+                  isCompleted ? "completed-card" : ""
+                }`}
+                key={idx}
+              >  
               <img
                 src={course.imageurl}
                 alt={course.title}

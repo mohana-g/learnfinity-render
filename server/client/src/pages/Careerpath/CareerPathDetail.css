@@ -106,6 +106,23 @@
   text-decoration: none;
 }
 
+.completed-card {
+  border: 2px solid green;
+  background: #e6ffe6; /* light green */
+  transition: 0.3s;
+}
+
+.completed-badge {
+  display: inline-block;
+  padding: 8px 14px;
+  margin-top: 10px;
+  background: green;
+  color: white;
+  font-weight: bold;
+  border-radius: 6px;
+}
+
+
 /* Base shimmer effect */
 .skeleton {
   background: linear-gradient(90deg, #ececec 25%, #f5f5f5 50%, #ececec 75%);
