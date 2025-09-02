@@ -197,7 +197,7 @@ const CareerPathDetail = () => {
     );
   }
 
-   // ✅ Overall completion check
+  // ✅ Overall completion check
   const allCompleted =
     learnerProgress.length > 0 &&
     careerPath.courses.every((courseRef) =>
@@ -255,15 +255,14 @@ const CareerPathDetail = () => {
               <div className="course-info">
                 <h3>{course.title}</h3>
 
-              <div className="progress-container">
-                {courseProgress ? (
-                  <p className="progress"><strong>Progress:</strong> {courseProgress.progressPercent}%</p>
-                ) : (
-                  <p className="progress-placeholder">&nbsp;</p> // blank line keeps height consistent
+                {courseProgress && (
+                  <p className="progress"><strong>
+                    Progress:</strong> {courseProgress.progressPercent}%
+                  </p>
                 )}
-                {isCompleted && <span className="completed-badge">✅ Completed</span>}
-              </div>
 
+                {isCompleted && <span className="completed-badge">✅ Completed</span>}
+                
                 <p>{course.description}</p>
                 <p><strong>Level:</strong> {courseRef.level}</p>
                 <p><strong>Duration:</strong> {courseRef.duration}</p>
@@ -320,24 +319,22 @@ const CareerPathDetail = () => {
         Back to Career Paths
       </button>
 
-     {localStorage.getItem("role") === "learner" ? (
-          allCompleted ? (
-            <span className="btn btn-completed">
-              🎉 All Courses Completed
-            </span>
-          ) : (
-            <Link
-              to="/learner-dashboard/courses"
-              className="btn btn-go-courses"
-            >
-              Go to Courses
-            </Link>
-          )
+      {localStorage.getItem("role") === "learner" ? (
+        allCompleted ? (
+          <div className="all-completed-text">
+            🎉 All Courses Completed
+          </div>
         ) : (
-          <Link to="/signup" className="btn btn-join-now">
-            Join Now
+          <Link to="/learner-dashboard/courses" className="btn btn-go-courses">
+            Go to Courses
           </Link>
-        )}
+        )
+      ) : (
+        <Link to="/signup" className="btn btn-join-now">
+          Join Now
+        </Link>
+      )}
+
     </div>
 
 
