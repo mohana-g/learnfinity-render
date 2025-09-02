@@ -106,6 +106,22 @@
   text-decoration: none;
 }
 
+.career-course-card.completed-card {
+  border: 2px solid #4caf50; /* green */
+  background-color: #e8f5e9; /* light green */
+}
+
+.completed-badge {
+  display: inline-block;
+  margin-top: 6px;
+  padding: 4px 8px;
+  font-size: 0.85rem;
+  background: #4caf50;
+  color: white;
+  border-radius: 6px;
+}
+
+
 /* Base shimmer effect */
 .skeleton {
   background: linear-gradient(90deg, #ececec 25%, #f5f5f5 50%, #ececec 75%);

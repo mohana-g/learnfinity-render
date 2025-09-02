@@ -144,27 +144,43 @@ const CareerPathDetail = () => {
   const navigate = useNavigate();
   const [careerPath, setCareerPath] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [learnerProgress, setLearnerProgress] = useState([]);
+
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+  window.scrollTo(0, 0);
 
-    const fetchPath = async () => {
-      try {
-        const res = await fetch(
-          `https://hilms.onrender.com/api/career-paths/${pathId}`
+  const fetchPath = async () => {
+    try {
+      const res = await fetch(
+        `https://hilms.onrender.com/api/career-paths/${pathId}`
+      );
+      if (!res.ok) throw new Error("Failed to fetch career path");
+      const data = await res.json();
+      setCareerPath(data.data);
+
+      // 🔹 Fetch learner progress if logged in
+      if (localStorage.getItem("role") === "learner") {
+        const token = localStorage.getItem("token");
+        const progressRes = await fetch(
+          `https://hilms.onrender.com/api/learners/progress`,
+          { headers: { Authorization: `Bearer ${token}` } }
         );
-        if (!res.ok) throw new Error("Failed to fetch career path");
-        const data = await res.json();
-        setCareerPath(data.data);
-      } catch (err) {
-        console.error(err.message);
-      } finally {
-        setLoading(false);
+        if (progressRes.ok) {
+          const progressData = await progressRes.json();
+          setLearnerProgress(progressData.enrolledCourses);
+        }
       }
-    };
+    } catch (err) {
+      console.error(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    fetchPath();
-  }, [pathId]);
+  fetchPath();
+}, [pathId]);
+
 
   if (loading) {
     return <CareerPathDetailSkeleton />;
@@ -205,8 +221,19 @@ const CareerPathDetail = () => {
       <div className="course-list">
         {careerPath.courses?.map((courseRef, idx) => {
           const course = courseRef.courseId;
+          let courseProgress = null;
+          if (localStorage.getItem("role") === "learner") {
+            courseProgress = learnerProgress.find(
+              (p) => p.courseTitle === course.title
+            );
+          }
+
+          const isCompleted = courseProgress?.progressPercent === "100";
           return (
-            <div className="career-course-card" key={idx}>
+            <div
+  className={`career-course-card ${isCompleted ? "completed-card" : ""}`}
+  key={idx}
+>
               <img
                 src={course.imageurl}
                 alt={course.title}
@@ -214,6 +241,15 @@ const CareerPathDetail = () => {
               />
               <div className="course-info">
                 <h3>{course.title}</h3>
+
+                {courseProgress && (
+      <p className="progress">
+        Progress: {courseProgress.progressPercent}%
+      </p>
+    )}
+
+    {isCompleted && <span className="completed-badge">✅ Completed</span>}
+    
                 <p>{course.description}</p>
                 <p><strong>Level:</strong> {courseRef.level}</p>
                 <p><strong>Duration:</strong> {courseRef.duration}</p>
