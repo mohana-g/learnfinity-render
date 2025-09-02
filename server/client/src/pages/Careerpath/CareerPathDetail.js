@@ -179,7 +179,7 @@ const CareerPathDetail = () => {
               const courseProgress = progressData.enrolledCourses.find(
                 (c) => c.courseTitle === courseRef.courseId.title
               );
-              return courseProgress?.progressPercent === "100";
+              return courseProgress?.progressPercent === 100;
             });
             setAllCompleted(completed);
           }
@@ -243,9 +243,10 @@ const CareerPathDetail = () => {
           let isCompleted = false;
           if (localStorage.getItem("role") === "learner") {
             const courseProgress = learnerProgress.find(
-              (c) => c.courseTitle === course.title
+              (c) => c.courseId === course._id
             );
-            isCompleted = courseProgress?.progressPercent === "100";
+
+            isCompleted = courseProgress?.progressPercent === 100;
           }
 
           return (
