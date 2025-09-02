@@ -126,7 +126,6 @@ const getLoggedInLearnerProgress = async (req, res) => {
       const progressPercent = totalItems > 0 ? ((completedItems / totalItems) * 100).toFixed(0) : 0;
 
       return {
-        courseId: course._id,
         courseTitle: course.title,
         totalChapters: course.chapters.length,
         totalLessons,
