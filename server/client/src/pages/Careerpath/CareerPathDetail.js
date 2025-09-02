@@ -223,12 +223,14 @@ const CareerPathDetail = () => {
           const course = courseRef.courseId;
           let courseProgress = null;
           if (localStorage.getItem("role") === "learner") {
-            courseProgress = learnerProgress.find(
-              (p) => p.courseTitle === course.title
-            );
+courseProgress = learnerProgress.find(
+  (p) => p.courseTitle === course.title
+);
+
+
           }
 
-          const isCompleted = courseProgress?.progressPercent === "100";
+const isCompleted = Number(courseProgress?.progressPercent) === 100;
           return (
             <div
   className={`career-course-card ${isCompleted ? "completed-card" : ""}`}
