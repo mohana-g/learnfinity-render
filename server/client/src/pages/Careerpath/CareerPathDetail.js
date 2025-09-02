@@ -197,6 +197,17 @@ const CareerPathDetail = () => {
     );
   }
 
+   // ✅ Overall completion check
+  const allCompleted =
+    learnerProgress.length > 0 &&
+    careerPath.courses.every((courseRef) =>
+      learnerProgress.some(
+        (p) =>
+          p.courseTitle === courseRef.courseId.title &&
+          Number(p.progressPercent) === 100
+      )
+    );
+
   return (
     <section className="career-detail-container">
       <header className="career-path-header-page">
@@ -309,15 +320,24 @@ const CareerPathDetail = () => {
         Back to Career Paths
       </button>
 
-      {localStorage.getItem("role") === "learner" ? (
-        <Link to="/learner-dashboard/courses" className="btn btn-go-courses">
-          Go to Courses
-        </Link>
-      ) : (
-        <Link to="/signup" className="btn btn-join-now">
-          Join Now
-        </Link>
-      )}
+     {localStorage.getItem("role") === "learner" ? (
+          allCompleted ? (
+            <span className="btn btn-completed">
+              🎉 All Courses Completed
+            </span>
+          ) : (
+            <Link
+              to="/learner-dashboard/courses"
+              className="btn btn-go-courses"
+            >
+              Go to Courses
+            </Link>
+          )
+        ) : (
+          <Link to="/signup" className="btn btn-join-now">
+            Join Now
+          </Link>
+        )}
     </div>
 
 
