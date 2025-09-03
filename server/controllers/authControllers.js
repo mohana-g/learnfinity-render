@@ -35,25 +35,27 @@ const adminLogin = async (req, res) => {
     // Check if the user already exists in the User collection, if not create one
     let user = await User.findOne({ email, role: 1 }); // Role 1 for Admin
     //Old code for admin without hashing password in user collection
-    // if (!user) {
-    //   user = new User({
-    //     email,
-    //     password, // You can hash the password or use a default one if needed
-    //     role: 1,  // Admin role
-    //   });
-    //   await user.save();
-    // }
-
-    //new code for hashing password in user collection for admin--3/9/25
     if (!user) {
-      const hashedPassword = await bcrypt.hash(password, 10); // hash plain password
       user = new User({
         email,
-        password: hashedPassword,
-        role: 1,
+        password, // You can hash the password or use a default one if needed
+        role: 1,  // Admin role
+        admin: admin._id, // Link to the Admin document
       });
       await user.save();
     }
+
+    //new code for hashing password in user collection for admin--3/9/25
+    // if (!user) {
+    //   const hashedPassword = await bcrypt.hash(password, 10); // hash plain password
+    //   user = new User({
+    //     email,
+    //     password: hashedPassword,
+    //     role: 1,
+    //     admin: admin._id, // Link to the Admin document
+    //   });
+    //   await user.save();
+    // }
 
     const token = jwt.sign({ id: admin._id, role: admin.role }, JWT_SECRET, { expiresIn: '1h' });
 
