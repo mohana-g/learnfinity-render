@@ -258,7 +258,7 @@ const CareerPathDetail = () => {
               {courseProgress && (
                 <div className="progress-container">
                   <p><strong>Progress:</strong> {courseProgress.progressPercent}%</p>
-                  <div className="progress-bar">
+                  <div className="career-progress-bar">
                     <div
                       className="progress-fill"
                       style={{ width: `${courseProgress.progressPercent}%` }}
