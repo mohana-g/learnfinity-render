@@ -43,7 +43,7 @@
   border: 1px solid #eee;
   border-radius: 16px;
   padding: 1.5rem;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
   background: #fff;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
@@ -83,13 +83,13 @@
 }
 
 .trainer-info-path {
-  margin-top: 0.8rem;
+  margin: 0.3rem 0;
   font-size: 0.95rem;
   color: #000;
 }
 
 .lessons {
-  margin-left: 1.5rem;
+  margin-top: 5px;
   list-style: disc;
   font-size: 0.9rem;
   color: #000;
@@ -148,7 +148,7 @@
 
 /* Progress Bar Styling */
 .progress-bar {
-  width: 100%;
+  width: 50%;
   height: 10px;
   background-color: #e5e7eb; /* light gray */
   border-radius: 6px;
