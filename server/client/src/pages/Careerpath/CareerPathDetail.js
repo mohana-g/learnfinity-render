@@ -268,7 +268,7 @@ const CareerPathDetail = () => {
               )}
 
 
-                {isCompleted && <span className="completed-badge">✅ Completed</span>}
+                {isCompleted && <span className="completed-badge">✅ Course Completed</span>}
                 
                 <p>{course.description}</p>
                 <p><strong>Level:</strong> {courseRef.level}</p>
