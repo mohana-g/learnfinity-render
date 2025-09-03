@@ -255,11 +255,18 @@ const CareerPathDetail = () => {
               <div className="course-info">
                 <h3>{course.title}</h3>
 
-                {courseProgress && (
-                  <p className="progress"><strong>
-                    Progress:</strong> {courseProgress.progressPercent}%
-                  </p>
-                )}
+              {courseProgress && (
+                <div className="progress-container">
+                  <p><strong>Progress:</strong> {courseProgress.progressPercent}%</p>
+                  <div className="progress-bar">
+                    <div
+                      className="progress-fill"
+                      style={{ width: `${courseProgress.progressPercent}%` }}
+                    ></div>
+                  </div>
+                </div>
+              )}
+
 
                 {isCompleted && <span className="completed-badge">✅ Completed</span>}
                 

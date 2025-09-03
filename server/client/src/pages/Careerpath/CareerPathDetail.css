@@ -37,33 +37,56 @@
 
 .career-course-card {
   display: flex;
+  flex-direction: row;       /* side by side on desktop */
+  align-items: flex-start;
   gap: 1.5rem;
   border: 1px solid #eee;
-  border-radius: 12px;
-  padding: 1rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  background: #fff;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.career-course-card:hover {
+  transform: translateY(-4px); /* subtle hover lift */
+  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
 }
 
 .course-img {
-  height: 150px;
-  object-fit: cover;
-  border-radius: 8px;
+  width: 260px;         /* fixed width */
+  height: 160px;        /* fixed height */
+  object-fit: cover;    /* keeps aspect ratio */
+  border-radius: 12px;
+  flex-shrink: 0;       /* don’t let image shrink */
+}
+
+.course-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .course-info h3 {
-  margin: 0;
-  color: #222;
+  margin: 0 0 0.5rem;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.course-info p {
+  margin: 0.3rem 0;
+  font-size: 0.95rem;
+  color: #444;
+  line-height: 1.4;
 }
 
 .trainer-info-path {
-  color: #000
+  margin-top: 0.8rem;
+  font-size: 0.95rem;
+  color: #111;
 }
-
-/* .trainer-img {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-} */
 
 .chapters {
   margin-top: 1rem;
@@ -72,6 +95,27 @@
 .lessons {
   margin-left: 1.5rem;
   list-style: disc;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+/* ✅ Responsive for mobile/tablet */
+@media (max-width: 768px) {
+  .career-course-card {
+    flex-direction: column;  /* stack image on top */
+    text-align: center;
+    align-items: center;
+  }
+
+  .course-img {
+    width: 100%;
+    height: 200px;          /* bigger on mobile */
+  }
+
+  .course-info {
+    margin-top: 1rem;
+    text-align: left;
+  }
 }
 
 .career-detail-buttons {
@@ -106,11 +150,25 @@
   text-decoration: none;
 }
 
+/* Progress Bar Styling */
 .progress-container {
-  min-height: 24px; /* adjust to match height of progress + badge */
+  margin: 0.8rem 0;
 }
-.progress-placeholder {
-  visibility: hidden; /* invisible but takes up space */
+
+.progress-bar {
+  width: 100%;
+  height: 10px;
+  background-color: #e5e7eb; /* light gray */
+  border-radius: 6px;
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #3b82f6, #06b6d4);
+  border-radius: 6px;
+  transition: width 0.4s ease-in-out;
 }
 
 .all-completed-text {
