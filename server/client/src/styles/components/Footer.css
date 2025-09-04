@@ -29,7 +29,7 @@
 .footer-links {
   list-style: none;
   padding: 0;
-  margin: 1rem 0 0;
+  margin: 0.5rem 0;
   display: flex;
   justify-content: center;
   gap: 1rem;
