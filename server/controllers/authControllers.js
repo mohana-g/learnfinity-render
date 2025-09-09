@@ -9,59 +9,133 @@ const User = require('../models/User');
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your_secret_key';
 
-//Admin Login Logic
+// //Admin Login Logic
+// const adminLogin = async (req, res) => {
+//   const { email, password, role } = req.body;
+
+//   if (!email || !password || !role) {
+//     return res.status(400).json({ error: 'Email, password, and role are required' });
+//   }
+
+//   try {
+//     const admin = await Admin.findOne({ email });
+//     if (!admin) {
+//       return res.status(400).json({ error: 'Invalid credentials' });
+//     }
+
+//     if (role !== 'admin') {
+//       return res.status(400).json({ error: 'Invalid role' });
+//     }
+
+//     const isMatch = await admin.matchPassword(password);
+//     if (!isMatch) {
+//       return res.status(400).json({ error: 'Invalid credentials' });
+//     }
+
+//     // Check if the user already exists in the User collection, if not create one
+//     let user = await User.findOne({ email, role: 1 }); // Role 1 for Admin
+//     //Old code for admin without hashing password in user collection
+//     // if (!user) {
+//     //   user = new User({
+//     //     email,
+//     //     password, // You can hash the password or use a default one if needed
+//     //     role: 1,  // Admin role
+//     //   });
+//     //   await user.save();
+//     // }
+
+//     //new code for hashing password in user collection for admin--3/9/25
+//     if (!user) {
+//       const hashedPassword = await bcrypt.hash(password, 10); // hash plain password
+//       user = new User({
+//         email,
+//         password: hashedPassword,
+//         role: 1,
+//         admin: admin._id, // Link to the Admin document
+//       });
+//       await user.save();
+//     }
+
+//     const token = jwt.sign({ id: admin._id, role: admin.role }, JWT_SECRET, { expiresIn: '1h' });
+
+//     return res.status(200).json({ success: true, token });
+//   } catch (err) {
+//     console.error('Error during admin login:', err);
+//     return res.status(500).json({ error: 'Internal server error' });
+//   }
+// };
+
+//Try new code for admin login to hash password in admin collection and use same in user collection
 const adminLogin = async (req, res) => {
   const { email, password, role } = req.body;
 
   if (!email || !password || !role) {
-    return res.status(400).json({ error: 'Email, password, and role are required' });
+    return res
+      .status(400)
+      .json({ error: "Email, password, and role are required" });
   }
 
   try {
     const admin = await Admin.findOne({ email });
     if (!admin) {
-      return res.status(400).json({ error: 'Invalid credentials' });
+      return res.status(400).json({ error: "Invalid credentials" });
     }
 
-    if (role !== 'admin') {
-      return res.status(400).json({ error: 'Invalid role' });
+    if (role !== "admin") {
+      return res.status(400).json({ error: "Invalid role" });
     }
 
-    const isMatch = await admin.matchPassword(password);
+    let isMatch = false;
+    let hashedPasswordToUse = admin.password;
+
+    // ✅ Check if the admin password is already hashed
+    if (admin.password.startsWith("$2a$") || admin.password.startsWith("$2b$")) {
+      // already hashed, just compare
+      isMatch = await bcrypt.compare(password, admin.password);
+    } else {
+      // plain text, compare directly
+      if (admin.password === password) {
+        isMatch = true;
+
+        // 🔒 Hash once and update admin
+        hashedPasswordToUse = await bcrypt.hash(password, 10);
+        admin.password = hashedPasswordToUse;
+        await admin.save();
+      }
+    }
+
     if (!isMatch) {
-      return res.status(400).json({ error: 'Invalid credentials' });
+      return res.status(400).json({ error: "Invalid credentials" });
     }
 
-    // Check if the user already exists in the User collection, if not create one
+    // ✅ Now use the SAME hashed password for User
     let user = await User.findOne({ email, role: 1 }); // Role 1 for Admin
-    //Old code for admin without hashing password in user collection
-    // if (!user) {
-    //   user = new User({
-    //     email,
-    //     password, // You can hash the password or use a default one if needed
-    //     role: 1,  // Admin role
-    //   });
-    //   await user.save();
-    // }
-
-    //new code for hashing password in user collection for admin--3/9/25
     if (!user) {
-      const hashedPassword = await bcrypt.hash(password, 10); // hash plain password
       user = new User({
         email,
-        password: hashedPassword,
+        password: hashedPasswordToUse, // use same hash as Admin
         role: 1,
-        admin: admin._id, // Link to the Admin document
+        admin: admin._id,
       });
       await user.save();
+    } else {
+      // ensure sync if user already exists but password differs
+      if (user.password !== hashedPasswordToUse) {
+        user.password = hashedPasswordToUse;
+        await user.save();
+      }
     }
 
-    const token = jwt.sign({ id: admin._id, role: admin.role }, JWT_SECRET, { expiresIn: '1h' });
+    const token = jwt.sign(
+      { id: admin._id, role: "admin" },
+      JWT_SECRET,
+      { expiresIn: "1h" }
+    );
 
     return res.status(200).json({ success: true, token });
   } catch (err) {
-    console.error('Error during admin login:', err);
-    return res.status(500).json({ error: 'Internal server error' });
+    console.error("Error during admin login:", err);
+    return res.status(500).json({ error: "Internal server error" });
   }
 };
 
