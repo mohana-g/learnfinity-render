@@ -51,6 +51,8 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 */
 
+require("dotenv").config();
+
 const express = require("express");
 // const mongoose = require("mongoose");
 const cors = require("cors");
@@ -58,8 +60,6 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const pool = require("./config/db"); // ✅ PostgreSQL connection
 
-
-require("dotenv").config();
 require("./services/cronJobs"); // Import to start cleanup job
 
 
