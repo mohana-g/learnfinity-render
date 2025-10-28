@@ -1,3 +1,4 @@
+const pool = require("../config/db");
 
 const jwt = require('jsonwebtoken');
 //const emailjs = require("@emailjs/nodejs");
@@ -66,21 +67,23 @@ const JWT_SECRET = process.env.JWT_SECRET || 'your_secret_key';
 // };
 
 //Try new code for admin login to hash password in admin collection and use same in user collection
+// Admin Login (Postgres equivalent of MongoDB code)
 const adminLogin = async (req, res) => {
   const { email, password, role } = req.body;
 
   if (!email || !password || !role) {
-    return res
-      .status(400)
-      .json({ error: "Email, password, and role are required" });
+    return res.status(400).json({ error: "Email, password, and role are required" });
   }
 
   try {
-    const admin = await Admin.findOne({ email });
-    if (!admin) {
+    // 🔎 Find admin
+    const { rows: admins } = await pool.query("SELECT * FROM admin WHERE email=$1", [email]);
+    if (admins.length === 0) {
       return res.status(400).json({ error: "Invalid credentials" });
     }
+    let admin = admins[0];
 
+    // 🚫 Role check
     if (role !== "admin") {
       return res.status(400).json({ error: "Invalid role" });
     }
@@ -90,17 +93,19 @@ const adminLogin = async (req, res) => {
 
     // ✅ Check if the admin password is already hashed
     if (admin.password.startsWith("$2a$") || admin.password.startsWith("$2b$")) {
-      // already hashed, just compare
       isMatch = await bcrypt.compare(password, admin.password);
     } else {
       // plain text, compare directly
       if (admin.password === password) {
         isMatch = true;
 
-        // 🔒 Hash once and update admin
+        // 🔒 Hash once and update admin in DB
         hashedPasswordToUse = await bcrypt.hash(password, 10);
+        await pool.query("UPDATE admin SET password=$1 WHERE id=$2", [
+          hashedPasswordToUse,
+          admin.id,
+        ]);
         admin.password = hashedPasswordToUse;
-        await admin.save();
       }
     }
 
@@ -109,28 +114,32 @@ const adminLogin = async (req, res) => {
     }
 
     // ✅ Now use the SAME hashed password for User
-    let user = await User.findOne({ email, role: 1 }); // Role 1 for Admin
-    if (!user) {
-      user = new User({
-        email,
-        password: hashedPasswordToUse, // use same hash as Admin
-        role: 1,
-        admin: admin._id,
-      });
-      await user.save();
+    const { rows: users } = await pool.query(
+      "SELECT * FROM users WHERE email=$1 AND role=1",
+      [email]
+    );
+
+    if (users.length === 0) {
+      // User doesn’t exist, create new
+      await pool.query(
+        `INSERT INTO users (email, password, role, admin_id, created_at)
+         VALUES ($1, $2, 1, $3, NOW())`,
+        [email, hashedPasswordToUse, admin.id]
+      );
     } else {
-      // ensure sync if user already exists but password differs
-      if (user.password !== hashedPasswordToUse) {
-        user.password = hashedPasswordToUse;
-        await user.save();
+      // ensure sync if password differs
+      if (users[0].password !== hashedPasswordToUse) {
+        await pool.query("UPDATE users SET password=$1 WHERE id=$2", [
+          hashedPasswordToUse,
+          users[0].id,
+        ]);
       }
     }
 
-    const token = jwt.sign(
-      { id: admin._id, role: "admin" },
-      JWT_SECRET,
-      { expiresIn: "1h" }
-    );
+    // 🎫 Generate JWT
+    const token = jwt.sign({ id: admin.id, role: "admin" }, JWT_SECRET, {
+      expiresIn: "1h",
+    });
 
     return res.status(200).json({ success: true, token });
   } catch (err) {
@@ -139,7 +148,9 @@ const adminLogin = async (req, res) => {
   }
 };
 
+
 //Learner Login Logic
+// Learner Login (Postgres — exact logic match to your MongoDB version)
 const learnerLogin = async (req, res) => {
   const { email, password, role } = req.body;
 
@@ -149,10 +160,11 @@ const learnerLogin = async (req, res) => {
 
   try {
     // Find learner by email
-    const learner = await Learner.findOne({ email });
-    if (!learner) {
+    const { rows: learners } = await pool.query("SELECT * FROM learner WHERE email = $1", [email]);
+    if (learners.length === 0) {
       return res.status(400).json({ error: "Invalid credentials" });
     }
+    const learner = learners[0];
 
     // Check role
     if (role !== "learner") {
@@ -164,43 +176,33 @@ const learnerLogin = async (req, res) => {
       return res.status(403).json({ error: "Your account has been blocked by the admin." });
     }
 
-
-    // Debugging logs
-    //console.log("Stored Hashed Password:", learner.password);
-    //console.log("Entered Password:", password);
-    
-    // Correct password comparison
+    // Correct password comparison (learner.password is expected to be hashed)
     const isMatch = await bcrypt.compare(password, learner.password);
-    //console.log("Password Match:", isMatch);
-
     if (!isMatch) {
       return res.status(401).json({ error: "Invalid credentials" });
     }
 
-    // Check if user exists in `User` collection
-    let user = await User.findOne({ email, role: 0 }); // Role 0 for Learner
+    // Check if user exists in `users` table for role = 0 (Learner)
+    const { rows: users } = await pool.query("SELECT * FROM users WHERE email = $1 AND role = 0", [email]);
+    const user = users[0];
 
-    // Check if the user is blocked in the User collection
+    // If user exists in users table and is blocked there, block the login
     if (user && user.flag === 1) {
       return res.status(403).json({ error: "Your account has been blocked by the admin." });
     }
 
+    // If user doesn't exist in users table, create one (use the already hashed password)
     if (!user) {
-      user = new User({
-        email,
-        password, // Use the already hashed password
-        role: 0, // Learner role
-      });
-      await user.save();
+      await pool.query(
+        "INSERT INTO users (email, password, role, learner_id, created_at) VALUES ($1, $2, 0, $3, NOW())",
+        [email, learner.password, learner.id]
+      );
     }
 
-    // Generate JWT token
-    const token = jwt.sign({ id: learner._id, role: learner.role }, JWT_SECRET, {
-      expiresIn: "1h",
-    });
+    // Generate JWT token (using learner.id and learner.role just like Mongo version used learner._id and learner.role)
+    const token = jwt.sign({ id: learner.id, role: learner.role }, JWT_SECRET, { expiresIn: "1h" });
 
     return res.status(200).json({ success: true, token });
-
   } catch (err) {
     console.error("Error during learner login:", err);
     return res.status(500).json({ error: "Internal server error" });
@@ -209,6 +211,7 @@ const learnerLogin = async (req, res) => {
 
 
 // Trainer Login Logic
+// Trainer Login (Postgres — exact logic match to your MongoDB version)
 const trainerLogin = async (req, res) => {
   const { email, password, role } = req.body;
 
@@ -217,45 +220,61 @@ const trainerLogin = async (req, res) => {
   }
 
   try {
-    const trainer = await Trainer.findOne({ email });
-    if (!trainer) {
+    // Find trainer by email
+    const { rows: trainers } = await pool.query(
+      "SELECT * FROM trainer WHERE email = $1",
+      [email]
+    );
+
+    if (trainers.length === 0) {
       return res.status(400).json({ error: 'Invalid credentials' });
     }
-    
+
+    const trainer = trainers[0];
+
+    // Check role
     if (role !== 'trainer') {
       return res.status(400).json({ error: 'Invalid role' });
     }
 
-    // Check if learner is blocked
+    // Check if trainer is blocked
     if (trainer.flag === 1) {
       return res.status(403).json({ error: "Your account has been blocked by the admin." });
     }
 
-
-    const isMatch = await trainer.matchPassword(password);  // Assuming the matchPassword method exists on Trainer model
+    // Password check (assuming trainer.password is hashed with bcrypt)
+    // This mirrors trainer.matchPassword(...) from Mongoose
+    const isMatch = await bcrypt.compare(password, trainer.password);
     if (!isMatch) {
       return res.status(400).json({ error: 'Invalid credentials' });
     }
 
-    // Check if the user already exists in the User collection, if not create one
-    let user = await User.findOne({ email, role: 2 }); // Role 2 for Trainer
+    // Check if user exists in `users` table with role = 2 (Trainer)
+    const { rows: users } = await pool.query(
+      "SELECT * FROM users WHERE email = $1 AND role = 2",
+      [email]
+    );
+    const user = users[0];
 
-
-    // Check if the user is blocked in the User collection
+    // If user exists in users table and is blocked there, block the login
     if (user && user.flag === 1) {
       return res.status(403).json({ error: "Your account has been blocked by the admin." });
     }
 
+    // If user doesn't exist in users table, create one (use trainer's password as stored)
     if (!user) {
-      user = new User({
-        email,
-        password, // You can hash the password or use a default one if needed
-        role: 2,  // Trainer role
-      });
-      await user.save();
+      await pool.query(
+        "INSERT INTO users (email, password, role, created_at) VALUES ($1, $2, 2, NOW())",
+        [email, trainer.password]
+      );
     }
 
-    const token = jwt.sign({ id: trainer._id, role: trainer.role }, JWT_SECRET, { expiresIn: '1h' });
+    // Generate JWT token (using trainer.id and trainer.role like Mongo used trainer._id and trainer.role)
+    const token = jwt.sign(
+      { id: trainer.id, role: trainer.role ?? 'trainer' },
+      JWT_SECRET,
+      { expiresIn: '1h' }
+    );
 
     return res.status(200).json({ success: true, token });
   } catch (err) {
@@ -263,6 +282,8 @@ const trainerLogin = async (req, res) => {
     return res.status(500).json({ error: 'Internal server error' });
   }
 };
+
+
 /*
 // Forgot Password Logic (with EmailJS)
 const forgotPassword = async (req, res) => {
@@ -349,38 +370,47 @@ const resetPassword = async (req, res) => {
 };
 */
 // Reset Password Logic
+// Reset Password (Postgres version matching MongoDB logic)
 const resetPassword = async (req, res) => {
   try {
     const { token, password } = req.body;
 
-    // Decode email from the token
-    const email = Buffer.from(token, 'base64').toString('utf-8');
+    // Decode email from token
+    const email = Buffer.from(token, "base64").toString("utf-8").toLowerCase();
 
-    // Find user in Admin, Learner, Trainer collections
-    let user = await Admin.findOne({ email }) || 
-               await Learner.findOne({ email }) || 
-               await Trainer.findOne({ email });
+    // Try finding user in Admin, Learner, Trainer
+    let { rows: admins } = await pool.query("SELECT * FROM admin WHERE email=$1", [email]);
+    let { rows: learners } = await pool.query("SELECT * FROM learner WHERE email=$1", [email]);
+    let { rows: trainers } = await pool.query("SELECT * FROM trainer WHERE email=$1", [email]);
+
+    let user = admins[0] || learners[0] || trainers[0];
 
     if (!user) {
-      return res.status(400).json({ error: 'Invalid or expired reset link' });
+      return res.status(400).json({ error: "Invalid or expired reset link" });
     }
 
-    // Hash the new password
+    // Hash new password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Update user's password
-    user.password = hashedPassword;
-    await user.save();
+    // Update in the right table
+    if (admins[0]) {
+      await pool.query("UPDATE admin SET password=$1 WHERE email=$2", [hashedPassword, email]);
+    } else if (learners[0]) {
+      await pool.query("UPDATE learner SET password=$1 WHERE email=$2", [hashedPassword, email]);
+    } else if (trainers[0]) {
+      await pool.query("UPDATE trainer SET password=$1 WHERE email=$2", [hashedPassword, email]);
+    }
 
-    // Also update in User collection
-    await User.findOneAndUpdate({ email }, { password: hashedPassword });
+    // Also update in users table
+    await pool.query("UPDATE users SET password=$1 WHERE email=$2", [hashedPassword, email]);
 
-    res.json({ message: 'Password reset successful' });
+    res.json({ message: "Password reset successful" });
   } catch (err) {
-    console.error('Reset Password Error:', err);
-    res.status(500).json({ error: 'Server error' });
+    console.error("Reset Password Error:", err);
+    res.status(500).json({ error: "Server error" });
   }
 };
+
 
 // // Dynamic Role Check for Microsoft Login
 // const checkUserRole = async (req, res) => {
@@ -428,7 +458,6 @@ const resetPassword = async (req, res) => {
 
 
 // Dynamic Role Check for Microsoft Login
-
 const checkUserRole = async (req, res) => {
   const { email } = req.body;
 
@@ -437,17 +466,20 @@ const checkUserRole = async (req, res) => {
   }
 
   try {
-    const user = await User.findOne({ email });
-
-    if (!user) {
+    // Look up user in Postgres (equivalent to User.findOne({ email }))
+    const { rows: users } = await pool.query("SELECT * FROM users WHERE email=$1", [email]);
+    if (users.length === 0) {
       return res.status(404).json({ message: "User not found" });
     }
 
-    // Optional: Blocked user check
+    const user = users[0];
+
+    // Blocked user check
     if (user.flag === 1) {
       return res.status(403).json({ message: "Your account has been blocked by the admin." });
     }
 
+    // Map numeric role to role name
     let roleName;
     switch (user.role) {
       case 0:
@@ -464,7 +496,11 @@ const checkUserRole = async (req, res) => {
     }
 
     // Create JWT token
-    const token = jwt.sign({ id: user._id, role: roleName }, JWT_SECRET, { expiresIn: '1h' });
+    const token = jwt.sign(
+      { id: user.id, role: roleName }, // user._id in Mongo → user.id in Postgres
+      JWT_SECRET,
+      { expiresIn: "1h" }
+    );
 
     return res.status(200).json({ role: roleName, token });
   } catch (error) {

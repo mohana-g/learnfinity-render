@@ -5,6 +5,7 @@ body {
     padding: 0;
     box-sizing: border-box;
     user-select: none; /* Prevent selection */
+    background: linear-gradient(135deg, #a8edea, #fed6e3);
   }
   
   /* Container */
@@ -47,6 +48,7 @@ body {
     max-width: 600px;
     height: auto;
     margin: 0 auto;
+    border-radius: 12px;
   }
   
   /* Right Section */

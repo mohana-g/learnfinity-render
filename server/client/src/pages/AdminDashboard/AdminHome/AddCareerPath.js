@@ -76,7 +76,7 @@ const AddCareerPath = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get("https://hilms.onrender.com/api/courses")
+      .get("http://localhost:5000/api/courses")
       .then((res) => {
         const data = res.data;
         if (Array.isArray(data)) {
@@ -98,7 +98,7 @@ const AddCareerPath = () => {
   // fetch existing career paths
   const fetchCareerPaths = () => {
     axios
-      .get("https://hilms.onrender.com/api/career-paths")
+      .get("http://localhost:5000/api/career-paths")
       .then((res) => {
         if (Array.isArray(res.data.data)) {
           setCareerPaths(res.data.data); // ✅ use nested "data"
@@ -193,7 +193,7 @@ const AddCareerPath = () => {
 
     if (editId) {
       axios
-        .put(`https://hilms.onrender.com/api/career-paths/${editId}`, careerPath)
+        .put(`http://localhost:5000/api/career-paths/${editId}`, careerPath)
         .then(() => {
           setEditId(null);
           resetForm();
@@ -204,7 +204,7 @@ const AddCareerPath = () => {
         .finally(() => setLoading(false));
     } else {
       axios
-        .post("https://hilms.onrender.com/api/career-paths", careerPath)
+        .post("http://localhost:5000/api/career-paths", careerPath)
         .then(() => {
           resetForm();
           fetchCareerPaths();
@@ -248,7 +248,7 @@ const AddCareerPath = () => {
     courses:
       Array.isArray(path.courses) && path.courses.length
         ? path.courses.map((c) => ({
-            courseId: c.courseId?._id || c.courseId || "", // force string id
+            courseId: c.courseId?.id || c.courseId || "", // force string id
             level: c.level || "",
             duration: c.duration || "",
             skillsLearnt:
@@ -258,14 +258,14 @@ const AddCareerPath = () => {
           }))
         : [{ courseId: "", level: "", duration: "", skillsLearnt: [""] }],
   });
-  setEditId(path._id);
+  setEditId(path.id);
 };
 
 
   // delete
   const handleDelete = (id) => {
     axios
-      .delete(`https://hilms.onrender.com/api/career-paths/${id}`)
+      .delete(`http://localhost:5000/api/career-paths/${id}`)
       .then(() => {
         fetchCareerPaths();
         showMessage("success", "Career path deleted successfully!");
@@ -336,7 +336,7 @@ return (
             >
               <option value="">Select Course</option>
               {courses.map((c) => (
-                <option key={c._id} value={c._id}>
+                <option key={c.id} value={c.id}>
                   {c.title || c.name}
                 </option>
               ))}
@@ -408,10 +408,10 @@ return (
       ) : (
         <ul>
           {careerPaths.map((path) => (
-            <li key={path._id}>
+            <li key={path.id}>
               <strong>{path.title}</strong>
               <button onClick={() => handleEdit(path)}>Edit</button>
-              <button onClick={() => handleDelete(path._id)}>Delete</button>
+              <button onClick={() => handleDelete(path.id)}>Delete</button>
             </li>
           ))}
         </ul>

@@ -52,10 +52,11 @@ app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 */
 
 const express = require("express");
-const mongoose = require("mongoose");
+// const mongoose = require("mongoose");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const path = require("path");
+const pool = require("./config/db"); // ✅ PostgreSQL connection
 
 
 require("dotenv").config();
@@ -96,16 +97,26 @@ app.use("/api/quizzes", quizRoutes); // Quiz-related routes
 app.use('/api/course-interaction', courseInteractionRoutes); // Course interaction routes
 app.use("/api/career-paths", careerPathRoutes); // Career path routes
 
-// ✅ Add this test route to verify the backend
-app.get("/api/test", (req, res) => {
-  res.json({ message: "API is working!" });
-});
+// // ✅ Add this test route to verify the backend
+// app.get("/api/test", (req, res) => {
+//   res.json({ message: "API is working!" });
+// });
 
-// MongoDB Connection
-mongoose
-  .connect(process.env.MONGODB_URL)
-  .then(() => console.log("MongoDB connected successfully"))
-  .catch((err) => console.error("MongoDB connection error:", err));
+// // MongoDB Connection
+// mongoose
+//   .connect(process.env.MONGODB_URL)
+//   .then(() => console.log("MongoDB connected successfully"))
+//   .catch((err) => console.error("MongoDB connection error:", err));
+
+// ✅ Add test route
+app.get("/api/test", async (req, res) => {
+  try {
+    const result = await pool.query("SELECT NOW()");
+    res.json({ message: "PostgreSQL connected!", time: result.rows[0].now });
+  } catch (err) {
+    res.status(500).json({ error: "Database not connected", details: err });
+  }
+});
 
 //Use the client app
 app.use(express.static(path.join(__dirname,"client/build")));
@@ -117,7 +128,7 @@ app.get('*', (req, res) =>
 
 // Base Route
 app.get("/", (req, res) => {
-  res.send("Welcome to the Learnfinity Backend!");
+  res.send("Welcome to the Learnfinity Backend (POSTGRESQL)!");
 });
 
 // Start the Server

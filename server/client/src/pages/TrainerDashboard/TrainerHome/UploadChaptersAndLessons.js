@@ -51,8 +51,8 @@ const handleVideoUpload = (chapterIndex, lessonIndex, file) => {
 
   const handleRemoveChapter = async (courseId, chapterId, setChapters, chapters) => {
   try {
-    await axios.delete(`https://hilms.onrender.com/api/courses/${courseId}/chapters/${chapterId}`);
-    setChapters(chapters.filter((chapter) => chapter._id !== chapterId));
+    await axios.delete(`http://localhost:5000/api/courses/${courseId}/chapters/${chapterId}`);
+    setChapters(chapters.filter((chapter) => chapter.id !== chapterId));
     alert('Chapter removed successfully!');
   } catch (error) {
     console.error('Error removing chapter:', error.message);
@@ -62,10 +62,10 @@ const handleVideoUpload = (chapterIndex, lessonIndex, file) => {
 
 const handleRemoveLesson = async (courseId, chapterId, lessonId, setChapters, chapters) => {
   try {
-    await axios.delete(`https://hilms.onrender.com/api/courses/${courseId}/chapters/${chapterId}/lessons/${lessonId}`);
+    await axios.delete(`http://localhost:5000/api/courses/${courseId}/chapters/${chapterId}/lessons/${lessonId}`);
     const updatedChapters = chapters.map((chapter) => {
-      if (chapter._id === chapterId) {
-        chapter.lessons = chapter.lessons.filter((lesson) => lesson._id !== lessonId);
+      if (chapter.id === chapterId) {
+        chapter.lessons = chapter.lessons.filter((lesson) => lesson.id !== lessonId);
       }
       return chapter;
     });
@@ -84,14 +84,14 @@ const handleRemoveLesson = async (courseId, chapterId, lessonId, setChapters, ch
   
     // Append chapters data (without videos)
     formData.append("chapters", JSON.stringify(chapters.map((chapter) => ({
-      chapterId: chapter._id || null,
+      chapterId: chapter.id || null,
       chapterName: chapter.chapterName,
       lessons: chapter.lessons.map((lesson) => ({
-        lessonId: lesson._id || null,
+        lessonId: lesson.id || null,
         number: lesson.number,
         title: lesson.title,
         description: lesson.description,
-        videoUrl: lesson.video ? lesson.video.name : "", // File name for preview
+        videoUrl: lesson.video ? lesson.video.name : lesson.videoUrl || "", // File name for preview
       })),
     }))));
   
@@ -105,7 +105,7 @@ const handleRemoveLesson = async (courseId, chapterId, lessonId, setChapters, ch
     });
   
     try {
-      await axios.post("https://hilms.onrender.com/api/courses/upload", formData, {
+      await axios.post("http://localhost:5000/api/courses/upload", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       alert("Chapters and lessons uploaded successfully!");
@@ -124,17 +124,17 @@ const handleRemoveLesson = async (courseId, chapterId, lessonId, setChapters, ch
   useEffect(() => {
     const fetchChapters = async () => {
       try {
-        const response = await axios.get(`https://hilms.onrender.com/api/courses/${courseId}/chapters`);
+        const response = await axios.get(`http://localhost:5000/api/courses/${courseId}/chapters`);
         const formattedChapters = response.data.map((chapter) => ({
-          _id: chapter._id,
+          id: chapter.id,
           chapterName: chapter.name, // Ensure consistency with form fields
           //description: chapter.description || "",
           lessons: chapter.lessons.map((lesson) => ({
-            _id: lesson._id,
+            id: lesson.id,
             number: lesson.number || "",
             title: lesson.title || "", // Ensure lesson name matches your form
             description: lesson.description || "",
-            videoUrl: lesson.videoUrl ? `https://hilms.onrender.com/${lesson.videoUrl}` : "", // Ensure full URL
+            videoUrl: lesson.videoUrl ? `http://localhost:5000/${lesson.videoUrl}` : "", // Ensure full URL
           })),
         }));
         setChapters(formattedChapters);
@@ -164,7 +164,7 @@ const handleRemoveLesson = async (courseId, chapterId, lessonId, setChapters, ch
               <button
                 type="button"
                 className="upload-btn remove"
-                onClick={() => handleRemoveChapter(courseId, chapter._id, setChapters, chapters)}
+                onClick={() => handleRemoveChapter(courseId, chapter.id, setChapters, chapters)}
                 >
                 Remove Chapter
               </button>
@@ -227,7 +227,7 @@ const handleRemoveLesson = async (courseId, chapterId, lessonId, setChapters, ch
                   <button
                     type="button"
                     className="upload-btn remove"
-                    onClick={() => handleRemoveLesson(courseId, chapter._id, lesson._id, setChapters, chapters)}
+                    onClick={() => handleRemoveLesson(courseId, chapter.id, lesson.id, setChapters, chapters)}
                     >
                     Remove Lesson
                   </button>

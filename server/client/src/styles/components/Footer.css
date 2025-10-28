@@ -1,10 +1,12 @@
 .footer {
-  background-color: #78767a;
+  background-color: #fff;
   font-family: 'Work Sans', sans-serif;
-  color: #fff;
+  color: #000;
   padding: 1.5rem 1rem;
   text-align: center;
   user-select: none; /* Prevent selection */
+  box-shadow: 10px -5px 4px rgba(0, 0, 0, 0.1);
+  position: sticky;
 }
 
 .footer-container {
@@ -18,7 +20,7 @@
 }
 
 .footer a {
-  color: #fff;
+  color: #000;
   text-decoration: none;
 }
 

@@ -1,4 +1,5 @@
 // routes/LearnerRoutes.js
+const pool = require("../config/db");
 
 const express = require('express');
 const bcrypt = require("bcryptjs");
@@ -22,22 +23,25 @@ router.get("/learners/:courseId", async (req, res) => {
   try {
     const { courseId } = req.params;
 
-    // Find Learners who are enrolled in the given courseId
-    const learners = await Learner.find({ courses: courseId }).select("email");
+    const result = await pool.query(
+      `SELECT l.email
+       FROM learner l
+       JOIN learner_courses lc ON lc.learner_id = l.id
+       WHERE lc.course_id = $1`,
+      [courseId]
+    );
 
-    if (!learners || learners.length === 0) {
-      return res.status(404).json({ success: false, message: "No Learners enrolled in this course" });
-    }
+    if (result.rows.length === 0)
+      return res.status(404).json({ success: false, message: "No learners enrolled in this course" });
 
-    // Extract Learner emails
-    const learnerEmails = learners.map(learner => learner.email);
-
+    const learnerEmails = result.rows.map((row) => row.email);
     res.json({ success: true, data: learnerEmails });
   } catch (error) {
-    console.error("Error fetching enrolled Learners' emails:", error);
-    res.status(500).json({ success: false, message: "Error fetching Learner emails" });
+    console.error("Error fetching learner emails:", error);
+    res.status(500).json({ success: false, message: "Error fetching learner emails" });
   }
 });
+
 
 /* The old send mail code
 // Route to fetch all Learner emails
@@ -61,67 +65,71 @@ router.get('/Learners', async (req, res) => {
 // Get Learner profile
 router.get("/profile", authMiddleware, async (req, res) => {
   try {
-    const learner = await Learner.findById(req.user.id).select("-password");
-    if (!learner) {
+    const learner = await pool.query(
+      `SELECT id, first_name, last_name, phone, dob, address, email, created_at
+       FROM learner
+       WHERE id = $1`,
+      [req.user.id]
+    );
+
+    if (learner.rows.length === 0)
       return res.status(404).json({ message: "Learner not found" });
-    }
-    res.json(learner);
+
+    res.json(learner.rows[0]);
   } catch (error) {
+    console.error("Error fetching learner profile:", error);
     res.status(500).json({ message: "Server error" });
   }
 });
+
 
 // Update Learner profile
 router.put("/profile/update", authMiddleware, async (req, res) => {
   try {
     const { firstName, lastName, phone, dob, address } = req.body;
 
-    const learner = await Learner.findById(req.user.id);
-    if (!learner) {
+    const updated = await pool.query(
+      `UPDATE learner SET
+         first_name = COALESCE($1, first_name),
+         last_name = COALESCE($2, last_name),
+         phone = COALESCE($3, phone),
+         dob = COALESCE($4, dob),
+         address = COALESCE($5, address),
+         updated_at = NOW()
+       WHERE id = $6
+       RETURNING *`,
+      [firstName, lastName, phone, dob, address, req.user.id]
+    );
+
+    if (updated.rows.length === 0)
       return res.status(404).json({ message: "Learner not found" });
-    }
 
-    learner.firstName = firstName || learner.firstName;
-    learner.lastName = lastName || lastNameearner.lastName;
-    learner.phone = phone || learner.phone;
-    learner.dob = dob || learner.dob;
-    learner.address = address || learner.address;
-    learner.updatedAt = Date.now();
-
-    await learner.save();
-    res.json({ message: "Profile updated successfully!",learner });
+    res.json({ message: "Profile updated successfully", learner: updated.rows[0] });
   } catch (error) {
+    console.error("Error updating profile:", error);
     res.status(500).json({ message: "Server error" });
   }
 });
 
-
 // Update Learner password
 router.put("/update-password", authMiddleware, async (req, res) => {
-  const { currentPassword, newPassword } = req.body;
-
   try {
-    // Find Learner by ID
-    const learner = await Learner.findById(req.user.id);
-    if (!learner) {
+    const { currentPassword, newPassword } = req.body;
+
+    const learnerResult = await pool.query("SELECT * FROM learner WHERE id = $1", [req.user.id]);
+    if (learnerResult.rows.length === 0)
       return res.status(404).json({ message: "Learner not found" });
-    }
 
-    // Check if current password is correct
+    const learner = learnerResult.rows[0];
     const isMatch = await bcrypt.compare(currentPassword, learner.password);
-    if (!isMatch) {
+    if (!isMatch)
       return res.status(400).json({ message: "Incorrect current password" });
-    }
 
-    // Hash the new password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(newPassword, salt);
 
-    // Update Learner collection
-    await learner.updateOne({ _id: Learner._id }, { $set: { password: hashedPassword } });
-
-    // Update User collection by matching the email
-    await User.updateOne({ email: learner.email }, { $set: { password: hashedPassword } });
+    await pool.query("UPDATE learner SET password = $1 WHERE id = $2", [hashedPassword, req.user.id]);
+    await pool.query("UPDATE users SET password = $1 WHERE email = $2", [hashedPassword, learner.email]);
 
     res.json({ message: "Password updated successfully" });
   } catch (error) {
@@ -131,25 +139,42 @@ router.put("/update-password", authMiddleware, async (req, res) => {
 });
 
 // Get leaderboard
-router.get('/leaderboard', async (req, res) => {
+router.get("/leaderboard", async (req, res) => {
   try {
-    const learners = await Learner.find().populate('courses');
+    const result = await pool.query(`
+      SELECT 
+      l.id,
+      l.first_name,
+      l.last_name,
+      l.email,
+      l.phone,
+      l.created_at AS date_of_joined,
+      COALESCE(m.total_marks, 0) AS total_marks,
+      COALESCE(
+        JSON_AGG(DISTINCT c.title) FILTER (WHERE c.title IS NOT NULL),
+        '[]'
+      ) AS enrolled_courses
+    FROM learner l
+    LEFT JOIN (
+      SELECT learner_id, SUM(marks_scored) AS total_marks
+      FROM learner_quizzes
+      GROUP BY learner_id
+    ) m ON m.learner_id = l.id
+    LEFT JOIN learner_courses lc ON lc.learner_id = l.id
+    LEFT JOIN courses c ON c.id = lc.course_id
+    GROUP BY l.id, m.total_marks
+    ORDER BY total_marks DESC;
+    `);
 
-    const leaderboard = learners.map(learner => {
-      const totalMarks = learner.quizzes?.reduce((sum, quiz) => sum + (quiz.marksScored || 0), 0) || 0;
-
-      return {
-        _id: learner._id,
-        name: `${learner.firstName} ${learner.lastName}`,
-        email: learner.email || '',
-        phone: learner.phone || '',
-        totalMarks,
-        enrolledCourses: learner.courses.map(course => course?.title || 'Unnamed Course'),
-        DateofJoined: learner.createdAt || null,
-      };
-    });
-
-    leaderboard.sort((a, b) => b.totalMarks - a.totalMarks);
+    const leaderboard = result.rows.map(row => ({
+      _id: row.id,
+      name: `${row.first_name} ${row.last_name}`,
+      email: row.email || '',
+      phone: row.phone || '',
+      totalMarks: parseInt(row.total_marks, 10),
+      enrolledCourses: row.enrolled_courses,
+      DateofJoined: row.date_of_joined || null,
+    }));
 
     res.json(leaderboard);
   } catch (error) {
@@ -157,6 +182,7 @@ router.get('/leaderboard', async (req, res) => {
     res.status(500).json({ message: "Server Error" });
   }
 });
+
 
 // Get logged-in Learner's progress
 router.get('/progress', authMiddleware, getLoggedInLearnerProgress);

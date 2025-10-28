@@ -438,12 +438,23 @@ const CourseInteraction = () => {
         const response = await axios.get(`/api/course-interaction/${courseId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        setCourse(response.data);
+
+        // Ensure chapters & lessons are always arrays
+        const fetchedCourse = {
+          ...response.data,
+          chapters: response.data.chapters?.map(ch => ({
+            ...ch,
+            lessons: ch.lessons || []
+          })) || [],
+        };
+
+        setCourse(fetchedCourse);
         setCompletedLessons(response.data.completedLessons || []);
       } catch (err) {
         setError(err.response?.data?.message || 'Failed to fetch course');
       }
     };
+
     fetchCourse();
   }, [courseId]);
 
@@ -461,7 +472,7 @@ const CourseInteraction = () => {
 
   useEffect(() => {
     if (course && course.chapters.every(chapter =>
-      chapter.lessons.every(lesson => completedLessons.includes(lesson._id))
+      chapter.lessons.every(lesson => completedLessons.includes(lesson.lesson_id))
     )) {
       setShowQuiz(true);
       fetchQuiz();
@@ -481,42 +492,39 @@ const CourseInteraction = () => {
       }
     });
 
-    const quizScore = (correctAnswers / totalMarks) * 100;
-    setScore(quizScore);
+    // ✅ send both count and total
     submitQuizAttempt(correctAnswers, totalMarks);
   };
 
-  const submitQuizAttempt = async (score, totalMarks) => {
-  try {
-    const token = localStorage.getItem('token');
-    await axios.post(
-      '/api/course-interaction/submit-quiz',
-      {
-        quizId: quiz._id,
-        courseId: courseId,
-        chapterId: quiz.chapterId,
-        score: score,
-        totalMarks: totalMarks,
-      },
-      {
-        headers: { Authorization: `Bearer ${token}` },
+  const submitQuizAttempt = async (marksScored, totalMarks) => {
+    try {
+      const token = localStorage.getItem('token');
+      await axios.post(
+        '/api/course-interaction/submit-quiz',
+        {
+          quizId: quiz.id,
+          courseId,
+          chapterId: quiz.chapterId,
+          score: marksScored,
+          totalMarks,
+        },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      const percentage = (marksScored / totalMarks) * 100;
+      setScore(percentage); // ✅ Save final percentage
+
+      if (percentage >= 60) {
+        alert(`✅ Congratulations! You passed with ${percentage.toFixed(2)}%.`);
+        setQuizCompleted(true);
+      } else {
+        alert(`❌ You scored ${percentage.toFixed(2)}%. Minimum 60% required. Please try again.`);
+        setQuizCompleted(false);
       }
-    );
-
-    const percentage = (score / totalMarks) * 100;
-
-    if (percentage >= 60) {
-      alert(`✅ Congratulations! You passed with ${percentage}%.`);
-      setQuizCompleted(true);
-    } else {
-      alert(`❌ You scored ${percentage}%. Minimum 60% required. Please try again.`);
-      setQuizCompleted(false);
+    } catch (err) {
+      console.error('Failed to submit quiz attempt:', err.response?.data?.message || err.message);
     }
-
-  } catch (err) {
-    console.error('Failed to submit quiz attempt:', err.response?.data?.message || err.message);
-  }
-};
+  };
 
 //old score popup command
   // const submitQuizAttempt = async (score, totalMarks) => {
@@ -550,7 +558,7 @@ const CourseInteraction = () => {
       const response = await axios.post(
         '/api/course-interaction/submit-review',
         {
-          courseId: course._id,
+          courseId: course.id,
           learnerName,
           rating,
           comment,
@@ -602,8 +610,7 @@ const CourseInteraction = () => {
       <img src={course.imageurl} alt={course.title} style={{ width: '300px', borderRadius: '10px' }} />
       <p><strong>Description:</strong> {course.description}</p>
       <p><strong>Instructor:</strong> {course.trainer?.fullName || 'Unknown'}</p>
-      <p><strong>Enrolled Learners:</strong> {course.learners.length}</p>
-
+      <p><strong>Enrolled Learners:</strong> {course.enrolled_count || 0}</p>
       <h2 className="courseinteraction-chapters-title">Chapters</h2>
       {course.chapters.map((chapter, chapterIndex) => (
         <div key={chapter._id} className="courseinteraction-chapter">
@@ -612,22 +619,22 @@ const CourseInteraction = () => {
           </h3>
           <ul className="courseinteraction-lessons">
             {chapter.lessons.map((lesson, lessonIndex) => (
-              <li key={lesson._id} className="courseinteraction-lesson">
+              <li key={lesson.lesson_id} className="courseinteraction-lesson">
                 <p onClick={() => toggleLesson(lessonIndex)} className="courseinteraction-lesson-title">
                   <strong>Lesson {lesson.number || lessonIndex + 1}:</strong> {lesson.title}
-                  {completedLessons.includes(lesson._id) && ' ✔️'}
+                  {completedLessons.includes(lesson.lesson_id) && ' ✔️'}
                 </p>
                 {openLessonIndex === lessonIndex && (
                   <div className="courseinteraction-lesson-details">
                     <p><strong>Description:</strong> {lesson.description || 'No description available.'}</p>
                     {lesson.videoUrl && (() => {
                       const type = getFileType(lesson.videoUrl);
-                      const fullPath = `https://hilms.onrender.com/${lesson.videoUrl.replace(/\\/g, "/")}`;
+                      const fullPath = `http://localhost:5000/${lesson.videoUrl.replace(/\\/g, "/")}`;
 
                       switch (type) {
                         case 'video':
                           return (
-                            <video width="400" controls controlsList="nodownload" onEnded={() => markLessonComplete(lesson._id)}>
+                            <video width="400" controls controlsList="nodownload" onEnded={() => markLessonComplete(lesson.lesson_id)}>
                               <source src={fullPath} type="video/mp4" />
                               Your browser does not support the video tag.
                             </video>
@@ -703,25 +710,25 @@ const CourseInteraction = () => {
         <div className="courseinteraction-quiz">
           <h2>Quiz: {quiz.title}</h2>
           <form onSubmit={handleQuizSubmit}>
-            {quiz.questions.map((question, index) => (
-              <div key={question._id} className="quiz-question">
-                <p>{index + 1}. {question.question}</p>
-                {question.options.map((option, optionIndex) => {
-                  const label = String.fromCharCode(65 + optionIndex);
-                  return (
-                    <label key={optionIndex}>
-                      <input
-                        type="radio"
-                        name={`question-${index}`}
-                        value={`${label}) ${option}`}
-                        required
-                      />
-                      {label}) {option}
-                    </label>
-                  );
-                })}
-              </div>
-            ))}
+            {(quiz.questions || []).map((question, index) => (
+            <div key={question.id} className="quiz-question">
+              <p>{index + 1}. {question.question}</p>
+              {(question.options || []).map((option, optionIndex) => {
+                const label = String.fromCharCode(65 + optionIndex);
+                return (
+                  <label key={`${question.id}-${optionIndex}`}>
+                    <input
+                      type="radio"
+                      name={`question-${index}`}
+                      value={`${label}) ${option}`}
+                      required
+                    />
+                    {label}) {option}
+                  </label>
+                );
+              })}
+            </div>
+          ))}
             <button type="submit" className="quiz-submit">Submit Quiz</button>
           </form>
           {score > 0 && (

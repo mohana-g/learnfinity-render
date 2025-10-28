@@ -1,6 +1,7 @@
 /* Popular Courses Section */
 body {
   user-select: none; /* Prevent selection */
+  background: linear-gradient(135deg, #a8edea, #fed6e3);
 }
 
 .courses-page h1 {
@@ -39,7 +40,7 @@ body {
   
   .courses-page-sort-by select {
     padding: 10px 20px;
-    background-color: #f9f9f9;
+    background-color: #fff;
     border: 1px solid #ddd;
     border-radius: 5px;
     font-size: 1rem;

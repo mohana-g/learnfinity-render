@@ -1,10 +1,13 @@
 .navbar {
-  background-color: #78767a;
+  background-color: #fff;
   font-family: 'Work Sans', sans-serif;
   color: #fff;
   padding: 1rem 2rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 10px 10px 4px rgba(0, 0, 0, 0.1);
   user-select: none;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
 .navbar-container {
@@ -15,18 +18,18 @@
   position: relative;
 }
 
-.logo a {
+/* .logo a {
   font-size: 1.8rem;
   font-weight: bold;
-  color: #fff;
+  color: #000;
   text-decoration: none;
-}
+} */
 
 .hamburger {
   font-size: 2rem;
   background: none;
   border: none;
-  color: #fff;
+  color: #000;
   cursor: pointer;
   display: none; /* visible only on small screens */
 }
@@ -67,7 +70,7 @@
 
 .nav-links a {
   text-decoration: none;
-  color: #fff;
+  color: #000;
   transition: color 0.3s, border-bottom 0.3s;
   padding-bottom: 2px;
 }
@@ -102,6 +105,8 @@
 
   nav.nav-open {
     display: block;
+    background-color: #fff;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
   }
 
   .nav-links {
@@ -130,5 +135,36 @@
     font-size: 0.9rem;
     width: auto;
     display: inline-block;
+  }
+}
+/* ✅ Logo styling */
+.logo-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.logo-img {
+  height: 35px;
+  width: auto;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+/* Hover animation */
+.logo-img:hover {
+  transform: scale(1.08);
+  filter: brightness(1.1);
+}
+
+/* 📱 Responsive logo size */
+@media (max-width: 768px) {
+  .logo-img {
+    height: 35px;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo-img {
+    height: 28px;
   }
 }

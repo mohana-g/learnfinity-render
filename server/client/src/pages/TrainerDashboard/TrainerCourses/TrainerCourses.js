@@ -9,7 +9,7 @@
 //   useEffect(() => {
 //     const fetchCourses = async () => {
 //       try {
-//         const response = await fetch("https://hilms.onrender.com/api/courses"); // Backend API URL
+//         const response = await fetch("http://localhost:5000/api/courses"); // Backend API URL
 //         if (!response.ok) {
 //           throw new Error("Failed to fetch courses");
 //         }
@@ -137,7 +137,7 @@ const CoursesPage = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await fetch("https://hilms.onrender.com/api/courses");
+        const response = await fetch("http://localhost:5000/api/courses");
         if (!response.ok) {
           throw new Error("Failed to fetch courses");
         }
@@ -207,8 +207,8 @@ const CoursesPage = () => {
             : courses.length > 0 ? (
                 courses.map((course) => (
                   <Link
-                    to={`/course-details/${course._id}`}
-                    key={course._id}
+                    to={`/course-details/${course.id}`}
+                    key={course.id}
                     className="trainer-courses-card-link"
                   >
                     <div className="courses-page-card">
@@ -220,11 +220,10 @@ const CoursesPage = () => {
                       <h3>{course.title}</h3>
                       <p>
                         <strong>Instructor:</strong>{" "}
-                        {course.trainer?.fullName || "Unknown"}
+                        {course.trainer_name || course.instructor_name || "Unknown"}
                       </p>
                       <p>
-                        <strong>Enrolled Learners:</strong>{" "}
-                        {course.learners?.length || 0}
+                        <strong>Enrolled Learners:</strong> {course.enrolled_count || 0}
                       </p>
                       <span className="btn-primary">Read More</span>
                     </div>

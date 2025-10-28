@@ -51,7 +51,7 @@ function CourseContent() {
   useEffect(() => {
     const fetchCourseData = async () => {
       try {
-        const response = await axios.get(`https://hilms.onrender.com/api/courses/${courseId}`);
+        const response = await axios.get(`http://localhost:5000/api/courses/${courseId}`);
         setCourse(response.data.data);
       } catch (error) {
         console.error("Error fetching course details:", error);
@@ -63,12 +63,12 @@ function CourseContent() {
     fetchCourseData();
   }, [courseId]);
 
-  // ✅ Function to calculate average rating dynamically
-  const calculateAverageRating = (reviews) => {
-    if (!Array.isArray(reviews) || reviews.length === 0) return "No ratings yet";
-    const total = reviews.reduce((sum, review) => sum + review.rating, 0);
-    return (total / reviews.length).toFixed(1); // One decimal place
-  };
+  // // ✅ Function to calculate average rating dynamically
+  // const calculateAverageRating = (reviews) => {
+  //   if (!Array.isArray(reviews) || reviews.length === 0) return "No ratings yet";
+  //   const total = reviews.reduce((sum, review) => sum + review.rating, 0);
+  //   return (total / reviews.length).toFixed(1); // One decimal place
+  // };
 
   // ✅ Show loading message while fetching data
   // if (loading) {
@@ -113,11 +113,11 @@ function CourseContent() {
               <h2>{course.title}</h2>
               <p>{course.description}</p>
               <div className="course-stats">
+                <div className="Trainer-ratings">
+                  ⭐ {course.averageRating || 0}/5 ({course.reviewCount || 0} Reviews)
+                </div>
                 <p>
-                  <strong>{calculateAverageRating(course.reviews)}</strong> ⭐ ({course.reviews?.length || 0} Reviews)
-                </p>
-                <p>
-                  <strong>{course.learners?.length || 0}</strong> Enrolled Learners
+                  <strong>{course.enrolled_count || 0}</strong> Enrolled Learners
                 </p>
                 {/*
                 <p>

@@ -13,7 +13,7 @@
 //   useEffect(() => {
 //     const fetchCourses = async () => {
 //       try {
-//         const response = await fetch("https://hilms.onrender.com/api/courses");
+//         const response = await fetch("http://localhost:5000/api/courses");
 //         if (!response.ok) {
 //           throw new Error("Failed to fetch courses");
 //         }
@@ -31,7 +31,7 @@
 //   useEffect(() => {
 //     const fetchEnrolledCourses = async () => {
 //       try {
-//         const response = await fetch("https://hilms.onrender.com/api/learner/enrolled-courses", {
+//         const response = await fetch("http://localhost:5000/api/learner/enrolled-courses", {
 //           method: "GET",
 //           headers: {
 //             Authorization: `Bearer ${learnerToken}`, // Pass token for authentication
@@ -156,7 +156,7 @@ const CoursesPage = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await fetch("https://hilms.onrender.com/api/courses");
+        const response = await fetch("http://localhost:5000/api/courses");
         if (!response.ok) throw new Error("Failed to fetch courses");
         const data = await response.json();
         setCourses(data.data || []);
@@ -172,7 +172,7 @@ const CoursesPage = () => {
   useEffect(() => {
     const fetchEnrolledCourses = async () => {
       try {
-        const response = await fetch("https://hilms.onrender.com/api/learner/enrolled-courses", {
+        const response = await fetch("http://localhost:5000/api/learner/enrolled-courses", {
           method: "GET",
           headers: {
             Authorization: `Bearer ${learnerToken}`,
@@ -181,7 +181,7 @@ const CoursesPage = () => {
         });
         if (!response.ok) throw new Error("Failed to fetch enrolled courses");
         const data = await response.json();
-        const enrolledIds = new Set(data.data.map((course) => course._id));
+        const enrolledIds = new Set(data.data.map((course) => course.id));
         setEnrolledCourses(enrolledIds);
       } catch (error) {
         console.error(error.message);
@@ -222,8 +222,8 @@ const CoursesPage = () => {
         {courses.length > 0 ? (
           courses.map((course) => (
             <Link
-              to={`/course-details/${course._id}`}
-              key={course._id}
+              to={`/course-details/${course.id}`}
+              key={course.id}
               className="learner-courses-card-link"
             >
               <div className="learner-courses-card">
@@ -234,16 +234,17 @@ const CoursesPage = () => {
                 />
                 <h3>{course.title}</h3>
                 <p>
-                  <strong>Instructor:</strong> {course.trainer?.fullName || "Unknown"}
+                    <strong>Instructor:</strong>{" "}
+                    {course.trainer_name || course.instructor_name || "Unknown"}
                 </p>
                 <p>
-                  <strong>Enrolled Learners:</strong> {course.learners?.length || 0}
+                  <strong>Enrolled Learners:</strong> {course.enrolled_count || 0}
                 </p>
-                {enrolledCourses?.has(course._id) && (
+                {enrolledCourses?.has(course.id) && (
                   <p className="learner-enrolled-label">✔ Enrolled</p>
                 )}
-                <span className={enrolledCourses?.has(course._id) ? "learner-btn-continue" : "learner-btn-read-more"}>
-                  {enrolledCourses?.has(course._id) ? "Continue Course" : "Read More"}
+                <span className={enrolledCourses?.has(course.id) ? "learner-btn-continue" : "learner-btn-read-more"}>
+                  {enrolledCourses?.has(course.id) ? "Continue Course" : "Read More"}
                 </span>
               </div>
             </Link>

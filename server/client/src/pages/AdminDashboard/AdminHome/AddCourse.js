@@ -19,7 +19,7 @@ const AddCourse = () => {
   useEffect(() => {
     const fetchTrainers = async () => {
       try {
-        const response = await axios.get("https://hilms.onrender.com/api/admin/trainers");
+        const response = await axios.get("http://localhost:5000/api/admin/trainers");
         setTrainers(response.data.trainers);
       } catch (error) {
         console.error("Error fetching trainers:", error);
@@ -55,7 +55,7 @@ const AddCourse = () => {
     formData.append("image", image);
 
     try {
-      const response = await axios.post("https://hilms.onrender.com/api/admin/add-course", formData, {
+      const response = await axios.post("http://localhost:5000/api/admin/add-course", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
@@ -93,8 +93,8 @@ const AddCourse = () => {
           <select id="trainer" value={trainer} onChange={(e) => setTrainer(e.target.value)} required>
             <option value="">Select a Trainer</option>
             {trainers.map((t) => (
-              <option key={t._id} value={t._id}>
-                {t.fullName}
+              <option key={t.id} value={t.id}>
+                {t.full_name}
               </option>
             ))}
           </select>

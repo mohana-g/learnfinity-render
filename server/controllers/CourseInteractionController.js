@@ -1,3 +1,5 @@
+const pool = require("../config/db");
+
 const mongoose = require('mongoose');
 const Course = require('../models/Course');
 const Learner = require('../models/Learner');
@@ -15,83 +17,136 @@ const getEnrolledCourses = async (req, res) => {
     const { courseId } = req.params;
     const userId = req.user.id;
 
-    const course = await Course.findById(courseId)
-      .populate({
-        path: 'chapters',
-        populate: {
-          path: 'lessons',
-          select: 'number title description videoUrl',
-        }
-      })
-      .populate('trainer', 'fullName');
+    // 1) fetch course + trainer
+    const courseRes = await pool.query(
+      `SELECT c.id, c.title, c.name, c.description, c.imageurl, c.instructor_name,
+              t.id AS trainer_id, t.full_name AS trainer_full_name,
+              (SELECT COUNT(*) FROM learner_courses lc WHERE lc.course_id = c.id) AS enrolled_count
+       FROM courses c
+       LEFT JOIN trainer t ON c.trainer_id = t.id
+       WHERE c.id = $1`,
+      [courseId]
+    );
 
-    if (!course) {
-      return res.status(404).json({ message: 'Course not found' });
+    if (courseRes.rows.length === 0) {
+      return res.status(404).json({ message: "Course not found" });
+    }
+    const course = courseRes.rows[0];
+
+    // 2) fetch chapters and lessons for the course (chapters array with lessons)
+    const chaptersRes = await pool.query(
+      `SELECT ch.id AS chapter_id, ch.name AS chapter_name,
+              COALESCE(json_agg(json_build_object('lesson_id', l.id, 'number', l.number, 'title', l.title, 'description', l.description, 'videoUrl', l.video_url) ORDER BY l.id) FILTER (WHERE l.id IS NOT NULL), '[]') AS lessons
+       FROM chapters ch
+       LEFT JOIN lessons l ON l.chapter_id = ch.id
+       WHERE ch.course_id = $1
+       GROUP BY ch.id
+       ORDER BY ch.id`,
+      [courseId]
+    );
+
+    const chapters = chaptersRes.rows.map((r) => ({
+      _id: r.chapter_id,
+      name: r.chapter_name,
+      lessons: r.lessons,
+    }));
+
+    // 3) verify learner exists
+    const learnerRes = await pool.query("SELECT id FROM learner WHERE id = $1", [userId]);
+    if (learnerRes.rows.length === 0) {
+      return res.status(404).json({ message: "Learner not found" });
     }
 
-    const learner = await Learner.findById(userId);
-    if (!learner) {
-      return res.status(404).json({ message: 'Learner not found' });
+    // 4) verify enrollment via learner_courses junction
+    const enrolledRes = await pool.query(
+      `SELECT 1 FROM learner_courses WHERE learner_id = $1 AND course_id = $2`,
+      [userId, courseId]
+    );
+    if (enrolledRes.rows.length === 0) {
+      return res.status(403).json({ message: "Access denied. Not enrolled." });
     }
 
-    const isEnrolled = course.learners.some(learnerId => learnerId.toString() === userId);
-    if (!isEnrolled) {
-      return res.status(403).json({ message: 'Access denied. Not enrolled.' });
-    }
+    // 5) get completed lessons for this learner (list of lesson ids)
+    const completedRes = await pool.query(
+      `SELECT lesson_id FROM learner_completed_lessons WHERE learner_id = $1`,
+      [userId]
+    );
+    const completedLessons = completedRes.rows.map((r) => r.lesson_id);
 
-    res.status(200).json({
-      ...course.toObject(),
-      completedLessons: learner.completedLessons || [],
-    });
+    // assemble result
+    const result = {
+      id: course.id,
+      title: course.title,
+      name: course.name,
+      description: course.description,
+      imageurl: course.imageurl,
+      instructor_name: course.instructor_name,
+      trainer: course.trainer_id
+        ? {
+            _id: course.trainer_id,
+            fullName: course.trainer_full_name,
+          }
+        : null,
+      chapters,
+      completedLessons,
+      enrolled_count: parseInt(course.enrolled_count, 10) || 0, // <-- this will match your frontend
+    };
+
+    return res.status(200).json(result);
   } catch (error) {
     console.error("Error:", error.message);
-    res.status(500).json({ message: error.message });
+    return res.status(500).json({ message: error.message });
   }
 };
 
-//Mark lesson comepleted in Learner database
+//Mark lesson complete
 const markLessonComplete = async (req, res) => {
-  const { lessonId } = req.body;
-  const learnerId = req.user?.id || req.user?._id;  // Ensure req.user exists
+  const lessonId = parseInt(req.body.lessonId, 10);
+  const learnerId = parseInt(req.user?.id || req.user?._id, 10);
 
   if (!lessonId || !learnerId) {
-    return res.status(400).json({ message: 'Lesson ID and Learner ID are required' });
+    return res.status(400).json({ message: "Lesson ID and Learner ID are required" });
   }
 
   try {
-    const lesson = await Lesson.findById(lessonId).populate({
-      path: 'chapter',
-      populate: { path: 'course' }
-    });
+    const lessonRes = await pool.query(
+      `SELECT l.id AS lesson_id, l.chapter_id, ch.course_id
+       FROM lessons l
+       LEFT JOIN chapters ch ON l.chapter_id = ch.id
+       WHERE l.id = $1`,
+      [lessonId]
+    );
 
-    if (!lesson) {
-      return res.status(404).json({ message: 'Lesson not found' });
+    if (lessonRes.rows.length === 0) return res.status(404).json({ message: "Lesson not found" });
+
+    const { chapter_id, course_id } = lessonRes.rows[0];
+    if (!chapter_id || !course_id) return res.status(404).json({ message: "Lesson does not belong to a valid course" });
+
+    const learnerRes = await pool.query("SELECT id FROM learner WHERE id = $1", [learnerId]);
+    if (learnerRes.rows.length === 0) return res.status(404).json({ message: "Learner not found" });
+
+    const enrollRes = await pool.query(
+      `SELECT 1 FROM learner_courses WHERE learner_id = $1 AND course_id = $2`,
+      [learnerId, course_id]
+    );
+    if (enrollRes.rows.length === 0) return res.status(403).json({ message: "You are not enrolled in this course" });
+
+    const existsRes = await pool.query(
+      `SELECT 1 FROM learner_completed_lessons WHERE learner_id = $1 AND lesson_id = $2`,
+      [learnerId, lessonId]
+    );
+    if (existsRes.rows.length === 0) {
+      await pool.query(
+        `INSERT INTO learner_completed_lessons (learner_id, lesson_id, created_at)
+         VALUES ($1, $2, NOW())`,
+        [learnerId, lessonId]
+      );
     }
 
-    if (!lesson.chapter || !lesson.chapter.course) {
-      return res.status(404).json({ message: 'Lesson does not belong to a valid course' });
-    }
-
-    const courseId = lesson.chapter.course._id;
-
-    const learner = await Learner.findById(learnerId);
-    if (!learner) {
-      return res.status(404).json({ message: 'Learner not found' });
-    }
-
-    if (!learner.courses.includes(courseId)) {
-      return res.status(403).json({ message: 'You are not enrolled in this course' });
-    }
-
-    if (!learner.completedLessons.includes(lessonId)) {
-      learner.completedLessons.push(lessonId);
-      await learner.save();
-    }
-
-    res.status(200).json({ message: 'Lesson marked as complete' });
+    return res.status(200).json({ message: "Lesson marked as complete" });
   } catch (error) {
-    console.error('Error marking lesson complete:', error);
-    res.status(500).json({ message: 'Server error', error: error.message });
+    console.error("Error marking lesson complete:", error.message);
+    return res.status(500).json({ message: "Server error", error: error.message });
   }
 };
 
@@ -99,210 +154,224 @@ const markLessonComplete = async (req, res) => {
 const getQuiz = async (req, res) => {
   try {
     const { courseId } = req.params;
-    const quiz = await Quiz.findOne({ course: courseId });
-    if (!quiz) {
-      return res.status(404).json({ message: 'Quiz not found' });
+
+    const quizRes = await pool.query(
+      `SELECT q.*, c.id AS chapter_id
+       FROM quizzes q
+       LEFT JOIN chapters c ON q.course_id = c.course_id
+       WHERE q.course_id = $1
+       ORDER BY q.created_at ASC
+       LIMIT 1`,
+      [courseId]
+    );
+
+    if (quizRes.rows.length === 0) {
+      return res.status(404).json({ message: "Quiz not found" });
     }
-    res.status(200).json(quiz);
+
+    const quiz = quizRes.rows[0];
+
+    // ✅ Convert snake_case to camelCase
+    quiz.chapterId = quiz.chapter_id;
+
+    const questionsRes = await pool.query(
+      `SELECT * FROM quiz_questions WHERE quiz_id = $1 ORDER BY id ASC`,
+      [quiz.id]
+    );
+
+    quiz.questions = questionsRes.rows;
+
+    return res.status(200).json(quiz);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error("Error getting quiz:", error);
+    return res.status(500).json({ message: error.message });
   }
 };
 
-//Submit quiz attempt new
+// Submit quiz attempt
 const submitQuizAttempt = async (req, res) => {
   const { quizId, courseId, chapterId, score, totalMarks } = req.body;
-  const learnerId = req.user.id; // Assuming middleware provides the logged-in user's ID
+  const learnerId = req.user.id;
 
   try {
     // Validate quiz existence
-    const quiz = await Quiz.findById(quizId);
-    if (!quiz) {
-      return res.status(404).json({ message: 'Quiz not found' });
+    const quizRes = await pool.query(`SELECT id FROM quizzes WHERE id = $1`, [quizId]);
+    if (quizRes.rows.length === 0) {
+      return res.status(404).json({ message: "Quiz not found" });
     }
 
-    // Update Learner's quiz record
-    const learner = await Learner.findById(learnerId);
-    if (!learner) {
-      return res.status(404).json({ message: 'Learner not found' });
+    // Validate learner existence
+    const learnerRes = await pool.query(`SELECT id FROM learner WHERE id = $1`, [learnerId]);
+    if (learnerRes.rows.length === 0) {
+      return res.status(404).json({ message: "Learner not found" });
     }
 
-    // Check if the quiz already exists in the Learner's record
-    const existingQuiz = learner.quizzes.find(
-    (q) => q.quiz && q.quiz.toString() === quizId
+    // Check if the learner has already submitted this quiz
+    const existingRes = await pool.query(
+      `SELECT id FROM learner_quizzes WHERE learner_id = $1 AND quiz_id = $2`,
+      [learnerId, quizId]
     );
 
-    if (existingQuiz) {
-      // Update existing quiz record
-      existingQuiz.marksScored = score;
-      existingQuiz.totalMarks = totalMarks;
-      existingQuiz.chapter = chapterId; // Update chapterId
+    if (existingRes.rows.length > 0) {
+      // Update existing attempt and updated_at timestamp
+      await pool.query(
+        `UPDATE learner_quizzes
+         SET marks_scored = $1,
+             total_marks = $2,
+             chapter_id = $3,
+             course_id = $4,
+             updated_at = NOW()
+         WHERE learner_id = $5 AND quiz_id = $6`,
+        [score, totalMarks, chapterId || null, courseId || null, learnerId, quizId]
+      );
     } else {
-      // Add new quiz record
-      learner.quizzes.push({
-        course: courseId,
-        chapter: chapterId, // Add chapterId
-        quiz: quizId,
-        marksScored: score,
-        totalMarks: totalMarks,
-      });
+      // Insert new attempt with created_at and updated_at default values
+      await pool.query(
+        `INSERT INTO learner_quizzes 
+         (learner_id, course_id, chapter_id, quiz_id, marks_scored, total_marks, created_at, updated_at)
+         VALUES ($1, $2, $3, $4, $5, $6, NOW(), NOW())`,
+        [learnerId, courseId || null, chapterId || null, quizId, score, totalMarks]
+      );
     }
 
-    await learner.save();
-
-    res.status(200).json({ message: 'Quiz submitted successfully' });
+    return res.status(200).json({ message: "Quiz submitted successfully" });
   } catch (err) {
-    console.error('Error submitting quiz:', err);
-    res.status(500).json({ message: 'Failed to submit quiz' });
+    console.error("Error submitting quiz:", err);
+    return res.status(500).json({ message: "Failed to submit quiz" });
   }
 };
 
+//Submit course review
 const submitReview = async (req, res) => {
   const { courseId, learnerName, rating, comment } = req.body;
 
   try {
-    // Validate course existence
-    const course = await Course.findById(courseId);
-    if (!course) {
-      return res.status(404).json({ message: 'Course not found' });
+    // Check if the course exists
+    const courseRes = await pool.query(`SELECT id FROM courses WHERE id = $1`, [courseId]);
+    if (courseRes.rows.length === 0) {
+      return res.status(404).json({ message: "Course not found" });
     }
 
-    // Create a new review
-    const review = new Review({
-      courseId,
-      learnerName,
-      rating,
-      comment,
-      todaysdate: new Date().toISOString().split('T')[0], // Store today's date in YYYY-MM-DD format
+    // Insert review into the reviews table
+    const todaysdate = new Date().toISOString().split("T")[0];
+    const reviewRes = await pool.query(
+      `INSERT INTO reviews (course_id, learner_name, rating, comment, todaysdate, created_at)
+       VALUES ($1, $2, $3, $4, $5, NOW())
+       RETURNING *`,
+      [courseId, learnerName, rating, comment, todaysdate]
+    );
+
+    // Return the created review (like MongoDB)
+    return res.status(200).json({
+      message: "Review submitted successfully",
+      review: reviewRes.rows[0],
     });
-
-    await review.save();
-
-    // Push the new review into the Course's reviews array
-    course.reviews.push({
-      learnerName, // Store Learner name instead of ID
-      comment,
-      rating,
-    });
-
-    await course.save();
-
-
-    res.status(200).json({ message: 'Review submitted successfully', review });
   } catch (err) {
-    console.error('Error submitting review:', err);
-    res.status(500).json({ message: 'Failed to submit review' });
+    console.error("Error submitting review:", err);
+    return res.status(500).json({ message: "Failed to submit review" });
   }
 };
 
+// Download certificate (generate PDF) — requires learner passed the course (>=60%)
 const downloadCertificate = async (req, res) => {
   const { courseId } = req.params;
-  const userId = req.user.id; // Assuming you have user authentication
+  const userId = req.user.id;
 
   try {
-    // Fetch course and user details (ensure user has passed the exam)
-    const course = await Course.findById(courseId);
-    if (!course) {
-      return res.status(404).json({ message: 'Course not found' });
+    // Fetch course info
+    const courseRes = await pool.query(`SELECT id, title FROM courses WHERE id = $1`, [courseId]);
+    if (courseRes.rows.length === 0) {
+      return res.status(404).json({ message: "Course not found" });
     }
+    const course = courseRes.rows[0];
 
-    const learner = await Learner.findById(userId);
-    if (!learner) {
-      return res.status(404).json({ message: 'Learner not found' });
+    // Fetch learner
+    const learnerRes = await pool.query(`SELECT id, first_name, last_name FROM learner WHERE id = $1`, [userId]);
+    if (learnerRes.rows.length === 0) {
+      return res.status(404).json({ message: "Learner not found" });
     }
+    const learner = learnerRes.rows[0];
 
-    const quizRecord = learner.quizzes.find(
-      (quiz) => quiz.course.toString() === courseId && quiz.marksScored / quiz.totalMarks >= 0.6
+    // Find a quiz attempt for this course where score/total >= 0.6
+    const quizRecordRes = await pool.query(
+      `SELECT * FROM learner_quizzes
+       WHERE learner_id = $1 AND course_id = $2
+         AND total_marks > 0
+         AND (marks_scored::float / total_marks::float) >= 0.6
+       LIMIT 1`,
+      [userId, courseId]
     );
 
-    if (!quizRecord) {
-      return res.status(403).json({ message: 'You are not eligible for a certificate' });
+    if (quizRecordRes.rows.length === 0) {
+      return res.status(403).json({ message: "You are not eligible for a certificate" });
     }
 
-    // Generate the certificate PDF
+    // Generate PDF certificate (similar layout to your Mongo code)
     const doc = new PDFDocument({
-      size: [600, 900], // Landscape size
-      layout: 'landscape', // Landscape orientation
+      size: [600, 900],
+      layout: "landscape",
       margin: 50,
     });
-    const fileName = `Certificate-${course.title}.pdf`;
+    const fileName = `Certificate-${course.title.replace(/[^a-z0-9]/gi, "_")}.pdf`;
 
-    res.setHeader('Content-Disposition', `attachment; filename="${fileName}"`);
-    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader("Content-Disposition", `attachment; filename="${fileName}"`);
+    res.setHeader("Content-Type", "application/pdf");
 
-    // Pipe the PDF document to the response
     doc.pipe(res);
 
-    // Add a background color
-    doc.rect(0, 0, doc.page.width, doc.page.height).fill('#fff');
+    // Background
+    doc.rect(0, 0, doc.page.width, doc.page.height).fill("#fff");
 
-    // Add a gradient border for the top
-    const topGradient = doc.linearGradient(25, 25, doc.page.width - 25, 25); // Horizontal gradient
-    topGradient.stop(0, '#BA2759') // Pink
-              .stop(0.5, '#20DAC7') // Green
-              .stop(1, '#FFFFFF'); // Fallback to white instead of transparent
+    // Top gradient border (approximation)
+    const topGradient = doc.linearGradient(25, 25, doc.page.width - 25, 25);
+    topGradient.stop(0, "#BA2759").stop(0.5, "#20DAC7").stop(1, "#FFFFFF");
     doc.rect(25, 25, doc.page.width - 50, 20).fill(topGradient);
 
-    // Add a gradient border for the bottom
-    const bottomGradient = doc.linearGradient(25, doc.page.height - 25, doc.page.width - 25, doc.page.height - 25); // Horizontal gradient
-    bottomGradient.stop(0, '#FFFFFF') // Fallback to white instead of transparent
-                  .stop(0.5, '#20DAC7') // Green
-                  .stop(1, '#BF9F46'); // Yellow
+    // Bottom gradient border
+    const bottomGradient = doc.linearGradient(25, doc.page.height - 25, doc.page.width - 25, doc.page.height - 25);
+    bottomGradient.stop(0, "#FFFFFF").stop(0.5, "#20DAC7").stop(1, "#BF9F46");
     doc.rect(25, doc.page.height - 45, doc.page.width - 50, 20).fill(bottomGradient);
 
-    // Add a gradient border for the left
-    const leftGradient = doc.linearGradient(25, 25, 25, doc.page.height - 25); // Vertical gradient
-    leftGradient.stop(0, '#BA2759') // Pink
-                .stop(0.5, '#20DAC7') // Green
-                .stop(1, '#FFFFFF'); // Fallback to white instead of transparent
+    // Left and right gradient borders
+    const leftGradient = doc.linearGradient(25, 25, 25, doc.page.height - 25);
+    leftGradient.stop(0, "#BA2759").stop(0.5, "#20DAC7").stop(1, "#FFFFFF");
     doc.rect(25, 25, 20, doc.page.height - 50).fill(leftGradient);
 
-    // Add a gradient border for the right
-    const rightGradient = doc.linearGradient(doc.page.width - 25, 25, doc.page.width - 25, doc.page.height - 25); // Vertical gradient
-    rightGradient.stop(0, '#FFFFFF') // Fallback to white instead of transparent
-                .stop(0.5, '#20DAC7') // Green
-                .stop(1, '#BF9F46'); // Yellow
+    const rightGradient = doc.linearGradient(doc.page.width - 25, 25, doc.page.width - 25, doc.page.height - 25);
+    rightGradient.stop(0, "#FFFFFF").stop(0.5, "#20DAC7").stop(1, "#BF9F46");
     doc.rect(doc.page.width - 45, 25, 20, doc.page.height - 50).fill(rightGradient);
-    // Add Learnfinity logo
-    const logoPath = path.join(__dirname, '../assets/logo.png'); // Adjust the path to your logo
+
+    // Logo (if exists)
+    const logoPath = path.join(__dirname, "../assets/logo.png");
     if (fs.existsSync(logoPath)) {
       doc.image(logoPath, doc.page.width / 2 - 100, 30, { width: 200 });
     }
     doc.moveDown(11);
-    // Add "Certificate of Completion" title
-    doc.font('Times-Bold').fontSize(30).fillColor('#000').text('Certificate of Completion', { align: 'center' });
-    doc.moveDown(1);
 
-    // Add Learner name
-    doc.fontSize(20).fillColor('#000').text(`This certifies that`, { align: 'center' });
+    // Title and learner/course info
+    doc.font("Times-Bold").fontSize(30).fillColor("#000").text("Certificate of Completion", { align: "center" });
     doc.moveDown(1);
-    doc.font('Helvetica-Bold').fontSize(36).fillColor('#E93131').text(`${learner.firstName} ${learner.lastName}`, { align: 'center' });
-
-    // Add course title
-    doc.fontSize(20).fillColor('#000').text(`has successfully completed the course`, { align: 'center' });
+    doc.fontSize(20).fillColor("#000").text("This certifies that", { align: "center" });
     doc.moveDown(1);
-    doc.font('Helvetica-Bold').fontSize(28).fillColor('#060270').text(`"${course.title}"`, { align: 'center' });
+    doc.font("Helvetica-Bold").fontSize(36).fillColor("#E93131").text(`${learner.first_name} ${learner.last_name}`, { align: "center" });
     doc.moveDown(1);
-
-    // Add certificate date
+    doc.fontSize(20).fillColor("#000").text("has successfully completed the course", { align: "center" });
+    doc.moveDown(1);
+    doc.font("Helvetica-Bold").fontSize(28).fillColor("#060270").text(`"${course.title}"`, { align: "center" });
+    doc.moveDown(1);
     const certificateDate = new Date().toLocaleDateString();
-    doc.fontSize(18).fillColor('#000').text(`Date: ${certificateDate}`, { align: 'center' });
+    doc.fontSize(18).fillColor("#000").text(`Date: ${certificateDate}`, { align: "center" });
     doc.moveDown(1);
-
-    // Add footer with Learnfinity name
-    doc.fontSize(16).fillColor('#888').text('Powered by Learnfinity', {
-      align: 'center',
-      baseline: 'bottom',
+    doc.fontSize(16).fillColor("#888").text("Powered by Learnfinity", {
+      align: "center",
+      baseline: "bottom",
     });
 
-    // End the PDF document
     doc.end();
   } catch (err) {
-    console.error('Error generating certificate:', err);
-
-    // If an error occurs, ensure the response is not left open
+    console.error("Error generating certificate:", err);
     if (!res.headersSent) {
-      res.status(500).json({ message: 'Failed to generate certificate' });
+      return res.status(500).json({ message: "Failed to generate certificate" });
     }
   }
 };

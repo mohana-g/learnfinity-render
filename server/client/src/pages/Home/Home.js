@@ -66,7 +66,7 @@
 //   // Fetch popular courses sorted by number of enrolled Learners
 //   const fetchPopularCourses = async () => {
 //     try {
-//       const response = await fetch('https://hilms.onrender.com/api/courses/popular');
+//       const response = await fetch('http://localhost:5000/api/courses/popular');
 //       if (!response.ok) {
 //         throw new Error('Failed to fetch popular courses');
 //       }
@@ -145,7 +145,7 @@
 //             <Link to="/trainer-signup" className="btn-secondary">Become a Trainer</Link>
 //           </div>
 //           <div className="teach-image">
-//           <img src="https://hilms.onrender.com/uploads/istockphoto-1392125218-612x612.jpg" alt="Teaching Platform" />
+//           <img src="http://localhost:5000/uploads/istockphoto-1392125218-612x612.jpg" alt="Teaching Platform" />
 //           </div>
 //         </div>
 //       </section>
@@ -338,14 +338,14 @@ function CareerPathCards({ paths = [], onReadMore }) {
     <section className="career-path-cards-container">
       {paths.length > 0 ? (
         paths.map((path) => (
-          <div key={path._id} className="career-path-card">
+          <div key={path.id} className="career-path-card">
             <h3>{path.title}</h3>
             {/* <p className="career-path-desc">{path.description}</p> */}
             <p className="career-path-levels">
               <strong>Levels:</strong>{" "}
               {path.levelSummary || "No levels"}
             </p>
-            <button className="btn-read-more" onClick={() => onReadMore(path._id)}>
+            <button className="btn-read-more" onClick={() => onReadMore(path.id)}>
               Read More
             </button>
           </div>
@@ -372,7 +372,7 @@ function Home() {
   const fetchPopularCourses = async () => {
     try {
       const response = await fetch(
-        'https://hilms.onrender.com/api/courses/popular'
+        'http://localhost:5000/api/courses/popular'
       );
       if (!response.ok) throw new Error('Failed to fetch popular courses');
 
@@ -388,7 +388,7 @@ function Home() {
  // Fetch career paths
 const fetchCareerPaths = async () => {
   try {
-    const response = await fetch('https://hilms.onrender.com/api/career-paths');
+    const response = await fetch('http://localhost:5000/api/career-paths');
     if (!response.ok) throw new Error('Failed to fetch career paths');
 
     const data = await response.json();
@@ -441,8 +441,8 @@ const fetchCareerPaths = async () => {
             {courses.length > 0 ? (
               courses.slice(0, 4).map((course) => (
                 <Link
-                  to={`/course-details/${course._id}`}
-                  key={course._id}
+                  to={`/course-details/${course.id}`}
+                  key={course.id}
                   className="courses-card-link"
                 >
                   <div className="courses-card">
@@ -454,8 +454,8 @@ const fetchCareerPaths = async () => {
                     <div className="courses-card-content">
                       <h3>{course.title}</h3>
                       <p>
-                        <strong>Instructor:</strong>{' '}
-                        {course.trainer?.fullName || course.instructorName}
+                        <strong>Instructor:</strong>{" "}
+                        {course.trainer_full_name || course.instructor_name || "Unknown"}
                       </p>
                       <p>
                         <strong>Enrolled Learners:</strong>{' '}
@@ -509,7 +509,7 @@ const fetchCareerPaths = async () => {
           </div>
           <div className="teach-image">
             <img
-              src="https://hilms.onrender.com/uploads/istockphoto-1392125218-612x612.jpg"
+              src="http://localhost:5000/uploads/istockphoto-1392125218-612x612.jpg"
               alt="Teaching Platform"
             />
           </div>

@@ -20,6 +20,7 @@ const TrainerProfileSkeleton = () => (
 
 const TrainerProfile = () => {
   const [profile, setProfile] = useState(null);
+  const [editData, setEditData] = useState(null); // 👈 temp state for editing
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -36,7 +37,7 @@ const TrainerProfile = () => {
           return;
         }
 
-        const response = await axios.get("https://hilms.onrender.com/api/trainer/profile", {
+        const response = await axios.get("http://localhost:5000/api/trainer/profile", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -54,13 +55,17 @@ const TrainerProfile = () => {
   }, []);
 
   const handleEditToggle = () => {
+    if (!isEditing) {
+      // when entering edit mode, copy current profile
+      setEditData({ ...profile });
+    }
     setIsEditing(!isEditing);
   };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setProfile((prevProfile) => ({
-      ...prevProfile,
+    setEditData((prev) => ({
+      ...prev,
       [name]: value,
     }));
   };
@@ -73,7 +78,13 @@ const TrainerProfile = () => {
         return;
       }
 
-      await axios.put("https://hilms.onrender.com/api/trainer/profile/update", profile, {
+      const payload = {
+        fullName: editData.full_name,
+        institute: editData.institute,
+        phoneNumber: editData.phone_number,
+      };
+
+      await axios.put("http://localhost:5000/api/trainer/profile/update", payload, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
@@ -81,6 +92,7 @@ const TrainerProfile = () => {
       });
 
       alert("Profile updated successfully!");
+      setProfile(editData); // ✅ update UI with saved data
       setIsEditing(false);
     } catch (err) {
       setError("Failed to update profile");
@@ -91,9 +103,7 @@ const TrainerProfile = () => {
     navigate("/trainer-dashboard/profile/editaccount");
   };
 
-  // if (loading) return <p>Loading profile...</p>;
   if (loading) return <TrainerProfileSkeleton />;
-
   if (error) return <p className="error-message">{error}</p>;
 
   return (
@@ -102,9 +112,9 @@ const TrainerProfile = () => {
       <div className="trainer-profile-card">
         {!isEditing ? (
           <>
-            <p><strong>Full Name:</strong> {profile?.fullName}</p>
-            <p><strong>Institute:</strong> {profile?.institute}</p> {/* Updated field */}
-            <p><strong>Phone Number:</strong> {profile?.phoneNumber}</p> {/* Updated field */}
+            <p><strong>Full Name:</strong> {profile?.full_name}</p>
+            <p><strong>Institute:</strong> {profile?.institute}</p>
+            <p><strong>Phone Number:</strong> {profile?.phone_number}</p>
             <p><strong>Email:</strong> {profile?.email}</p>
             <button onClick={handleEditToggle}>Edit Profile</button>
             <button onClick={handleEditAccount}>Edit Account</button>
@@ -113,19 +123,39 @@ const TrainerProfile = () => {
           <>
             <div>
               <label>Full Name: </label>
-              <input type="text" name="fullName" value={profile.fullName} onChange={handleInputChange} />
+              <input
+                type="text"
+                name="full_name"
+                value={editData.full_name}
+                onChange={handleInputChange}
+              />
             </div>
             <div>
-              <label>Institute: </label> {/* Updated field */}
-              <input type="text" name="institute" value={profile.institute} onChange={handleInputChange} />
+              <label>Institute: </label>
+              <input
+                type="text"
+                name="institute"
+                value={editData.institute}
+                onChange={handleInputChange}
+              />
             </div>
             <div>
-              <label>Phone Number: </label> {/* Updated field */}
-              <input type="text" name="phoneNumber" value={profile.phoneNumber} onChange={handleInputChange} />
+              <label>Phone Number: </label>
+              <input
+                type="text"
+                name="phone_number"
+                value={editData.phone_number}
+                onChange={handleInputChange}
+              />
             </div>
             <div>
               <label>Email: </label>
-              <input type="email" name="email" value={profile.email} onChange={handleInputChange} disabled />
+              <input
+                type="email"
+                name="email"
+                value={editData.email}
+                disabled
+              />
             </div>
             <button onClick={handleSave}>Save</button>
             <button onClick={handleEditToggle}>Cancel</button>

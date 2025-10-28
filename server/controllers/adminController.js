@@ -92,6 +92,8 @@ module.exports = { getUsers, blockUser, deleteUser, getCourses, deleteCourse, ge
 */
 
 
+const pool = require("../config/db");
+
 const User = require("../models/User");
 const Learner = require("../models/Learner");
 const Trainer = require("../models/Trainer");
@@ -135,88 +137,144 @@ const Review = require("../models/Review");
   }
 };*/
 
+//get all users
 const getUsers = async (req, res) => {
-    try {
-        const users = await User.find({}, "email flag role createdAt")
-        .populate("learner", "dob phone firstName lastName") // Fetch DOB & Phone from Learner schema
-        .populate("trainer", "institute phoneNumber fullName") // Fetch Institute & Phone from Trainer schema
-        .lean(); // Fetch actual users
-      res.json({ users });
-    } catch (error) {
-      console.error("Error fetching users:", error);
-      res.status(500).json({ message: "Internal Server Error" });
-    }
-  };
-  
+  try {
+    const query = `
+      SELECT
+          u.id,
+          u.email,
+          u.flag,
+          u.role,
+          u.created_at AS "createdAt",
+          json_build_object(
+              'dob', l.dob,
+              'phone', l.phone,
+              'firstName', l.first_name,
+              'lastName', l.last_name
+          ) AS learner,
+          json_build_object(
+              'institute', t.institute,
+              'phone', t.phone_number,
+              'fullName', t.full_name
+          ) AS trainer,
+          json_build_object(
+              'fullName', a.full_name,
+              'email', a.email,
+              'phone', a.phone_no
+          ) AS admin
+      FROM public.users u
+      LEFT JOIN public.learner l ON u.learner_id = l.id
+      LEFT JOIN public.trainer t ON u.trainer_id = t.id
+      LEFT JOIN public."admin" a ON u.admin_id = a.id;
+    `;
+
+    const { rows: users } = await pool.query(query);
+    res.json({ users });
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
 
 // Block User
 const blockUser = async (req, res) => {
-    try {
-        const user = await User.findById(req.params.id);
-        if (!user) return res.status(404).json({ message: "User not found" });
-
-        user.flag = 1; // Set flag to 1 (blocked)
-        await user.save();
-        res.status(200).json({ message: "User blocked successfully" });
-    } catch (error) {
-        res.status(500).json({ message: "Server error", error });
-    }
-};
-
-//unblock user
-const unblockUser = async (req, res) => {
-    try {
-        const user = await User.findById(req.params.id);
-        if (!user) return res.status(404).json({ message: "User not found" });
-
-        user.flag = 0; // Set flag to 0 (unblocked)
-        await user.save();
-        res.status(200).json({ message: "User unblocked successfully" });
-    } catch (error) {
-        res.status(500).json({ message: "Server error", error });
-    }
-};
-
-//delete user
-const deleteUser = async (req, res) => {
-    try {
-        const user = await User.findById(req.params.id);
-        if (!user) return res.status(404).json({ message: "User not found" });
-
-        // Remove associated Learner/Trainer document if exists
-        if (user.learner) {
-            await Learner.findByIdAndDelete(user.learner);
-        }
-        if (user.trainer) {
-            await Trainer.findByIdAndDelete(user.trainer);
-        }
-
-        await User.findByIdAndDelete(req.params.id);
-        res.status(200).json({ message: "User deleted successfully" });
-    } catch (error) {
-        res.status(500).json({ message: "Server error", error });
-    }
-};
-
-// Get Pending Trainers
-const getPendingTrainers = async (req, res) => {
-    try {
-      const trainers = await Trainer.find({ flag: 0 }, "fullName email phoneNumber institute profileImage");
-      res.json({ trainers });
-    } catch (error) {
-      res.status(500).json({ message: "Server error", error });
-    }
-  };
-  
-
-// Approve Trainer
-const approveTrainer = async (req, res) => {
+  const userId = req.params.id;
   try {
-    const trainer = await Trainer.findById(req.params.id);
-    if (!trainer) return res.status(404).json({ message: "Trainer not found" });
+    const { rowCount } = await pool.query(
+      `UPDATE public.users SET flag = 1 WHERE id = $1`,
+      [userId]
+    );
 
-    trainer.flag = 2;
-    await trainer.save();
+    if (rowCount === 0)
+      return res.status(404).json({ message: "User not found" });
+
+    res.status(200).json({ message: "User blocked successfully" });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error });
+  }
+};
+
+// Unblock User
+const unblockUser = async (req, res) => {
+  const userId = req.params.id;
+  try {
+    const { rowCount } = await pool.query(
+      `UPDATE public.users SET flag = 0 WHERE id = $1`,
+      [userId]
+    );
+
+    if (rowCount === 0)
+      return res.status(404).json({ message: "User not found" });
+
+    res.status(200).json({ message: "User unblocked successfully" });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error });
+  }
+};
+
+// Delete User
+const deleteUser = async (req, res) => {
+  const userId = req.params.id;
+  try {
+    // First, get the associated learner_id and trainer_id
+    const { rows } = await pool.query(
+      `SELECT learner_id, trainer_id FROM public.users WHERE id = $1`,
+      [userId]
+    );
+
+    if (rows.length === 0) return res.status(404).json({ message: "User not found" });
+
+    const { learner_id, trainer_id } = rows[0];
+
+    // Delete associated learner
+    if (learner_id) {
+      await pool.query(`DELETE FROM public.learner WHERE id = $1`, [learner_id]);
+    }
+
+    // Delete associated trainer
+    if (trainer_id) {
+      await pool.query(`DELETE FROM public.trainer WHERE id = $1`, [trainer_id]);
+    }
+
+    // Delete the user
+    await pool.query(`DELETE FROM public.users WHERE id = $1`, [userId]);
+
+    res.status(200).json({ message: "User deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error });
+  }
+};
+
+// Get Pending Trainers (flag = 0)
+const getPendingTrainers = async (req, res) => {
+  try {
+    const { rows: trainers } = await pool.query(
+      `SELECT id, full_name, email, phone_number, institute 
+       FROM public.trainer 
+       WHERE flag = 0`
+    );
+
+    res.json({ trainers });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error });
+  }
+};
+
+// Approve Trainer (set flag = 2)
+const approveTrainer = async (req, res) => {
+  const trainerId = req.params.id;
+  try {
+    const { rowCount } = await pool.query(
+      `UPDATE public.trainer 
+       SET flag = 2 
+       WHERE id = $1`,
+      [trainerId]
+    );
+
+    if (rowCount === 0)
+      return res.status(404).json({ message: "Trainer not found" });
 
     res.json({ message: "Trainer approved successfully" });
   } catch (error) {
@@ -224,24 +282,19 @@ const approveTrainer = async (req, res) => {
   }
 };
 
-// Decline Trainer
-/*const declineTrainer = async (req, res) => {
-  try {
-    await Trainer.findByIdAndDelete(req.params.id);
-    res.json({ message: "Trainer declined successfully" });
-  } catch (error) {
-    res.status(500).json({ message: "Server error", error });
-  }
-};*/
-
-// Decline Trainer (Set flag to 2 instead of deleting)
+// Decline Trainer (set flag = 3 instead of deleting)
 const declineTrainer = async (req, res) => {
+  const trainerId = req.params.id;
   try {
-    const trainer = await Trainer.findById(req.params.id);
-    if (!trainer) return res.status(404).json({ message: "Trainer not found" });
+    const { rowCount } = await pool.query(
+      `UPDATE public.trainer 
+       SET flag = 3 
+       WHERE id = $1`,
+      [trainerId]
+    );
 
-    trainer.flag = 3;  // Mark as declined
-    await trainer.save();
+    if (rowCount === 0)
+      return res.status(404).json({ message: "Trainer not found" });
 
     res.json({ message: "Trainer declined successfully" });
   } catch (error) {
@@ -249,28 +302,32 @@ const declineTrainer = async (req, res) => {
   }
 };
 
-// Get all approved Trainers
+// Get all approved Trainers (flag = 2)
 const getTrainers = async (req, res) => {
   try {
-    const trainers = await Trainer.find({ flag: 2 }); // Only approved Trainers
-    //console.log("Fetched Trainers:", Trainers); // Debugging log
+    const { rows: trainers } = await pool.query(
+      `SELECT id, full_name, email, phone_number, institute 
+       FROM public.trainer 
+       WHERE flag = 2`
+    );
+
     res.json({ trainers });
   } catch (error) {
-    //console.error("Error fetching Trainers:", error);
     res.status(500).json({ message: "Server error", error });
   }
 };
-
 
 // Get All Courses
 const getCourses = async (req, res) => {
   try {
-    const courses = await Course.find();
-    res.json({ courses });
+    const result = await pool.query("SELECT * FROM courses ORDER BY created_at ASC");
+    res.json({ courses: result.rows });
   } catch (error) {
+    console.error("Error fetching courses:", error);
     res.status(500).json({ message: "Server error", error });
   }
 };
+
 /*
 // Add Course (Ensures Trainer is Valid)
 const addCourse = async (req, res) => {
@@ -292,42 +349,40 @@ const addCourse = async (req, res) => {
 //new add course
 const addCourse = async (req, res) => {
   try {
-    const { title, name, description, instructorName, trainerId } = req.body;
+    const { title, name, description, trainerId } = req.body;
 
-    // Validate required fields
     if (!title || !name || !trainerId) {
-      return res.status(400).json({ message: "Title, name, and TrainerId are required" });
+      return res.status(400).json({ message: "Title, name, and trainerId are required" });
     }
 
-    // Check if Trainer exists
-    const trainer = await Trainer.findById(trainerId);
-    if (!trainer) return res.status(400).json({ message: "Invalid Trainer ID" });
+    const trainerCheck = await pool.query("SELECT full_name FROM trainer WHERE id = $1", [trainerId]);
+    if (trainerCheck.rows.length === 0) {
+      return res.status(400).json({ message: "Invalid Trainer ID" });
+    }
 
-    // Get uploaded image
+    const instructorName = trainerCheck.rows[0].full_name;
     const imagePath = req.file ? `/uploads/${req.file.filename}` : null;
 
-    // Create new course
-    const newCourse = new Course({
-      title,
-      name,
-      description,
-      instructorName,
-      trainer: trainerId, // Store Trainer ID
-      imageurl: imagePath
-    });
+    const insertQuery = `
+      INSERT INTO courses (title, name, description, instructor_name, trainer_id, imageurl, created_at)
+      VALUES ($1, $2, $3, $4, $5, $6, NOW())
+      RETURNING *;
+    `;
 
-    // Save course
-    await newCourse.save();
+    const values = [title, name, description, instructorName, trainerId, imagePath];
+    const result = await pool.query(insertQuery, values);
+    const newCourseId = result.rows[0].id;
 
-    // Add course to Trainer's courses array
-    trainer.courses.push(newCourse._id);
-    await trainer.save();
-
-    res.status(201).json({ success: true, message: "Course added successfully!", course: newCourse });
-
+    // ✅ Insert mapping into trainer_courses table
+    await pool.query(
+      `INSERT INTO trainer_courses (trainer_id, course_id) VALUES ($1, $2)`,
+      [trainerId, newCourseId]
+    );
+    
+    res.status(201).json({ success: true, message: "Course added successfully!", course: result.rows[0] });
   } catch (error) {
     console.error("Error adding course:", error);
-    res.status(500).json({ message: "Server error", error });
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 };
 
@@ -336,36 +391,33 @@ const deleteCourse = async (req, res) => {
   try {
     const courseId = req.params.id;
 
-    // Find the course
-    const course = await Course.findById(courseId);
-    if (!course) return res.status(404).json({ message: "Course not found" });
-
-    // Find the assigned Trainer
-    const trainer = await Trainer.findById(course.trainer);
-    if (trainer) {
-      // Remove course ID from Trainer's courses array
-      trainer.courses = trainer.courses.filter(course => course.toString() !== courseId);
-      await trainer.save();
+    // ✅ 1. Check if the course exists
+    const courseCheck = await pool.query("SELECT * FROM courses WHERE id = $1", [courseId]);
+    if (courseCheck.rows.length === 0) {
+      return res.status(404).json({ message: "Course not found" });
     }
 
-    // Find all chapters linked to the course
-    const chapters = await Chapter.find({ course: courseId });
+    // ✅ 2. Delete all related lessons → chapters → quizzes → reviews
+    // (If you already set ON DELETE CASCADE in your schema, you can skip most of this manual cleanup)
 
-    // Collect all lesson IDs from the chapters
-    const lessonIds = chapters.flatMap((chapter) => chapter.lessons);
+    // Delete lessons linked to chapters of this course
+    await pool.query(
+      `DELETE FROM lessons 
+       WHERE chapter_id IN (SELECT id FROM chapters WHERE course_id = $1)`,
+      [courseId]
+    );
 
-    // Delete lessons associated with these chapters
-    await Lesson.deleteMany({ _id: { $in: lessonIds } });
+    // Delete chapters linked to this course
+    await pool.query("DELETE FROM chapters WHERE course_id = $1", [courseId]);
 
-    // Delete all chapters related to the course
-    await Chapter.deleteMany({ course: courseId });
+    // Delete quizzes linked to this course
+    await pool.query("DELETE FROM quizzes WHERE course_id = $1", [courseId]);
 
-    // Delete quizzes and reviews
-    await Quiz.deleteMany({ course: courseId });
-    await Review.deleteMany({ courseId });
+    // Delete reviews linked to this course
+    await pool.query("DELETE FROM reviews WHERE course_id = $1", [courseId]);
 
-    // Delete the course
-    await Course.findByIdAndDelete(courseId);
+    // ✅ 3. Finally, delete the course itself
+    await pool.query("DELETE FROM courses WHERE id = $1", [courseId]);
 
     res.json({ message: "Course deleted successfully" });
 
@@ -375,84 +427,104 @@ const deleteCourse = async (req, res) => {
   }
 };
 
-// Get Learners Progress
+//Get Learners Progress 
 const getLearnersProgress = async (req, res) => {
   try {
-    const learners = await Learner.find()
-      .populate({
-        path: 'courses',
-        populate: [
-          { path: 'chapters', populate: { path: 'lessons' } },
-          { path: 'quizzes' }
-        ]
-      })
-      .populate({
-        path: 'quizzes.quiz',
-        model: 'Quiz'
-      })
-      .populate('completedLessons');
+    const learnersQuery = `
+      SELECT 
+        l.id AS learner_id, 
+        l.first_name, 
+        l.last_name, 
+        l.email,
+        c.id AS course_id, 
+        c.title AS course_title
+      FROM learner l
+      JOIN learner_courses lc ON lc.learner_id = l.id
+      JOIN courses c ON c.id = lc.course_id
+      ORDER BY l.id, c.id;
+    `;
+    const learnersResult = await pool.query(learnersQuery);
 
-    const learnerProgressData = learners.map((learner) => {
-      const enrolledCourses = learner.courses.map((course) => {
-        // Total lessons count
-        const totalLessons = course.chapters.reduce((lessonCount, chapter) => {
-          return lessonCount + (chapter.lessons ? chapter.lessons.length : 0);
-        }, 0);
+    const learnerMap = {};
 
-        // Flatten lesson IDs for the course
-        const courseLessonIds = course.chapters.flatMap(chapter =>
-          chapter.lessons.map(lesson => lesson._id.toString())
-        );
-
-        // Completed lessons count
-        const completedLessonsCount = Array.isArray(learner.completedLessons)
-        ? learner.completedLessons.filter(lesson =>
-            courseLessonIds.includes(lesson._id.toString())
-          ).length
-        : 0;
-
-        // Completed quizzes count
-        const completedQuizzesCount = Array.isArray(learner.quizzes)
-          ? learner.quizzes.filter(sq =>
-              sq.course && sq.course.toString() === course._id.toString()
-            ).length
-          : 0;
-
-        const totalQuizzes = course.quizzes.length;
-        const totalItems = totalLessons + totalQuizzes;
-        const completedItems = completedLessonsCount + completedQuizzesCount;
-
-        let progressPercent = 0;
-        if (totalItems > 0) {
-          progressPercent = ((completedItems / totalItems) * 100).toFixed(0);
-        }
-
-        return {
-          courseTitle: course.title,
-          totalChapters: course.chapters.length,
-          totalLessons,
-          completedLessons: completedLessonsCount,
-          totalQuizzes,
-          completedQuizzes: completedQuizzesCount,
-          progressPercent
+    for (const row of learnersResult.rows) {
+      if (!learnerMap[row.learner_id]) {
+        learnerMap[row.learner_id] = {
+          id: row.learner_id,
+          first_name: row.first_name,
+          last_name: row.last_name,
+          email: row.email,
+          enrolledCourses: []
         };
+      }
+
+      // ✅ Get total chapters for the course
+      const chaptersQuery = `
+        SELECT COUNT(id) AS total_chapters
+        FROM chapters
+        WHERE course_id = $1;
+      `;
+      const chaptersResult = await pool.query(chaptersQuery, [row.course_id]);
+      const totalChapters = parseInt(chaptersResult.rows[0].total_chapters, 10);
+
+      // ✅ Get total lessons
+      const lessonsQuery = `
+        SELECT COUNT(l.id) AS total_lessons
+        FROM chapters ch
+        LEFT JOIN lessons l ON l.chapter_id = ch.id
+        WHERE ch.course_id = $1;
+      `;
+      const lessonsResult = await pool.query(lessonsQuery, [row.course_id]);
+      const totalLessons = parseInt(lessonsResult.rows[0].total_lessons, 10);
+
+      // ✅ Get completed lessons
+      const completedLessonsQuery = `
+        SELECT COUNT(lcl.lesson_id) AS completed_lessons
+        FROM learner_completed_lessons lcl
+        JOIN lessons l ON l.id = lcl.lesson_id
+        JOIN chapters ch ON ch.id = l.chapter_id
+        WHERE lcl.learner_id = $1 AND ch.course_id = $2;
+      `;
+      const completedLessonsResult = await pool.query(completedLessonsQuery, [row.learner_id, row.course_id]);
+      const completedLessons = parseInt(completedLessonsResult.rows[0].completed_lessons, 10);
+
+      // ✅ Get total quizzes
+      const quizzesQuery = `SELECT COUNT(id) AS total_quizzes FROM quizzes WHERE course_id = $1;`;
+      const quizzesResult = await pool.query(quizzesQuery, [row.course_id]);
+      const totalQuizzes = parseInt(quizzesResult.rows[0].total_quizzes, 10);
+
+      // ✅ Get completed quizzes
+      const completedQuizzesQuery = `
+        SELECT COUNT(id) AS completed_quizzes
+        FROM learner_quizzes
+        WHERE learner_id = $1 AND course_id = $2;
+      `;
+      const completedQuizzesResult = await pool.query(completedQuizzesQuery, [row.learner_id, row.course_id]);
+      const completedQuizzes = parseInt(completedQuizzesResult.rows[0].completed_quizzes, 10);
+
+      // ✅ Calculate progress
+      const totalItems = totalLessons + totalQuizzes;
+      const completedItems = completedLessons + completedQuizzes;
+      const progressPercent = totalItems > 0 ? Math.round((completedItems / totalItems) * 100) : 0;
+
+      learnerMap[row.learner_id].enrolledCourses.push({
+        courseTitle: row.course_title,
+        totalChapters,
+        totalLessons,
+        completedLessons,
+        totalQuizzes,
+        completedQuizzes,
+        progressPercent
       });
+    }
 
-      return {
-        _id: learner._id,
-        firstName: learner.firstName,
-        lastName: learner.lastName,
-        email: learner.email,
-        enrolledCourses
-      };
-    });
-
-    res.status(200).json(learnerProgressData);
+    res.status(200).json(Object.values(learnerMap));
   } catch (error) {
-    console.error('Error fetching Learner progress:', error);
-    res.status(500).json({ error: 'An error occurred while fetching Learner progress' });
+    console.error("Error fetching Learner progress:", error);
+    res.status(500).json({ error: "An error occurred while fetching Learner progress" });
   }
 };
+
 
 module.exports = {
   getUsers,

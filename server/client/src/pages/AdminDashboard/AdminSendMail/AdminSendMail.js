@@ -103,7 +103,7 @@ const AdminSendMail = () => {
   const [isSending, setIsSending] = useState(false);
 
   useEffect(() => {
-    fetch('https://hilms.onrender.com/api/courses')
+    fetch('http://localhost:5000/api/courses')
       .then((response) => response.json())
       .then((data) => {
         console.log('Fetched courses:', data);
@@ -121,7 +121,7 @@ const AdminSendMail = () => {
   }, []);
 
   const fetchLearnerEmails = (courseId) => {
-    fetch(`https://hilms.onrender.com/api/learner/learners/${courseId}`)
+    fetch(`http://localhost:5000/api/learner/learners/${courseId}`)
       .then((response) => response.json())
       .then((data) => {
         console.log('Fetched learner emails:', data);
@@ -195,7 +195,7 @@ const AdminSendMail = () => {
           <option value="">-- Select a Course --</option>
           {courses.length > 0 ? (
             courses.map((course) => (
-              <option key={course._id} value={course._id}>
+              <option key={course.id} value={course.id}>
                 {course.title}
               </option>
             ))

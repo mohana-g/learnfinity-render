@@ -15,7 +15,7 @@
 //     const fetchPath = async () => {
 //       try {
 //         const res = await fetch(
-//           `https://hilms.onrender.com/api/career-paths/${pathId}`
+//           `http://localhost:5000/api/career-paths/${pathId}`
 //         );
 //         if (!res.ok) throw new Error("Failed to fetch career path");
 //         const data = await res.json();
@@ -153,7 +153,7 @@ const CareerPathDetail = () => {
   const fetchPath = async () => {
     try {
       const res = await fetch(
-        `https://hilms.onrender.com/api/career-paths/${pathId}`
+        `http://localhost:5000/api/career-paths/${pathId}`
       );
       if (!res.ok) throw new Error("Failed to fetch career path");
       const data = await res.json();
@@ -163,7 +163,7 @@ const CareerPathDetail = () => {
       if (localStorage.getItem("role") === "learner") {
         const token = localStorage.getItem("token");
         const progressRes = await fetch(
-          `https://hilms.onrender.com/api/learner/progress`,
+          `http://localhost:5000/api/learner/progress`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
         if (progressRes.ok) {
@@ -288,7 +288,7 @@ const CareerPathDetail = () => {
                       className="trainer-img"
                     /> */}
                     <div>
-                      <strong>Trainer Name: </strong>{course.trainer.fullName}
+                      <strong>Trainer Name: </strong>{course.trainer.full_name}
                       {/* <p>{course.trainer.bio}</p> */}
                     </div>
                   </div>
@@ -299,12 +299,12 @@ const CareerPathDetail = () => {
                     <h4>Chapters</h4>
                     <ol>
                       {course.chapters.map((ch) => (
-                        <li key={ch._id}>
+                        <li key={ch.id}>
                           <strong>{ch.name}</strong>
                           {ch.lessons?.length > 0 && (
                             <ul className="lessons">
                               {ch.lessons.map((lesson) => (
-                                <li key={lesson._id}>
+                                <li key={lesson.id}>
                                   {lesson.title} ({lesson.duration})
                                 </li>
                               ))}

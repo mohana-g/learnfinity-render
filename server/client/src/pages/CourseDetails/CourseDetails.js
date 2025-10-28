@@ -64,7 +64,7 @@ const CourseDetails = () => {
     const fetchCourseDetails = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`https://hilms.onrender.com/api/courses/course-details/${courseId}`);
+        const response = await axios.get(`http://localhost:5000/api/courses/course-details/${courseId}`);
         setCourse(response?.data?.data || {});
       } catch (err) {
         console.error("Error fetching course details:", err.message);
@@ -93,7 +93,7 @@ const CourseDetails = () => {
 
   try {
     await axios.post(
-      `https://hilms.onrender.com/api/courses/course-details/${courseId}/enroll`,
+      `http://localhost:5000/api/courses/course-details/${courseId}/enroll`,
       {},
       { headers: { Authorization: `Bearer ${token}` } }
     );
@@ -160,7 +160,7 @@ const CourseDetails = () => {
             <ul className="course-meta">
               <li>Enrolled Learners: {Array.isArray(course.learners) ? course.learners.length : 0}</li>
               <li>Course Trainer: {course.trainer?.fullName || "Unknown"}</li>
-              <li>Last Updated: {course.updatedAt ? new Date(course.updatedAt).toLocaleDateString() : "N/A"}</li>
+              <li>Last Updated: {course.updated_at ? new Date(course.updated_at).toLocaleDateString() : "N/A"}</li>
               <li>Language: {course.language || "English"}</li>
             </ul>
           </div>
@@ -199,12 +199,12 @@ const CourseDetails = () => {
                 {Array.isArray(course.chapters) && course.chapters.length > 0 ? (
                   <ul className="chapter-list">
                     {course.chapters.map((chapter) => (
-                      <li key={chapter._id}>
+                      <li key={chapter.id}>
                         <strong>Chapter: {chapter.name || "Untitled Chapter"}</strong>
                         <ul className="lesson-list">
                           {Array.isArray(chapter.lessons) && chapter.lessons.length > 0 ? (
                             chapter.lessons.map((lesson) => (
-                              <li key={lesson._id}>
+                              <li key={lesson.id}>
                                 <strong>Lesson {lesson.number}: {lesson.title || "Untitled Lesson"}</strong>
                                 <p>{lesson.description || "No description available"}</p>
                               </li>
@@ -238,8 +238,8 @@ const CourseDetails = () => {
                 {Array.isArray(course.reviews) && course.reviews.length > 0 ? (
                   <ul className="review-list">
                     {course.reviews.map((review) => (
-                      <li key={review._id}>
-                        <strong>{review.learnerName || "Anonymous"}:</strong>
+                      <li key={review.id}>
+                        <strong>{review.learner_name || "Anonymous"}:</strong>
                         <p>Rating: ★ {review.rating}/5</p>
                         <p>{review.comment || "No comment provided."}</p>
                       </li>

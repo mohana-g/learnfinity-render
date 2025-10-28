@@ -101,7 +101,7 @@ function TrainerHome() {
     const fetchCourses = async () => {
       try {
         const token = localStorage.getItem("token");
-        const response = await axios.get("https://hilms.onrender.com/api/trainer/trainer-courses", {
+        const response = await axios.get("http://localhost:5000/api/trainer/trainer-courses", {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -132,7 +132,7 @@ function TrainerHome() {
     useEffect(() => {
       const fetchLeaderboard = async () => {
         try {
-          const response = await axios.get("https://hilms.onrender.com/api/learner/leaderboard");
+          const response = await axios.get("http://localhost:5000/api/learner/leaderboard");
           setLeaderboard(response.data);
         } catch (err) {
           setLeaderboardError("Failed to fetch leaderboard");
@@ -178,8 +178,8 @@ function TrainerHome() {
     <div className="trainer-courses-container-cards">
       {teachingCourses.map((course) => (
         <Link
-          to={`/trainer-dashboard/course-content/${course._id}`}
-          key={course._id}
+          to={`/trainer-dashboard/course-content/${course.id}`}
+          key={course.id}
           className="trainer-courses-card-link"
         >
           <div className="trainer-courses-card">
@@ -189,8 +189,8 @@ function TrainerHome() {
               className="trainer-courses-image"
             />
             <h3>{course.title}</h3>
-            <p><strong>Instructor:</strong> {course.trainer?.fullName || "Not Available"}</p>
-            <p><strong>Enrolled Learners:</strong> {course.learners?.length || 0}</p>
+            <p><strong>Instructor:</strong> {course.trainer_name || "Not Available"}</p>
+            <p><strong>Enrolled Learners:</strong> {course.enrolled_count || 0}</p>
             <div className="btn-primary">Open Course</div>
           </div>
         </Link>

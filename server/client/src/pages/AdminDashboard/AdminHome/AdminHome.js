@@ -117,7 +117,7 @@ const AdminDashboard = () => {
   const fetchUsers = async () => {
     setUsersLoading(true);
     try {
-      const response = await axios.get('https://hilms.onrender.com/api/admin/users');
+      const response = await axios.get('http://localhost:5000/api/admin/users');
       setUsers(response.data.users);
     } catch (error) {
       console.error('Error fetching users:', error);
@@ -129,7 +129,7 @@ const AdminDashboard = () => {
   const fetchTrainers = async () => {
     setTrainersLoading(true);
     try {
-      const response = await axios.get('https://hilms.onrender.com/api/admin/pending-trainers');
+      const response = await axios.get('http://localhost:5000/api/admin/pending-trainers');
       setTrainers(response.data.trainers);
     } catch (error) {
       console.error('Error fetching trainers:', error);
@@ -141,7 +141,7 @@ const AdminDashboard = () => {
   const fetchCourses = async () => {
     setCoursesLoading(true);
     try {
-      const response = await axios.get('https://hilms.onrender.com/api/admin/courses');
+      const response = await axios.get('http://localhost:5000/api/admin/courses');
       setCourses(response.data.courses);
     } catch (error) {
       console.error('Error fetching courses:', error);
@@ -162,7 +162,7 @@ const AdminDashboard = () => {
   const fetchLearnersProgress = async () => {
     setLearnersLoading(true);
     try {
-      const response = await axios.get('https://hilms.onrender.com/api/admin/learners-progress');
+      const response = await axios.get('http://localhost:5000/api/admin/learners-progress');
       setLearnersProgress(response.data);
     } catch (error) {
       console.error('Error fetching Learner progress:', error);
@@ -174,7 +174,7 @@ const AdminDashboard = () => {
   const fetchLeaderboard = async () => {
     setLeaderboardLoading(true);
     try {
-      const response = await axios.get("https://hilms.onrender.com/api/learner/leaderboard");
+      const response = await axios.get("http://localhost:5000/api/learner/leaderboard");
       setLeaderboard(response.data);
     } catch (err) {
       setLeaderboardError("Failed to fetch leaderboard");
@@ -199,7 +199,7 @@ const AdminDashboard = () => {
   const blockUser = async (userId) => {
     confirmAction("Are you sure you want to block this user?", async () => {
         try {
-            const response = await axios.put(`https://hilms.onrender.com/api/admin/block-user/${userId}`);
+            const response = await axios.put(`http://localhost:5000/api/admin/block-user/${userId}`);
              console.log("Block Response:", response.data);
             alert("User has been blocked!");
             fetchUsers(); // Refresh the user list
@@ -212,7 +212,7 @@ const AdminDashboard = () => {
   const unblockUser = async (userId) => {
       confirmAction("Are you sure you want to unblock this user?", async () => {
           try {
-              const response = await axios.put(`https://hilms.onrender.com/api/admin/unblock-user/${userId}`);
+              const response = await axios.put(`http://localhost:5000/api/admin/unblock-user/${userId}`);
               console.log("Unblock Response:", response.data);
               alert("User has been unblocked!");
               fetchUsers(); // Refresh the user list
@@ -226,7 +226,7 @@ const AdminDashboard = () => {
   const deleteUser = async (userId) => {
       confirmAction("Are you sure you want to delete this user?", async () => {
           try {
-            await axios.delete(`https://hilms.onrender.com/api/admin/delete-user/${userId}`);
+            await axios.delete(`http://localhost:5000/api/admin/delete-user/${userId}`);
             alert("User has been deleted!");
               fetchUsers();
           } catch (error) {
@@ -238,7 +238,7 @@ const AdminDashboard = () => {
   const deleteCourse = async (courseId) => {
     confirmAction('Are you sure you want to delete this course?', async () => {
       try {
-        await axios.delete(`https://hilms.onrender.com/api/admin/delete-course/${courseId}`);
+        await axios.delete(`http://localhost:5000/api/admin/delete-course/${courseId}`);
         fetchCourses();
       } catch (error) {
         console.error('Error deleting course:', error);
@@ -249,7 +249,7 @@ const AdminDashboard = () => {
   const approveTrainer = async (trainerId) => {
     confirmAction('Are you sure you want to approve this trainer?', async () => {
       try {
-        await axios.put(`https://hilms.onrender.com/api/admin/approve-trainer/${trainerId}`);
+        await axios.put(`http://localhost:5000/api/admin/approve-trainer/${trainerId}`);
         fetchTrainers();
       } catch (error) {
         console.error('Error approving trainer:', error);
@@ -260,7 +260,7 @@ const AdminDashboard = () => {
   const declineTrainer = async (trainerId) => {
     confirmAction('Are you sure you want to decline this trainer?', async () => {
       try {
-        await axios.put(`https://hilms.onrender.com/api/admin/decline-trainer/${trainerId}`);
+        await axios.put(`http://localhost:5000/api/admin/decline-trainer/${trainerId}`);
         fetchTrainers();
       } catch (error) {
         console.error('Error declining trainer:', error);
@@ -311,8 +311,7 @@ const AdminDashboard = () => {
     <table className="user-table">
       <thead>
         <tr>
-              <th>No</th> {/* <-- New Column */}
-
+          <th>No</th>
           <th>Profile</th>
           <th>Name</th>
           <th>Role</th>
@@ -328,11 +327,11 @@ const AdminDashboard = () => {
           .filter((user) => {
             const learnerName =
               user.role === 0 && user.learner
-                ? `${user.learner.firstName || ''} ${user.learner.lastName || ''}`
+                ? `${user.learner.first_name || ''} ${user.learner.last_name || ''}`
                 : '';
             const trainerName =
               user.role === 2 && user.trainer
-                ? user.trainer.fullName || ''
+                ? user.trainer.full_name || ''
                 : '';
             const name = learnerName || trainerName;
             const email = user.email || '';
@@ -342,59 +341,45 @@ const AdminDashboard = () => {
             );
           })
           .map((user, index) => {
-            const fullName =
+            const full_name =
               user.role === 0 && user.learner
-                ? `${user.learner.firstName} ${user.learner.lastName}`
+                ? `${user.learner.firstName || ""} ${user.learner.lastName || ""}`.trim()
                 : user.role === 2 && user.trainer
-                ? user.trainer.fullName
-                : 'Unknown';
+                ? user.trainer.fullName || "Unknown"
+                : "Unknown";
 
             const phone =
               user.role === 0 && user.learner
-                ? user.learner.phone
+                ? user.learner.phone || "N/A"
                 : user.role === 2 && user.trainer
-                ? user.trainer.phoneNumber
-                : 'N/A';
+                ? user.trainer.phone || "N/A"
+                : "N/A";
 
             const detail =
               user.role === 0 && user.learner
                 ? user.learner.dob
                   ? new Date(user.learner.dob).toLocaleDateString()
-                  : 'N/A'
+                  : "N/A"
                 : user.role === 2 && user.trainer
-                ? user.trainer.institute
-                : 'N/A';
+                ? user.trainer.institute || "N/A"
+                : "N/A";
 
             return (
-              <tr key={user._id}>
-                          <td>{index + 1}</td> {/* <-- User number column */}
-
-                {/* <td>
-                  <img
-                    src={
-                      user.profileImage ||
-                      'https://static.vecteezy.com/system/resources/thumbnails/009/734/564/small/default-avatar-profile-icon-of-social-media-user-vector.jpg'
-                    }
-                    alt={`${fullName}'s profile`}
-                          className="table-profile-image"
-                  />
-                </td> */}
-
+              <tr key={user.id}>
+                <td>{index + 1}</td>
                 <td>
-                  {user.profileImage ? (
+                  {user.image_url ? (
                     <img
-                      src={user.profileImage}
-                      alt={`${fullName}'s profile`}
+                      src={user.image_url}
+                      alt={`${full_name}'s profile`}
                       className="table-profile-image"
                     />
                   ) : (
                     <div
                       className="initial-avatar"
-                      style={{
-                        background: getGradientFromName(fullName), // 🎨 controlled gradient
-                      }}
+                      style={{ background: getGradientFromName(full_name) }}
                     >
-                      {fullName
+                      {full_name
                         .split(" ")
                         .map((n) => n[0])
                         .join("")
@@ -402,23 +387,24 @@ const AdminDashboard = () => {
                     </div>
                   )}
                 </td>
-
-
-                <td>{fullName}</td>
-                <td>{user.role === 0 ? 'Learner' : 'Trainer'}</td>
+                <td>{full_name}</td>
+                <td>{user.role === 0 ? "Learner" : "Trainer"}</td>
                 <td>{user.email}</td>
                 <td>{phone}</td>
                 <td>{detail}</td>
                 <td>
                   <button
-                    className={user.flag === 1 ? 'unblock-btn' : 'block-btn'}
+                    className={user.flag === 1 ? "unblock-btn" : "block-btn"}
                     onClick={() =>
-                      user.flag === 1 ? unblockUser(user._id) : blockUser(user._id)
+                      user.flag === 1 ? unblockUser(user.id) : blockUser(user.id)
                     }
                   >
-                    {user.flag === 1 ? 'Unblock' : 'Block'}
+                    {user.flag === 1 ? "Unblock" : "Block"}
                   </button>
-                  <button className="admin-delete-btn" onClick={() => deleteUser(user._id)}>
+                  <button
+                    className="admin-delete-btn"
+                    onClick={() => deleteUser(user.id)}
+                  >
                     Delete
                   </button>
                 </td>
@@ -429,7 +415,6 @@ const AdminDashboard = () => {
     </table>
   )}
 </div>
-
           </div>
         )}
 
@@ -463,11 +448,11 @@ const AdminDashboard = () => {
             course.description.toLowerCase().includes(searchCourseQuery.toLowerCase())
           )
                 .map((course) => (
-                  <div className="course-card" key={course._id}>
-                  <img src={`https://hilms.onrender.com${course.imageurl}`} alt={course.title} className="course-image" />
+                  <div className="course-card" key={course.id}>
+                  <img src={`http://localhost:5000${course.imageurl}`} alt={course.title} className="course-image" />
                   <p className="course-title-label">Title:<span className="course-title">{course.title}</span></p>
                   <p className="course-description-label">Description:<span className="course-description">{course.description}</span></p>
-                  <button className="admin-delete-btn" onClick={() => deleteCourse(course._id)}>Delete Course</button>
+                  <button className="admin-delete-btn" onClick={() => deleteCourse(course.id)}>Delete Course</button>
                 </div>
                 ))
               )}
@@ -486,7 +471,7 @@ const AdminDashboard = () => {
               <p>No pending trainers for approval.</p>
             ) : (
               trainers.map((trainer) => (
-                <div className="trainer-card" key={trainer._id}>
+                <div className="trainer-card" key={trainer.id}>
                   {/* <img 
                     src={trainer.profileImage || "https://static.vecteezy.com/system/resources/thumbnails/009/734/564/small/default-avatar-profile-icon-of-social-media-user-vector.jpg"} 
                     alt={`${trainer.fullName}'s profile`} 
@@ -495,17 +480,17 @@ const AdminDashboard = () => {
                   {trainer.profileImage ? (
                     <img
                       src={trainer.profileImage}
-                      alt={`${trainer.fullName}'s profile`}
+                      alt={`${trainer.full_name}'s profile`}
                       className="profile-image"
                     />
                   ) : (
                     <div
                       className="initial-image"
                       style={{
-                        background: getGradientFromName(trainer.fullName), // gradient background
+                        background: getGradientFromName(trainer.full_name), // gradient background
                       }}
                     >
-                      {trainer.fullName
+                      {trainer.full_name
                         .split(" ")
                         .map((n) => n[0])
                         .join("")
@@ -513,11 +498,11 @@ const AdminDashboard = () => {
                     </div>
                   )}
 
-                  <p><strong>{trainer.fullName}</strong></p>
+                  <p><strong>{trainer.full_name}</strong></p>
                   <p>Email: {trainer.email}</p>
-                  <p>Phone: {trainer.phoneNumber || "N/A"}</p>
-                  <button className="approve-btn" onClick={() => approveTrainer(trainer._id)}>Approve</button>
-                  <button className="decline-btn" onClick={() => declineTrainer(trainer._id)}>Decline</button>
+                  <p>Phone: {trainer.phone_number || "N/A"}</p>
+                  <button className="approve-btn" onClick={() => approveTrainer(trainer.id)}>Approve</button>
+                  <button className="decline-btn" onClick={() => declineTrainer(trainer.id)}>Decline</button>
                 </div>
               ))
             )}
@@ -541,22 +526,22 @@ const AdminDashboard = () => {
         ) : (
           <div className="admin-learner-cards">
             {learnersProgress.map((learner) => (
-              <div className="admin-learner-card" key={learner._id}>
-                <p><strong>{learner.firstName} {learner.lastName}</strong></p>
+              <div className="admin-learner-card" key={learner.id}>
+                <p><strong>{learner.first_name} {learner.last_name}</strong></p>
                 <p>{learner.email}</p>
                 <p>
                   <strong>Enrolled Courses:</strong> {learner.enrolledCourses.length}
                   <button
                     className="toggle-details-button"
                     onClick={() =>
-                      setExpandedLearner(expandedLearner === learner._id ? null : learner._id)
+                      setExpandedLearner(expandedLearner === learner.id ? null : learner.id)
                     }
                   >
-                    {expandedLearner === learner._id ? 'Hide Details' : 'Show Details'}
+                    {expandedLearner === learner.id ? 'Hide Details' : 'Show Details'}
                   </button>
                 </p>
 
-                {expandedLearner === learner._id && (
+                {expandedLearner === learner.id && (
                   <div className="admin-course-list">
                     {learner.enrolledCourses.map((course, index) => (
                     <div key={index} className="admin-course-progress">
@@ -586,7 +571,6 @@ const AdminDashboard = () => {
       </div>
     )}
 
-    {/* Leaderboard Section */}
 {/* Leaderboard Section */}
 {activeSection === 'leaderboard' && (
   <section className="admin-leaderboard-section">

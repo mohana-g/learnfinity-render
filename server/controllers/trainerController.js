@@ -1,3 +1,5 @@
+const pool = require("../config/db");
+
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const Trainer = require("../models/Trainer");
@@ -21,35 +23,36 @@ const trainerSignUp = async (req, res) => {
   }
 
   try {
-    const existingTrainer = await Trainer.findOne({ $or: [{ phoneNumber }, { email }] });
-    if (existingTrainer) {
+    // Check if trainer already exists
+    const existingTrainer = await pool.query(
+      "SELECT * FROM trainer WHERE phone_number = $1 OR email = $2",
+      [phoneNumber, email]
+    );
+
+    if (existingTrainer.rows.length > 0) {
       return res.status(400).json({ error: "Trainer with this phone number or email already exists" });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const newTrainer = new Trainer({
-      fullName,
-      institute,
-      phoneNumber,
-      email,
-      gender,
-      password: hashedPassword,
-      courses: [],
-    });
+    // Insert into Trainer table
+    const newTrainer = await pool.query(
+      `INSERT INTO trainer (full_name, institute, phone_number, email, gender, password)
+       VALUES ($1, $2, $3, $4, $5, $6) RETURNING id, full_name, email`,
+      [fullName, institute, phoneNumber, email, gender, hashedPassword]
+    );
 
-    await newTrainer.save();
+    const trainerId = newTrainer.rows[0].id;
 
-    const newUser = new User({
-      email,
-      password: hashedPassword,
-      trainer: newTrainer._id,
-      role: 2, // Role 2 for Trainers
-    });
+    // Insert into User table
+    await pool.query(
+      `INSERT INTO users (email, password, role, trainer_id)
+       VALUES ($1, $2, $3, $4)`,
+      [email, hashedPassword, 2, trainerId] // 2 = Trainer role
+    );
 
-    await newUser.save();
-
-    const token = jwt.sign({ id: newTrainer._id, role: "trainer" }, JWT_SECRET, { expiresIn: "1h" });
+    // Generate JWT
+    const token = jwt.sign({ id: trainerId, role: "trainer" }, JWT_SECRET, { expiresIn: "1h" });
 
     res.status(201).json({ success: true, token, message: "Trainer registered successfully!" });
   } catch (err) {
@@ -63,50 +66,45 @@ const trainerSignUp = async (req, res) => {
  */
 const addCourse = async (req, res) => {
   try {
-    // Extract Trainer ID from the authenticated user (assuming JWT middleware attaches it)
     const trainerId = req.user.id;
-
-    if (!trainerId) {
-      return res.status(401).json({ message: "Unauthorized: Trainer ID not found" });
-    }
-
     const { title, name, description } = req.body;
 
-    if (!title || !name || !description) {
+    if (!trainerId)
+      return res.status(401).json({ message: "Unauthorized: Trainer ID not found" });
+    if (!title || !name || !description)
       return res.status(400).json({ message: "Title, name, and description are required" });
-    }
 
-    // Find Trainer in the database
-    const trainer = await Trainer.findById(trainerId);
-    if (!trainer) {
+    // ✅ 1. Check if trainer exists
+    const trainer = await pool.query("SELECT * FROM trainer WHERE id = $1", [trainerId]);
+    if (trainer.rows.length === 0)
       return res.status(404).json({ message: "Trainer not found" });
-    }
 
-    // Handle image file if uploaded
+    const instructorName = trainer.rows[0].full_name; // ✅ Get trainer name
     const imagePath = req.file ? `/uploads/${req.file.filename}` : null;
 
-    // Create new course and associate it with the Trainer
-    const newCourse = new Course({
-      title,
-      name,
-      description,
-      imageurl: imagePath,
-      trainer: trainerId, // Automatically assigned
-    });
+    // ✅ 2. Insert course into 'courses' table (with instructor name)
+    const newCourse = await pool.query(
+      `INSERT INTO courses (title, name, description, imageurl, instructor_name, trainer_id)
+       VALUES ($1, $2, $3, $4, $5, $6)
+       RETURNING id, title, name, description, imageurl, instructor_name, trainer_id`,
+      [title, name, description, imagePath, instructorName, trainerId]
+    );
 
-    // Save course to DB
-    await newCourse.save();
+    const courseId = newCourse.rows[0].id;
 
-    // Add course ID to the Trainer's list of courses
-    trainer.courses.push(newCourse._id);
-    await trainer.save();
+    // ✅ 3. Also link trainer and course in 'trainer_courses' table
+    await pool.query(
+      `INSERT INTO trainer_courses (trainer_id, course_id)
+       VALUES ($1, $2)`,
+      [trainerId, courseId]
+    );
 
+    // ✅ 4. Respond success
     res.status(201).json({
       success: true,
       message: "Course added successfully!",
-      course: newCourse,
+      course: newCourse.rows[0],
     });
-
   } catch (error) {
     console.error("Error adding course:", error);
     res.status(500).json({ message: "Server error", error });
@@ -117,11 +115,24 @@ const addCourse = async (req, res) => {
 const getTrainerCourses = async (req, res) => {
   try {
     const trainerId = req.user.id;
-    const courses = await Course.find({ trainer: trainerId }).populate("trainer", "fullName");
+    const courses = await pool.query(
+      `SELECT 
+          c.*, 
+          t.full_name AS trainer_name,
+          COUNT(lc.learner_id) AS enrolled_count
+       FROM courses c
+       JOIN trainer t ON c.trainer_id = t.id
+       LEFT JOIN learner_courses lc ON lc.course_id = c.id
+       WHERE c.trainer_id = $1
+       GROUP BY c.id, t.full_name
+       ORDER BY c.created_at DESC`,
+      [trainerId]
+    );
 
-    res.status(200).json({ success: true, data: courses });
+    res.status(200).json({ success: true, data: courses.rows });
   } catch (error) {
-    res.status(500).json({ success: false, message: "Error fetching courses", error });
+    console.error("Error fetching trainer courses:", error);
+    res.status(500).json({ success: false, message: "Error fetching courses" });
   }
 };
 
@@ -130,12 +141,14 @@ const getTrainerCourses = async (req, res) => {
  */
 const getTrainerProfile = async (req, res) => {
   try {
-    const trainer = await Trainer.findById(req.user.id).select("-password");
-    if (!trainer) {
-      return res.status(404).json({ message: "Trainer not found" });
-    }
-    res.json(trainer);
+    const trainer = await pool.query(
+      "SELECT id, full_name, institute, phone_number, email, gender FROM trainer WHERE id = $1",
+      [req.user.id]
+    );
+    if (trainer.rows.length === 0) return res.status(404).json({ message: "Trainer not found" });
+    res.json(trainer.rows[0]);
   } catch (error) {
+    console.error("Error fetching trainer profile:", error);
     res.status(500).json({ message: "Server error" });
   }
 };
@@ -147,22 +160,33 @@ const updateTrainerProfile = async (req, res) => {
   try {
     const { fullName, institute, phoneNumber } = req.body;
 
-    const trainer = await Trainer.findById(req.user.id);
-    if (!trainer) {
+    // Update trainer and return the updated row
+    const updatedTrainer = await pool.query(
+      `UPDATE trainer SET 
+         full_name = COALESCE($1, full_name),
+         institute = COALESCE($2, institute),
+         phone_number = COALESCE($3, phone_number),
+         updated_at = NOW()
+       WHERE id = $4
+       RETURNING *`,
+      [fullName, institute, phoneNumber, req.user.id]
+    );
+
+    // Check if trainer exists
+    if (updatedTrainer.rows.length === 0) {
       return res.status(404).json({ message: "Trainer not found" });
     }
 
-    trainer.fullName = fullName || trainer.fullName;
-    trainer.institute = institute || trainer.institute;
-    trainer.phoneNumber = phoneNumber || trainer.phoneNumber;
-    trainer.updatedAt = Date.now();
-
-    await trainer.save();
-    res.json({ message: "Profile updated successfully!", trainer });
+    res.json({
+      message: "Profile updated successfully!",
+      trainer: updatedTrainer.rows[0],
+    });
   } catch (error) {
+    console.error("Error updating trainer profile:", error);
     res.status(500).json({ message: "Server error" });
   }
 };
+
 
 /**
  * ✅ Update Trainer Password
@@ -171,21 +195,28 @@ const updateTrainerPassword = async (req, res) => {
   const { currentPassword, newPassword } = req.body;
 
   try {
-    const trainer = await Trainer.findById(req.user.id);
-    if (!trainer) {
+    // Fetch trainer
+    const trainerResult = await pool.query("SELECT * FROM trainer WHERE id = $1", [req.user.id]);
+    if (trainerResult.rows.length === 0) {
       return res.status(404).json({ message: "Trainer not found" });
     }
+    const trainer = trainerResult.rows[0];
 
+    // Compare current password
     const isMatch = await bcrypt.compare(currentPassword, trainer.password);
     if (!isMatch) {
       return res.status(400).json({ message: "Incorrect current password" });
     }
 
+    // Generate salt and hash new password (same as MongoDB)
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(newPassword, salt);
 
-    await Trainer.updateOne({ _id: trainer._id }, { $set: { password: hashedPassword } });
-    await User.updateOne({ email: trainer.email }, { $set: { password: hashedPassword } });
+    // Update trainer password
+    await pool.query("UPDATE trainer SET password = $1 WHERE id = $2", [hashedPassword, req.user.id]);
+
+    // Update user password
+    await pool.query("UPDATE users SET password = $1 WHERE email = $2", [hashedPassword, trainer.email]);
 
     res.json({ message: "Password updated successfully" });
   } catch (error) {

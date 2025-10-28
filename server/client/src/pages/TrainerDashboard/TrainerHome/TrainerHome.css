@@ -2,6 +2,7 @@
 .trainer-container {
     font-family: 'Work Sans', sans-serif;
     user-select: none; /* Prevent selection */
+    background: linear-gradient(135deg, #a8edea, #fed6e3);
 }
 
 /* Header Section */

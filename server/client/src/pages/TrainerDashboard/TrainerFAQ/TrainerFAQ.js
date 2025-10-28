@@ -15,18 +15,19 @@ const TrainerFAQ = () => {
       answer: "Yes, eLearning courses can be customized according to your needs, including content, duration, and delivery methods.",
     },
     {
-      question: "How much does an eLearning course cost?",
-      answer:
-        "E-learning is a one-time investment, and once you have your course, you can use it as many times as you want. Costs depend on content, customization, and delivery method.",
-    },
-    {
-      question: "What is the refund policy?",
-      answer: "Refund policies vary by course provider. Please refer to the terms and conditions for detailed information.",
-    },
-    {
       question: "Can I download the course certificate after completing the course?",
       answer:
         "Yes, once you have completed all the course requirements, you can download your course certificate directly from your dashboard.",
+    },
+    {
+      question: "What should I do if I forget my password?",
+      answer:
+        "If you forget your password, go to the sign-in page and click on the 'Forgot Password' link. Follow the instructions to reset your password via your registered email.",
+    },
+    {
+      question: "Can I access the courses on mobile devices?",
+      answer:
+        "Yes, all courses are fully responsive and can be accessed on any device, including smartphones, tablets, and laptops, for convenient learning anytime, anywhere.",
     },
     {
       question: "How can I enroll in a course?",

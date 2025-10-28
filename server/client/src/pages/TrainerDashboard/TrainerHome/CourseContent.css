@@ -5,6 +5,7 @@
   gap: 20px;
   padding: 20px;
   user-select: none; /* Prevent selection */
+  background: linear-gradient(135deg, #a8edea, #fed6e3);
 }
 
 /* Left Sidebar (Tabs) */
@@ -54,6 +55,17 @@
 }
 
 /* Review Item */
+.Trainer-ratings {
+  color: #4CAF50;
+  margin-top: 5px;
+  font-size: 1.2em;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
 .review-item {
   background: #f9f9f9;
   padding: 15px;

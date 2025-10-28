@@ -9,6 +9,7 @@
     gap: 30px;
     margin: 30px auto;
     max-width: 1400px;
+    background: linear-gradient(135deg, #a8edea, #fed6e3);
 }
 
 /* Form container */

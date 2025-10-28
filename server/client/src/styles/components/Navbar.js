@@ -116,6 +116,7 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom'; // ✅ use NavLink
 import { useMsal } from "@azure/msal-react";
+import logo from '../../assets/HTI.png';
 import MicrosoftLogin from '../../pages/Login/MicrosoftLogin';
 import './Navbar.css';
 
@@ -168,7 +169,9 @@ function Navbar() {
     <header className="navbar">
       <div className="navbar-container">
         <div className="logo">
-          <NavLink to="/" end onClick={closeMenu}>Learnfinity</NavLink>
+          <NavLink to="/" end onClick={closeMenu} className="logo-link">
+            <img src={logo} alt="Learnfinity Logo" className="logo-img" />
+          </NavLink>
         </div>
         <button className="hamburger" onClick={() => setIsMenuOpen(prev => !prev)}>☰</button>
 

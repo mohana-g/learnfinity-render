@@ -89,7 +89,7 @@ const ResetPassword = () => {
 export default ResetPassword;
 */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './ResetPassword.css';
 
 const ResetPassword = () => {
@@ -98,39 +98,36 @@ const ResetPassword = () => {
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [token, setToken] = useState('');
 
-  // Get the reset token from the URL query parameters
-  const resetToken = new URLSearchParams(window.location.search).get('token');
-
-  // Validate token presence
-  if (!resetToken) {
-    setError('Invalid or expired reset token');
-    return <p className="error-message">Invalid or expired reset token</p>;
-  }
+  useEffect(() => {
+    const urlToken = new URLSearchParams(window.location.search).get('token');
+    if (!urlToken) {
+      setError('Invalid or expired reset token');
+    } else {
+      setToken(urlToken);
+    }
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
     if (password !== confirmPassword) {
       setError('Passwords do not match');
       setMessage('');
       return;
     }
-  
+
     setLoading(true);
     try {
-      const response = await fetch('https://hilms.onrender.com/api/auth/reset-password', {
+      const response = await fetch('http://localhost:5000/api/auth/reset-password', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ password, token: resetToken }), // Send encoded email as token
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password, token }),
       });
-  
+
       const data = await response.json();
-  
       if (response.ok) {
-        setMessage('Password reset successful.');
+        setMessage('Password reset successful. You can now log in.');
         setPassword('');
         setConfirmPassword('');
       } else {
@@ -142,7 +139,9 @@ const ResetPassword = () => {
       setLoading(false);
     }
   };
-  
+
+  if (error && !token) return <p className="error-message">{error}</p>;
+
   return (
     <div className="reset-password-container">
       <div className="reset-password-box">

@@ -3,6 +3,7 @@ body {
   font-family: 'Work Sans', sans-serif;
   margin: 0;
   padding: 0;
+  background: linear-gradient(135deg, #a8edea, #fed6e3);
   user-select: none; /* Prevent selection */
 }
 

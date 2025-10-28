@@ -31,14 +31,14 @@ function CareerPathCards({ paths = [], onReadMore }) {
     <section className="Lcareer-path-cards-container">
       {paths.length > 0 ? (
         paths.map((path) => (
-          <div key={path._id} className="Lcareer-path-card">
+          <div key={path.id} className="Lcareer-path-card">
             <h3>{path.title}</h3>
             <p className="Lcareer-path-levels">
               <strong>Levels:</strong> {path.levelSummary || "No levels"}
             </p>
             <button
               className="Lbtn-read-more"
-              onClick={() => onReadMore(path._id)}
+              onClick={() => onReadMore(path.id)}
             >
               Read More
             </button>
@@ -109,7 +109,7 @@ function LearnerHome() {
   useEffect(() => {
     const fetchCareerPaths = async () => {
       try {
-        const response = await axios.get("https://hilms.onrender.com/api/career-paths");
+        const response = await axios.get("http://localhost:5000/api/career-paths");
         setCareerPaths(Array.isArray(response.data) ? response.data : response.data.data || []);
       } catch (error) {
         console.error("Error fetching career paths:", error);
@@ -168,7 +168,7 @@ function LearnerHome() {
     const fetchEnrolledCourses = async () => {
       try {
         const token = localStorage.getItem("token");
-        const response = await axios.get("https://hilms.onrender.com/api/learner/enrolled-courses", {
+        const response = await axios.get("http://localhost:5000/api/learner/enrolled-courses", {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -187,7 +187,7 @@ function LearnerHome() {
   useEffect(() => {
     const fetchLeaderboard = async () => {
       try {
-        const response = await axios.get("https://hilms.onrender.com/api/learner/leaderboard");
+        const response = await axios.get("http://localhost:5000/api/learner/leaderboard");
         setLeaderboard(response.data);
       } catch (err) {
         setLeaderboardError("Failed to fetch leaderboard");
@@ -238,18 +238,18 @@ function LearnerHome() {
     <div className="courses-container-cards">
       {enrolledCourses.map((course) => (
         <Link
-          to={`/course-interaction/${course._id}`}
+          to={`/course-interaction/${course.id}`}
           className="courses-card-link"
-          key={course._id}
+          key={course.id}
         >
           <div className="courses-card">
             <img src={course.imageurl} alt={course.title} className="courses-image" />
             <h3>{course.title}</h3>
             <p>
-              <strong>Instructor:</strong> {course.trainer.fullName}
+              <strong>Instructor:</strong> {course.trainerFullName}
             </p>
             <p>
-              <strong>Enrolled learners:</strong> {course.learners.length}
+              <strong>Enrolled learners:</strong> {course.enrolledCount || 0}
             </p>
             <div className="btn-primary">Go to Course</div>
           </div>

@@ -5,6 +5,7 @@
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
   user-select: none; /* Prevent selection */
+  background-color: #fff;
 }
 
 .edit-course-container h2 {

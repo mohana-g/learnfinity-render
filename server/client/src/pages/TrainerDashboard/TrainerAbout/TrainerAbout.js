@@ -15,7 +15,7 @@ const TrainerAbout = () => {
         <div className="about-left">
           {loading && <div className="skeleton skeleton-course-aboimg"></div>}
           <img
-            src="https://hilms.onrender.com/uploads/e90af6d9-1036-48b5-ac3d-6a2391bd6009.png"
+            src="http://localhost:5000/uploads/e90af6d9-1036-48b5-ac3d-6a2391bd6009.png"
             alt="Education Illustration"
             className="about-image"
             onLoad={() => setLoading(false)}

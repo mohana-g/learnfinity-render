@@ -3,7 +3,8 @@
   padding: 2rem;
   font-family: 'Work Sans', sans-serif;
   color: #fff;
-  background-color: #fff;
+  /* background-color: #fff; */
+  background: linear-gradient(135deg, #a8edea, #fed6e3);
 }
 
 .courseinteraction-page h1 {
@@ -215,7 +216,7 @@
 
 .courseinteraction-review {
   margin-top: 20px;
-  color: white;
+  color: black;
 }
 
 .courseinteraction-review textarea {
