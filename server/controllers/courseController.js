@@ -81,26 +81,28 @@ const getCourseById = async (req, res) => {
 
     // ✅ 1. Fetch main course details
     const courseResult = await pool.query(`
-      SELECT 
-        c.id,
-        c.title,
-        c.name AS course_name,
-        c.description,
-        c.imageurl,
-        c.instructor_name,
-        c.trainer_id,
-        t.full_name AS trainer_name,
-        t.email AS trainer_email,
-        COUNT(DISTINCT lc.learner_id) AS enrolled_count,
-        COALESCE(AVG(r.rating), 0) AS average_rating,
-        COUNT(r.id) AS review_count
-      FROM courses c
-      LEFT JOIN trainer t ON c.trainer_id = t.id
-      LEFT JOIN learner_courses lc ON lc.course_id = c.id
-      LEFT JOIN reviews r ON r.course_id = c.id
-      WHERE c.id = $1
-      GROUP BY c.id, t.id
-    `, [courseId]);
+  SELECT 
+    c.id,
+    c.title,
+    c.name AS course_name,
+    c.description,
+    c.imageurl,
+    c.instructor_name,
+    c.trainer_id,
+    t.full_name AS trainer_name,
+    t.email AS trainer_email,
+    COUNT(DISTINCT lc.learner_id) AS enrolled_count,
+    COALESCE(AVG(r.rating), 0) AS average_rating,
+    COUNT(r.id) AS review_count
+  FROM courses c
+  LEFT JOIN trainer t ON c.trainer_id = t.id
+  LEFT JOIN learner_courses lc ON lc.course_id = c.id
+  LEFT JOIN reviews r ON r.course_id = c.id
+  WHERE c.id = $1
+  GROUP BY c.id, c.title, c.name, c.description, c.imageurl, c.instructor_name, 
+           c.trainer_id, t.full_name, t.email;
+`, [courseId]);
+
 
     if (courseResult.rows.length === 0) {
       return res.status(404).json({ message: "Course not found" });
