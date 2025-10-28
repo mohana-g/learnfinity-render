@@ -22,31 +22,17 @@
 //   .catch(err => console.error("❌ Database connection error", err.stack));
 
 // module.exports = pool;
-
 const { Pool } = require("pg");
 
-// Check if running on Render (production) or local
-const isProduction = process.env.NODE_ENV === "production";
-
-const pool = new Pool(
-  isProduction
-    ? {
-        connectionString: process.env.DATABASE_URL,
-        ssl: { rejectUnauthorized: false }, // required for Render's SSL connection
-      }
-    : {
-        user: "postgres",            // your local username
-        host: "localhost",           // local host
-        database: "postgres",        // local database name
-        password: "pgadmin",         // your local PostgreSQL password
-        port: 5432,                  // default port
-      }
-);
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: { rejectUnauthorized: false }, // required for Render PostgreSQL
+});
 
 // ✅ Test connection
 pool.connect()
   .then(client => {
-    console.log("✅ Connected to PostgreSQL");
+    console.log("✅ Connected to Render PostgreSQL");
     client.release();
   })
   .catch(err => console.error("❌ Database connection error:", err.stack));
