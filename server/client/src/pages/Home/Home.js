@@ -66,7 +66,7 @@
 //   // Fetch popular courses sorted by number of enrolled Learners
 //   const fetchPopularCourses = async () => {
 //     try {
-//       const response = await fetch('http://localhost:5000/api/courses/popular');
+//       const response = await fetch('https://hilms.onrender.com/api/courses/popular');
 //       if (!response.ok) {
 //         throw new Error('Failed to fetch popular courses');
 //       }
@@ -145,7 +145,7 @@
 //             <Link to="/trainer-signup" className="btn-secondary">Become a Trainer</Link>
 //           </div>
 //           <div className="teach-image">
-//           <img src="http://localhost:5000/uploads/istockphoto-1392125218-612x612.jpg" alt="Teaching Platform" />
+//           <img src="https://hilms.onrender.com/uploads/istockphoto-1392125218-612x612.jpg" alt="Teaching Platform" />
 //           </div>
 //         </div>
 //       </section>
@@ -372,7 +372,7 @@ function Home() {
   const fetchPopularCourses = async () => {
     try {
       const response = await fetch(
-        'http://localhost:5000/api/courses/popular'
+        'https://hilms.onrender.com/api/courses/popular'
       );
       if (!response.ok) throw new Error('Failed to fetch popular courses');
 
@@ -388,7 +388,7 @@ function Home() {
  // Fetch career paths
 const fetchCareerPaths = async () => {
   try {
-    const response = await fetch('http://localhost:5000/api/career-paths');
+    const response = await fetch('https://hilms.onrender.com/api/career-paths');
     if (!response.ok) throw new Error('Failed to fetch career paths');
 
     const data = await response.json();
@@ -509,7 +509,7 @@ const fetchCareerPaths = async () => {
           </div>
           <div className="teach-image">
             <img
-              src="http://localhost:5000/uploads/istockphoto-1392125218-612x612.jpg"
+              src="https://hilms.onrender.com/uploads/istockphoto-1392125218-612x612.jpg"
               alt="Teaching Platform"
             />
           </div>

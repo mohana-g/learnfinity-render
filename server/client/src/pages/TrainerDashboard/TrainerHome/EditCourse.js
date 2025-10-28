@@ -17,7 +17,7 @@ const EditCourse = () => {
   useEffect(() => {
     const fetchCourse = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/courses/${courseId}`);
+        const response = await axios.get(`https://hilms.onrender.com/api/courses/${courseId}`);
         const courseData = response.data.data;
 
         setCourseTitle(courseData.title);
@@ -54,7 +54,7 @@ const EditCourse = () => {
         formData.append("image", image);
       }
 
-      await axios.put(`http://localhost:5000/api/courses/${courseId}`, formData, {
+      await axios.put(`https://hilms.onrender.com/api/courses/${courseId}`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 

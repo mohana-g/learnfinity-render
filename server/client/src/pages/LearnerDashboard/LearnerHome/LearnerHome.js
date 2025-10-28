@@ -109,7 +109,7 @@ function LearnerHome() {
   useEffect(() => {
     const fetchCareerPaths = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/career-paths");
+        const response = await axios.get("https://hilms.onrender.com/api/career-paths");
         setCareerPaths(Array.isArray(response.data) ? response.data : response.data.data || []);
       } catch (error) {
         console.error("Error fetching career paths:", error);
@@ -168,7 +168,7 @@ function LearnerHome() {
     const fetchEnrolledCourses = async () => {
       try {
         const token = localStorage.getItem("token");
-        const response = await axios.get("http://localhost:5000/api/learner/enrolled-courses", {
+        const response = await axios.get("https://hilms.onrender.com/api/learner/enrolled-courses", {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -187,7 +187,7 @@ function LearnerHome() {
   useEffect(() => {
     const fetchLeaderboard = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/learner/leaderboard");
+        const response = await axios.get("https://hilms.onrender.com/api/learner/leaderboard");
         setLeaderboard(response.data);
       } catch (err) {
         setLeaderboardError("Failed to fetch leaderboard");

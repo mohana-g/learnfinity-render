@@ -12,7 +12,7 @@ const AdminSendMail = () => {
 
   useEffect(() => {
     // Fetch Learner emails from the backend
-    fetch('http://localhost:5000/api/Learner/Learners')
+    fetch('https://hilms.onrender.com/api/Learner/Learners')
       .then(response => response.json())
       .then(data => setLearnerEmails(data.map(Learner => Learner.email)))
       .catch(error => console.error('Error fetching Learner emails:', error));
@@ -103,7 +103,7 @@ const AdminSendMail = () => {
   const [isSending, setIsSending] = useState(false);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/courses')
+    fetch('https://hilms.onrender.com/api/courses')
       .then((response) => response.json())
       .then((data) => {
         console.log('Fetched courses:', data);
@@ -121,7 +121,7 @@ const AdminSendMail = () => {
   }, []);
 
   const fetchLearnerEmails = (courseId) => {
-    fetch(`http://localhost:5000/api/learner/learners/${courseId}`)
+    fetch(`https://hilms.onrender.com/api/learner/learners/${courseId}`)
       .then((response) => response.json())
       .then((data) => {
         console.log('Fetched learner emails:', data);

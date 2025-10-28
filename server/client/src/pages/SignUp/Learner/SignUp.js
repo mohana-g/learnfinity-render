@@ -58,7 +58,7 @@ const SignUp = () => {
 
     if (validateForm()) {
       try {
-        const response = await fetch('http://localhost:5000/api/Learner/signup', {
+        const response = await fetch('https://hilms.onrender.com/api/Learner/signup', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

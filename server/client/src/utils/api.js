@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API = axios.create({
-  baseURL: 'http://localhost:5000', // Your backend base URL
+  baseURL: 'https://hilms.onrender.com', // Your backend base URL
 });
 
 // Add a function to test the API connection

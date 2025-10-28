@@ -54,10 +54,10 @@ const LearnerProfile = () => {
         }
 
         const [profileRes, progressRes] = await Promise.all([
-          axios.get("http://localhost:5000/api/learner/profile", {
+          axios.get("https://hilms.onrender.com/api/learner/profile", {
             headers: { Authorization: `Bearer ${token}` },
           }),
-          axios.get("http://localhost:5000/api/learner/progress", {
+          axios.get("https://hilms.onrender.com/api/learner/progress", {
             headers: { Authorization: `Bearer ${token}` },
           }),
         ]);
@@ -102,7 +102,7 @@ const LearnerProfile = () => {
         return;
       }
 
-      await axios.put("http://localhost:5000/api/learner/profile/update", editData, {
+      await axios.put("https://hilms.onrender.com/api/learner/profile/update", editData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",

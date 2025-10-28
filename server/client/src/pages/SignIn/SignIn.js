@@ -20,11 +20,11 @@ const SignIn = () => {
 
       // Select the correct login URL based on the role
       if (role === 'admin') {
-        loginUrl = 'http://localhost:5000/api/auth/admin-login';
+        loginUrl = 'https://hilms.onrender.com/api/auth/admin-login';
       } else if (role === 'trainer') {
-        loginUrl = 'http://localhost:5000/api/auth/trainer-login';
+        loginUrl = 'https://hilms.onrender.com/api/auth/trainer-login';
       } else if (role === 'learner') {
-        loginUrl = 'http://localhost:5000/api/auth/learner-login';
+        loginUrl = 'https://hilms.onrender.com/api/auth/learner-login';
       }
 
       // Send the email and password to the backend

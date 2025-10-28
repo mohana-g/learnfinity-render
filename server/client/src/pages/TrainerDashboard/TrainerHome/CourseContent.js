@@ -51,7 +51,7 @@ function CourseContent() {
   useEffect(() => {
     const fetchCourseData = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/courses/${courseId}`);
+        const response = await axios.get(`https://hilms.onrender.com/api/courses/${courseId}`);
         setCourse(response.data.data);
       } catch (error) {
         console.error("Error fetching course details:", error);

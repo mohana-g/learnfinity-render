@@ -51,7 +51,7 @@ const ForgotPassword = () => {
   //   if (email) {
   //     setLoading(true);  // Start loading when request is made
   //     try {
-  //       const response = await axios.post('http://localhost:5000/api/auth/forgot-password', { email });
+  //       const response = await axios.post('https://hilms.onrender.com/api/auth/forgot-password', { email });
 
   //       if (response.data.message) {
 

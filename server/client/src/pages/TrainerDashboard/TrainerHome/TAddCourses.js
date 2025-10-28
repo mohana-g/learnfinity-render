@@ -39,7 +39,7 @@ const TAddCourses = () => {
       setIsLoading(true);
       setErrorMessage('');
       
-      await axios.post('http://localhost:5000/api/trainer/add-course', formData, {
+      await axios.post('https://hilms.onrender.com/api/trainer/add-course', formData, {
         headers: {
           'Authorization': `Bearer ${token}`, // Send JWT token for authentication
           'Content-Type': 'multipart/form-data',

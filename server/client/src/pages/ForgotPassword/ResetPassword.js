@@ -32,7 +32,7 @@ const ResetPassword = () => {
       setLoading(true);
       try {
         // Make API call to reset the password
-        const response = await axios.post('http://localhost:5000/api/auth/reset-password', { password, token: resetToken });
+        const response = await axios.post('https://hilms.onrender.com/api/auth/reset-password', { password, token: resetToken });
 
         if (response.data.message) {
           setMessage(response.data.message); // Success message
@@ -119,7 +119,7 @@ const ResetPassword = () => {
 
     setLoading(true);
     try {
-      const response = await fetch('http://localhost:5000/api/auth/reset-password', {
+      const response = await fetch('https://hilms.onrender.com/api/auth/reset-password', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ password, token }),

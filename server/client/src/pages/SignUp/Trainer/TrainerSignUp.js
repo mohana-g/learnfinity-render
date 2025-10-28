@@ -71,7 +71,7 @@ const TrainerSignup = () => {
   
     // Proceed with form submission if validations pass
     try {
-      const response = await fetch('http://localhost:5000/api/Trainer/Trainer-signup', {
+      const response = await fetch('https://hilms.onrender.com/api/Trainer/Trainer-signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

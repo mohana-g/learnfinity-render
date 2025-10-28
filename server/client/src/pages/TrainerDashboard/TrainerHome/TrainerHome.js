@@ -101,7 +101,7 @@ function TrainerHome() {
     const fetchCourses = async () => {
       try {
         const token = localStorage.getItem("token");
-        const response = await axios.get("http://localhost:5000/api/trainer/trainer-courses", {
+        const response = await axios.get("https://hilms.onrender.com/api/trainer/trainer-courses", {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -132,7 +132,7 @@ function TrainerHome() {
     useEffect(() => {
       const fetchLeaderboard = async () => {
         try {
-          const response = await axios.get("http://localhost:5000/api/learner/leaderboard");
+          const response = await axios.get("https://hilms.onrender.com/api/learner/leaderboard");
           setLeaderboard(response.data);
         } catch (err) {
           setLeaderboardError("Failed to fetch leaderboard");
