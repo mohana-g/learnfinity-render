@@ -112,33 +112,29 @@ exports.getCareerPaths = async (req, res) => {
 
         // Courses with trainer + skills
         const coursesRes = await pool.query(
-  `SELECT 
-     cpc.id AS career_path_course_id,
-     cpc.course_id,
-     cpc.level,
-     cpc.duration,
-     c.id AS course_id,
-     c.title AS course_title,
-     c.description AS course_description,
-     c.imageurl AS course_imageurl,
-     t.id AS trainer_id,
-     t.full_name AS trainer_name,
-     t.institute AS trainer_institute,
-     t.email AS trainer_email,
-     t.phone_number AS trainer_phone,
-     COALESCE(json_agg(cpcs.skill) FILTER (WHERE cpcs.skill IS NOT NULL), '[]') AS skills
-   FROM career_path_courses cpc
-   LEFT JOIN courses c ON c.id = cpc.course_id
-   LEFT JOIN trainer t ON t.id = c.trainer_id
-   LEFT JOIN career_path_course_skills cpcs ON cpcs.career_path_course_id = cpc.id
-   WHERE cpc.career_path_id = $1
-   GROUP BY 
-     cpc.id, cpc.course_id, cpc.level, cpc.duration,
-     c.id, c.title, c.description, c.imageurl,
-     t.id, t.full_name, t.institute, t.email, t.phone_number`,
-  [path.id]
-);
-
+          `SELECT 
+             cpc.id AS career_path_course_id,
+             cpc.course_id,
+             cpc.level,
+             cpc.duration,
+             c.id AS course_id,
+             c.title AS course_title,
+             c.description AS course_description,
+             c.imageurl AS course_imageurl,
+             t.id AS trainer_id,
+             t.full_name AS trainer_name,
+             t.institute AS trainer_institute,
+             t.email AS trainer_email,
+             t.phone_number AS trainer_phone,
+             COALESCE(json_agg(cpcs.skill) FILTER (WHERE cpcs.skill IS NOT NULL), '[]') AS skills
+           FROM career_path_courses cpc
+           LEFT JOIN courses c ON c.id = cpc.course_id
+           LEFT JOIN trainer t ON t.id = c.trainer_id
+           LEFT JOIN career_path_course_skills cpcs ON cpcs.career_path_course_id = cpc.id
+           WHERE cpc.career_path_id = $1
+           GROUP BY cpc.id, c.id, t.id`,
+          [path.id]
+        );
 
         const courses = coursesRes.rows.map((c) => ({
           career_path_course_id: c.career_path_course_id,

@@ -174,35 +174,6 @@ const getCourseById = async (req, res) => {
 */
 
 // ✅ Get Popular Courses (Sorted by Enrolled Learners)---------WORKING CODE
-// const getPopularCourses = async (req, res) => {
-//   try {
-//     const result = await pool.query(`
-//       SELECT 
-//         c.id,
-//         c.title,
-//         c.name,
-//         c.description,
-//         c.imageurl,
-//         COUNT(lc.learner_id) AS "learnerCount",
-//         t.full_name AS "trainer_full_name",
-//         t.email AS "trainer_email",
-//         t.institute AS "trainer_institute",
-//         t.phone_number AS "trainer_phone_number"
-//       FROM courses c
-//       LEFT JOIN learner_courses lc ON c.id = lc.course_id
-//       LEFT JOIN trainer t ON c.trainer_id = t.id
-//       GROUP BY c.id, t.full_name, t.email, t.institute, t.phone_number
-//       ORDER BY "learnerCount" DESC
-//       LIMIT 4
-//     `);
-
-//     res.status(200).json({ success: true, data: result.rows });
-//   } catch (error) {
-//     console.error("Error fetching popular courses:", error);
-//     res.status(500).json({ success: false, message: "Error fetching popular courses", error });
-//   }
-// };
-
 const getPopularCourses = async (req, res) => {
   try {
     const result = await pool.query(`
@@ -220,11 +191,9 @@ const getPopularCourses = async (req, res) => {
       FROM courses c
       LEFT JOIN learner_courses lc ON c.id = lc.course_id
       LEFT JOIN trainer t ON c.trainer_id = t.id
-      GROUP BY 
-        c.id, c.title, c.name, c.description, c.imageurl,
-        t.full_name, t.email, t.institute, t.phone_number
+      GROUP BY c.id, t.full_name, t.email, t.institute, t.phone_number
       ORDER BY "learnerCount" DESC
-      LIMIT 4;
+      LIMIT 4
     `);
 
     res.status(200).json({ success: true, data: result.rows });
