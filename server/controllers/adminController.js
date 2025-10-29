@@ -265,19 +265,30 @@ const getPendingTrainers = async (req, res) => {
 // Approve Trainer (set flag = 2)
 const approveTrainer = async (req, res) => {
   const trainerId = req.params.id;
+
   try {
-    const { rowCount } = await pool.query(
+    // ✅ 1. Update trainer flag
+    const { rowCount: trainerUpdated } = await pool.query(
       `UPDATE public.trainer 
        SET flag = 2 
        WHERE id = $1`,
       [trainerId]
     );
 
-    if (rowCount === 0)
+    if (trainerUpdated === 0)
       return res.status(404).json({ message: "Trainer not found" });
+
+    // ✅ 2. Update corresponding user flag
+    await pool.query(
+      `UPDATE public.users 
+       SET flag = 2 
+       WHERE trainer_id = $1`,
+      [trainerId]
+    );
 
     res.json({ message: "Trainer approved successfully" });
   } catch (error) {
+    console.error("Error approving trainer:", error);
     res.status(500).json({ message: "Server error", error });
   }
 };
@@ -285,19 +296,30 @@ const approveTrainer = async (req, res) => {
 // Decline Trainer (set flag = 3 instead of deleting)
 const declineTrainer = async (req, res) => {
   const trainerId = req.params.id;
+
   try {
-    const { rowCount } = await pool.query(
+    // ✅ 1. Update trainer flag
+    const { rowCount: trainerUpdated } = await pool.query(
       `UPDATE public.trainer 
        SET flag = 3 
        WHERE id = $1`,
       [trainerId]
     );
 
-    if (rowCount === 0)
+    if (trainerUpdated === 0)
       return res.status(404).json({ message: "Trainer not found" });
+
+    // ✅ 2. Update corresponding user flag
+    await pool.query(
+      `UPDATE public.users 
+       SET flag = 3 
+       WHERE trainer_id = $1`,
+      [trainerId]
+    );
 
     res.json({ message: "Trainer declined successfully" });
   } catch (error) {
+    console.error("Error declining trainer:", error);
     res.status(500).json({ message: "Server error", error });
   }
 };

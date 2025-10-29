@@ -53,20 +53,41 @@ const LearnerProfile = () => {
           return;
         }
 
-        const [profileRes, progressRes] = await Promise.all([
-          axios.get("https://hilms.onrender.com/api/learner/profile", {
+        // ✅ Step 1: Always fetch profile first
+        const profileRes = await axios.get(
+          "https://hilms.onrender.com/api/learner/profile",
+          {
             headers: { Authorization: `Bearer ${token}` },
-          }),
-          axios.get("https://hilms.onrender.com/api/learner/progress", {
-            headers: { Authorization: `Bearer ${token}` },
-          }),
-        ]);
-
+          }
+        );
         setProfile(profileRes.data);
-        setCourseProgress(progressRes.data.enrolledCourses);
+
+        // ✅ Step 2: Then try to fetch course progress (optional)
+        try {
+          const progressRes = await axios.get(
+            "https://hilms.onrender.com/api/learner/progress",
+            {
+              headers: { Authorization: `Bearer ${token}` },
+            }
+          );
+
+          // Check if learner has enrolled courses
+          if (
+            progressRes.data &&
+            Array.isArray(progressRes.data.enrolledCourses) &&
+            progressRes.data.enrolledCourses.length > 0
+          ) {
+            setCourseProgress(progressRes.data.enrolledCourses);
+          } else {
+            setCourseProgress([]); // no courses yet
+          }
+        } catch (progressError) {
+          console.warn("No enrolled courses found yet");
+          setCourseProgress([]); // if no course progress API fails, don't break profile
+        }
       } catch (err) {
         console.error(err);
-        setError("Failed to fetch profile or course progress");
+        setError("Failed to fetch profile");
       } finally {
         setLoading(false);
       }
@@ -74,6 +95,7 @@ const LearnerProfile = () => {
 
     fetchProfileAndProgress();
   }, []);
+
 
   // 🔁 Handle edit toggle
   const handleEditToggle = () => {
@@ -203,7 +225,7 @@ const LearnerProfile = () => {
       </div>
 
       {/* 📘 Course Progress Section */}
-      {courseProgress.length > 0 && (
+      {courseProgress && courseProgress.length > 0 ? (
         <div className="learner-course-progress">
           <h2>📚 My Course Progress</h2>
           <div className="course-progress-grid">
@@ -245,6 +267,10 @@ const LearnerProfile = () => {
             })}
           </div>
         </div>
+      ) : (
+          <p className="no-courses-message">
+            You haven’t enrolled in any courses yet.
+          </p>
       )}
     </div>
   );
