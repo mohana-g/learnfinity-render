@@ -55,7 +55,7 @@
 }
 
 /* Review Item */
-.Trainer-ratings {
+/* .Trainer-ratings {
   color: #4CAF50;
   margin-top: 5px;
   font-size: 1.2em;
@@ -64,7 +64,7 @@
   align-items: center;
   gap: 8px;
   margin-bottom: 10px;
-}
+} */
 
 .review-item {
   background: #f9f9f9;
