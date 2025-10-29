@@ -236,14 +236,14 @@ const uploadChaptersAndLessons = async (req, res) => {
   try {
     const { courseId, chapters } = req.body;
     const parsedChapters = JSON.parse(chapters);
-    const uploadedVideos = req.files;
+    const uploadedVideos = req.files; // Multer files
 
-    const BASE_URL = process.env.BASE_URL || "https://hilms.onrender.com";
+    const chapterIds = [];
 
     for (const chapter of parsedChapters) {
       let chapterId;
 
-      // ✅ Update existing or create new chapter
+      // ✅ If chapter exists → update it
       if (chapter.chapterId) {
         const chapterRes = await pool.query(
           `UPDATE chapters
@@ -254,6 +254,7 @@ const uploadChaptersAndLessons = async (req, res) => {
         );
         chapterId = chapterRes.rows[0].id;
       } else {
+        // ✅ Create new chapter
         const chapterRes = await pool.query(
           `INSERT INTO chapters (course_id, name)
            VALUES ($1, $2)
@@ -263,25 +264,24 @@ const uploadChaptersAndLessons = async (req, res) => {
         chapterId = chapterRes.rows[0].id;
       }
 
+      chapterIds.push(chapterId);
+
       // ✅ Handle lessons in each chapter
       for (const lesson of chapter.lessons) {
-        const videoFile = uploadedVideos?.find(
+        const videoFile = uploadedVideos.find(
           (file) => file.originalname === lesson.videoUrl
         );
-
-        // ✅ Full public URL only if a new file was uploaded
-        const videoPath = videoFile
-          ? `${BASE_URL}/uploads/${path.basename(videoFile.path)}`
-          : null;
+      // ✅ Use new video path only if uploaded
+        const videoPath = videoFile ? videoFile.path : null;
 
         if (lesson.lessonId) {
-          // Update lesson (only replace video_url if a new file is uploaded)
+          // Update lesson
           await pool.query(
             `UPDATE lessons
              SET number = COALESCE($1, number),
                  title = COALESCE($2, title),
                  description = COALESCE($3, description),
-                 video_url = COALESCE($4, video_url)
+                 video_url = COALESCE(NULLIF($4, ''), video_url)
              WHERE id = $5`,
             [lesson.number, lesson.title, lesson.description, videoPath, lesson.lessonId]
           );
@@ -296,13 +296,15 @@ const uploadChaptersAndLessons = async (req, res) => {
       }
     }
 
-    res.status(200).json({ message: "Chapters and lessons uploaded successfully!" });
+    // ✅ Update course-chapter relationships (if needed)
+    // (In Postgres, chapters are already linked via course_id, so no need to update the course table)
+
+    res.status(200).json({ message: "Chapters and lessons updated successfully!" });
   } catch (error) {
     console.error("Error uploading chapters and lessons:", error);
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
-
 
 // Get existing chapters and lessons for a course
 const getChaptersByCourse = async (req, res) => {
