@@ -112,7 +112,7 @@ const LearnerProfile = () => {
           if (rank === 1) setUserBadge("👑 🥇 Gold Champion");
           else if (rank === 2) setUserBadge("👑 🥈 Silver Star");
           else if (rank === 3) setUserBadge("👑 🥉 Bronze Achiever");
-          else setUserBadge(`⭐ Rank #${rank}`);
+          else setUserBadge(`⭐ Rank ${rank}`);
         } else {
           setUserRank(null);
           setUserBadge("Unranked");

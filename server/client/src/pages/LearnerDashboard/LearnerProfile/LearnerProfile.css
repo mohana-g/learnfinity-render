@@ -10,60 +10,66 @@
     font-family: 'Work Sans', sans-serif;
     user-select: none; /* Prevent selection */
   }
-  
-  /* 🏆 Rank Badge Styles */
+  /* ✨ General badge style */
 .rank-badge {
   display: inline-block;
-  padding: 0.6rem 1.2rem;
+  padding: 0.6rem 1.4rem;
   border-radius: 50px;
-  font-weight: bold;
-  margin-bottom: 1rem;
+  font-weight: 600;
   font-size: 1.1rem;
+  letter-spacing: 0.5px;
   animation: glow 2s infinite alternate;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: center;
+  min-width: 180px;
 }
 
 .rank-badge:hover {
-  transform: scale(1.1);
+  transform: scale(1.05);
 }
 
-/* Gold */
+/* 🌟 Gold Champion */
 .rank-1 {
-  background: linear-gradient(45deg, #ffd700, #ffec8b);
-  color: #000;
-  box-shadow: 0 0 20px gold;
+  background: linear-gradient(135deg, #ffd700, #ffec8b, #fff9d1);
+  color: #222;
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.8);
+  border: 1px solid rgba(255, 215, 0, 0.5);
 }
 
-/* Silver */
+/* 🥈 Silver Star */
 .rank-2 {
-  background: linear-gradient(45deg, #c0c0c0, #e6e6e6);
-  color: #000;
-  box-shadow: 0 0 20px silver;
+  background: linear-gradient(135deg, #c0c0c0, #e6e6e6, #f5f5f5);
+  color: #222;
+  box-shadow: 0 0 25px rgba(192, 192, 192, 0.8);
+  border: 1px solid rgba(192, 192, 192, 0.4);
 }
 
-/* Bronze */
+/* 🥉 Bronze Achiever */
 .rank-3 {
-  background: linear-gradient(45deg, #cd7f32, #e0a96d);
+  background: linear-gradient(135deg, #cd7f32, #e0a96d, #ffb27a);
   color: #fff;
-  box-shadow: 0 0 20px #cd7f32;
+  box-shadow: 0 0 25px rgba(205, 127, 50, 0.8);
+  border: 1px solid rgba(205, 127, 50, 0.4);
 }
 
-/* Normal ranks */
+/* ⭐ Normal Ranks */
 .rank-normal {
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
-  border: 1px solid #fff3;
+  background: linear-gradient(135deg, #a8edea, #fed6e3);
+  color: #222;
+  box-shadow: 0 0 20px rgba(255, 182, 193, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-/* Glow animation */
+/* 🌈 Subtle glowing animation */
 @keyframes glow {
-  from {
+  0% {
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
   }
-  to {
-    box-shadow: 0 0 25px rgba(255, 255, 255, 0.8);
+  100% {
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.6);
   }
 }
+
 
   /* Heading styles */
   .learner-profile-container h1 {
