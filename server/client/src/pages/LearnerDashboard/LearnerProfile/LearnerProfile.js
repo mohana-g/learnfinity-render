@@ -95,7 +95,7 @@ const LearnerProfile = () => {
         // Fetch Leaderboard to Get Rank + Badge
       try {
         const leaderboardRes = await axios.get(
-          "https://hilms.onrender.com/api/leaderboard"
+          "https://hilms.onrender.com/api/learner/leaderboard"
         );
         const leaderboard = leaderboardRes.data;
 
