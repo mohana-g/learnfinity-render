@@ -114,7 +114,7 @@ function CourseContent() {
               <p>{course.description}</p>
               <div className="course-stats">
                 <div className="Trainer-ratings">
-                   <strong>{course.averageRating || 0}/5</strong> ⭐ ({course.reviewCount || 0} Reviews)
+                   <strong>{course.averageRating || 0}</strong> ⭐ ({course.reviewCount || 0} Reviews)
                 </div>
                 <p>
                   <strong>{course.enrolled_count || 0}</strong> Enrolled Learners

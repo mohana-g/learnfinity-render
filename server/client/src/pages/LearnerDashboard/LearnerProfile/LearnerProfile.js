@@ -40,6 +40,12 @@ const LearnerProfile = () => {
   const [expandedCourse, setExpandedCourse] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  
+  // 🏆 Added Rank State
+  const [userRank, setUserRank] = useState(null);
+  const [userBadge, setUserBadge] = useState(null);
+
   const navigate = useNavigate();
 
   // Fetch learner data + progress
@@ -85,6 +91,38 @@ const LearnerProfile = () => {
           console.warn("No enrolled courses found yet");
           setCourseProgress([]); // if no course progress API fails, don't break profile
         }
+
+        // Fetch Leaderboard to Get Rank + Badge
+      try {
+        const leaderboardRes = await axios.get(
+          "https://hilms.onrender.com/api/leaderboard"
+        );
+        const leaderboard = leaderboardRes.data;
+
+        // Find the user’s rank by comparing email
+        const rank =
+          leaderboard.findIndex(
+            (u) => u.email === profileRes.data.email
+          ) + 1;
+
+        if (rank > 0) {
+          setUserRank(rank);
+
+          // 🎖 Assign Badge Based on Rank
+          if (rank === 1) setUserBadge("👑 🥇 Gold Champion");
+          else if (rank === 2) setUserBadge("👑 🥈 Silver Star");
+          else if (rank === 3) setUserBadge("👑 🥉 Bronze Achiever");
+          else setUserBadge(`⭐ Rank #${rank}`);
+        } else {
+          setUserRank(null);
+          setUserBadge("Unranked");
+        }
+      } catch (leaderboardError) {
+        console.warn("Leaderboard fetch failed");
+        setUserRank(null);
+        setUserBadge("Unranked");
+      }
+
       } catch (err) {
         console.error(err);
         setError("Failed to fetch profile");
@@ -151,6 +189,22 @@ const LearnerProfile = () => {
     <div className="learner-profile-container">
       <h1>Learner Profile</h1>
       <div className="learner-profile-card">
+        {/* 🏆 Rank Badge Display */}
+        {userBadge && (
+          <div
+            className={`rank-badge ${
+              userRank === 1
+                ? "rank-1"
+                : userRank === 2
+                ? "rank-2"
+                : userRank === 3
+                ? "rank-3"
+                : "rank-normal"
+            }`}
+          >
+            {userBadge}
+          </div>
+        )}
         {!isEditing ? (
           <>
             <p><strong>First Name:</strong> {profile?.first_name}</p>

@@ -11,6 +11,60 @@
     user-select: none; /* Prevent selection */
   }
   
+  /* 🏆 Rank Badge Styles */
+.rank-badge {
+  display: inline-block;
+  padding: 0.6rem 1.2rem;
+  border-radius: 50px;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  animation: glow 2s infinite alternate;
+  transition: transform 0.3s ease;
+}
+
+.rank-badge:hover {
+  transform: scale(1.1);
+}
+
+/* Gold */
+.rank-1 {
+  background: linear-gradient(45deg, #ffd700, #ffec8b);
+  color: #000;
+  box-shadow: 0 0 20px gold;
+}
+
+/* Silver */
+.rank-2 {
+  background: linear-gradient(45deg, #c0c0c0, #e6e6e6);
+  color: #000;
+  box-shadow: 0 0 20px silver;
+}
+
+/* Bronze */
+.rank-3 {
+  background: linear-gradient(45deg, #cd7f32, #e0a96d);
+  color: #fff;
+  box-shadow: 0 0 20px #cd7f32;
+}
+
+/* Normal ranks */
+.rank-normal {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border: 1px solid #fff3;
+}
+
+/* Glow animation */
+@keyframes glow {
+  from {
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+  }
+  to {
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.8);
+  }
+}
+
   /* Heading styles */
   .learner-profile-container h1 {
     text-align: center;
