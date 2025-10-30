@@ -145,8 +145,8 @@
 }
 
 .logo-img {
-  height: 35px;
-  width: auto;
+  height: 60px;
+  width: 200px;
   transition: transform 0.3s ease, filter 0.3s ease;
 }
 
