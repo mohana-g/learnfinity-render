@@ -7,8 +7,6 @@
   user-select: none; /* Prevent selection */
   box-shadow: 10px -5px 4px rgba(0, 0, 0, 0.1);
   position: relative;
-  bottom: 0;
-  width: 100%;
 }
 
 .footer-container {
