@@ -272,7 +272,7 @@ const uploadChaptersAndLessons = async (req, res) => {
           (file) => file.originalname === lesson.videoUrl
         );
       // ✅ Use new video path only if uploaded
-        const videoPath = videoFile ? videoFile.path : null;
+      const videoPath = videoFile ? `/uploads/${videoFile.filename}` : null;
 
         if (lesson.lessonId) {
           // Update lesson
