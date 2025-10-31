@@ -30,42 +30,40 @@ const upload = multer({
 module.exports = upload;
 */
 
-// middleware/upload.js
+
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
 
-// ✅ Make sure uploads folder exists
-const uploadDir = path.join(__dirname, "uploads");
-if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir, { recursive: true });
+// 🗂 Absolute path to the uploads folder
+const uploadPath = path.join(__dirname, "..", "uploads");
+
+// 🧱 Ensure 'uploads' folder exists
+if (!fs.existsSync(uploadPath)) {
+  fs.mkdirSync(uploadPath, { recursive: true });
 }
 
-// ✅ Storage configuration
+// ⚙️ Storage configuration
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, uploadDir); // Absolute path
+    cb(null, uploadPath); // ✅ Now points to server/uploads
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now() + path.extname(file.originalname));
-  },
+    const uniqueName = Date.now() + path.extname(file.originalname);
+    cb(null, uniqueName);
+  }
 });
 
-// ✅ File filter
+// 🧩 File filter
 const fileFilter = (req, file, cb) => {
   const allowedMimeTypes = [
-    "image/jpeg",
-    "image/png",
-    "image/gif",
-    "image/webp",
-    "video/mp4",
-    "video/mpeg",
-    "video/quicktime",
+    "image/jpeg", "image/png", "image/gif", "image/webp",
+    "video/mp4", "video/mpeg", "video/quicktime",
     "application/pdf",
     "application/msword",
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
     "application/vnd.ms-powerpoint",
-    "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+    "application/vnd.openxmlformats-officedocument.presentationml.presentation"
   ];
 
   if (allowedMimeTypes.includes(file.mimetype)) {
@@ -75,11 +73,11 @@ const fileFilter = (req, file, cb) => {
   }
 };
 
-// ✅ Initialize multer
+// 🧰 Initialize Multer
 const upload = multer({
   storage,
   fileFilter,
-  limits: { fileSize: 200 * 1024 * 1024 }, // 200MB
+  limits: { fileSize: 200 * 1024 * 1024 }, // 200 MB limit
 });
 
 module.exports = upload;
