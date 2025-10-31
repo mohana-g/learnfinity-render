@@ -75,7 +75,9 @@ function App() {
 
   return (
     <>
+    <div className="app-wrapper">
       <Navbar isAdmin={isAdmin} isTrainer={isTrainer} isLearner={isLearner} />
+      <div className="main-content">
       <Routes>
         {/* Public Routes */}
         <Route path="/" element={<Home />} />
@@ -150,7 +152,9 @@ function App() {
         {/* Redirect to SignIn if route doesn't exist */}
         <Route path="*" element={<Navigate to={isLearner ? "/learner-dashboard" : isAdmin ? "/admin-dashboard" : isTrainer ? "/trainer-dashboard" : "/signin"} />} />
       </Routes>
+      </div>
       <Footer />
+      </div>
     </>
   );
 }
