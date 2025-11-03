@@ -1,39 +1,19 @@
 .signin-page {
     position: relative;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
     display: flex;
     justify-content: center;
     align-items: center;
     user-select: none; /* Prevent selection */
-}
-
-.signin-page::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: url('https://hilms.onrender.com/uploads/signin.png');
-    /* background-image: url('https://static.vecteezy.com/system/resources/thumbnails/023/170/834/small_2x/light-bulb-with-glowing-rays-with-book-learning-cartoon-style-stationery-symbol-of-creativity-doodles-concept-innovation-inspiration-invention-and-idea-3d-rendering-on-yellow-background-photo.jpg'); */
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    filter: blur(4px);
-    z-index: -1;
+    padding: 80px 20px;
 }
 
 .signin-container {
     background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    width: 400px;
-    margin: auto;
-    margin-top: 30px;
-    margin-bottom: 30px;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    max-width: 400px;
     z-index: 1;
   }
   

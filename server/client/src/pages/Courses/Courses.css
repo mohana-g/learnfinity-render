@@ -1,7 +1,4 @@
 /* Popular Courses Section
-body {
-  user-select: none; 
-}
 
 .courses-page h2 {
   font-size: 2rem;
@@ -147,9 +144,10 @@ body {
   }
    */
 /* General Reset */
-body {
+.courses-page {
   user-select: none;
-  background: linear-gradient(135deg, #a8edea, #fed6e3);
+  min-height: 100%;
+  padding: 40px 0;
 }
 
 .courses-page h2 {

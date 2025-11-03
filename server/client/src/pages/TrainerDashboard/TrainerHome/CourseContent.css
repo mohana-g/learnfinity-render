@@ -4,8 +4,8 @@
   justify-content: space-between;
   gap: 20px;
   padding: 20px;
+  min-height: 100%;
   user-select: none; /* Prevent selection */
-  background: linear-gradient(135deg, #a8edea, #fed6e3);
 }
 
 /* Left Sidebar (Tabs) */

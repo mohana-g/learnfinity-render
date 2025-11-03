@@ -2,21 +2,22 @@
     font-family: 'Work Sans', sans-serif;
 }
 
-body {
+.add-course-container {
   user-select: none; /* Prevent selection */
-  background: linear-gradient(135deg, #a8edea, #fed6e3);
+  min-height: 100%;
+  padding: 50px 0;
 }
 
-.add-course-container {
+.add-course-container > form {
     max-width: 400px;
-    margin: 50px auto;
+    margin: 0 auto;
     padding: 20px;
     border-radius: 8px;
     background-color: #fff;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
   }
-  
-  .add-course-container h2 {
+
+.add-course-container > h2 {
     text-align: center;
     margin-bottom: 20px;
     color: #000;

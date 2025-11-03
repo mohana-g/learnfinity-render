@@ -5,7 +5,8 @@
 .admin-dashboard {
   font-family: 'Work Sans', sans-serif;
   user-select: none; /* Prevent selection */
-  background: linear-gradient(135deg, #a8edea, #fed6e3);
+  padding: 40px 0;
+  min-height: 100%;
 }
 
 /* Header section */

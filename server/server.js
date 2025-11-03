@@ -27,7 +27,7 @@ require("dotenv").config();
 const app = express();
 // app.use(cors());
 app.use(cors({
-  origin: ["https://learnfinity-client.onrender.com"], // ✅ change this to your actual frontend URL
+  origin: ["https://learnfinity-client.onrender.com", "http://localhost:3000"], // ✅ production and local development URLs
   credentials: true
 }));
 app.use(bodyParser.json());

@@ -5,24 +5,26 @@ import './TEditAccount.css';
 
 // Skeleton loader for Trainer Edit Account
 const TEditAccountSkeleton = () => (
-  <div className="Tedit-account-container1">
-    <div className="skeleton skeleton-title" />
-    <form className="Tedit-account-form">
-      <div className="Tform-group">
-        <div className="skeleton skeleton-field" />
-      </div>
-      <div className="Tform-group">
-        <div className="skeleton skeleton-field" />
-      </div>
-      <div className="Tform-group">
-        <div className="skeleton skeleton-field" />
-      </div>
-      <div className="Tform-group">
-        <div className="skeleton skeleton-field" />
-      </div>
+  <div className="Tedit-account-page-wrapper">
+    <div className="Tedit-account-container">
+      <div className="skeleton skeleton-title" />
+      <form className="Tedit-account-form">
+        <div className="Tform-group">
+          <div className="skeleton skeleton-field" />
+        </div>
+        <div className="Tform-group">
+          <div className="skeleton skeleton-field" />
+        </div>
+        <div className="Tform-group">
+          <div className="skeleton skeleton-field" />
+        </div>
+        <div className="Tform-group">
+          <div className="skeleton skeleton-field" />
+        </div>
+        <div className="skeleton skeleton-btn" />
+      </form>
       <div className="skeleton skeleton-btn" />
-    </form>
-    <div className="skeleton skeleton-btn" />
+    </div>
   </div>
 );
 
@@ -114,8 +116,9 @@ const TEditAccount = () => {
   if (error) return <p className="error-message">{error}</p>;
 
   return (
-    <div className="Tedit-account-container">
-      <h1>Edit Trainer Profile</h1>
+    <div className="Tedit-account-page-wrapper">
+      <div className="Tedit-account-container">
+        <h1>Edit Trainer Profile</h1>
       <form className="Tedit-account-form" onSubmit={handleUpdate}>
         <div className="Tform-group">
           <label>Email:</label>
@@ -164,6 +167,7 @@ const TEditAccount = () => {
       <button className="Tback-button" onClick={handleBack}>
         Back to Profile
       </button>
+      </div>
     </div>
   );
 };

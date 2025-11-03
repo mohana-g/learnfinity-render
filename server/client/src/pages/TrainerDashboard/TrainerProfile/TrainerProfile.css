@@ -4,10 +4,9 @@
 }
 
 .trainer-profile-container {
-    padding: 20px;
+    padding: 60px 20px;
     max-width: 600px;
     margin: 0 auto;
-    margin-bottom: 8%;
     font-family: 'Work Sans', sans-serif;
     user-select: none; /* Prevent selection */
   }
@@ -25,7 +24,6 @@
   .trainer-profile-card {
     padding: 20px;
     border-radius: 10px;
-    margin-bottom: 11%;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     background-color: #fff;
   }
@@ -96,9 +94,6 @@
   100% {
     background-position: -200% 0;
   }
-}
-.trainer-profile-card {
-  margin-bottom: 20%;
 }
 
 .skeleton-title {

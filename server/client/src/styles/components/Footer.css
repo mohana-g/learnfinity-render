@@ -6,7 +6,8 @@
   text-align: center;
   user-select: none; /* Prevent selection */
   box-shadow: 10px -5px 4px rgba(0, 0, 0, 0.1);
-  position: relative;
+  flex-shrink: 0;
+  margin-top: auto;
 }
 
 .footer-container {
