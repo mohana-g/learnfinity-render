@@ -50,7 +50,13 @@ const handleVideoUpload = (chapterIndex, lessonIndex, file) => {
 };
 
   const handleRemoveChapter = async (courseId, chapterId, setChapters, chapters) => {
-  try {
+   // 🟩 If no chapterId, remove from state only (not in DB)
+  if (!chapterId) {
+    setChapters(chapters.filter((chapter) => chapter.id !== chapterId));
+    alert('Unsaved chapter removed locally!');
+    return;
+  }
+    try {
     await axios.delete(`https://hilms.onrender.com/api/courses/${courseId}/chapters/${chapterId}`);
     setChapters(chapters.filter((chapter) => chapter.id !== chapterId));
     alert('Chapter removed successfully!');
@@ -61,6 +67,19 @@ const handleVideoUpload = (chapterIndex, lessonIndex, file) => {
 };
 
 const handleRemoveLesson = async (courseId, chapterId, lessonId, setChapters, chapters) => {
+  // 🟩 If no lessonId (unsaved), remove locally
+  if (!lessonId) {
+    const updatedChapters = chapters.map((chapter) => {
+      if (chapter.id === chapterId || !chapterId) {
+        chapter.lessons = chapter.lessons.filter((lesson) => lesson.id !== lessonId);
+      }
+      return chapter;
+    });
+    setChapters(updatedChapters);
+    alert('Unsaved lesson removed locally!');
+    return;
+  }
+  
   try {
     await axios.delete(`https://hilms.onrender.com/api/courses/${courseId}/chapters/${chapterId}/lessons/${lessonId}`);
     const updatedChapters = chapters.map((chapter) => {
