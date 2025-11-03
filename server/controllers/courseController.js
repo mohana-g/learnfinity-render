@@ -272,8 +272,7 @@ const uploadChaptersAndLessons = async (req, res) => {
           (file) => file.originalname === lesson.videoUrl
         );
       // ✅ Use new video path only if uploaded
-      const videoPath = videoFile ? `/uploads/${videoFile.filename}` : null;
-
+        const videoPath = videoFile ? videoFile.path : null;
         if (lesson.lessonId) {
           // Update lesson
           await pool.query(
