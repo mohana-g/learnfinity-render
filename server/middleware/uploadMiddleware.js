@@ -33,11 +33,13 @@ module.exports = upload;
 const multer = require("multer");
 const path = require("path");
 
+const uploadPath = path.join(process.cwd(), "uploads");
+
 // Storage configuration
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     // cb(null, "uploads/"); // Store files in 'uploads/' folder
-    cb(null, path.join(__dirname, "..", "uploads")); // Store files in 'uploads/' folder
+     cb(null, uploadPath); // absolute path
   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + path.extname(file.originalname)); // Unique filename
