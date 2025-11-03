@@ -6,24 +6,26 @@ import "./LEditAccount.css";
 
 // Skeleton loader component
 const LEditAccountSkeleton = () => (
-  <div className="edit-account-container">
-    <div className="skeleton skeleton-title" />
-    <form className="edit-account-form">
-      <div className="form-group">
-        <div className="skeleton skeleton-field" />
-      </div>
-      <div className="form-group">
-        <div className="skeleton skeleton-field" />
-      </div>
-      <div className="form-group">
-        <div className="skeleton skeleton-field" />
-      </div>
-      <div className="form-group">
-        <div className="skeleton skeleton-field" />
-      </div>
+  <div className="edit-account-page-wrapper">
+    <div className="edit-account-container">
+      <div className="skeleton skeleton-title" />
+      <form className="edit-account-form">
+        <div className="form-group">
+          <div className="skeleton skeleton-field" />
+        </div>
+        <div className="form-group">
+          <div className="skeleton skeleton-field" />
+        </div>
+        <div className="form-group">
+          <div className="skeleton skeleton-field" />
+        </div>
+        <div className="form-group">
+          <div className="skeleton skeleton-field" />
+        </div>
+        <div className="skeleton skeleton-btn" />
+      </form>
       <div className="skeleton skeleton-btn" />
-    </form>
-    <div className="skeleton skeleton-btn" />
+    </div>
   </div>
 );
 
@@ -113,8 +115,9 @@ const LEditAccount = () => {
   if (error) return <p className="error-message">{error}</p>;
 
   return (
-    <div className="edit-account-container">
-      <h1>Edit Account</h1>
+    <div className="edit-account-page-wrapper">
+      <div className="edit-account-container">
+        <h1>Edit Account</h1>
       <form className="edit-account-form" onSubmit={handleUpdate}>
         <div className="form-group">
           <label>Email:</label>
@@ -153,6 +156,7 @@ const LEditAccount = () => {
         <button type="submit" className="update-button">Update</button>
       </form>
       <button className="back-button" onClick={handleBack}>Back to Profile</button>
+      </div>
     </div>
   );
 };
