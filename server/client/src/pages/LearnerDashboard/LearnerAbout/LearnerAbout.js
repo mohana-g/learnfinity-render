@@ -23,12 +23,19 @@ const About = () => {
           />
         </div>
        <div className="about-right">
-          <h2>Welcome to Learnfinity – Your Partner in Professional Growth</h2>
+         <h2>Welcome to HIROTEC Learnfinity Portal – Your Partner in Professional Growth</h2>
           <p>
-            At Learnfinity, we believe that learning never stops. Our platform is designed for working professionals, organizations, and teams who aim to stay ahead in today’s fast-paced business world.
+            At HIROTEC Learnfinity, we believe that learning never stops. Our comprehensive Learning Management System (LMS) is designed for working professionals, organizations, and teams who aim to stay ahead in today's fast-paced business world.
           </p>
-          <p>From leadership development to technical upskilling, our curated courses are crafted by industry experts to meet real-world challenges.</p>
-          <p>Whether you’re looking to improve your professional skills, train your workforce, or explore new career opportunities, Learnfinity provides the tools, resources, and support you need to succeed.</p>
+          <p>
+            This platform empowers the organization with powerful tools to create, manage, and track learning initiatives. With features like customizable learning paths, real-time progress tracking, and detailed analytics dashboards, managers gain complete visibility into their team's development journey.
+          </p>
+          <p>
+            From leadership development to technical upskilling, our curated courses are crafted by industry experts to meet real-world challenges. Organizations benefit from centralized content management, automated certification tracking, and seamless collaboration tools that foster a culture of continuous learning.
+          </p>
+          <p>
+            Whether you're looking to improve your professional skills, train your workforce, or explore new career opportunities, Learnfinity provides the tools, resources, and support you need to succeed. Our LMS streamlines training administration, reduces costs, and delivers measurable ROI through improved employee performance and retention.
+          </p>
           <p><strong>Empower your career, empower your future.</strong></p>
           <div className="about-features">
           <div className="feature-card">
