@@ -76,7 +76,7 @@ function App() {
   return (
     <>
       <Navbar isAdmin={isAdmin} isTrainer={isTrainer} isLearner={isLearner} />
-      <div style={{ flex: '1 0 auto', background: 'linear-gradient(135deg, #a8edea, #fed6e3)', padding: '20px' }}>
+      <div style={{ flex: '1 0 auto', background: 'linear-gradient(135deg, #a8edea, #fed6e3)' }}>
         <Routes>
           {/* Public Routes */}
           <Route path="/" element={<Home />} />
