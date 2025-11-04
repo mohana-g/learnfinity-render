@@ -646,10 +646,10 @@ const CourseInteraction = () => {
                               <h4>📄 PDF Document</h4>
                               <>
                                 <PdfViewer fileUrl={fullPath} />
-                                {!completedLessons.includes(lesson.id) && (
+                                {!completedLessons.includes(lesson.lesson_id) && (
                                   <button
                                     style={{ marginTop: '10px' }}
-                                    onClick={() => markLessonComplete(lesson.id)}
+                                    onClick={() => markLessonComplete(lesson.lesson_id)}
                                   >
                                     Mark as Read
                                   </button>
@@ -681,10 +681,10 @@ const CourseInteraction = () => {
                                     title="Office File Viewer"
                                   />
                                 )}
-                                {!completedLessons.includes(lesson.id) && (
+                                {!completedLessons.includes(lesson.lesson_id) && (
                                   <button
                                     style={{ marginTop: '10px' }}
-                                    onClick={() => markLessonComplete(lesson.id)}
+                                    onClick={() => markLessonComplete(lesson.lesson_id)}
                                   >
                                     Mark as Read
                                   </button>
