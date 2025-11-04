@@ -15,6 +15,16 @@ const TrainerFAQ = () => {
       answer: "Yes, eLearning courses can be customized according to your needs, including content, duration, and delivery methods.",
     },
     {
+      question: "Do I need any prior experience to start learning?",
+      answer:
+        "No, most courses are designed for beginners and include step-by-step guidance. However, some advanced courses may recommend having basic knowledge of the subject.",
+    },
+    {
+      question: "Are the course materials available after completing the course?",
+      answer:
+        "Yes, once you have completed a course, you will continue to have access to all course materials and resources for future reference, unless otherwise specified by the instructor.",
+    },
+    {
       question: "Can I download the course certificate after completing the course?",
       answer:
         "Yes, once you have completed all the course requirements, you can download your course certificate directly from your dashboard.",
