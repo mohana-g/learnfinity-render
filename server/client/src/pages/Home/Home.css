@@ -18,7 +18,8 @@ background-repeat: no-repeat;
 padding: 85px 20px;
 color: black;
 text-align: center;
-margin-top: 35px;
+/* margin-top: 35px; */
+margin-top: 20px;
 }
 
 .hero-section::before {
@@ -71,7 +72,7 @@ background-color: #0000cc;
 
 /* Popular Courses Section */
 .courses-section {
-  padding: 50px 20px;
+  padding: 30px 20px;
   text-align: center;
 }
 
@@ -163,7 +164,7 @@ background-color: #0000cc;
 
 /* Career Path Section */
 .career-path-section {
-  padding: 50px 20px;
+  padding: 30px 20px;
   text-align: center;
 }
 
@@ -231,7 +232,7 @@ background-color: #0000cc;
 
   /* Teach Section */
   .teach-section {
-    padding: 50px 20px;
+    padding: 30px 20px;
     text-align: center;
   }
 

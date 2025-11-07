@@ -4,7 +4,7 @@
 }
 
 .edit-account-page-wrapper {
-  padding: 60px 20px;
+  padding: 20px 20px 30px 20px;
   user-select: none;
 }
 
@@ -79,7 +79,7 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  margin-top: 10px;
+  margin-top: 5px;
 }
 
 .back-button:hover {

@@ -16,7 +16,7 @@
     padding: 85px 20px;
     color: black;
     text-align: center;
-    margin-top: 35px;
+    margin-top: 20px;
 }
 
 .trainer-header::before {
@@ -71,7 +71,7 @@
 
 /* Teaching Courses Section */
 .trainer-teaching-courses-section {
-  padding: 50px 20px;
+  padding: 30px 20px;
   text-align: center;
 }
 

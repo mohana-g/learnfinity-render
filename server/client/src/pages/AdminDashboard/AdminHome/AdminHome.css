@@ -5,7 +5,7 @@
 .admin-dashboard {
   font-family: 'Work Sans', sans-serif;
   user-select: none; /* Prevent selection */
-  padding: 40px 0;
+  padding: 20px 0;
   min-height: 100%;
 }
 

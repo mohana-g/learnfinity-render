@@ -4,7 +4,7 @@
 .container {
     font-family: 'Work Sans', sans-serif;
     user-select: none; /* Prevent selection */
-    padding: 40px 0;
+    padding: 20px 0;
     min-height: 100%;
 }
   
@@ -72,7 +72,7 @@
   /* Enrolled Courses Section */
 /* Enrolled Courses Section */
 .enrolled-courses-section {
-  padding: 50px 20px;
+  padding: 30px 20px;
   text-align: center;
 }
 
@@ -455,7 +455,7 @@
 
 /* Career Path Section */
 .Lcareer-path-section {
-  padding: 50px 20px;
+  padding: 20px 20px;
   text-align: center;
 }
 

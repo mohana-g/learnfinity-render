@@ -147,7 +147,7 @@
 .courses-page {
   user-select: none;
   min-height: 100%;
-  padding: 40px 0;
+  /* padding: 40px 0; */
 }
 
 .courses-page h2 {

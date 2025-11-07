@@ -2,7 +2,7 @@
 .faq-container {
     font-family: 'Work Sans', sans-serif;
     user-select: none; /* Prevent selection */
-    padding: 60px 0;
+    padding: 20px 0;
 }
 
 .faq-container .faq-main {
