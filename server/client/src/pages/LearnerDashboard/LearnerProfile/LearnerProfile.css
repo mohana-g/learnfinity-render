@@ -1,116 +1,288 @@
-/* --- Base --- */
-* { box-sizing: border-box; font-family: 'Work Sans', sans-serif; }
-:root {
-  --bg: #f6fbfb;
-  --card: #ffffff;
-  --accent1: #763af9;
-  --accent2: #099ff2;
-  --primary: #0505fc;
-  --danger: #f44336;
+/* Container styles */
+*{
+    font-family: 'Work Sans', sans-serif;
 }
-body.dark-mode {
-  --bg: #0f1114;
-  --card: #121316;
-  --text: #e7e7e7;
-  --muted: #bdbdbd;
+
+.learner-profile-container {
+    padding: 0px 20px 25px 20px;
+    max-width: 600px;
+    margin: 0 auto;
+    font-family: 'Work Sans', sans-serif;
+    user-select: none; /* Prevent selection */
+  }
+  /* ✨ General badge style */
+.rank-badge {
+  display: inline-block;
+  padding: 0.6rem 1.4rem;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  letter-spacing: 0.5px;
+  animation: glow 2s infinite alternate;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: center;
+  min-width: 180px;
 }
-body { background: linear-gradient(135deg,#a8edea 0%,#fed6e3 100%); margin:0; color: #111; }
 
-/* Container and grid */
-.learner-profile-container { max-width: 1200px; margin: 18px auto; padding: 18px; }
-.topbar { display:flex; justify-content:space-between; align-items:center; padding: 8px 4px; margin-bottom: 12px; }
-.logo-left { font-weight:700; font-size:1.1rem; color: #08305b; }
-.top-actions { display:flex; align-items:center; gap: 12px; }
-
-/* Notification button */
-.notif-btn { position:relative; background:transparent; border:none; cursor:pointer; font-size:18px; }
-.notif-count { position:absolute; top:-8px; right:-8px; background:#e53935; color:#fff; border-radius:50%; padding:2px 6px; font-size:11px; }
-
-/* Theme toggle */
-.switch { position: relative; display:inline-block; width:46px; height:26px; }
-.switch input{ display:none; }
-.slider { position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background:#ccc; border-radius:26px; transition:.4s; }
-.slider:before { position:absolute; content:""; height:20px; width:20px; left:3px; top:3px; background:white; border-radius:50%; transition:.4s; }
-.switch input:checked + .slider { background: #4f46e5; }
-.switch input:checked + .slider:before { transform: translateX(20px); }
-.theme-label { margin-left:8px; font-size:13px; color:#333; }
-
-/* Two-column layout */
-.content-grid { display: grid; grid-template-columns: 1fr 420px; gap: 22px; align-items:start; }
-.left-col h2, .right-col h2 { margin: 6px 0 12px; text-align:left; color:#0a2b3a; }
-
-/* Cards */
-.learner-profile-card, .achievements-card, .badge-card, .targets-card, .notifications-panel {
-  background: var(--card); border-radius: 14px; padding: 18px; box-shadow: 0 8px 24px rgba(6,24,69,0.08);
+.rank-badge:hover {
+  transform: scale(1.05);
 }
-.learner-profile-card { margin-bottom: 18px; position:relative; }
 
-/* Rank badge */
-.rank-badge { display:inline-block; padding: 10px 18px; border-radius: 30px; font-weight:600; margin-bottom: 12px; }
-.rank-1 { background: linear-gradient(135deg, #ffd700, #ffec8b); color:#222; box-shadow:0 8px 28px rgba(255,215,0,0.18);}
-.rank-2 { background: linear-gradient(135deg,#c0c0c0,#f5f5f5); color:#222; }
-.rank-3 { background: linear-gradient(135deg,#cd7f32,#ffb27a); color:#fff; }
-.rank-normal { background: linear-gradient(135deg,#a8edea,#fed6e3); color:#222; }
+/* 🌟 Gold Champion */
+.rank-1 {
+  background: linear-gradient(135deg, #ffd700, #ffec8b, #fff9d1);
+  color: #222;
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.8);
+  border: 1px solid rgba(255, 215, 0, 0.5);
+}
 
-/* profile fields & buttons */
-.learner-profile-card p { margin: 8px 0; font-size:15px; }
-.profile-buttons { margin-top:12px; display:flex; gap:10px; }
-.btn { padding: 9px 14px; border-radius:8px; border:none; cursor:pointer; background:#e0e0e0; color:#111; font-weight:600; }
-.btn.primary { background: var(--primary); color:#fff; }
-.btn.danger { background: var(--danger); color:#fff; }
+/* 🥈 Silver Star */
+.rank-2 {
+  background: linear-gradient(135deg, #c0c0c0, #e6e6e6, #f5f5f5);
+  color: #222;
+  box-shadow: 0 0 25px rgba(192, 192, 192, 0.8);
+  border: 1px solid rgba(192, 192, 192, 0.4);
+}
 
-/* Form rows */
-.form-row { margin:8px 0; display:flex; gap:10px; align-items:center; }
-.form-row label { width:120px; font-weight:600; font-size:14px; }
-.form-row input { flex:1; padding:8px 10px; border-radius:6px; border:1px solid #dcdcdc; }
+/* 🥉 Bronze Achiever */
+.rank-3 {
+  background: linear-gradient(135deg, #cd7f32, #e0a96d, #ffb27a);
+  color: #fff;
+  box-shadow: 0 0 25px rgba(205, 127, 50, 0.8);
+  border: 1px solid rgba(205, 127, 50, 0.4);
+}
 
-/* course progress grid */
-.course-progress-grid { display:flex; flex-direction:column; gap: 12px; margin-top:10px; }
-.course-progress-card { width:100%; border-radius:12px; padding:12px; box-shadow: 0 6px 18px rgba(2,6,23,0.06); background:var(--card); }
-.card-header { display:flex; justify-content:space-between; align-items:center; }
-.toggle-details { background: var(--primary); color:#fff; border:none; padding:6px 10px; border-radius:8px; cursor:pointer; }
-.progress-bar { background:#eee; border-radius:8px; height:10px; margin-top:12px; overflow:hidden; }
-.progress-fill { height:100%; background: linear-gradient(90deg,var(--accent1),var(--accent2)); width:0; transition: width .6s ease; }
-.progress-percent { text-align:right; margin-top:6px; font-size:13px; color:#555; }
+/* ⭐ Normal Ranks */
+.rank-normal {
+  background: linear-gradient(135deg, #a8edea, #fed6e3);
+  color: #222;
+  box-shadow: 0 0 20px rgba(255, 182, 193, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
 
-/* achievements */
-.achievements-card h3, .badge-card h3, .targets-card h3{ margin:0 0 10px; font-size:18px; }
-.achievements-card ul { list-style:none; padding:0; margin:0; }
-.achievements-card li { padding:10px 6px; font-weight:600; font-size:16px; display:flex; align-items:center; gap:10px; }
-.achievements-card .dot { width:10px; height:10px; border-radius:50%; background: #2ecc71; display:inline-block; }
-.achievements-card .star { margin-left:auto; color:#f1c40f; }
+/* 🌈 Subtle glowing animation */
+@keyframes glow {
+  0% {
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+  }
+  100% {
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.6);
+  }
+}
 
-/* badge visual */
-.badge-card .badge-visual { display:flex; flex-direction:column; align-items:center; gap:10px; padding:8px; }
-.badge-title { font-weight:700; color:#d4a017; }
-.badge-illustration .podium { display:flex; gap:8px; align-items:flex-end; }
-.podium div { width:54px; height:64px; border:3px solid #111; border-radius:6px; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:22px; background:white; }
-.p1 { height:96px; transform:translateY(-8px); }
 
-/* targets */
-.targets-desc { font-size:16px; margin-bottom:12px; font-weight:600; }
-.targets-bar { background:#ddd; height:24px; border-radius:18px; position:relative; overflow:hidden; display:flex; align-items:center; }
-.targets-fill { background:#2eb872; height:100%; width:50%; transition:width .5s ease; border-radius:18px 0 0 18px; }
-.targets-percent { position:absolute; right:10px; font-weight:700; color:#123; }
+  /* Heading styles */
+  .learner-profile-container h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #000;
+    font-size: 2rem;
+    text-decoration: none;
+  }
+  
+  /* Card styles */
+  .learner-profile-card {
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    background-color: #fff;
+  }
+  
+  /* Profile field styles */
+  .learner-profile-card p {
+    margin: 10px 0;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  
+  .learner-profile-card p strong {
+    font-weight: bold;
+    color: #000;
+  }
+  
+  /* Input field styles */
+  .learner-profile-card input[type="text"],
+  .learner-profile-card input[type="email"],
+  .learner-profile-card input[type="date"] {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    box-sizing: border-box;
+  }
+  
+  /* Button styles */
+  .learner-profile-card button {
+    padding: 10px 20px;
+    margin: 5px;
+    font-size: 14px;
+    color: #fff;
+    background: #0505fc;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  .learner-profile-card button:hover {
+    background: #0000cc;
+  }
+  
+  /* Cancel button styles */
+  .learner-profile-card button:last-child {
+    background: #f44336;
+  }
+  
+  .learner-profile-card button:last-child:hover {
+    background: #d32f2f;
+  }
+  
+/* Course progress styles */
+.learner-course-progress {
+  margin-top: 50px;
+}
+.course-progress-grid {
+  display: grid;
+  gap: 20px;
+  justify-content: center;
+}
 
-/* notifications */
-.notifications-panel { margin-top:18px; }
-.notifications-header { display:flex; justify-content:space-between; align-items:center; }
-.notifications-list { margin-top:8px; max-height:210px; overflow:auto; }
-.notif-item { display:flex; justify-content:space-between; align-items:center; padding:8px; border-radius:8px; margin-bottom:8px; background: linear-gradient(90deg,#fff,#f7f9fc); }
-.notif-text { font-size:14px; }
-.notif-actions .small { background:transparent; border:1px solid #ddd; padding:6px 8px; border-radius:6px; cursor:pointer; }
+.course-progress-card {
+  width: 300px;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+  padding: 15px;
+  transition: 0.3s ease;
+  position: relative;
+}
 
-/* no courses / errors */
-.no-courses-message, .no-notifs { padding:12px; color:#777; }
+.course-progress-card:hover {
+  transform: translateY(-5px);
+}
 
-/* skeleton helper */
-.skeleton-mode .skeleton { background: linear-gradient(90deg,#e6e6e6 25%, #f4f4f4 50%, #e6e6e6 75%); background-size:200% 100%; animation:skeleton-anim 1.2s linear infinite; border-radius:6px; }
-@keyframes skeleton-anim { 0% { background-position:200% 0 } 100% { background-position:-200% 0 } }
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
-/* responsive */
-@media (max-width: 980px) {
-  .content-grid { grid-template-columns: 1fr; }
-  .right-col { order: 2; }
-  .left-col { order: 1; }
+.card-header h4 {
+  margin: 0;
+  font-size: 16px;
+  color: #333;
+}
+
+.toggle-details {
+  background: #0505fc;
+  border: none;
+  color: #fff;
+  font-size: 12px;
+  padding: 5px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.toggle-details:hover {
+  background-color: #0000cc;
+}
+
+.progress-bar {
+  background-color: #eee;
+  border-radius: 10px;
+  overflow: hidden;
+  height: 8px;
+  margin-top: 10px;
+}
+
+.progress-fill {
+  background: linear-gradient(135deg, #763af9, #099ff2);
+  height: 100%;
+  width: 0;
+  transition: width 0.5s ease;
+}
+
+.progress-percent {
+  font-size: 12px;
+  text-align: right;
+  color: #666;
+  margin-top: 4px;
+}
+
+.card-details {
+  margin-top: 10px;
+  font-size: 13px;
+  color: #444;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scaleY(0.95); }
+  to { opacity: 1; transform: scaleY(1); }
+}
+
+/* Skeleton Loader Styles */
+.skeleton {
+  background: linear-gradient(90deg, #ececec 25%, #f5f5f5 50%, #ececec 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.2s infinite linear;
+  border-radius: 6px;
+}
+
+@keyframes skeleton-loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.skeleton-title {
+  width: 60%;
+  height: 28px;
+  margin: 0 auto 18px auto;
+}
+
+.skeleton-field {
+  width: 90%;
+  height: 18px;
+  margin: 10px auto;
+}
+
+.skeleton-btn {
+  width: 40%;
+  height: 32px;
+  margin: 12px 8px 0 0;
+  display: inline-block;
+}
+
+.skeleton-section-title {
+  width: 40%;
+  height: 22px;
+  margin: 30px 0 18px 0;
+}
+
+.skeleton-course-title {
+  width: 70%;
+  height: 18px;
+  margin: 0 0 12px 0;
+}
+
+.skeleton-progress-bar {
+  width: 100%;
+  height: 10px;
+  margin-bottom: 8px;
+  border-radius: 8px;
+}
+
+.skeleton-percent {
+  width: 30%;
+  height: 14px;
+  margin-bottom: 10px;
+}
+
+.skeleton-details {
+  width: 90%;
+  height: 36px;
+  margin-bottom: 8px;
 }
