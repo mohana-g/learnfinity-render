@@ -116,6 +116,7 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom'; // ✅ use NavLink
 import { useMsal } from "@azure/msal-react";
+import { Moon, Sun } from "lucide-react";
 import logo from '../../assets/HTI.png';
 import MicrosoftLogin from '../../pages/Login/MicrosoftLogin';
 import './Navbar.css';
@@ -125,6 +126,13 @@ function Navbar() {
   const [userRole, setUserRole] = useState(localStorage.getItem('role') || null);
   const [isMicrosoft, setIsMicrosoft] = useState(localStorage.getItem('isMicrosoftLogin') === 'true');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [darkMode, setDarkMode] = useState(localStorage.getItem("theme") === "dark");
+
+  // 🌗 Handle dark mode
+  useEffect(() => {
+    document.body.classList.toggle("dark-mode", darkMode);
+    localStorage.setItem("theme", darkMode ? "dark" : "light");
+  }, [darkMode]);
 
   useEffect(() => {
     const updateRoleState = () => {
@@ -161,7 +169,7 @@ function Navbar() {
   };
 
   const closeMenu = () => setIsMenuOpen(false);
-
+  const toggleTheme = () => setDarkMode(prev => !prev);
   const getNavLinkClass = ({ isActive }) =>
     isActive ? "active-link" : "";
 
@@ -173,7 +181,19 @@ function Navbar() {
             <img src={logo} alt="Learnfinity Logo" className="logo-img" />
           </NavLink>
         </div>
+
+        <div className="right-section">
+          {/* 🌗 Theme Toggle */}
+          <div className="theme-toggle" onClick={toggleTheme}>
+            {darkMode ? (
+              <Sun className="theme-icon filled" />
+            ) : (
+              <Moon className="theme-icon outline" />
+            )}
+          </div>
+
         <button className="hamburger" onClick={() => setIsMenuOpen(prev => !prev)}>☰</button>
+        </div>
 
         <nav className={isMenuOpen ? 'nav-open' : ''}>
           <ul className="nav-links">
