@@ -41,74 +41,141 @@ const LearnerProfile = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  
   // 🏆 Added Rank State
   const [userRank, setUserRank] = useState(null);
   const [userBadge, setUserBadge] = useState(null);
 
+  // 🧩 Add near the top, after your other useStates:
+  const [achievements, setAchievements] = useState([]);
+  
   const navigate = useNavigate();
 
   // Fetch learner data + progress
-  useEffect(() => {
-    const fetchProfileAndProgress = async () => {
+  // useEffect(() => {
+  //   const fetchProfileAndProgress = async () => {
+  //     try {
+  //       const token = localStorage.getItem("token");
+  //       if (!token) {
+  //         setError("Unauthorized: No token found");
+  //         setLoading(false);
+  //         return;
+  //       }
+
+  //       // ✅ Step 1: Always fetch profile first
+  //       const profileRes = await axios.get(
+  //         "https://hilms.onrender.com/api/learner/profile",
+  //         {
+  //           headers: { Authorization: `Bearer ${token}` },
+  //         }
+  //       );
+  //       setProfile(profileRes.data);
+
+  //       // ✅ Step 2: Then try to fetch course progress (optional)
+  //       try {
+  //         const progressRes = await axios.get(
+  //           "https://hilms.onrender.com/api/learner/progress",
+  //           {
+  //             headers: { Authorization: `Bearer ${token}` },
+  //           }
+  //         );
+
+  //         // Check if learner has enrolled courses
+  //         if (
+  //           progressRes.data &&
+  //           Array.isArray(progressRes.data.enrolledCourses) &&
+  //           progressRes.data.enrolledCourses.length > 0
+  //         ) {
+  //           setCourseProgress(progressRes.data.enrolledCourses);
+  //         } else {
+  //           setCourseProgress([]); // no courses yet
+  //         }
+  //       } catch (progressError) {
+  //         console.warn("No enrolled courses found yet");
+  //         setCourseProgress([]); // if no course progress API fails, don't break profile
+  //       }
+
+  //       // Fetch Leaderboard to Get Rank + Badge
+  //     try {
+  //       const leaderboardRes = await axios.get(
+  //         "https://hilms.onrender.com/api/learner/leaderboard"
+  //       );
+  //       const leaderboard = leaderboardRes.data;
+
+  //       // Find the user’s rank by comparing email
+  //       const rank =
+  //         leaderboard.findIndex(
+  //           (u) => u.email === profileRes.data.email
+  //         ) + 1;
+
+  //       if (rank > 0) {
+  //         setUserRank(rank);
+
+  //         // 🎖 Assign Badge Based on Rank
+  //         if (rank === 1) setUserBadge("👑 🥇 Gold Champion");
+  //         else if (rank === 2) setUserBadge("👑 🥈 Silver Star");
+  //         else if (rank === 3) setUserBadge("👑 🥉 Bronze Achiever");
+  //         else setUserBadge(`⭐ Rank ${rank}`);
+  //       } else {
+  //         setUserRank(null);
+  //         setUserBadge("Unranked");
+  //       }
+  //     } catch (leaderboardError) {
+  //       console.warn("Leaderboard fetch failed");
+  //       setUserRank(null);
+  //       setUserBadge("Unranked");
+  //     }
+
+  //     } catch (err) {
+  //       console.error(err);
+  //       setError("Failed to fetch profile");
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   fetchProfileAndProgress();
+  // }, []);
+
+  // 🧠 Inside your useEffect (after setting courseProgress)
+useEffect(() => {
+  const fetchProfileAndProgress = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        setError("Unauthorized: No token found");
+        setLoading(false);
+        return;
+      }
+
+      const profileRes = await axios.get(
+        "https://hilms.onrender.com/api/learner/profile",
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      setProfile(profileRes.data);
+
+      let enrolled = [];
       try {
-        const token = localStorage.getItem("token");
-        if (!token) {
-          setError("Unauthorized: No token found");
-          setLoading(false);
-          return;
-        }
-
-        // ✅ Step 1: Always fetch profile first
-        const profileRes = await axios.get(
-          "https://hilms.onrender.com/api/learner/profile",
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
+        const progressRes = await axios.get(
+          "https://hilms.onrender.com/api/learner/progress",
+          { headers: { Authorization: `Bearer ${token}` } }
         );
-        setProfile(profileRes.data);
+        enrolled = progressRes.data?.enrolledCourses || [];
+        setCourseProgress(enrolled);
+      } catch {
+        console.warn("No enrolled courses found yet");
+        setCourseProgress([]);
+      }
 
-        // ✅ Step 2: Then try to fetch course progress (optional)
-        try {
-          const progressRes = await axios.get(
-            "https://hilms.onrender.com/api/learner/progress",
-            {
-              headers: { Authorization: `Bearer ${token}` },
-            }
-          );
-
-          // Check if learner has enrolled courses
-          if (
-            progressRes.data &&
-            Array.isArray(progressRes.data.enrolledCourses) &&
-            progressRes.data.enrolledCourses.length > 0
-          ) {
-            setCourseProgress(progressRes.data.enrolledCourses);
-          } else {
-            setCourseProgress([]); // no courses yet
-          }
-        } catch (progressError) {
-          console.warn("No enrolled courses found yet");
-          setCourseProgress([]); // if no course progress API fails, don't break profile
-        }
-
-        // Fetch Leaderboard to Get Rank + Badge
+      // 🏆 Leaderboard Fetch
       try {
         const leaderboardRes = await axios.get(
           "https://hilms.onrender.com/api/learner/leaderboard"
         );
         const leaderboard = leaderboardRes.data;
-
-        // Find the user’s rank by comparing email
         const rank =
-          leaderboard.findIndex(
-            (u) => u.email === profileRes.data.email
-          ) + 1;
-
+          leaderboard.findIndex((u) => u.email === profileRes.data.email) + 1;
         if (rank > 0) {
           setUserRank(rank);
-
-          // 🎖 Assign Badge Based on Rank
           if (rank === 1) setUserBadge("👑 🥇 Gold Champion");
           else if (rank === 2) setUserBadge("👑 🥈 Silver Star");
           else if (rank === 3) setUserBadge("👑 🥉 Bronze Achiever");
@@ -117,22 +184,53 @@ const LearnerProfile = () => {
           setUserRank(null);
           setUserBadge("Unranked");
         }
-      } catch (leaderboardError) {
+      } catch {
         console.warn("Leaderboard fetch failed");
         setUserRank(null);
         setUserBadge("Unranked");
       }
 
-      } catch (err) {
-        console.error(err);
-        setError("Failed to fetch profile");
-      } finally {
-        setLoading(false);
-      }
-    };
+      // 🧮 Achievement Calculation
+      if (Array.isArray(enrolled) && enrolled.length > 0) {
+        const derived = [];
+        const completedCourses = enrolled.filter(
+          (c) => c.progressPercent >= 100
+        ).length;
+        const finishedLessons = enrolled.reduce(
+          (acc, c) => acc + (c.completedLessons || 0),
+          0
+        );
+        const highQuizScores = enrolled.reduce(
+          (acc, c) =>
+            acc +
+            ((c.topQuizScores || []).filter((s) => s >= 90).length || 0),
+          0
+        );
 
-    fetchProfileAndProgress();
-  }, []);
+        if (completedCourses >= 1)
+          derived.push(`🏁 Completed ${completedCourses} course(s)`);
+        if (finishedLessons >= 5)
+          derived.push(`📘 Completed ${finishedLessons} lessons`);
+        if (highQuizScores >= 1)
+          derived.push(`💯 Scored 90%+ in ${highQuizScores} quiz(es)`);
+
+        if (derived.length === 0)
+          derived.push("✨ Getting started — keep learning!");
+
+        setAchievements(derived);
+      } else {
+        setAchievements(["✨ Getting started — keep learning!"]);
+      }
+    } catch (err) {
+      console.error(err);
+      setError("Failed to fetch profile");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchProfileAndProgress();
+}, []);
 
 
   // 🔁 Handle edit toggle
@@ -277,6 +375,22 @@ const LearnerProfile = () => {
           </>
         )}
       </div>
+
+      {/* 🏆 Achievements Section */}
+      {achievements.length > 0 && (
+        <div className="learner-achievements">
+          <h2>🏆 Achievements</h2>
+          <div className="achievement-grid">
+            {achievements.map((a, i) => (
+              <div key={i} className="achievement-card">
+                <span className="achievement-icon">⭐</span>
+                <p>{a}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
 
       {/* 📘 Course Progress Section */}
       {courseProgress && courseProgress.length > 0 ? (
