@@ -15,12 +15,13 @@ const LearnerProfileSkeleton = () => (
       <div key={i} className="skeleton profile-skeleton-line"></div>
     ))}
     <div className="skeleton profile-skeleton-btn"></div>
+    <div className="skeleton profile-skeleton-btn"></div>
   </div>
 
   {/* Right – Rank Holder Skeleton */}
   <div className="rank-skeleton-card">
     <div className="skeleton rank-skeleton-img"></div>
-    {Array.from({ length: 4 }).map((_, i) => (
+    {Array.from({ length: 1 }).map((_, i) => (
       <div key={i} className="skeleton rank-skeleton-line"></div>
     ))}
     <div className="skeleton rank-skeleton-btn"></div>
