@@ -252,7 +252,6 @@ useEffect(() => {
 
         if (activeLearner) derived.push(activeLearner);
         if (consistentLearner) derived.push(consistentLearner);
-        if (quizChampion) derived.push(quizChampion);
 
         if (derived.length === 0)
           derived.push("✨ Getting started — keep learning!");
