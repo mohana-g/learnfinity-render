@@ -205,13 +205,16 @@ useEffect(() => {
       // 🧮 Achievement Calculation
       if (Array.isArray(enrolled) && enrolled.length > 0) {
         const derived = [];
+
         const completedCourses = enrolled.filter(
           (c) => c.progressPercent >= 100
         ).length;
+
         const finishedLessons = enrolled.reduce(
           (acc, c) => acc + (c.completedLessons || 0),
           0
         );
+
         const highQuizScores = enrolled.reduce(
           (acc, c) =>
             acc +
@@ -219,12 +222,48 @@ useEffect(() => {
           0
         );
 
+        // 🕒 Average course progress
+        const avgProgress =
+          enrolled.reduce((acc, c) => acc + (c.progressPercent || 0), 0) /
+          enrolled.length;
+
+        // 🎯 Courses in progress (not completed but started)
+        const inProgressCourses = enrolled.filter(
+          (c) => c.progressPercent > 0 && c.progressPercent < 100
+        ).length;
+
+        // 🔥 Streak: learner has completed multiple lessons in multiple courses
+        const activeLearner =
+          finishedLessons >= 15 ? "🔥 Active Learner — keep it up!" : null;
+
+        // 🌟 Consistency: user has enrolled in multiple courses
+        const consistentLearner =
+          enrolled.length >= 3
+            ? "🌟 Consistent Learner — enrolled in multiple courses"
+            : null;
+
+        // 🏅 Quiz Champion: scored high in many quizzes
+        const quizChampion =
+          highQuizScores >= 5
+            ? "🏅 Quiz Champion — 5+ high scores!"
+            : null;
+
+        // Push achievements
         if (completedCourses >= 1)
           derived.push(`🏁 Completed ${completedCourses} course(s)`);
+        if (inProgressCourses >= 1)
+          derived.push(`🚀 Currently learning ${inProgressCourses} course(s)`);
         if (finishedLessons >= 5)
-          derived.push(`📘 Completed ${finishedLessons} lessons`);
+          derived.push(`📘 Completed ${finishedLessons} lesson(s)`);
         if (highQuizScores >= 1)
           derived.push(`💯 Scored 90%+ in ${highQuizScores} quiz(es)`);
+
+        if (avgProgress >= 50)
+          derived.push(`📈 Maintained an average progress of ${Math.round(avgProgress)}%`);
+
+        if (activeLearner) derived.push(activeLearner);
+        if (consistentLearner) derived.push(consistentLearner);
+        if (quizChampion) derived.push(quizChampion);
 
         if (derived.length === 0)
           derived.push("✨ Getting started — keep learning!");
@@ -233,6 +272,7 @@ useEffect(() => {
       } else {
         setAchievements(["✨ Getting started — keep learning!"]);
       }
+
     } catch (err) {
       console.error(err);
       setError("Failed to fetch profile");

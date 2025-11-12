@@ -298,6 +298,7 @@
   100% { background-position: -200% 0; }
 }
 
+/* Profile Section */
 .skeleton-title {
   width: 60%;
   height: 28px;
@@ -317,6 +318,42 @@
   display: inline-block;
 }
 
+
+/* 🏆 Achievements Section */
+/* .learner-achievements {
+  margin-top: 2rem;
+} */
+/* 
+.achievement-grid {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+} */
+
+.skeleton-achievement-card {
+  width: 120px;
+  height: 80px;
+  border-radius: 15px;
+  padding: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.skeleton-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-bottom: 0.5rem;
+}
+
+.skeleton-text {
+  width: 70%;
+  height: 12px;
+  border-radius: 4px;
+}
+/* Course Progress Section */
 .skeleton-section-title {
   width: 40%;
   height: 22px;
@@ -346,39 +383,4 @@
   width: 90%;
   height: 36px;
   margin-bottom: 8px;
-}
-
-/* 🏆 Achievements Section */
-.learner-achievements {
-  margin-top: 2rem;
-}
-
-.achievement-grid {
-  display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-
-.skeleton-achievement-card {
-  width: 120px;
-  height: 80px;
-  border-radius: 15px;
-  padding: 0.8rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.skeleton-icon {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  margin-bottom: 0.5rem;
-}
-
-.skeleton-text {
-  width: 70%;
-  height: 12px;
-  border-radius: 4px;
 }
