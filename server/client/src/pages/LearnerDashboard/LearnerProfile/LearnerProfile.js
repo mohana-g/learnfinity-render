@@ -325,96 +325,105 @@ useEffect(() => {
   return (
     <div className="learner-profile-container">
       <h1>Learner Profile</h1>
-      <div className="learner-profile-card">
-        {/* 🏆 Rank Badge Display */}
-        {userBadge && (
-          <div
-            className={`rank-badge ${
-              userRank === 1
-                ? "rank-1"
-                : userRank === 2
-                ? "rank-2"
-                : userRank === 3
-                ? "rank-3"
-                : "rank-normal"
-            }`}
-          >
-            {userBadge}
-          </div>
-        )}
-        {!isEditing ? (
-          <>
-            <p><strong>First Name:</strong> {profile?.first_name}</p>
-            <p><strong>Last Name:</strong> {profile?.last_name}</p>
-            <p><strong>Email:</strong> {profile?.email}</p>
-            <p><strong>Phone Number:</strong> {profile?.phone}</p>
-            <p><strong>Date of Birth:</strong> {new Date(profile?.dob).toLocaleDateString()}</p>
-            <p><strong>Address:</strong> {profile?.address}</p>
-            <button onClick={handleEditToggle}>Edit Profile</button>
-            <button onClick={handleEditAccount}>Edit Account</button>
-          </>
-        ) : (
-          <>
-            <div>
-              <label>First Name: </label>
-              <input
-                type="text"
-                name="first_name"
-                value={editData.first_name}
-                onChange={handleInputChange}
-              />
-            </div>
-            <div>
-              <label>Last Name: </label>
-              <input
-                type="text"
-                name="last_name"
-                value={editData.last_name}
-                onChange={handleInputChange}
-              />
-            </div>
-            <div>
-              <label>Email: </label>
-              <input
-                type="email"
-                name="email"
-                value={editData.email}
-                disabled
-              />
-            </div>
-            <div>
-              <label>Phone Number: </label>
-              <input
-                type="text"
-                name="phone"
-                value={editData.phone}
-                onChange={handleInputChange}
-              />
-            </div>
-            <div>
-              <label>Date of Birth: </label>
-              <input
-                type="date"
-                name="dob"
-                value={editData.dob?.split("T")[0]}
-                onChange={handleInputChange}
-              />
-            </div>
-            <div>
-              <label>Address: </label>
-              <input
-                type="text"
-                name="address"
-                value={editData.address}
-                onChange={handleInputChange}
-              />
-            </div>
-            <button onClick={handleSave}>Save</button>
-            <button onClick={handleEditToggle}>Cancel</button>
-          </>
-        )}
-      </div>
 
+      {/* 🌟 Flex container for Profile + Rank */}
+      <div className="learner-stage-container">
+        {/* Left Side – Profile Card */}
+        <div className="learner-profile-card">
+          {!isEditing ? (
+            <>
+              <p><strong>First Name:</strong> {profile?.first_name}</p>
+              <p><strong>Last Name:</strong> {profile?.last_name}</p>
+              <p><strong>Email:</strong> {profile?.email}</p>
+              <p><strong>Phone Number:</strong> {profile?.phone}</p>
+              <p><strong>Date of Birth:</strong> {new Date(profile?.dob).toLocaleDateString()}</p>
+              <p><strong>Address:</strong> {profile?.address}</p>
+              <button onClick={handleEditToggle}>Edit Profile</button>
+              <button onClick={handleEditAccount}>Edit Account</button>
+            </>
+          ) : (
+            <>
+              <div>
+                <label>First Name: </label>
+                <input
+                  type="text"
+                  name="first_name"
+                  value={editData.first_name}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div>
+                <label>Last Name: </label>
+                <input
+                  type="text"
+                  name="last_name"
+                  value={editData.last_name}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div>
+                <label>Email: </label>
+                <input
+                  type="email"
+                  name="email"
+                  value={editData.email}
+                  disabled
+                />
+              </div>
+              <div>
+                <label>Phone Number: </label>
+                <input
+                  type="text"
+                  name="phone"
+                  value={editData.phone}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div>
+                <label>Date of Birth: </label>
+                <input
+                  type="date"
+                  name="dob"
+                  value={editData.dob?.split("T")[0]}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div>
+                <label>Address: </label>
+                <input
+                  type="text"
+                  name="address"
+                  value={editData.address}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <button onClick={handleSave}>Save</button>
+              <button onClick={handleEditToggle}>Cancel</button>
+            </>
+          )}
+        </div>
+
+        {/* Right Side – Rank Holder Box */}
+        <div className="rank-holder-card">
+          <h3 className="rank-title">🏆 Stage Rank Holder</h3>
+          {userBadge && (
+            <div
+              className={`rank-badge ${
+                userRank === 1
+                  ? "rank-1"
+                  : userRank === 2
+                  ? "rank-2"
+                  : userRank === 3
+                  ? "rank-3"
+                  : "rank-normal"
+              }`}
+            >
+              {userBadge}
+            </div>
+          )}
+          {userRank && <p className="rank-text">Current Rank: #{userRank}</p>}
+        </div>
+      </div>
       {/* 🏆 Achievements Section */}
       {achievements.length > 0 && (
         <div className="learner-achievements">
