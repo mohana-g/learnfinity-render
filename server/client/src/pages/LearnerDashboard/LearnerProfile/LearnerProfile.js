@@ -16,6 +16,17 @@ const LearnerProfileSkeleton = () => (
       <div className="skeleton skeleton-btn" />
       <div className="skeleton skeleton-btn" />
     </div>
+    <div className="learner-achievements">
+      <div className="skeleton skeleton-section-title" />
+      <div className="achievement-grid">
+        {Array.from({ length: 3 }).map((_, i) => (
+          <div key={i} className="achievement-card skeleton-achievement-card">
+            <div className="skeleton skeleton-icon" />
+            <div className="skeleton skeleton-text" />
+          </div>
+        ))}
+      </div>
+    </div>
     <div className="learner-course-progress">
       <div className="skeleton skeleton-section-title" />
       <div className="course-progress-grid">
@@ -25,17 +36,6 @@ const LearnerProfileSkeleton = () => (
             <div className="skeleton skeleton-progress-bar" />
             <div className="skeleton skeleton-percent" />
             <div className="skeleton skeleton-details" />
-          </div>
-        ))}
-      </div>
-    </div>
-    <div className="learner-achievements">
-      <div className="skeleton skeleton-section-title" />
-      <div className="achievement-grid">
-        {Array.from({ length: 3 }).map((_, i) => (
-          <div key={i} className="achievement-card skeleton-achievement-card">
-            <div className="skeleton skeleton-icon" />
-            <div className="skeleton skeleton-text" />
           </div>
         ))}
       </div>
@@ -224,8 +224,10 @@ useEffect(() => {
 
         // 🕒 Average course progress
         const avgProgress =
-          enrolled.reduce((acc, c) => acc + (c.progressPercent || 0), 0) /
-          enrolled.length;
+        enrolled.length > 0
+          ? enrolled.reduce((acc, c) => acc + ((c.progressPercent || 0) / 100), 0) /
+            enrolled.length * 100
+          : 0;
 
         // 🎯 Courses in progress (not completed but started)
         const inProgressCourses = enrolled.filter(
@@ -234,7 +236,7 @@ useEffect(() => {
 
         // 🔥 Streak: learner has completed multiple lessons in multiple courses
         const activeLearner =
-          finishedLessons >= 15 ? "🔥 Active Learner — keep it up!" : null;
+          finishedLessons >= 10 ? "🔥 Active Learner — keep it up!" : null;
 
         // 🌟 Consistency: user has enrolled in multiple courses
         const consistentLearner =
@@ -259,7 +261,9 @@ useEffect(() => {
           derived.push(`💯 Scored 90%+ in ${highQuizScores} quiz(es)`);
 
         if (avgProgress >= 50)
-          derived.push(`📈 Maintained an average progress of ${Math.round(avgProgress)}%`);
+        derived.push(
+          `📈 Maintained an average progress of ${avgProgress.toFixed(1)}%`
+        );
 
         if (activeLearner) derived.push(activeLearner);
         if (consistentLearner) derived.push(consistentLearner);
@@ -434,7 +438,7 @@ useEffect(() => {
           <div className="achievement-grid">
             {achievements.map((a, i) => (
               <div key={i} className="achievement-card">
-                <span className="achievement-icon">⭐</span>
+                {/* <span className="achievement-icon">⭐</span> */}
                 <p>{a}</p>
               </div>
             ))}
