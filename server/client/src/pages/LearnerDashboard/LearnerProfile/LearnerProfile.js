@@ -214,20 +214,6 @@ useEffect(() => {
           (acc, c) => acc + (c.completedLessons || 0),
           0
         );
-       const highQuizScores = enrolled.reduce((acc, course) => {
-  if (course.quizzes && course.quizzes.length > 0) {
-    const highScoringQuizzes = course.quizzes.filter(
-      (quiz) =>
-        quiz.marks_scored !== null &&
-        quiz.total_marks > 0 &&
-        (quiz.marks_scored / quiz.total_marks) * 100 >= 90
-    ).length;
-    return acc + highScoringQuizzes;
-  }
-  return acc;
-}, 0);
-
-
 
         // 🕒 Average course progress
         const avgProgress =
@@ -251,12 +237,6 @@ useEffect(() => {
             ? "🌟 Consistent Learner — enrolled in multiple courses"
             : null;
 
-        // 🏅 Quiz Champion: scored high in many quizzes
-        const quizChampion =
-          highQuizScores >= 2
-            ? "🏅 Quiz Champion — 2+ high scores!"
-            : null;
-
         // Push achievements
         if (completedCourses >= 1)
           derived.push(`🏁 Completed ${completedCourses} course(s)`);
@@ -264,8 +244,6 @@ useEffect(() => {
           derived.push(`🚀 Currently learning ${inProgressCourses} course(s)`);
         if (finishedLessons >= 5)
           derived.push(`📘 Completed ${finishedLessons} lesson(s)`);
-        if (highQuizScores >= 1)
-          derived.push(`💯 Scored 90%+ in ${highQuizScores} quiz(es)`);
 
         if (avgProgress >= 50)
         derived.push(

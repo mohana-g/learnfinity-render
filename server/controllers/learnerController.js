@@ -150,21 +150,8 @@ const getLoggedInLearnerProgress = async (req, res) => {
                 )
               )
             ) AS chapters,
-             
-            (SELECT json_agg(
-                json_build_object(
-                  'quiz_id', q.id,
-                  'course_id', q.course_id,
-                  'title', q.title,
-                  'total_marks', q.total_marks,
-                  'marks_scored', lq.marks_scored
-                )
-              )
-            FROM quizzes q
-            LEFT JOIN learner_quizzes lq
-              ON lq.quiz_id = q.id AND lq.learner_id = $1
-            WHERE q.course_id = c.id) AS quizzes
-
+            (SELECT json_agg(json_build_object('quiz_id', q.id, 'course_id', q.course_id, 'title', q.title))
+              FROM quizzes q WHERE q.course_id = c.id) AS quizzes
       FROM courses c
       JOIN learner_courses lc ON lc.course_id = c.id
       LEFT JOIN chapters ch ON ch.course_id = c.id
