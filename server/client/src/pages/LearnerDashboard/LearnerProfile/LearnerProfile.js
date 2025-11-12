@@ -214,18 +214,19 @@ useEffect(() => {
           (acc, c) => acc + (c.completedLessons || 0),
           0
         );
-        const highQuizScores = enrolledCourses.reduce((acc, course) => {
-          if (course.quizzes && course.quizzes.length > 0) {
-            const highScoringQuizzes = course.quizzes.filter(
-              (quiz) =>
-                quiz.marks_scored !== null &&
-                quiz.total_marks > 0 &&
-                (quiz.marks_scored / quiz.total_marks) * 100 >= 90
-            ).length;
-            return acc + highScoringQuizzes;
-          }
-          return acc;
-        }, 0);
+       const highQuizScores = enrolled.reduce((acc, course) => {
+  if (course.quizzes && course.quizzes.length > 0) {
+    const highScoringQuizzes = course.quizzes.filter(
+      (quiz) =>
+        quiz.marks_scored !== null &&
+        quiz.total_marks > 0 &&
+        (quiz.marks_scored / quiz.total_marks) * 100 >= 90
+    ).length;
+    return acc + highScoringQuizzes;
+  }
+  return acc;
+}, 0);
+
 
 
         // 🕒 Average course progress
