@@ -91,8 +91,8 @@
 
 /* 🏆 Rank Holder Card (Right side) */
 .rank-holder-card {
-  flex: 0.7;
-  min-width: 320px;
+  flex: 0.6;
+  min-width: 360px;
   background: linear-gradient(135deg, #fff8e1, #fff);
   border-radius: 12px;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
@@ -194,7 +194,7 @@
 
 .achievement-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 16px;
   justify-content: center;
 }
@@ -275,94 +275,44 @@
   100% { background-position: -200% 0; }
 }
 
-/* 🧱 Main Layout Container */
-.learner-skeleton-container {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 30px;
-  padding: 20px;
-  flex-wrap: wrap;
-}
+/* Skeleton Elements */
 
-/* 🩶 Profile Skeleton (Left Card) */
-.profile-skeleton-card {
-  flex: 1 1 60%;
-  background: #fff;
-  border-radius: 12px;
-  padding: 24px;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
-  min-width: 320px;
+.profile-top-section {
   display: flex;
   flex-direction: row;
-}
-
-.profile-skeleton-title {
-  width: 40%;
-  height: 28px;
-  margin: 0 auto 20px auto;
-}
-
-.profile-skeleton-line {
-  width: 30%;
-  height: 14px;
-  margin: 10px auto;
-  border-radius: 6px;
-}
-
-.profile-skeleton-btn {
-  width: 25%;
-  height: 34px;
-  margin: 20px auto 0 auto;
-  border-radius: 18px;
-}
-
-/* 👑 Rank Skeleton (Right Card) */
-.rank-skeleton-card {
-  flex: 1 1 30%;
-  background: #fff;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
-  min-width: 260px;
-  display: flex;
-  flex-direction: row; 
-}
-
-.rank-skeleton-img {
-  width: 30%;
-  height: 150px;
+  align-items: center;
   margin-bottom: 20px;
-  border-radius: 10px;
 }
 
-.rank-skeleton-line {
-  width: 30%;
-  height: 14px;
+.skeleton-title {
+  width: 50%;
+  height: 26px;
+  margin: 0 auto 18px auto;
+}
+
+.skeleton-field {
+  width: 90%;
+  height: 16px;
   margin: 10px auto;
   border-radius: 6px;
 }
 
-.rank-skeleton-btn {
-  width: 25%;
-  height: 28px;
-  margin: 20px auto 0 auto;
-  border-radius: 15px;
-  flex-direction: row
+.skeleton-btn {
+  width: 40%;
+  height: 30px;
+  margin: 15px auto;
+  border-radius: 20px;
 }
 
-/* 📱 Responsive Layout */
-@media (max-width: 768px) {
-  .learner-skeleton-container {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .profile-skeleton-card,
-  .rank-skeleton-card {
-    width: 100%;
-    max-width: 500px;
-  }
+/* 🏆 Rank Holder Specifics */
+.rank-holder-card .skeleton-title {
+  width: 40%;
+  height: 24px;
+  margin: 0 auto 15px 0;
+}
+.rank-holder-card .skeleton-field {
+  margin-top: 12px;
+  margin-left: 0;
 }
 
 /* 🏅 Achievement Card Skeleton */
@@ -382,12 +332,12 @@
   align-items: center;
 }
 
-/* .skeleton-icon {
-  width: 50px;
-  height: 50px;
+.skeleton-icon {
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   margin-bottom: 10px;
-} */
+}
 
 .skeleton-text {
   width: 70%;
