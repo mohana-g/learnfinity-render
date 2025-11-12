@@ -6,36 +6,50 @@ import "./LearnerProfile.css";
 // Skeleton component for loading state
 const LearnerProfileSkeleton = () => (
   <div className="learner-profile-container">
-    <div className="learner-profile-card">
-      <div className="skeleton skeleton-title" />
-      <div className="skeleton skeleton-field" />
-      <div className="skeleton skeleton-field" />
-      <div className="skeleton skeleton-field" />
-      <div className="skeleton skeleton-field" />
-      <div className="skeleton skeleton-field" />
-      <div className="skeleton skeleton-btn" />
-      <div className="skeleton skeleton-btn" />
+    {/* Profile Section */}
+    <div className="profile-top-section">
+      <div className="learner-profile-card">
+        <div className="skeleton skeleton-title"></div>
+        <div className="skeleton skeleton-field"></div>
+        <div className="skeleton skeleton-field"></div>
+        <div className="skeleton skeleton-field"></div>
+        <div className="skeleton skeleton-field"></div>
+        <div className="skeleton skeleton-field"></div>
+        <div className="skeleton skeleton-btn"></div>
+        <div className="skeleton skeleton-btn"></div>
+      </div>
+
+      {/* Rank Holder Section */}
+      <div className="rank-holder-card">
+        <div className="skeleton skeleton-title"></div>
+        <div className="skeleton skeleton-field" style={{ width: "70%" }}></div>
+        <div className="skeleton skeleton-field" style={{ width: "50%" }}></div>
+      </div>
     </div>
+
+    {/* 🏆 Achievements Section */}
     <div className="learner-achievements">
-      <div className="skeleton skeleton-section-title" />
+      <div className="skeleton skeleton-section-title"></div>
       <div className="achievement-grid">
         {Array.from({ length: 3 }).map((_, i) => (
           <div key={i} className="achievement-card skeleton-achievement-card">
-            <div className="skeleton skeleton-icon" />
-            <div className="skeleton skeleton-text" />
+            <div className="skeleton skeleton-icon"></div>
+            <div className="skeleton skeleton-text"></div>
           </div>
         ))}
       </div>
     </div>
+
+    {/* 📊 Course Progress Section */}
     <div className="learner-course-progress">
-      <div className="skeleton skeleton-section-title" />
+      <div className="skeleton skeleton-section-title"></div>
       <div className="course-progress-grid">
         {Array.from({ length: 3 }).map((_, i) => (
           <div className="course-progress-card" key={i}>
-            <div className="skeleton skeleton-course-title" />
-            <div className="skeleton skeleton-progress-bar" />
-            <div className="skeleton skeleton-percent" />
-            <div className="skeleton skeleton-details" />
+            <div className="skeleton skeleton-course-title"></div>
+            <div className="skeleton skeleton-progress-bar"></div>
+            <div className="skeleton skeleton-percent"></div>
+            <div className="skeleton skeleton-details"></div>
           </div>
         ))}
       </div>
@@ -188,9 +202,9 @@ useEffect(() => {
           leaderboard.findIndex((u) => u.email === profileRes.data.email) + 1;
         if (rank > 0) {
           setUserRank(rank);
-          if (rank === 1) setUserBadge("👑 🥇 Gold Champion");
-          else if (rank === 2) setUserBadge("👑 🥈 Silver Star");
-          else if (rank === 3) setUserBadge("👑 🥉 Bronze Achiever");
+          if (rank === 1) setUserBadge(" 🥇 Gold Champion");
+          else if (rank === 2) setUserBadge(" 🥈 Silver Star");
+          else if (rank === 3) setUserBadge(" 🥉 Bronze Achiever");
           else setUserBadge(`⭐ Rank ${rank}`);
         } else {
           setUserRank(null);
@@ -405,7 +419,7 @@ useEffect(() => {
 
         {/* Right Side – Rank Holder Box */}
         <div className="rank-holder-card">
-          <h3 className="rank-title">🏆 Stage Rank Holder</h3>
+          <h3 className="rank-title">👑 Stage Rank Holder</h3>
           {userBadge && (
             <div
               className={`rank-badge ${
@@ -421,7 +435,7 @@ useEffect(() => {
               {userBadge}
             </div>
           )}
-          {userRank && <p className="rank-text">Current Rank: #{userRank}</p>}
+          {userRank && <p className="rank-text">Current Rank: <strong>{userRank}</strong></p>}
         </div>
       </div>
       {/* 🏆 Achievements Section */}
