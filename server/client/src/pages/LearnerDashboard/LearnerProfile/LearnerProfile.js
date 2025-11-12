@@ -215,12 +215,17 @@ useEffect(() => {
           0
         );
 
-        const highQuizScores = enrolled.reduce(
-          (acc, c) =>
-            acc +
-            ((c.topQuizScores || []).filter((s) => s >= 90).length || 0),
-          0
-        );
+      const highQuizScores = enrolled.reduce((acc, course) => {
+        if (
+          course.quiz &&
+          course.quiz.total_marks > 0 &&
+          (course.quiz.marks_scored / course.quiz.total_marks) * 100 >= 90
+        ) {
+          return acc + 1;
+        }
+        return acc;
+      }, 0);
+
 
         // 🕒 Average course progress
         const avgProgress =
