@@ -92,7 +92,7 @@
 /* 🏆 Rank Holder Card (Right side) */
 .rank-holder-card {
   flex: 0.7;
-  min-width: 360px;
+  min-width: 320px;
   background: linear-gradient(135deg, #fff8e1, #fff);
   border-radius: 12px;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
@@ -275,37 +275,90 @@
   100% { background-position: -200% 0; }
 }
 
-/* Skeleton Elements */
-.skeleton-title {
-  width: 40%;
-  height: 26px;
-  margin: 0 auto 18px auto;
+/* 🧱 Main Layout Container */
+.learner-skeleton-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 30px;
+  padding: 20px;
+  flex-wrap: wrap;
 }
 
-.skeleton-field {
+/* 🩶 Profile Skeleton (Left Card) */
+.profile-skeleton-card {
+  flex: 1 1 60%;
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  min-width: 320px;
+}
+
+.profile-skeleton-title {
+  width: 60%;
+  height: 28px;
+  margin: 0 auto 20px auto;
+}
+
+.profile-skeleton-line {
   width: 90%;
-  height: 16px;
+  height: 14px;
   margin: 10px auto;
   border-radius: 6px;
 }
 
-.skeleton-btn {
+.profile-skeleton-btn {
   width: 40%;
-  height: 30px;
-  margin: 15px auto;
-  border-radius: 20px;
+  height: 34px;
+  margin: 20px auto 0 auto;
+  border-radius: 18px;
 }
 
-/* 🏆 Rank Holder Specifics
-.rank-holder-card .skeleton-title {
-  width: 40%;
-  height: 24px;
-  margin: 0 auto 15px 0;
+/* 👑 Rank Skeleton (Right Card) */
+.rank-skeleton-card {
+  flex: 1 1 30%;
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  min-width: 260px;
 }
-.rank-holder-card .skeleton-field {
-  margin-top: 12px;
-  margin-left: 0;
-} */
+
+.rank-skeleton-img {
+  width: 100%;
+  height: 150px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+}
+
+.rank-skeleton-line {
+  width: 80%;
+  height: 14px;
+  margin: 10px auto;
+  border-radius: 6px;
+}
+
+.rank-skeleton-btn {
+  width: 50%;
+  height: 28px;
+  margin: 20px auto 0 auto;
+  border-radius: 15px;
+}
+
+/* 📱 Responsive Layout */
+@media (max-width: 768px) {
+  .learner-skeleton-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .profile-skeleton-card,
+  .rank-skeleton-card {
+    width: 100%;
+    max-width: 500px;
+  }
+}
 
 /* 🏅 Achievement Card Skeleton */
 .skeleton-section-title {

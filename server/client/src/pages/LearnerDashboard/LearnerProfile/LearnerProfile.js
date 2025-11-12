@@ -7,25 +7,26 @@ import "./LearnerProfile.css";
 const LearnerProfileSkeleton = () => (
   <div className="learner-profile-container">
     {/* Profile Section */}
-    <div className="profile-top-section">
-      <div className="learner-profile-card">
-        <div className="skeleton skeleton-title"></div>
-        <div className="skeleton skeleton-field"></div>
-        <div className="skeleton skeleton-field"></div>
-        <div className="skeleton skeleton-field"></div>
-        <div className="skeleton skeleton-field"></div>
-        <div className="skeleton skeleton-field"></div>
-        <div className="skeleton skeleton-btn"></div>
-        <div className="skeleton skeleton-btn"></div>
-      </div>
+    <div className="learner-skeleton-container">
+  {/* Left – Learner Profile Skeleton */}
+  <div className="profile-skeleton-card">
+    <div className="skeleton profile-skeleton-title"></div>
+    {Array.from({ length: 5 }).map((_, i) => (
+      <div key={i} className="skeleton profile-skeleton-line"></div>
+    ))}
+    <div className="skeleton profile-skeleton-btn"></div>
+  </div>
 
-      {/* Rank Holder Section */}
-      <div className="rank-holder-card">
-        <div className="skeleton skeleton-title"></div>
-        <div className="skeleton skeleton-field" style={{ width: "70%" }}></div>
-        <div className="skeleton skeleton-field" style={{ width: "50%" }}></div>
-      </div>
-    </div>
+  {/* Right – Rank Holder Skeleton */}
+  <div className="rank-skeleton-card">
+    <div className="skeleton rank-skeleton-img"></div>
+    {Array.from({ length: 4 }).map((_, i) => (
+      <div key={i} className="skeleton rank-skeleton-line"></div>
+    ))}
+    <div className="skeleton rank-skeleton-btn"></div>
+  </div>
+</div>
+
 
     {/* 🏆 Achievements Section */}
     <div className="learner-achievements">
