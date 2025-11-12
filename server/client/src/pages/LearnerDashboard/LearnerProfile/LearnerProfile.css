@@ -244,7 +244,7 @@
 
 /* Course progress styles */ 
 .learner-course-progress { margin-top: 50px; } 
-.course-progress-grid { display: grid; gap: 20px; justify-content: center; } 
+.course-progress-grid { display: flex; gap: 20px; justify-content: center; } 
 .course-progress-card { width: 300px; background: #fff; border: 1px solid #e0e0e0; border-radius: 12px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06); padding: 15px; transition: 0.3s ease; position: relative; } 
 .course-progress-card:hover { transform: translateY(-5px); } 
 .card-header { display: flex; justify-content: space-between; align-items: center; } 
@@ -273,7 +273,7 @@
 
 /* Skeleton Elements */
 .skeleton-title {
-  width: 60%;
+  width: 50%;
   height: 26px;
   margin: 0 auto 18px auto;
 }
@@ -294,11 +294,13 @@
 
 /* 🏆 Rank Holder Specifics */
 .rank-holder-card .skeleton-title {
-  width: 80%;
+  width: 40%;
   height: 24px;
+  margin: 0 auto 15px 0;
 }
 .rank-holder-card .skeleton-field {
   margin-top: 12px;
+  margin-left: 0;
 }
 
 /* 🏅 Achievement Card Skeleton */
@@ -306,6 +308,7 @@
   width: 30%;
   height: 22px;
   margin-bottom: 1.2rem;
+  align-items: center;
 }
 
 .skeleton-achievement-card {
@@ -317,12 +320,12 @@
   align-items: center;
 }
 
-.skeleton-icon {
+/* .skeleton-icon {
   width: 50px;
   height: 50px;
   border-radius: 50%;
   margin-bottom: 10px;
-}
+} */
 
 .skeleton-text {
   width: 70%;
@@ -334,6 +337,7 @@
   width: 70%;
   height: 16px;
   margin-bottom: 10px;
+  align-items: center;
 }
 
 .skeleton-progress-bar {
