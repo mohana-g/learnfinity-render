@@ -236,7 +236,7 @@ useEffect(() => {
 
         // 🔥 Streak: learner has completed multiple lessons in multiple courses
         const activeLearner =
-          finishedLessons >= 10 ? "🔥 Active Learner — keep it up!" : null;
+          finishedLessons >= 3 ? "🔥 Active Learner — keep it up!" : null;
 
         // 🌟 Consistency: user has enrolled in multiple courses
         const consistentLearner =
@@ -246,8 +246,8 @@ useEffect(() => {
 
         // 🏅 Quiz Champion: scored high in many quizzes
         const quizChampion =
-          highQuizScores >= 5
-            ? "🏅 Quiz Champion — 5+ high scores!"
+          highQuizScores >= 2
+            ? "🏅 Quiz Champion — 2+ high scores!"
             : null;
 
         // Push achievements

@@ -332,8 +332,8 @@
 } */
 
 .skeleton-achievement-card {
-  width: 120px;
-  height: 80px;
+  width: 200px;
+  height: 60px;
   border-radius: 15px;
   padding: 0.8rem;
   display: flex;
