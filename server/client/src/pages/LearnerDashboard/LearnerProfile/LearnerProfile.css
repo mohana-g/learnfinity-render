@@ -180,6 +180,109 @@
   }
 }
 
+/* ===== Celebration Popup ===== */
+.celebration-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+.celebration-popup {
+  background: linear-gradient(135deg, #fffbe6, #fff5cc);
+  border-radius: 20px;
+  padding: 2.5rem;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 4px 40px rgba(255, 215, 0, 0.4);
+  animation: popupScale 0.4s ease;
+  width: 360px;
+}
+
+.celebration-popup h2 {
+  margin-top: 1rem;
+  color: #333;
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+.celebration-popup p {
+  font-size: 1rem;
+  color: #555;
+  margin-top: 0.5rem;
+}
+
+/* ===== User Icon + Crown ===== */
+.celebration-icon {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
+.user-icon {
+  font-size: 3rem;
+  color: #222;
+  background: #fff;
+  border-radius: 50%;
+  padding: 0.7rem;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+}
+
+.crown {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  font-size: 1.8rem;
+  transform: rotate(-15deg);
+  animation: crown-glow 1.2s ease-in-out infinite alternate;
+}
+
+/* ===== Close Button ===== */
+.close-popup {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #333;
+  transition: transform 0.2s ease;
+}
+
+.close-popup:hover {
+  transform: scale(1.2);
+}
+
+/* ===== Animations ===== */
+@keyframes popupScale {
+  from { transform: scale(0.7); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; } to { opacity: 1; }
+}
+
+@keyframes crown-glow {
+  0% { text-shadow: 0 0 10px gold; }
+  100% { text-shadow: 0 0 25px #ffd700; }
+}
+
+/* ===== Loader ===== */
+.loader {
+  text-align: center;
+  padding: 3rem;
+  font-size: 1.2rem;
+  color: #666;
+}
+
 /* 🏅 Achievements Section */
 .learner-achievements {
   margin-top: 40px;

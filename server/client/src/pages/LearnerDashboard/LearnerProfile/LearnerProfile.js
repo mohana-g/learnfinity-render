@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import confetti from "canvas-confetti";
+import { FaUserAlt } from "react-icons/fa";
+import { IoClose } from "react-icons/io5";
 import "./LearnerProfile.css";
 
 // Skeleton component for loading state
@@ -73,6 +76,10 @@ const LearnerProfile = () => {
 
   // 🧩 Add near the top, after your other useStates:
   const [achievements, setAchievements] = useState([]);
+
+  // 🎉 Celebration State
+  const [showCelebration, setShowCelebration] = useState(false);
+  const confettiRef = useRef(null);
 
   const navigate = useNavigate();
 
@@ -243,11 +250,11 @@ useEffect(() => {
 
         // 🔥 Streak: learner has completed multiple lessons in multiple courses
         const activeLearner =
-          finishedLessons >= 3 ? "🔥 Active Learner — keep it up!" : null;
+          finishedLessons >= 10 ? "🔥 Active Learner — keep it up!" : null;
 
         // 🌟 Consistency: user has enrolled in multiple courses
         const consistentLearner =
-          enrolled.length >= 3
+          enrolled.length >= 5
             ? "🌟 Consistent Learner — enrolled in multiple courses"
             : null;
 
@@ -285,6 +292,35 @@ useEffect(() => {
 
   fetchProfileAndProgress();
 }, []);
+
+  // 🎉 Function to trigger confetti burst
+  const launchConfetti = () => {
+    const duration = 2 * 1000; // 2 seconds
+    const end = Date.now() + duration;
+
+    const frame = () => {
+      confetti({
+        particleCount: 5,
+        startVelocity: 30,
+        spread: 360,
+        ticks: 60,
+        origin: { x: Math.random(), y: Math.random() - 0.2 },
+      });
+      if (Date.now() < end) requestAnimationFrame(frame);
+    };
+    frame();
+  };
+
+  // 🎉 When popup opens, trigger confetti
+  useEffect(() => {
+    if (showCelebration) {
+      launchConfetti();
+    }
+  }, [showCelebration]);
+
+  if (loading) {
+    return <div className="loader">Loading...</div>;
+  }
 
   // 🔁 Handle edit toggle
   const handleEditToggle = () => {
@@ -418,8 +454,11 @@ useEffect(() => {
         </div>
 
         {/* Right Side – Rank Holder Box */}
-        <div className="rank-holder-card">
-          <h3 className="rank-title">👑 Stage Rank Holder</h3>
+        <div
+          className="rank-holder-card"
+          onClick={() => setShowCelebration(true)}
+        >          
+        <h3 className="rank-title">👑 Stage Rank Holder</h3>
           {userBadge && (
             <div
               className={`rank-badge ${
@@ -438,6 +477,27 @@ useEffect(() => {
           {userRank && <p className="rank-text">Current Rank: <strong>{userRank}</strong></p>}
         </div>
       </div>
+
+      {/* 🎉 Celebration Popup */}
+      {showCelebration && (
+        <div className="celebration-overlay" ref={confettiRef}>
+          <div className="celebration-popup">
+            <button
+              className="close-popup"
+              onClick={() => setShowCelebration(false)}
+            >
+              <IoClose size={24} />
+            </button>
+            <div className="celebration-icon">
+              <FaUserAlt className="user-icon" />
+              <span className="crown">👑</span>
+            </div>
+            <h2>Congratulations!</h2>
+            <p>You’re shining as the Stage Rank Holder 🎉</p>
+          </div>
+        </div>
+      )}
+      
       {/* 🏆 Achievements Section */}
       {achievements.length > 0 && (
         <div className="learner-achievements">
