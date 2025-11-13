@@ -88,6 +88,14 @@ const motivationalTexts = [
   { emoji: "🚀", text: "Stay curious — more achievements are ready to be unlocked!" },
 ];
 
+const [currentTextIndex, setCurrentTextIndex] = useState(0);
+
+useEffect(() => {
+  const interval = setInterval(() => {
+    setCurrentTextIndex((prevIndex) => (prevIndex + 1) % motivationalTexts.length);
+  }, 4000); // changes every 4 seconds
+  return () => clearInterval(interval);
+}, []);
 
 const [motivation, setMotivation] = useState(motivationalTexts[0]);
 
