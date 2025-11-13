@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import confetti from "canvas-confetti";
@@ -497,7 +497,7 @@ useEffect(() => {
           </div>
         </div>
       )}
-      
+
       {/* 🏆 Achievements Section */}
       {achievements.length > 0 && (
         <div className="learner-achievements">
