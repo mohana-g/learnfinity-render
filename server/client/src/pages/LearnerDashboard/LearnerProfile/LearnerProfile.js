@@ -81,6 +81,28 @@ const LearnerProfile = () => {
   const [showCelebration, setShowCelebration] = useState(false);
   const confettiRef = useRef(null);
 
+  // 🔁 Motivational Texts Rotation
+  const motivationalTexts = [
+  "✨ Keep learning — new milestones await your journey!",
+  "🌱 Every lesson takes you closer to the next achievement!",
+  "🚀 Stay curious — more achievements are ready to be unlocked!",
+];
+
+const [motivation, setMotivation] = useState(motivationalTexts[0]);
+
+useEffect(() => {
+  const interval = setInterval(() => {
+    setMotivation((prev) => {
+      const currentIndex = motivationalTexts.indexOf(prev);
+      const nextIndex = (currentIndex + 1) % motivationalTexts.length;
+      return motivationalTexts[nextIndex];
+    });
+  }, 4000); // ⏱ change every 4 seconds
+
+  return () => clearInterval(interval);
+}, []);
+
+
   const navigate = useNavigate();
 
   // // Fetch learner data + progress
@@ -502,6 +524,7 @@ useEffect(() => {
       {achievements.length > 0 && (
         <div className="learner-achievements">
           <h2>🏆 Achievements</h2>
+          <p className="achievements-subtext">{motivation}</p>
           <div className="achievement-grid">
             {achievements.map((a, i) => (
               <div key={i} className="achievement-card">
