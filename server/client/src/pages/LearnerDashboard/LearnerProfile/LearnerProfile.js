@@ -82,11 +82,12 @@ const LearnerProfile = () => {
   const confettiRef = useRef(null);
 
   // 🔁 Motivational Texts Rotation
-  const motivationalTexts = [
-  "✨ Keep learning — new milestones await your journey!",
-  "🌱 Every lesson takes you closer to the next achievement!",
-  "🚀 Stay curious — more achievements are ready to be unlocked!",
+const motivationalTexts = [
+  { emoji: "✨", text: "Keep learning — new milestones await your journey!" },
+  { emoji: "🌱", text: "Every lesson takes you closer to the next achievement!" },
+  { emoji: "🚀", text: "Stay curious — more achievements are ready to be unlocked!" },
 ];
+
 
 const [motivation, setMotivation] = useState(motivationalTexts[0]);
 
@@ -524,7 +525,10 @@ useEffect(() => {
       {achievements.length > 0 && (
         <div className="learner-achievements">
           <h2>🏆 Achievements</h2>
-          <p className="achievements-subtext">{motivation}</p>
+          <div className="achievements-subtext">
+            <span className="emoji">{motivationalTexts[currentTextIndex].emoji}</span>
+            <span className="gradient-text">{motivationalTexts[currentTextIndex].text}</span>
+          </div>
           <div className="achievement-grid">
             {achievements.map((a, i) => (
               <div key={i} className="achievement-card">
